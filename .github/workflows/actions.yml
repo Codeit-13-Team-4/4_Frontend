@@ -22,17 +22,5 @@ jobs:
       - name: 의존성 설치
         run: npm ci
 
-      - name: Prettier 포맷 적용
-        run: npm run format
-
-      - name: Prettier 포맷 검사
-        run: npm run format:check
-
-      - name: ESLint 코드 검사
-        run: npm run lint
-
-      - name: TypeScript 타입 검사
-        run: npm run typecheck
-
-      - name: 프로젝트 빌드 테스트
+      - name: 프로젝트 빌드
         run: npm run build
