@@ -14,7 +14,7 @@ const eslintConfig = defineConfig([
   ...pluginQuery.configs["flat/recommended"],
   // Override default ignores of eslint-config-next.
   globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
-  ...storybook.configs["flat/recommended"]
+  ...storybook.configs["flat/recommended"],
 ]);
 
 export default eslintConfig;
