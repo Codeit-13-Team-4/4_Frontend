@@ -22,5 +22,14 @@ jobs:
       - name: 의존성 설치
         run: npm ci
 
+      - name: 포맷 검사
+        run: npm run format:check
+
+      - name: 린트 검사
+        run: npm run lint
+
+      - name: 타입 검사
+        run: npm run typecheck
+
       - name: 프로젝트 빌드
         run: npm run build
