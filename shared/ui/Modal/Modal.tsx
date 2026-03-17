@@ -1,168 +1,62 @@
 "use client";
 
-import { createPortal } from "react-dom";
-import {
-  ReactNode,
-  useEffect,
-  type MouseEvent,
-  type PropsWithChildren,
-  type ReactElement,
-} from "react";
+import * as Dialog from "@radix-ui/react-dialog";
+import type { PropsWithChildren, ReactNode } from "react";
 
 interface ModalProps extends PropsWithChildren {
   isOpen: boolean;
   onClose: () => void;
-  closeOnOverlayClick?: boolean;
-  closeOnEsc?: boolean;
   showCloseButton?: boolean;
   className?: string;
-  children?: ReactNode;
+  title?: ReactNode;
+  description?: ReactNode;
 }
 
-interface ModalSectionProps extends PropsWithChildren {
-  className?: string;
-}
-
-function ModalHeader({ children, className }: ModalSectionProps) {
-  return <div className={`mb-6 ${className ?? ""}`}>{children}</div>;
-}
-function ModalTitle({ children, className }: ModalSectionProps) {
-  return (
-    <h2
-      className={`text-center text-xl font-semibold text-black dark:text-white ${className ?? ""}`}
-    >
-      {children}
-    </h2>
-  );
-}
-
-function ModalBody({ children, className }: ModalSectionProps) {
-  return (
-    <div className={`mt-2 text-black dark:text-white ${className ?? ""}`}>
-      {children}
-    </div>
-  );
-}
-
-function ModalFooter({ children, className }: ModalSectionProps) {
-  return (
-    <div
-      className={`mt-8 flex items-center justify-end gap-2 ${className ?? ""}`}
-    >
-      {children}
-    </div>
-  );
-}
-
-function ModalCloseButton({ onClose, className }: ModalProps) {
-  const handleCloseClick = () => {
-    onClose();
-  };
-
-  return (
-    <button
-      type="button"
-      aria-label="모달 닫기"
-      onClick={handleCloseClick}
-      className={`absolute top-4 right-4 text-2xl font-semibold text-black dark:text-white ${className ?? ""}`}
-    >
-      ×
-    </button>
-  );
-}
-
-interface ModalCompoundComponent {
-  (props: ModalProps): ReactElement | null;
-  Header: typeof ModalHeader;
-  Title: typeof ModalTitle;
-  Body: typeof ModalBody;
-  Footer: typeof ModalFooter;
-}
-
-const Modal = (({
+export default function Modal({
   isOpen,
   onClose,
   children,
-  closeOnOverlayClick = true,
-  closeOnEsc = true,
   showCloseButton = true,
   className,
-}: ModalProps) => {
-  useEffect(() => {
-    if (!isOpen || !closeOnEsc) {
-      return;
-    }
+  title,
+  description,
+}: ModalProps) {
+  return (
+    <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/50" />
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
-    };
+        <Dialog.Content
+          className={`fixed top-1/2 left-1/2 z-50 w-[calc(100%-32px)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-white p-8 shadow-xl outline-none dark:bg-black ${className ?? ""}`}
+        >
+          {showCloseButton ? (
+            <Dialog.Close asChild>
+              <button
+                type="button"
+                aria-label="모달 닫기"
+                className="absolute top-5 right-5 text-2xl text-gray-400 transition hover:text-gray-600 dark:hover:text-gray-200"
+              >
+                ×
+              </button>
+            </Dialog.Close>
+          ) : null}
 
-    window.addEventListener("keydown", handleKeyDown);
+          {title ? (
+            <Dialog.Title className="text-2xl font-semibold text-black dark:text-white">
+              {title}
+            </Dialog.Title>
+          ) : null}
 
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen, closeOnEsc, onClose]);
+          {description ? (
+            <Dialog.Description className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              {description}
+            </Dialog.Description>
+          ) : null}
 
-  useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-
-    const originalOverflow = document.body.style.overflow;
-
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = originalOverflow;
-    };
-  }, [isOpen]);
-
-  if (!isOpen) {
-    return null;
-  }
-
-  if (typeof window === "undefined") {
-    return null;
-  }
-
-  const handleOverlayClick = () => {
-    if (closeOnOverlayClick) {
-      onClose();
-    }
-  };
-
-  const handlePanelClick = (event: MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-  };
-
-  return createPortal(
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center px-4"
-      onClick={handleOverlayClick}
-      aria-hidden="true"
-    >
-      <div
-        role="dialog"
-        aria-modal="true"
-        onClick={handlePanelClick}
-        className={`relative w-full max-w-lg rounded-3xl bg-white p-6 shadow-xl dark:bg-black ${className ?? ""}`}
-      >
-        {showCloseButton ? (
-          <ModalCloseButton isOpen={isOpen} onClose={onClose} />
-        ) : null}
-        {children}
-      </div>
-    </div>,
-    document.body,
+          <div className={title || description ? "mt-6" : ""}>{children}</div>
+          {/* 필요시 버튼, 인풋 등 컴포넌트 불러올 예정 */}
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
-}) as ModalCompoundComponent;
-
-Modal.Header = ModalHeader;
-Modal.Title = ModalTitle;
-Modal.Body = ModalBody;
-Modal.Footer = ModalFooter;
-
-export default Modal;
+}
