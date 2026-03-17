@@ -1,26 +1,57 @@
 "use client";
 
 import * as Dialog from "@radix-ui/react-dialog";
-import type { PropsWithChildren, ReactNode } from "react";
+import type { PropsWithChildren, ReactElement } from "react";
 
 interface ModalProps extends PropsWithChildren {
   isOpen: boolean;
   onClose: () => void;
   showCloseButton?: boolean;
   className?: string;
-  title?: ReactNode;
-  description?: ReactNode;
 }
 
-export default function Modal({
+interface ModalSectionProps extends PropsWithChildren {
+  className?: string;
+}
+
+function ModalTitle({ children, className }: ModalSectionProps) {
+  return (
+    <Dialog.Title
+      className={`text-2xl font-semibold text-black dark:text-white ${className ?? ""}`}
+    >
+      {children}
+    </Dialog.Title>
+  );
+}
+
+function ModalDescription({ children, className }: ModalSectionProps) {
+  return (
+    <Dialog.Description
+      className={`mt-2 text-sm text-gray-500 dark:text-gray-400 ${className ?? ""}`}
+    >
+      {children}
+    </Dialog.Description>
+  );
+}
+
+function ModalBody({ children, className }: ModalSectionProps) {
+  return <div className={`mt-6 ${className ?? ""}`}>{children}</div>;
+}
+
+interface ModalCompoundComponent {
+  (props: ModalProps): ReactElement;
+  Title: typeof ModalTitle;
+  Description: typeof ModalDescription;
+  Body: typeof ModalBody;
+}
+
+const Modal = (({
   isOpen,
   onClose,
   children,
   showCloseButton = true,
   className,
-  title,
-  description,
-}: ModalProps) {
+}: ModalProps) => {
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <Dialog.Portal>
@@ -40,23 +71,16 @@ export default function Modal({
               </button>
             </Dialog.Close>
           ) : null}
-
-          {title ? (
-            <Dialog.Title className="text-2xl font-semibold text-black dark:text-white">
-              {title}
-            </Dialog.Title>
-          ) : null}
-
-          {description ? (
-            <Dialog.Description className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-              {description}
-            </Dialog.Description>
-          ) : null}
-
-          <div className={title || description ? "mt-6" : ""}>{children}</div>
+          {children}
           {/* 필요시 버튼, 인풋 등 컴포넌트 불러올 예정 */}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
   );
-}
+}) as ModalCompoundComponent;
+
+Modal.Title = ModalTitle;
+Modal.Description = ModalDescription;
+Modal.Body = ModalBody;
+
+export default Modal;
