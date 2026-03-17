@@ -3,6 +3,8 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import type { PropsWithChildren, ReactElement } from "react";
 
+import { cn } from "@/shared/utils/cn";
+
 interface ModalProps extends PropsWithChildren {
   isOpen: boolean;
   onClose: () => void;
@@ -17,7 +19,10 @@ interface ModalSectionProps extends PropsWithChildren {
 function ModalTitle({ children, className }: ModalSectionProps) {
   return (
     <Dialog.Title
-      className={`text-2xl font-semibold text-black dark:text-white ${className ?? ""}`}
+      className={cn(
+        "text-2xl font-semibold text-black dark:text-white",
+        className,
+      )}
     >
       {children}
     </Dialog.Title>
@@ -27,7 +32,7 @@ function ModalTitle({ children, className }: ModalSectionProps) {
 function ModalDescription({ children, className }: ModalSectionProps) {
   return (
     <Dialog.Description
-      className={`mt-2 text-sm text-gray-500 dark:text-gray-400 ${className ?? ""}`}
+      className={cn("mt-2 text-sm text-gray-500 dark:text-gray-400", className)}
     >
       {children}
     </Dialog.Description>
@@ -35,7 +40,7 @@ function ModalDescription({ children, className }: ModalSectionProps) {
 }
 
 function ModalBody({ children, className }: ModalSectionProps) {
-  return <div className={`mt-6 ${className ?? ""}`}>{children}</div>;
+  return <div className={cn("mt-6", className)}>{children}</div>;
 }
 
 interface ModalCompoundComponent {
@@ -58,7 +63,10 @@ const Modal = (({
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/50" />
 
         <Dialog.Content
-          className={`fixed top-1/2 left-1/2 z-50 w-[calc(100%-32px)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-white p-8 shadow-xl outline-none dark:bg-black ${className ?? ""}`}
+          className={cn(
+            "fixed top-1/2 left-1/2 z-50 w-[calc(100%-32px)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-white p-8 shadow-xl outline-none dark:bg-black",
+            className,
+          )}
         >
           {showCloseButton ? (
             <Dialog.Close asChild>
