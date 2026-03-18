@@ -8,11 +8,14 @@ import { cn } from "@/shared/utils";
 interface ModalProps extends PropsWithChildren {
   isOpen: boolean;
   onClose: () => void;
-  showCloseButton?: boolean;
-  className?: string;
 }
 
 interface ModalSectionProps extends PropsWithChildren {
+  className?: string;
+}
+
+interface ModalContentProps extends PropsWithChildren {
+  showCloseButton?: boolean;
   className?: string;
 }
 
@@ -68,7 +71,11 @@ function ModalCloseBtn({ className }: ModalSectionProps) {
   );
 }
 
-function ModalContent({ children, className, showCloseButton }: ModalProps) {
+function ModalContent({
+  children,
+  className,
+  showCloseButton,
+}: ModalContentProps) {
   return (
     <Dialog.Content
       className={cn(
