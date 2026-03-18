@@ -5,7 +5,7 @@ import {
   registerToast,
   ToastItem,
   unregisterToast,
-} from "@/shared/utils/toast";
+} from "@/shared/utils/toast/toast";
 import { Toast } from "radix-ui";
 import { cn } from "@/shared/utils";
 

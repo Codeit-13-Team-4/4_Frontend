@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { ToastContainer } from "./Toast";
-import { useEffect } from "react";
-import { toast } from "@/shared/utils/toast";
+import { toast } from "@/shared/utils";
 
 const meta = {
   title: "shared/ui/Toast",
