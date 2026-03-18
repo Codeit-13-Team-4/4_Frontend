@@ -1,13 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import { cva } from "class-variance-authority";
-import { cn } from "@/shared/utils/cn";
 import {
   registerToast,
   ToastItem,
   unregisterToast,
 } from "@/shared/utils/toast";
 import { Toast } from "radix-ui";
+import { cn } from "@/shared/utils";
 
 const toastVariants = cva(
   "flex items-center gap-3 w-full px-4 py-3 rounded-[10px] bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-sm text-zinc-800 dark:text-zinc-100",

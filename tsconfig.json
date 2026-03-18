@@ -13,6 +13,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
+    "types": ["vitest/globals", "vitest/jsdom", "@testing-library/react"],
     "plugins": [
       {
         "name": "next"
