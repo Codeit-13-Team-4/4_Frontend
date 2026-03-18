@@ -1,5 +1,20 @@
 @import "tailwindcss";
 
+@theme {
+  --animate-toast-in: toast-in 0.3s ease-out;
+
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
