@@ -55,6 +55,9 @@ export function ToastContainer() {
             data-testid="toast-dot"
           />
           {item.icon && <span className="text-base">{item.icon}</span>}
+          <Toast.Description className="flex-1">
+            {item.message}
+          </Toast.Description>
         </Toast.Root>
       ))}
       <Toast.Viewport className="fixed top-5 right-5 z-50 flex max-w-90 min-w-70 flex-col items-end gap-2" />

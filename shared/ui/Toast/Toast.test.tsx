@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { test, expect, vi, describe } from "vitest";
 import { ToastContainer } from "./Toast";
 import { toast } from "@/shared/utils";
@@ -87,7 +87,7 @@ describe("Toast UI 테스트", () => {
       vi.useFakeTimers();
 
       act(() => {
-        toast("toast duration 5000 test");
+        toast("toast duration 5000 test", { duration: 5000 });
       });
 
       const viewItem = screen.getByText("toast duration 5000 test");
