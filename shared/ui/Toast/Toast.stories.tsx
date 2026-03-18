@@ -2,71 +2,38 @@ import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { ToastContainer } from "./Toast";
 import { toast } from "@/shared/utils";
 
+interface ToastStoryArgs {
+  variant: "default" | "success" | "error";
+  icon: string;
+}
+
 const meta = {
   title: "shared/ui/Toast",
   component: ToastContainer,
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof ToastContainer>;
+  argTypes: {
+    variant: {
+      control: { type: "select" },
+      options: ["default", "success", "error"],
+    },
+  },
+} satisfies Meta<ToastStoryArgs>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<ToastStoryArgs>;
 
-export const Default: Story = {
-  render: () => (
+export const Toast: Story = {
+  args: { variant: "default" },
+  render: ({ variant }) => (
     <>
       <ToastContainer />
       <button
-        onClick={() => toast("Default Toast Message")}
+        onClick={() => toast("Toast Message", { variant })}
         className="rounded-lg border border-gray-400 px-2 py-1"
       >
-        기본 토스트
-      </button>
-    </>
-  ),
-};
-
-export const Success: Story = {
-  render: () => (
-    <>
-      <ToastContainer />
-      <button
-        onClick={() => toast("Success Toast Message", { variant: "success" })}
-        className="rounded-lg border border-gray-400 px-2 py-1"
-      >
-        성공 토스트
-      </button>
-    </>
-  ),
-};
-export const Error: Story = {
-  render: () => (
-    <>
-      <ToastContainer />
-      <button
-        onClick={() => toast("Error Toast Message", { variant: "error" })}
-        className="rounded-lg border border-gray-400 px-2 py-1"
-      >
-        에러 토스트
-      </button>
-    </>
-  ),
-};
-
-export const Icon: Story = {
-  render: () => (
-    <>
-      <ToastContainer />
-      <button
-        onClick={() =>
-          toast("Error Toast Message", {
-            icon: <span>⚠️</span>,
-          })
-        }
-        className="rounded-lg border border-gray-400 px-2 py-1"
-      >
-        아이콘 토스트
+        {variant} Toast
       </button>
     </>
   ),
