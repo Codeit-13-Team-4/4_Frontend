@@ -1,7 +1,7 @@
 "use client";
 
 import * as Dialog from "@radix-ui/react-dialog";
-import type { PropsWithChildren, ReactElement } from "react";
+import type { PropsWithChildren } from "react";
 
 import { cn } from "@/shared/utils/cn";
 
@@ -14,6 +14,14 @@ interface ModalProps extends PropsWithChildren {
 
 interface ModalSectionProps extends PropsWithChildren {
   className?: string;
+}
+
+function ModalOverlay({ className }: ModalSectionProps) {
+  return (
+    <Dialog.Overlay
+      className={cn("fixed inset-0 z-50 bg-black/50", className)}
+    />
+  );
 }
 
 function ModalTitle({ children, className }: ModalSectionProps) {
@@ -43,52 +51,50 @@ function ModalBody({ children, className }: ModalSectionProps) {
   return <div className={cn("mt-6", className)}>{children}</div>;
 }
 
-interface ModalCompoundComponent {
-  (props: ModalProps): ReactElement;
-  Title: typeof ModalTitle;
-  Description: typeof ModalDescription;
-  Body: typeof ModalBody;
+function ModalCloseBtn({ className }: ModalSectionProps) {
+  return (
+    <Dialog.Close asChild>
+      <button
+        type="button"
+        aria-label="모달 닫기"
+        className={cn(
+          "absolute top-5 right-10 text-2xl text-gray-400 transition hover:text-gray-600 dark:hover:text-gray-200",
+          className,
+        )}
+      >
+        ×
+      </button>
+    </Dialog.Close>
+  );
 }
 
-const Modal = (({
-  isOpen,
-  onClose,
-  children,
-  showCloseButton = true,
-  className,
-}: ModalProps) => {
+function ModalContent({ children, className, showCloseButton }: ModalProps) {
+  return (
+    <Dialog.Content
+      className={cn(
+        "fixed top-1/2 left-1/2 z-50 w-[calc(100%-32px)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-white p-8 shadow-xl outline-none dark:bg-black",
+        className,
+      )}
+    >
+      {showCloseButton ? <ModalCloseBtn /> : null}
+      {children}
+    </Dialog.Content>
+  );
+}
+
+const Modal = ({ children, isOpen, onClose }: ModalProps) => {
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/50" />
-
-        <Dialog.Content
-          className={cn(
-            "fixed top-1/2 left-1/2 z-50 w-[calc(100%-32px)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-white p-8 shadow-xl outline-none dark:bg-black",
-            className,
-          )}
-        >
-          {showCloseButton ? (
-            <Dialog.Close asChild>
-              <button
-                type="button"
-                aria-label="모달 닫기"
-                className="absolute top-5 right-5 text-2xl text-gray-400 transition hover:text-gray-600 dark:hover:text-gray-200"
-              >
-                ×
-              </button>
-            </Dialog.Close>
-          ) : null}
-          {children}
-          {/* 필요시 버튼, 인풋 등 컴포넌트 불러올 예정 */}
-        </Dialog.Content>
-      </Dialog.Portal>
+      <Dialog.Portal>{children}</Dialog.Portal>
     </Dialog.Root>
   );
-}) as ModalCompoundComponent;
+};
 
 Modal.Title = ModalTitle;
 Modal.Description = ModalDescription;
 Modal.Body = ModalBody;
+Modal.Overlay = ModalOverlay;
+Modal.Content = ModalContent;
+Modal.CloseBtn = ModalCloseBtn;
 
 export default Modal;
