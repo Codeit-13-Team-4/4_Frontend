@@ -1,4 +1,4 @@
-import { toast } from "@/shared/utils/toast";
+import { toast } from "@/shared/utils/toast/toast";
 import { act, render, screen } from "@testing-library/react";
 import { test, expect, vi, describe } from "vitest";
 import { ToastContainer } from "./Toast";
