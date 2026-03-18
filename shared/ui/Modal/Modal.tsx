@@ -3,7 +3,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import type { PropsWithChildren } from "react";
 
-import { cn } from "@/shared/utils/cn/cn";
+import { cn } from "@/shared/utils";
 
 interface ModalProps extends PropsWithChildren {
   isOpen: boolean;
