@@ -31,5 +31,8 @@ jobs:
       - name: 타입 검사
         run: npm run typecheck
 
+      - name: 테스트
+        run: npm run test
+
       - name: 프로젝트 빌드
         run: npm run build
