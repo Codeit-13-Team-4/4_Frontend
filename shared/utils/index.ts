@@ -1,2 +1,2 @@
 export { cn } from "./cn/cn";
-export { toast } from "./toast/toast";
+export * from "./toast/toast";
