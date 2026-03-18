@@ -1,12 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import type { ComponentProps } from "react";
 import { useState } from "react";
 
 import Modal from "./Modal";
 
-const meta: Meta<typeof Modal> = {
+interface ModalStoryArgs {
+  className?: string;
+  showCloseButton?: boolean;
+}
+
+const meta: Meta<ModalStoryArgs> = {
   title: "shared/ui/Modal",
-  component: Modal,
   parameters: {
     layout: "fullscreen",
   },
@@ -17,12 +20,6 @@ const meta: Meta<typeof Modal> = {
       </div>
     ),
   ],
-  args: {
-    isOpen: true,
-    onClose: () => {},
-    showCloseButton: true,
-    className: "max-w-md",
-  },
   argTypes: {
     className: {
       control: "text",
@@ -30,24 +27,22 @@ const meta: Meta<typeof Modal> = {
     showCloseButton: {
       control: "boolean",
     },
-    isOpen: {
-      control: false,
-    },
-    onClose: {
-      control: false,
-    },
-    children: {
-      control: false,
-    },
   },
 };
 
 export default meta;
 
-type Story = StoryObj<typeof Modal>;
+type Story = StoryObj<ModalStoryArgs>;
 
-function DefaultModalExample(args: ComponentProps<typeof Modal>) {
+function DefaultModalExample({
+  className = "max-w-md",
+  showCloseButton = true,
+}: ModalStoryArgs) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -59,25 +54,9 @@ function DefaultModalExample(args: ComponentProps<typeof Modal>) {
         기본 모달 열기
       </button>
 
-      <Modal
-        {...args}
-        isOpen={isOpen}
-        onClose={() => {
-          setIsOpen(false);
-          args.onClose?.();
-        }}
-      >
+      <Modal isOpen={isOpen} onClose={handleClose}>
         <Modal.Overlay />
-
-        <Modal.Content
-          isOpen={isOpen}
-          onClose={() => {
-            setIsOpen(false);
-            args.onClose?.();
-          }}
-          showCloseButton={args.showCloseButton}
-          className={args.className}
-        >
+        <Modal.Content showCloseButton={showCloseButton} className={className}>
           <Modal.Title>모달 제목</Modal.Title>
           <Modal.Description>모달 설명입니다.</Modal.Description>
 
@@ -91,14 +70,14 @@ function DefaultModalExample(args: ComponentProps<typeof Modal>) {
               <div className="flex justify-end gap-2">
                 <button
                   type="button"
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleClose}
                   className="h-11 rounded-xl border border-gray-300 px-4 text-sm font-medium text-black transition hover:bg-gray-50 dark:border-gray-700 dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-800"
                 >
                   취소
                 </button>
                 <button
                   type="button"
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleClose}
                   className="h-11 rounded-xl bg-black px-4 text-sm font-semibold text-white transition dark:bg-white dark:text-black"
                 >
                   확인
@@ -115,6 +94,10 @@ function DefaultModalExample(args: ComponentProps<typeof Modal>) {
 function DeleteFormModalExample() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center">
       <button
@@ -125,20 +108,9 @@ function DeleteFormModalExample() {
         탈퇴 폼 모달 열기
       </button>
 
-      <Modal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        showCloseButton
-        className="max-w-lg"
-      >
+      <Modal isOpen={isOpen} onClose={handleClose}>
         <Modal.Overlay />
-
-        <Modal.Content
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          showCloseButton
-          className="max-w-lg"
-        >
+        <Modal.Content showCloseButton className="max-w-lg">
           <Modal.Title>정말 탈퇴하시겠습니까?</Modal.Title>
           <Modal.Description>
             탈퇴 사유를 입력한 뒤 탈퇴를 진행할 수 있습니다.
@@ -163,7 +135,7 @@ function DeleteFormModalExample() {
               <div className="flex justify-end gap-2">
                 <button
                   type="button"
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleClose}
                   className="h-11 rounded-xl border border-gray-300 px-4 text-sm font-medium text-black transition hover:bg-gray-50 dark:border-gray-700 dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-800"
                 >
                   취소
@@ -184,14 +156,13 @@ function DeleteFormModalExample() {
 }
 
 export const Default: Story = {
+  args: {
+    className: "max-w-md",
+    showCloseButton: true,
+  },
   render: (args) => <DefaultModalExample {...args} />,
 };
 
 export const DeleteForm: Story = {
-  parameters: {
-    controls: {
-      disable: true,
-    },
-  },
   render: () => <DeleteFormModalExample />,
 };
