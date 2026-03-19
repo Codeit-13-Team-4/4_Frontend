@@ -89,7 +89,7 @@ function getRandomItem<T>(items: T[]): T {
   return items[randomItem];
 }
 
-export function getUserName(): string {
+export function getRandomName(): string {
   const firstName = getRandomItem(FIRST);
   const secondName = getRandomItem(SECOND);
   const number = Math.floor(Math.random() * 1000);
