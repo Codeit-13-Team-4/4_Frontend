@@ -24,15 +24,3 @@ export const Default: Story = {
     value: 50,
   },
 };
-
-export const Complete: Story = {
-  args: {
-    value: 100,
-  },
-};
-
-export const Loading: Story = {
-  args: {
-    value: 0,
-  },
-};
