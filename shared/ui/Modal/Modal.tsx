@@ -104,4 +104,4 @@ Modal.Overlay = ModalOverlay;
 Modal.Content = ModalContent;
 Modal.CloseBtn = ModalCloseBtn;
 
-export default Modal;
+export { Modal };
