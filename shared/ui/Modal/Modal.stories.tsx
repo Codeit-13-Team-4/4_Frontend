@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { useState } from "react";
 
-import Modal from "./Modal";
+import { Modal } from "./Modal";
 
 interface ModalStoryArgs {
   className?: string;
