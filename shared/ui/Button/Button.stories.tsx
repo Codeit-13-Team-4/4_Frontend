@@ -12,6 +12,29 @@ const meta: Meta<typeof Button> = {
       </div>
     ),
   ],
+  args: {
+    children: "버튼",
+    variant: "default",
+    size: "default",
+    type: "button",
+  },
+  argTypes: {
+    variant: {
+      control: "select",
+      options: [
+        "default",
+        "primary",
+        "secondary",
+        "approve",
+        "reject",
+        "outline",
+      ],
+    },
+    size: {
+      control: "select",
+      options: ["default", "xs", "sm", "lg"],
+    },
+  },
 };
 
 export default meta;
@@ -22,7 +45,8 @@ export const Login: Story = {
   args: {
     children: "로그인",
     type: "submit",
-    className: "bg-slate-500 ",
+    variant: "default",
+    size: "default",
   },
 };
 
@@ -31,24 +55,28 @@ export const Disabled: Story = {
     children: "로그인",
     type: "submit",
     disabled: true,
-    className: "bg-slate-100 text-slate-600 ",
+    variant: "secondary",
+    size: "default",
   },
 };
 
 export const CheckBtn: Story = {
   args: {
     children: "중복확인",
-    className: "h-12 w-20 bg-slate-500 px-2 font-medium",
+    variant: "primary",
+    size: "sm",
   },
 };
+
 export const GithubBtn: Story = {
   args: {
     children: (
-      <div className="flex gap-[12px]">
+      <div className="flex items-center gap-3">
         <span>로고</span>
         <span>Github로 계속하기</span>
       </div>
     ),
-    className: "border border-slate-200 text-black",
+    variant: "outline",
+    size: "default",
   },
 };
