@@ -1,0 +1,40 @@
+interface LoginRequest {
+  loginId: string;
+  password: string;
+}
+
+interface LoginResponse {
+  user: {
+    id: number;
+    loginId: string;
+    nickname: string;
+  };
+  accessToken?: string;
+  refreshToken?: string;
+  expiresIn?: number;
+}
+
+export async function login({
+  loginId,
+  password,
+}: LoginRequest): Promise<LoginResponse> {
+  const response = await fetch("/api/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({
+      loginId: loginId.trim(),
+      password: password.trim(),
+    }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "로그인에 실패했습니다.");
+  }
+
+  return data;
+}
