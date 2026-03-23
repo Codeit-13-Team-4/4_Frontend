@@ -3,7 +3,7 @@ import type { ComponentProps, ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const buttonVariants = cva(
-  "flex items-center justify-center gap-[10px] rounded-2xl disabled:cursor-not-allowed disabled:opacity-50",
+  "flex items-center justify-center gap-2.5 rounded-2xl disabled:cursor-not-allowed disabled:opacity-50 hover:cursor-pointer",
   {
     variants: {
       variant: {
@@ -15,10 +15,11 @@ const buttonVariants = cva(
         outline: "border border-slate-200 bg-white text-black",
       },
       size: {
-        default: "h-14 w-[456px] px-[30px] py-4 text-base font-semibold",
-        xs: "h-8 px-3 py-1 text-xs",
+        xs: "h-8 px-3 py-1.5 text-xs",
         sm: "h-10 px-4 py-2 text-sm",
-        lg: "h-16 px-8 py-5 text-lg",
+        default: "h-12 px-5 py-2 text-sm font-semibold",
+        lg: "h-12 px-6 py-3 text-base font-semibold",
+        xl: "h-14 px-8 py-4 text-lg font-semibold",
       },
     },
     defaultVariants: {
