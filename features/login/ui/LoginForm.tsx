@@ -1,0 +1,143 @@
+"use client";
+
+import Link from "next/link";
+import { useState } from "react";
+
+import { login } from "@/features/login/api/login";
+import LoginSubmitButton from "@/features/login/ui/LoginSubmitButton";
+import { Button } from "@/shared/ui/Button/Button";
+import { Input } from "@/shared/ui/Input/Input";
+import { Label } from "@/shared/ui/Label/Label";
+
+export default function LoginForm() {
+  const [loginId, setLoginId] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState("");
+
+  const isValid = loginId.trim() !== "" && password.trim() !== "";
+  const isSubmitDisabled = !isValid || isPending;
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (isSubmitDisabled) return;
+
+    setError("");
+    setIsPending(true);
+
+    try {
+      await login({ loginId, password });
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("로그인에 실패했습니다.");
+      }
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  return (
+    <div className="flex w-full max-w-[568px] flex-col items-center gap-2 rounded-[40px] bg-white px-14 pt-12 pb-11">
+      <form
+        onSubmit={handleSubmit}
+        className="flex w-full max-w-[456px] flex-col gap-6"
+      >
+        <div className="flex flex-col gap-10">
+          <h1 className="text-center text-2xl font-bold text-gray-900">
+            로그인
+          </h1>
+
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
+              <Label htmlFor="loginId" className="text-sm font-medium">
+                아이디
+              </Label>
+              <Input
+                id="loginId"
+                type="text"
+                placeholder="이메일을 입력해주세요"
+                value={loginId}
+                onChange={(e) => setLoginId(e.target.value)}
+              />
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <Label htmlFor="password" className="text-sm font-medium">
+                비밀번호
+              </Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="비밀번호를 입력해주세요"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-2">
+            <LoginSubmitButton
+              disabled={isSubmitDisabled}
+              isPending={isPending}
+            />
+
+            {error ? <p className="text-sm text-red-500">{error}</p> : null}
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <div className="flex w-full items-center gap-4">
+              <div className="h-px flex-1 bg-slate-300" />
+              <span className="shrink-0 text-sm text-slate-500">
+                SNS 계정으로 로그인
+              </span>
+              <div className="h-px flex-1 bg-slate-300" />
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <Button type="button" variant="outline" className="w-full">
+                <div className="flex items-center gap-3">
+                  <span>로고</span>
+                  <span>구글로 계속하기</span>
+                </div>
+              </Button>
+
+              <Button
+                type="button"
+                variant="secondary"
+                className="w-full bg-[#FFEE01]"
+              >
+                <div className="flex items-center gap-3">
+                  <span>로고</span>
+                  <span>카카오로 계속하기</span>
+                </div>
+              </Button>
+
+              <Button type="button" variant="outline" className="w-full">
+                <div className="flex items-center gap-3">
+                  <span>로고</span>
+                  <span>Github로 계속하기</span>
+                </div>
+              </Button>
+            </div>
+          </div>
+
+          <p className="flex justify-center gap-1 text-sm text-gray-800">
+            서비스가 처음이신가요?
+            <Link
+              href="/signup"
+              className="border-b font-medium text-green-600"
+            >
+              회원가입
+            </Link>
+          </p>
+        </div>
+      </form>
+    </div>
+  );
+}
