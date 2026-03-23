@@ -17,7 +17,6 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
-const tags = ["포트폴리오", "공모전"];
 const endDate = "2026-10-30";
 const endDateToday = new Date().toISOString().split("T")[0];
 
@@ -39,9 +38,6 @@ export const AllVariants: Story = {
 
         <DeadlineBadge endDate={endDate} />
         <DeadlineBadge endDate={endDateToday} />
-        {tags.map((tag, index) => (
-          <Badge key={`${tag}-${index}`}># {tag}</Badge>
-        ))}
       </div>
     );
   },
