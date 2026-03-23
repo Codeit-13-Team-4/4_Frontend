@@ -9,3 +9,4 @@ export { Button, buttonVariants } from "./Button/Button";
 export { Badge } from "./Badge/Badge";
 export { StatusBadge } from "./StatusBadge/StatusBadge";
 export { DeadlineBadge } from "./DeadlineBadge/DeadlineBadge";
+export { Avatar, AvatarImage, AvatarFallback } from "./Avatar/Avatar";
