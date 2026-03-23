@@ -1,15 +1,32 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { useAuthStore } from "@/features/auth/model/authStore";
 import { login } from "@/features/login/api/login";
-import LoginSubmitButton from "@/features/login/ui/LoginSubmitButton";
 import { Button } from "@/shared/ui/Button/Button";
 import { Input } from "@/shared/ui/Input/Input";
 import { Label } from "@/shared/ui/Label/Label";
 
+interface LoginSubmitButtonProps {
+  disabled: boolean;
+  isPending: boolean;
+}
+
+function LoginSubmitButton({ disabled, isPending }: LoginSubmitButtonProps) {
+  return (
+    <Button type="submit" disabled={disabled} className="w-full">
+      {isPending ? "로그인 중..." : "로그인"}
+    </Button>
+  );
+}
+
 export default function LoginForm() {
+  const router = useRouter();
+  const setUser = useAuthStore((state) => state.setUser);
+
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
 
@@ -28,7 +45,9 @@ export default function LoginForm() {
     setIsPending(true);
 
     try {
-      await login({ loginId, password });
+      const data = await login({ loginId, password });
+      setUser(data.user);
+      router.push("/");
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -41,10 +60,10 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex w-full max-w-[568px] flex-col items-center gap-2 rounded-[40px] bg-white px-14 pt-12 pb-11">
+    <div className="flex w-full max-w-142 flex-col items-center gap-2 rounded-[40px] bg-white px-14 pt-12 pb-11">
       <form
         onSubmit={handleSubmit}
-        className="flex w-full max-w-[456px] flex-col gap-6"
+        className="flex w-full max-w-114 flex-col gap-6"
       >
         <div className="flex flex-col gap-10">
           <h1 className="text-center text-2xl font-bold text-gray-900">
@@ -59,7 +78,7 @@ export default function LoginForm() {
               <Input
                 id="loginId"
                 type="text"
-                placeholder="이메일을 입력해주세요"
+                placeholder="아이디를 입력해주세요"
                 value={loginId}
                 onChange={(e) => setLoginId(e.target.value)}
               />

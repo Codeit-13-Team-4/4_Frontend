@@ -4,13 +4,12 @@ interface LoginRequest {
 }
 
 interface LoginResponse {
+  message: string;
   user: {
     id: number;
     loginId: string;
     nickname: string;
   };
-  accessToken?: string;
-  refreshToken?: string;
   expiresIn?: number;
 }
 
