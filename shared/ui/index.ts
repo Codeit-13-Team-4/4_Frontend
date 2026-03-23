@@ -6,3 +6,4 @@ export { Progress } from "./Progress/Progress";
 export { Label } from "./Label/Label";
 export { Input } from "./Input/Input";
 export { Button, buttonVariants } from "./Button/Button";
+export { Avatar, AvatarImage, AvatarFallback } from "./Avatar/Avatar";
