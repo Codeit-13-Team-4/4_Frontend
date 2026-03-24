@@ -5,10 +5,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { useAuthStore } from "@/features/auth/model/authStore";
-import { login } from "@/features/login/api/login";
-import { Button } from "@/shared/ui/Button/Button";
-import { Input } from "@/shared/ui/Input/Input";
-import { Label } from "@/shared/ui/Label/Label";
+import { login } from "@/features/auth/api/login";
+import { Button, Input, Label } from "@/shared/ui";
 
 interface LoginSubmitButtonProps {
   disabled: boolean;
@@ -36,7 +34,7 @@ export default function LoginForm() {
   const isValid = loginId.trim() !== "" && password.trim() !== "";
   const isSubmitDisabled = !isValid || isPending;
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (isSubmitDisabled) return;

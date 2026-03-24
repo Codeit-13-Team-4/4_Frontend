@@ -7,7 +7,6 @@ export interface User {
 export async function getMe(): Promise<User> {
   const response = await fetch("/api/users/me", {
     method: "GET",
-    credentials: "include",
     cache: "no-store",
   });
 
