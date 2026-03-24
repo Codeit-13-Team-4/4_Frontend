@@ -10,16 +10,13 @@ export interface User {
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
-  isInitialized: boolean;
   setUser: (user: User) => void;
   clearUser: () => void;
-  setInitialized: (value: boolean) => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   isAuthenticated: false,
-  isInitialized: false,
 
   setUser: (user) =>
     set({
@@ -32,9 +29,11 @@ export const useAuthStore = create<AuthState>((set) => ({
       user: null,
       isAuthenticated: false,
     }),
-
-  setInitialized: (value) =>
-    set({
-      isInitialized: value,
-    }),
 }));
+
+export const authSelectors = {
+  user: (state: AuthState) => state.user,
+  isAuthenticated: (state: AuthState) => state.isAuthenticated,
+  setUser: (state: AuthState) => state.setUser,
+  clearUser: (state: AuthState) => state.clearUser,
+};
