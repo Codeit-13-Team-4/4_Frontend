@@ -14,9 +14,9 @@ const buttonVariants = cva(
         disabled: "bg-gray-600 text-gray-300",
       },
       size: {
-        sm: "h-10 px-2.5 text-sm rounded-[10px]",
-        md: "h-12 px-2 text-sm font-semibold rounded-xl",
-        lg: "h-15 px-4 text-base font-semibold rounded-2xl",
+        sm: "h-10 px-4 py-2.5 text-sm rounded-[10px] font-semibold",
+        md: "h-12 px-6 py-3 text-sm font-semibold rounded-xl",
+        lg: "h-15 px-[30px] py-4 text-base font-semibold rounded-2xl",
       },
     },
     defaultVariants: {
