@@ -42,7 +42,7 @@ function AlertModalHeader({
 }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn("grid place-items-center gap-1.5 text-center", className)}
+      className={cn("grid place-items-center gap-2 text-center", className)}
       {...props}
     />
   );
@@ -57,7 +57,7 @@ function AlertModalContent({
       <AlertModalOverlay />
       <AlertDialog.Content
         className={cn(
-          "data-open:animate-modal-in data-closed:animate-modal-out fixed top-1/2 left-1/2 z-50 grid w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl bg-white p-4 outline-none",
+          "data-open:animate-modal-in data-closed:animate-modal-out fixed top-1/2 left-1/2 z-50 grid w-140 max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-14 rounded-[40px] bg-[#1E293B] px-10 pt-12 pb-10 text-white outline-none",
           className,
         )}
         {...props}
@@ -73,7 +73,7 @@ function AlertModalFooter({
   return (
     <div
       className={cn(
-        "-mx-4 -mb-4 flex flex-col gap-2 rounded-b-xl p-4 sm:flex-row sm:justify-end",
+        "flex flex-col gap-2 sm:flex-row sm:justify-end md:gap-4",
         className,
       )}
       {...props}
@@ -87,7 +87,7 @@ function AlertModalTitle({
 }: React.ComponentProps<typeof AlertDialog.Title>) {
   return (
     <AlertDialog.Title
-      className={cn("text-base font-medium", className)}
+      className={cn("text-2xl font-semibold", className)}
       {...props}
     />
   );
@@ -100,7 +100,7 @@ function AlertModalDescription({
   return (
     <AlertDialog.Description
       className={cn(
-        "text-sm text-balance text-gray-500 md:text-pretty",
+        "text-lg text-balance text-gray-400 md:text-pretty",
         className,
       )}
       {...props}
@@ -110,8 +110,8 @@ function AlertModalDescription({
 
 function AlertModalAction({
   className,
-  variant = "default",
-  size = "sm",
+  variant = "primary",
+  size = "lg",
   ...props
 }: React.ComponentProps<typeof AlertDialog.Action> &
   VariantProps<typeof buttonVariants>) {
@@ -125,8 +125,8 @@ function AlertModalAction({
 
 function AlertModalCancel({
   className,
-  variant = "secondary",
-  size = "sm",
+  variant = "default",
+  size = "lg",
   ...props
 }: React.ComponentProps<typeof AlertDialog.Cancel> &
   VariantProps<typeof buttonVariants>) {
@@ -135,6 +135,36 @@ function AlertModalCancel({
       className={cn(buttonVariants({ variant, size }), className)}
       {...props}
     />
+  );
+}
+
+function AlertModalClose({
+  className,
+  ...props
+}: React.ComponentProps<typeof AlertDialog.Cancel>) {
+  return (
+    <AlertDialog.Cancel
+      className={cn(
+        "mb-4 flex w-full cursor-pointer justify-end text-gray-200",
+        className,
+      )}
+      {...props}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </svg>
+    </AlertDialog.Cancel>
   );
 }
 
@@ -148,5 +178,6 @@ AlertModal.Title = AlertModalTitle;
 AlertModal.Description = AlertModalDescription;
 AlertModal.Action = AlertModalAction;
 AlertModal.Cancel = AlertModalCancel;
+AlertModal.Close = AlertModalClose;
 
 export { AlertModal };
