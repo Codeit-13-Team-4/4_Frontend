@@ -30,13 +30,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { user, accessToken, refreshToken, expiresIn } = data;
+    const { user, accessToken, refreshToken } = data;
 
     const responseToClient = NextResponse.json(
       {
         message: "로그인에 성공했습니다.",
         user,
-        expiresIn: expiresIn ?? null,
       },
       { status: 200 },
     );
@@ -46,7 +45,6 @@ export async function POST(request: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: expiresIn ?? 60 * 15,
     });
 
     responseToClient.cookies.set("refreshToken", refreshToken, {
@@ -54,7 +52,6 @@ export async function POST(request: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7,
     });
 
     return responseToClient;
