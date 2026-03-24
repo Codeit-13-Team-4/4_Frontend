@@ -3,17 +3,15 @@
 import { useEffect } from "react";
 
 import { getMe } from "@/features/auth/api/getMe";
-import { useAuthStore } from "@/features/auth/model/authStore";
+import { authSelectors, useAuthStore } from "@/features/auth/model/authStore";
 
 interface AuthProviderProps {
   children: React.ReactNode;
 }
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-  const setUser = useAuthStore((state) => state.setUser);
-  const clearUser = useAuthStore((state) => state.clearUser);
-  const setInitialized = useAuthStore((state) => state.setInitialized);
-  const isInitialized = useAuthStore((state) => state.isInitialized);
+  const setUser = useAuthStore(authSelectors.setUser);
+  const clearUser = useAuthStore(authSelectors.clearUser);
 
   useEffect(() => {
     const initializeAuth = async () => {
@@ -22,17 +20,11 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         setUser(data);
       } catch {
         clearUser();
-      } finally {
-        setInitialized(true);
       }
     };
 
     initializeAuth();
-  }, [setUser, clearUser, setInitialized]);
-
-  if (!isInitialized) {
-    return null;
-  }
+  }, [setUser, clearUser]);
 
   return <>{children}</>;
 }
