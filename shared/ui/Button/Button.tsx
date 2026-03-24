@@ -3,27 +3,25 @@ import type { ComponentProps, ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const buttonVariants = cva(
-  "flex items-center justify-center gap-[10px] rounded-2xl disabled:cursor-not-allowed disabled:opacity-50",
+  "flex items-center justify-center gap-2.5 disabled:cursor-not-allowed disabled:opacity-50 hover:cursor-pointer",
   {
     variants: {
       variant: {
-        default: "bg-black text-white",
-        primary: "bg-slate-500 text-white",
-        secondary: "bg-gray-200 text-black",
-        approve: "bg-green-600 text-white",
-        reject: "bg-red-600 text-white",
-        outline: "border border-slate-200 bg-white text-black",
+        default: "border border-gray-200 text-gray-600 bg-gray-50",
+        primary: "bg-mint-500 text-gray-50",
+        dark: "bg-gray-800 text-gray-400 border border-gray-600",
+        destructive: "text-gray-50 border border-error bg-error",
+        disabled: "bg-gray-600 text-gray-300",
       },
       size: {
-        default: "h-14 w-[456px] px-[30px] py-4 text-base font-semibold",
-        xs: "h-8 px-3 py-1 text-xs",
-        sm: "h-10 px-4 py-2 text-sm",
-        lg: "h-16 px-8 py-5 text-lg",
+        sm: "h-10 px-4 py-2.5 text-sm rounded-[10px] font-semibold",
+        md: "h-12 px-6 py-3 text-sm font-semibold rounded-xl",
+        lg: "h-15 px-[30px] py-4 text-base font-semibold rounded-2xl",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "default",
+      size: "md",
     },
   },
 );
