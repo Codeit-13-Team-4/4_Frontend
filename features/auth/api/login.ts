@@ -1,5 +1,5 @@
 interface LoginRequest {
-  loginId: string;
+  email: string;
   password: string;
 }
 
@@ -7,14 +7,13 @@ interface LoginResponse {
   message: string;
   user: {
     id: number;
-    loginId: string;
+    email: string;
     nickname: string;
   };
-  expiresIn?: number;
 }
 
 export async function login({
-  loginId,
+  email,
   password,
 }: LoginRequest): Promise<LoginResponse> {
   const response = await fetch("/api/auth/login", {
@@ -23,7 +22,7 @@ export async function login({
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      loginId: loginId.trim(),
+      email: email.trim(),
       password: password.trim(),
     }),
   });

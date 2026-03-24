@@ -25,13 +25,13 @@ export default function LoginForm() {
   const router = useRouter();
   const setUser = useAuthStore((state) => state.setUser);
 
-  const [loginId, setLoginId] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState("");
 
-  const isValid = loginId.trim() !== "" && password.trim() !== "";
+  const isValid = email.trim() !== "" && password.trim() !== "";
   const isSubmitDisabled = !isValid || isPending;
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -43,7 +43,7 @@ export default function LoginForm() {
     setIsPending(true);
 
     try {
-      const data = await login({ loginId, password });
+      const data = await login({ email, password });
       setUser(data.user);
       router.push("/");
     } catch (error) {
@@ -70,15 +70,15 @@ export default function LoginForm() {
 
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-3">
-              <Label htmlFor="loginId" className="text-sm font-medium">
+              <Label htmlFor="email" className="text-sm font-medium">
                 아이디
               </Label>
               <Input
-                id="loginId"
-                type="text"
-                placeholder="아이디를 입력해주세요"
-                value={loginId}
-                onChange={(e) => setLoginId(e.target.value)}
+                id="email"
+                type="email"
+                placeholder="이메일을 입력해주세요"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 

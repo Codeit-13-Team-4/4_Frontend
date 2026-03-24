@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        loginId: body.loginId,
+        email: body.email,
         password: body.password,
       }),
       cache: "no-store",
