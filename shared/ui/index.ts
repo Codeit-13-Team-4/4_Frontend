@@ -11,3 +11,4 @@ export { StatusBadge } from "./StatusBadge/StatusBadge";
 export { DeadlineBadge } from "./DeadlineBadge/DeadlineBadge";
 export { Avatar, AvatarImage, AvatarFallback } from "./Avatar/Avatar";
 export { AlertModal } from "./AlertModal/AlertModal";
+export { AlertModalGlobal } from "./AlertModal/AlertModalGlobal";
