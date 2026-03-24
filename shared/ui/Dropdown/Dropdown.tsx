@@ -1,6 +1,5 @@
 import { cn } from "@/shared/utils";
 import { DropdownMenu } from "radix-ui";
-import { Separator } from "..";
 
 function Dropdown({
   ...props
@@ -68,7 +67,12 @@ function DropdownSeparator({
   className,
   ...props
 }: React.ComponentProps<typeof DropdownMenu.Separator>) {
-  return <Separator className={cn("bg-[#334155]", className)} {...props} />;
+  return (
+    <DropdownMenu.Separator
+      className={cn("h-px bg-[#334155]", className)}
+      {...props}
+    />
+  );
 }
 
 function DropdownItem({
