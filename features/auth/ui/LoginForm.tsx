@@ -31,7 +31,9 @@ export default function LoginForm() {
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState("");
 
-  const isValid = email.trim() !== "" && password.trim() !== "";
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isValid =
+    email.trim() !== "" && emailRegex.test(email) && password.trim() !== "";
   const isSubmitDisabled = !isValid || isPending;
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
