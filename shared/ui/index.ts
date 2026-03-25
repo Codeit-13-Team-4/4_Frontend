@@ -13,3 +13,4 @@ export { Avatar, AvatarImage, AvatarFallback } from "./Avatar/Avatar";
 export { AlertModal } from "./AlertModal/AlertModal";
 export { AlertModalGlobal } from "./AlertModal/AlertModalGlobal";
 export { Dropdown } from "./Dropdown/Dropdown";
+export { TextArea } from "./TextArea/TextArea";
