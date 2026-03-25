@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
 import { useAuthStore } from "@/features/auth/model/authStore";
 import { login } from "@/features/auth/api/login";
 import { Button, Input, Label } from "@/shared/ui";
@@ -24,16 +23,17 @@ function LoginSubmitButton({ disabled, isPending }: LoginSubmitButtonProps) {
 export default function LoginForm() {
   const router = useRouter();
   const setUser = useAuthStore((state) => state.setUser);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const isValid =
     email.trim() !== "" && emailRegex.test(email) && password.trim() !== "";
+
   const isSubmitDisabled = !isValid || isPending;
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -41,18 +41,19 @@ export default function LoginForm() {
 
     if (isSubmitDisabled) return;
 
-    setError("");
+    setErrorMessage(null);
     setIsPending(true);
 
     try {
       const data = await login({ email, password });
       setUser(data.user);
-      router.push("/");
+      router.replace("/");
     } catch (error) {
       if (error instanceof Error) {
-        setError(error.message);
+        setErrorMessage(error.message);
+        console.error(error);
       } else {
-        setError("로그인에 실패했습니다.");
+        setErrorMessage("로그인에 실패했습니다.");
       }
     } finally {
       setIsPending(false);
@@ -106,7 +107,9 @@ export default function LoginForm() {
               isPending={isPending}
             />
 
-            {error ? <p className="text-sm text-red-500">{error}</p> : null}
+            {errorMessage && (
+              <p className="text-sm text-red-500">{errorMessage}</p>
+            )}
           </div>
 
           <div className="flex flex-col gap-4">
