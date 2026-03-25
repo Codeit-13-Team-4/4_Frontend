@@ -1,12 +1,15 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+
 import RandomIcon from "@/public/auth/randomIcon.svg";
 import { signup } from "@/features/auth/api/signup";
-import { Button, Input, Label } from "@/shared/ui";
-import { getRandomName } from "@/shared/utils/randomName/randomName";
+import { Button, Input } from "@/shared/ui";
+import { Field, FieldError, FieldGroup, FieldLabel } from "@/shared/ui";
+import { getRandomName } from "@/shared/utils";
 
 interface SignupSubmitButtonProps {
   disabled: boolean;
@@ -75,8 +78,7 @@ export default function SignupForm() {
   const showPasswordConfirmError = isSubmitted || passwordConfirm.length > 0;
 
   const handleRandomNickname = () => {
-    const randomName = getRandomName();
-    setNickname(randomName);
+    setNickname(getRandomName());
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -100,7 +102,6 @@ export default function SignupForm() {
     } catch (error) {
       if (error instanceof Error) {
         setErrorMessage(error.message);
-        console.error(error);
       } else {
         setErrorMessage("회원가입에 실패했습니다.");
       }
@@ -110,7 +111,7 @@ export default function SignupForm() {
   };
 
   const getInputClassName = (hasError: boolean) =>
-    hasError ? "border-error" : "";
+    hasError ? "border border-error" : "";
 
   return (
     <div className="my-15 flex w-full max-w-142 flex-col items-center gap-2 rounded-[40px] bg-gray-800 px-14 pt-12 pb-11">
@@ -118,17 +119,15 @@ export default function SignupForm() {
         onSubmit={handleSubmit}
         className="flex w-full max-w-114 flex-col gap-6"
       >
-        <div className="flex flex-col gap-10">
-          <h1 className="text-center text-2xl font-bold text-gray-50">
-            회원가입
-          </h1>
-        </div>
+        <h1 className="text-center text-2xl font-bold text-gray-50">
+          회원가입
+        </h1>
 
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-col gap-1">
-            <Label htmlFor="nickname" className="text-sm font-medium">
-              닉네임 <span className="text-mint-500">*</span>
-            </Label>
+        <FieldGroup className="gap-2">
+          <Field className="gap-1">
+            <FieldLabel htmlFor="nickname" required className="text-gray-50">
+              닉네임
+            </FieldLabel>
 
             <div className="flex items-center gap-1">
               <Input
@@ -145,7 +144,7 @@ export default function SignupForm() {
               <button
                 type="button"
                 onClick={handleRandomNickname}
-                className="flex shrink-0 items-center gap-1 text-sm text-green-500"
+                className="text-mint-500 flex shrink-0 items-center gap-1 text-sm"
               >
                 <Image
                   src={RandomIcon}
@@ -157,15 +156,15 @@ export default function SignupForm() {
               </button>
             </div>
 
-            <p className="text-error min-h-5 text-sm">
+            <FieldError className="min-h-5">
               {showNicknameError ? nicknameError : ""}
-            </p>
-          </div>
+            </FieldError>
+          </Field>
 
-          <div className="flex flex-col gap-3">
-            <Label htmlFor="email" className="text-sm font-medium">
-              이메일 <span className="text-mint-500">*</span>
-            </Label>
+          <Field>
+            <FieldLabel htmlFor="email" required className="text-gray-50">
+              이메일
+            </FieldLabel>
 
             <Input
               id="email"
@@ -176,15 +175,15 @@ export default function SignupForm() {
               className={getInputClassName(showEmailError && !!emailError)}
             />
 
-            <p className="text-error min-h-5 text-sm">
+            <FieldError className="min-h-5">
               {showEmailError ? emailError : ""}
-            </p>
-          </div>
+            </FieldError>
+          </Field>
 
-          <div className="flex flex-col gap-3">
-            <Label htmlFor="password" className="text-sm font-medium">
-              비밀번호 <span className="text-mint-500">*</span>
-            </Label>
+          <Field>
+            <FieldLabel htmlFor="password" required className="text-gray-50">
+              비밀번호
+            </FieldLabel>
 
             <Input
               id="password"
@@ -197,15 +196,19 @@ export default function SignupForm() {
               )}
             />
 
-            <p className="text-error min-h-5 text-sm">
+            <FieldError className="min-h-5">
               {showPasswordError ? passwordError : ""}
-            </p>
-          </div>
+            </FieldError>
+          </Field>
 
-          <div className="flex flex-col gap-3">
-            <Label htmlFor="passwordConfirm" className="text-sm font-medium">
-              비밀번호 확인 <span className="text-mint-500">*</span>
-            </Label>
+          <Field>
+            <FieldLabel
+              htmlFor="passwordConfirm"
+              required
+              className="text-gray-50"
+            >
+              비밀번호 확인
+            </FieldLabel>
 
             <Input
               id="passwordConfirm"
@@ -218,21 +221,19 @@ export default function SignupForm() {
               )}
             />
 
-            <p className="text-error min-h-5 text-sm">
+            <FieldError className="min-h-5">
               {showPasswordConfirmError ? passwordConfirmError : ""}
-            </p>
-          </div>
-        </div>
+            </FieldError>
+          </Field>
+        </FieldGroup>
 
-        {errorMessage && <p className="text-error text-sm">{errorMessage}</p>}
+        {errorMessage && <FieldError>{errorMessage}</FieldError>}
 
         <div className="flex flex-col gap-10">
-          <div className="flex flex-col gap-2">
-            <SignupSubmitButton
-              disabled={isSubmitDisabled}
-              isPending={isPending}
-            />
-          </div>
+          <SignupSubmitButton
+            disabled={isSubmitDisabled}
+            isPending={isPending}
+          />
 
           <div className="flex flex-col gap-4">
             <div className="flex w-full items-center gap-4">
@@ -246,8 +247,8 @@ export default function SignupForm() {
             <div className="flex flex-col gap-3">
               <Button
                 type="button"
-                variant="outline"
-                className="w-full bg-white text-slate-800"
+                variant="default"
+                className="w-full border-none bg-white text-slate-800 hover:bg-slate-100"
               >
                 <div className="flex items-center gap-3">
                   <span>로고</span>
@@ -257,8 +258,8 @@ export default function SignupForm() {
 
               <Button
                 type="button"
-                variant="secondary"
-                className="w-full bg-[#FFEE01] text-slate-800 hover:bg-[#f5e400]"
+                variant="default"
+                className="w-full border-none bg-[#FFEE01] text-slate-800 hover:bg-[#f5e400]"
               >
                 <div className="flex items-center gap-3">
                   <span>로고</span>
@@ -268,8 +269,8 @@ export default function SignupForm() {
 
               <Button
                 type="button"
-                variant="outline"
-                className="w-full bg-white text-slate-800"
+                variant="default"
+                className="w-full border-none bg-white text-slate-800 hover:bg-slate-100"
               >
                 <div className="flex items-center gap-3">
                   <span>로고</span>
@@ -278,6 +279,7 @@ export default function SignupForm() {
               </Button>
             </div>
           </div>
+
           <p className="flex justify-center gap-1 text-sm text-gray-50">
             이미 회원이신가요?
             <Link
