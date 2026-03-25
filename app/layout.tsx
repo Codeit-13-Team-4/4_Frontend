@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import QueryProvider from "./providers/QueryProvider";
 import { AlertModalGlobal } from "@/shared/ui";
+import { cn } from "@/shared/utils";
 
 const pretendard = localFont({
   src: "../fonts/PretendardVariable.woff2",
@@ -15,8 +16,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={pretendard.className}>
-      <body>
+    <html lang="ko">
+      <body className={cn("", pretendard.className)}>
         <QueryProvider>
           {children}
           <AlertModalGlobal />
