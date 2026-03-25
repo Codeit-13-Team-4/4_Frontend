@@ -20,14 +20,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    htmlFor: "email",
-    className: "text-sm font-medium",
+    children: "닉네임",
   },
 };
 
-export const Title: Story = {
+export const Required: Story = {
   args: {
-    htmlFor: "title",
-    className: "text-lg font-bold",
+    children: "닉네임",
+    required: true,
   },
 };

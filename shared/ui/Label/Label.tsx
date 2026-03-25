@@ -1,25 +1,26 @@
 "use client";
 
 import * as LabelPrimitive from "@radix-ui/react-label";
-import type { ComponentPropsWithoutRef } from "react";
+import type { ComponentProps } from "react";
 
 import { cn } from "@/shared/utils";
 
-interface LabelProps extends Omit<
-  ComponentPropsWithoutRef<typeof LabelPrimitive.Root>,
-  "children"
-> {
-  htmlFor: string;
+interface LabelProps extends ComponentProps<typeof LabelPrimitive.Root> {
+  required?: boolean;
 }
 
-function Label({ htmlFor, className, ...props }: LabelProps) {
+function Label({ className, required, children, ...props }: LabelProps) {
   return (
     <LabelPrimitive.Root
-      htmlFor={htmlFor}
-      className={cn("text-black dark:text-white", className)}
+      data-slot="label"
+      className={cn(
+        "flex items-center gap-0.5 text-sm leading-none font-medium select-none",
+        className,
+      )}
       {...props}
     >
-      {htmlFor}
+      {children}
+      {required && <span className="text-mint-500">*</span>}
     </LabelPrimitive.Root>
   );
 }
