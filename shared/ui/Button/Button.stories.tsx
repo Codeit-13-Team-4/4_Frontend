@@ -21,7 +21,14 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["default", "primary", "dark", "destructive", "disabled"],
+      options: [
+        "default",
+        "primary",
+        "dark",
+        "destructive",
+        "disabled",
+        "ghost",
+      ],
     },
     size: {
       control: "select",
@@ -72,7 +79,14 @@ export const Disabled: Story = {
     children: "로그인",
     type: "submit",
     disabled: true,
-    variant: "disabled",
+    size: "md",
+  },
+};
+
+export const Ghost: Story = {
+  args: {
+    children: "더 보기",
+    variant: "ghost",
     size: "md",
   },
 };
