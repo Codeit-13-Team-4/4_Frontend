@@ -1,19 +1,33 @@
+import { cva, type VariantProps } from "class-variance-authority";
 import type { ComponentProps } from "react";
 
 import { cn } from "@/shared/utils";
 
-function Input({
-  type = "text",
-  className,
-  ...props
-}: ComponentProps<"input">) {
+const inputVariants = cva(
+  "w-full bg-gray-900 text-gray-50 outline-none placeholder:text-gray-400 font-normal",
+  {
+    variants: {
+      size: {
+        lg: "h-12 rounded-xl px-3 py-3 text-base",
+        sm: "h-10 rounded-[10px] px-3 py-2.5 text-sm",
+      },
+    },
+    defaultVariants: {
+      size: "lg",
+    },
+  },
+);
+
+interface InputProps
+  extends
+    Omit<ComponentProps<"input">, "size">,
+    VariantProps<typeof inputVariants> {}
+
+function Input({ type = "text", className, size, ...props }: InputProps) {
   return (
     <input
       type={type}
-      className={cn(
-        "h-12 w-full rounded-xl bg-gray-50 p-3 text-sm text-slate-800 outline-none placeholder:text-slate-500",
-        className,
-      )}
+      className={cn(inputVariants({ size }), className)}
       {...props}
     />
   );
