@@ -81,7 +81,7 @@ export default function SignupForm() {
     setNickname(getRandomName());
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitted(true);
 
