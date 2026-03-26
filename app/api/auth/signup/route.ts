@@ -6,7 +6,6 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    console.log("회원가입 요청 데이터:", `${BASE_URL}/auth/signup`);
     const response = await fetch(`${BASE_URL}/auth/signup`, {
       method: "POST",
       headers: {
