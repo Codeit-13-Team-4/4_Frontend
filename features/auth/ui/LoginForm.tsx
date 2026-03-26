@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -33,6 +34,7 @@ export default function LoginForm() {
   const [isPending, setIsPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -52,7 +54,9 @@ export default function LoginForm() {
   const shouldShowError = (value: string) => isSubmitted || value.length > 0;
 
   const getInputClassName = (hasError: boolean) =>
-    hasError ? "border border-error" : "";
+    hasError
+      ? "border border-error bg-gray-800"
+      : "border border-gray-700 bg-gray-800 ";
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -129,18 +133,36 @@ export default function LoginForm() {
             <FieldLabel htmlFor="password" required className="text-gray-50">
               비밀번호
             </FieldLabel>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              required
-              value={form.password}
-              onChange={handleInputChange}
-              placeholder="비밀번호를 입력해주세요"
-              className={getInputClassName(
-                shouldShowError(form.password) && !!passwordError,
-              )}
-            />
+
+            <div className="relative">
+              <Input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                required
+                value={form.password}
+                onChange={handleInputChange}
+                placeholder="비밀번호를 입력해주세요"
+                className={getInputClassName(
+                  shouldShowError(form.password) && !!passwordError,
+                )}
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute top-1/2 right-4 -translate-y-1/2"
+                aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
+              >
+                <Image
+                  src={showPassword ? "/eyeopen.svg" : "/eyeclose.svg"}
+                  alt={showPassword ? "비밀번호 보이기" : "비밀번호 숨기기"}
+                  width={24}
+                  height={24}
+                />
+              </button>
+            </div>
+
             <FieldError className="min-h-5">
               {shouldShowError(form.password) ? passwordError : ""}
             </FieldError>
@@ -153,6 +175,7 @@ export default function LoginForm() {
           <div className="flex flex-col gap-2">
             <Button
               type="submit"
+              variant="primary"
               disabled={isSubmitDisabled}
               className="w-full"
             >
