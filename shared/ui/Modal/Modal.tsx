@@ -1,107 +1,166 @@
-"use client";
-
-import * as Dialog from "@radix-ui/react-dialog";
-import type { PropsWithChildren } from "react";
-
 import { cn } from "@/shared/utils";
+import { Dialog } from "radix-ui";
+import { Button } from "@/shared/ui";
 
-interface ModalProps extends PropsWithChildren {
-  isOpen: boolean;
-  onClose: () => void;
+function Modal({ ...props }: React.ComponentProps<typeof Dialog.Root>) {
+  return <Dialog.Root data-slot="dialog" {...props} />;
 }
 
-interface ModalSectionProps extends PropsWithChildren {
-  className?: string;
+function ModalTrigger({
+  ...props
+}: React.ComponentProps<typeof Dialog.Trigger>) {
+  return <Dialog.Trigger {...props} />;
 }
 
-interface ModalContentProps extends PropsWithChildren {
-  showCloseButton?: boolean;
-  className?: string;
+function ModalPortal({ ...props }: React.ComponentProps<typeof Dialog.Portal>) {
+  return <Dialog.Portal {...props} />;
 }
 
-function ModalOverlay({ className }: ModalSectionProps) {
+function ModalOverlay({
+  className,
+  ...props
+}: React.ComponentProps<typeof Dialog.Overlay>) {
   return (
     <Dialog.Overlay
-      className={cn("fixed inset-0 z-50 bg-black/50", className)}
+      className={cn(
+        "data-open:animate-overlay-in data-closed:animate-overlay-out fixed inset-0 z-50 bg-black/50",
+        className,
+      )}
+      {...props}
     />
   );
 }
 
-function ModalTitle({ children, className }: ModalSectionProps) {
-  return (
-    <Dialog.Title
-      className={cn(
-        "text-2xl font-semibold text-black dark:text-white",
-        className,
-      )}
-    >
-      {children}
-    </Dialog.Title>
-  );
+function ModalClose({ ...props }: React.ComponentProps<typeof Dialog.Close>) {
+  return <Dialog.Close {...props} />;
 }
 
-function ModalDescription({ children, className }: ModalSectionProps) {
-  return (
-    <Dialog.Description
-      className={cn("mt-2 text-sm text-gray-500 dark:text-gray-400", className)}
-    >
-      {children}
-    </Dialog.Description>
-  );
-}
-
-function ModalBody({ children, className }: ModalSectionProps) {
-  return <div className={cn("mt-6", className)}>{children}</div>;
-}
-
-function ModalCloseBtn({ className }: ModalSectionProps) {
+function ModalCloseIcon({
+  className,
+  ...props
+}: React.ComponentProps<typeof Dialog.Close>) {
   return (
     <Dialog.Close asChild>
-      <button
-        type="button"
-        aria-label="모달 닫기"
+      <Button
+        variant="ghost"
+        size="sm"
         className={cn(
-          "absolute top-5 right-10 text-2xl text-gray-400 transition hover:text-gray-600 dark:hover:text-gray-200",
+          "ml-auto h-6 p-0 text-gray-400 hover:bg-gray-700 hover:text-white",
           className,
         )}
+        {...props}
       >
-        ×
-      </button>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      </Button>
     </Dialog.Close>
   );
 }
 
 function ModalContent({
-  children,
   className,
-  showCloseButton,
-}: ModalContentProps) {
+  children,
+  ...props
+}: React.ComponentProps<typeof Dialog.Content>) {
   return (
-    <Dialog.Content
-      className={cn(
-        "fixed top-1/2 left-1/2 z-50 w-[calc(100%-32px)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-white p-8 shadow-xl outline-none dark:bg-black",
-        className,
-      )}
-    >
-      {showCloseButton ? <ModalCloseBtn /> : null}
-      {children}
-    </Dialog.Content>
+    <ModalPortal>
+      <ModalOverlay />
+      <Dialog.Content
+        className={cn(
+          "data-open:animate-overlay-in data-closed:animate-overlay-out fixed top-1/2 left-1/2 z-50 flex max-h-[calc(100vh-2rem)] w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col gap-6 rounded-[40px] bg-gray-800 p-12 text-gray-400 shadow-xl duration-100 outline-none sm:max-w-136",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </Dialog.Content>
+    </ModalPortal>
   );
 }
 
-const Modal = ({ children, isOpen, onClose }: ModalProps) => {
-  return (
-    <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <Dialog.Portal>{children}</Dialog.Portal>
-    </Dialog.Root>
-  );
-};
+function ModalHeader({ className, ...props }: React.ComponentProps<"div">) {
+  return <div className={cn("flex flex-col gap-4", className)} {...props} />;
+}
 
+function ModalBody({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        "scrollbar-hide flex max-h-[50vh] flex-col gap-6 overflow-y-auto",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+function ModalFooter({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn("flex flex-col gap-4 sm:flex-row", className)}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+}
+
+function ModalTitle({
+  className,
+  ...props
+}: React.ComponentProps<typeof Dialog.Title>) {
+  return (
+    <Dialog.Title
+      className={cn(
+        "text-base font-medium text-gray-50 sm:text-2xl sm:font-semibold",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+function ModalDescription({
+  className,
+  ...props
+}: React.ComponentProps<typeof Dialog.Description>) {
+  return (
+    <Dialog.Description
+      className={cn(
+        "text-base font-medium text-gray-400 sm:text-lg",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+Modal.Trigger = ModalTrigger;
+Modal.Portal = ModalPortal;
+Modal.Overlay = ModalOverlay;
+Modal.Close = ModalClose;
+Modal.CloseIcon = ModalCloseIcon;
+Modal.Content = ModalContent;
+Modal.Header = ModalHeader;
+Modal.Body = ModalBody;
+Modal.Footer = ModalFooter;
 Modal.Title = ModalTitle;
 Modal.Description = ModalDescription;
-Modal.Body = ModalBody;
-Modal.Overlay = ModalOverlay;
-Modal.Content = ModalContent;
-Modal.CloseBtn = ModalCloseBtn;
 
 export { Modal };
