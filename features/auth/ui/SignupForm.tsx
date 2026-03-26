@@ -4,8 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-import RandomIcon from "@/public/auth/randomIcon.svg";
 import { signup } from "@/features/auth/api/signup";
 import { Button, Input } from "@/shared/ui";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/shared/ui";
@@ -147,7 +145,7 @@ export default function SignupForm() {
                 className="text-mint-500 flex shrink-0 items-center gap-1 text-sm"
               >
                 <Image
-                  src={RandomIcon}
+                  src="/auth/randomIcon.svg"
                   alt="랜덤설정 아이콘"
                   width={24}
                   height={24}
