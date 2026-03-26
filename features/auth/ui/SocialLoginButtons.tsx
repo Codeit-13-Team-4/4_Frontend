@@ -18,20 +18,20 @@ interface SocialButton {
 const SOCIAL_BUTTONS: SocialButton[] = [
   {
     provider: "google",
-    logo: "/google.svg",
+    logo: "/auth/google.svg",
     label: "구글로 계속하기",
     className: "w-full border-none bg-white text-slate-800 hover:bg-slate-100",
   },
   {
     provider: "kakao",
-    logo: "/kakao.svg",
+    logo: "/auth/kakao.svg",
     label: "카카오로 계속하기",
     className:
       "w-full border-none bg-[#FFEE01] text-slate-800 hover:bg-[#f5e400]",
   },
   {
     provider: "github",
-    logo: "/github.svg",
+    logo: "/auth/github.svg",
     label: "Github로 계속하기",
     className: "w-full border-none bg-white text-slate-800 hover:bg-slate-100",
   },
