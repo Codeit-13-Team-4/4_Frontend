@@ -1,6 +1,6 @@
 import { cn } from "@/shared/utils";
 import { Dialog } from "radix-ui";
-import { Button } from "@/shared/ui";
+import { Button, ScrollArea } from "@/shared/ui";
 
 function Modal({ ...props }: React.ComponentProps<typeof Dialog.Root>) {
   return <Dialog.Root data-slot="dialog" {...props} />;
@@ -23,7 +23,7 @@ function ModalOverlay({
   return (
     <Dialog.Overlay
       className={cn(
-        "data-open:animate-overlay-in data-closed:animate-overlay-out fixed inset-0 z-50 bg-black/50",
+        "data-open:animate-overlay-in data-closed:animate-overlay-out fixed inset-0 isolate z-50 bg-black/50",
         className,
       )}
       {...props}
@@ -79,7 +79,7 @@ function ModalContent({
       <ModalOverlay />
       <Dialog.Content
         className={cn(
-          "data-open:animate-overlay-in data-closed:animate-overlay-out fixed top-1/2 left-1/2 z-50 flex max-h-[calc(100vh-2rem)] w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col gap-6 rounded-[40px] bg-gray-800 p-12 text-gray-400 shadow-xl duration-100 outline-none sm:max-w-136",
+          "data-open:animate-overlay-in data-closed:animate-overlay-out fixed top-1/2 left-1/2 z-50 grid max-h-[calc(100vh-2rem)] w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 overflow-hidden rounded-[40px] bg-gray-800 p-12 text-gray-400 shadow-xl duration-100 outline-none sm:max-w-136",
           className,
         )}
         {...props}
@@ -91,18 +91,19 @@ function ModalContent({
 }
 
 function ModalHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return <div className={cn("flex flex-col gap-4", className)} {...props} />;
+  return <div className={cn("flex flex-col gap-2", className)} {...props} />;
 }
 
-function ModalBody({ className, ...props }: React.ComponentProps<"div">) {
+function ModalBody({ className, children }: React.ComponentProps<"div">) {
   return (
-    <div
-      className={cn(
-        "scrollbar-hide flex max-h-[50vh] flex-col gap-6 overflow-y-auto",
-        className,
-      )}
-      {...props}
-    />
+    <ScrollArea className="max-h-[50vh]" type="always">
+      <div
+        data-slot="dialog-body"
+        className={cn("flex flex-col gap-6", className)}
+      >
+        {children}
+      </div>
+    </ScrollArea>
   );
 }
 
@@ -112,10 +113,7 @@ function ModalFooter({
   ...props
 }: React.ComponentProps<"div">) {
   return (
-    <div
-      className={cn("flex flex-col gap-4 sm:flex-row", className)}
-      {...props}
-    >
+    <div className={cn("flex flex-row gap-4", className)} {...props}>
       {children}
     </div>
   );
