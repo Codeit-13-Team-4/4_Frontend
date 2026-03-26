@@ -53,6 +53,8 @@
   --background: #ffffff;
   --foreground: #171717;
 
+  --border-color-default: #334155;
+
   --color-mint-500: #00d7a0;
   --color-mint-700: #00a67b;
   --color-blue-500: #38c4ff;
@@ -74,8 +76,13 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  --color-border-default: #334155;
+
   --color-mint-500: #00d7a0;
   --color-mint-700: #00a67b;
+  --color-mint-900: #004d39;
+
   --color-blue-500: #38c4ff;
   --color-gradient-devup: linear-gradient(to bottom right, #00d7a0, #38c4ff);
 
