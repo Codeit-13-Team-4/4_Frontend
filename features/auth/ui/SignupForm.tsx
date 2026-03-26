@@ -9,31 +9,22 @@ import { Button, Input } from "@/shared/ui";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/shared/ui";
 import { getRandomName } from "@/shared/utils";
 
-interface SignupSubmitButtonProps {
-  disabled: boolean;
-  isPending: boolean;
-}
-
-function SignupSubmitButton({ disabled, isPending }: SignupSubmitButtonProps) {
-  return (
-    <Button
-      type="submit"
-      variant="primary"
-      disabled={disabled}
-      className="w-full"
-    >
-      {isPending ? "회원가입 중..." : "회원가입"}
-    </Button>
-  );
+interface SignupFormValues {
+  nickname: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
 }
 
 export default function SignupForm() {
   const router = useRouter();
 
-  const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [form, setForm] = useState<SignupFormValues>({
+    nickname: "",
+    email: "",
+    password: "",
+    passwordConfirm: "",
+  });
 
   const [isPending, setIsPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -42,26 +33,26 @@ export default function SignupForm() {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const nicknameError =
-    nickname.trim() === ""
+    form.nickname.trim() === ""
       ? "닉네임을 입력해주세요."
-      : nickname.trim().length < 2 || nickname.trim().length > 10
+      : form.nickname.trim().length < 2 || form.nickname.trim().length > 10
         ? "닉네임은 2자 이상, 10자 이하로 입력해주세요."
         : "";
 
   const emailError =
-    email.trim() === ""
+    form.email.trim() === ""
       ? "이메일을 입력해주세요."
-      : !emailRegex.test(email)
+      : !emailRegex.test(form.email)
         ? "올바른 이메일 형식을 입력해주세요."
         : "";
 
   const passwordError =
-    password.trim() === "" ? "비밀번호를 입력해주세요." : "";
+    form.password.trim() === "" ? "비밀번호를 입력해주세요." : "";
 
   const passwordConfirmError =
-    passwordConfirm.trim() === ""
+    form.passwordConfirm.trim() === ""
       ? "비밀번호를 입력해주세요."
-      : password !== passwordConfirm
+      : form.password !== form.passwordConfirm
         ? "비밀번호가 일치하지 않습니다."
         : "";
 
@@ -70,13 +61,26 @@ export default function SignupForm() {
 
   const isSubmitDisabled = !isValid || isPending;
 
-  const showNicknameError = isSubmitted || nickname.length > 0;
-  const showEmailError = isSubmitted || email.length > 0;
-  const showPasswordError = isSubmitted || password.length > 0;
-  const showPasswordConfirmError = isSubmitted || passwordConfirm.length > 0;
+  const shouldShowError = (value: string) => isSubmitted || value.length > 0;
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    if (errorMessage) {
+      setErrorMessage(null);
+    }
+  };
 
   const handleRandomNickname = () => {
-    setNickname(getRandomName());
+    setForm((prev) => ({
+      ...prev,
+      nickname: getRandomName(),
+    }));
   };
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -90,10 +94,10 @@ export default function SignupForm() {
 
     try {
       await signup({
-        email,
-        nickname,
-        password,
-        passwordConfirm,
+        email: form.email,
+        nickname: form.nickname,
+        password: form.password,
+        passwordConfirm: form.passwordConfirm,
       });
 
       router.replace("/login");
@@ -130,12 +134,13 @@ export default function SignupForm() {
             <div className="flex items-center gap-1">
               <Input
                 id="nickname"
+                name="nickname"
                 type="text"
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
+                value={form.nickname}
+                onChange={handleInputChange}
                 placeholder="닉네임을 입력해주세요"
                 className={getInputClassName(
-                  showNicknameError && !!nicknameError,
+                  shouldShowError(form.nickname) && !!nicknameError,
                 )}
               />
 
@@ -155,7 +160,7 @@ export default function SignupForm() {
             </div>
 
             <FieldError className="min-h-5">
-              {showNicknameError ? nicknameError : ""}
+              {shouldShowError(form.nickname) ? nicknameError : ""}
             </FieldError>
           </Field>
 
@@ -166,15 +171,18 @@ export default function SignupForm() {
 
             <Input
               id="email"
+              name="email"
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={form.email}
+              onChange={handleInputChange}
               placeholder="이메일을 입력해주세요"
-              className={getInputClassName(showEmailError && !!emailError)}
+              className={getInputClassName(
+                shouldShowError(form.email) && !!emailError,
+              )}
             />
 
             <FieldError className="min-h-5">
-              {showEmailError ? emailError : ""}
+              {shouldShowError(form.email) ? emailError : ""}
             </FieldError>
           </Field>
 
@@ -185,17 +193,18 @@ export default function SignupForm() {
 
             <Input
               id="password"
+              name="password"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={form.password}
+              onChange={handleInputChange}
               placeholder="비밀번호를 입력해주세요"
               className={getInputClassName(
-                showPasswordError && !!passwordError,
+                shouldShowError(form.password) && !!passwordError,
               )}
             />
 
             <FieldError className="min-h-5">
-              {showPasswordError ? passwordError : ""}
+              {shouldShowError(form.password) ? passwordError : ""}
             </FieldError>
           </Field>
 
@@ -210,17 +219,20 @@ export default function SignupForm() {
 
             <Input
               id="passwordConfirm"
+              name="passwordConfirm"
               type="password"
-              value={passwordConfirm}
-              onChange={(e) => setPasswordConfirm(e.target.value)}
+              value={form.passwordConfirm}
+              onChange={handleInputChange}
               placeholder="비밀번호를 입력해주세요"
               className={getInputClassName(
-                showPasswordConfirmError && !!passwordConfirmError,
+                shouldShowError(form.passwordConfirm) && !!passwordConfirmError,
               )}
             />
 
             <FieldError className="min-h-5">
-              {showPasswordConfirmError ? passwordConfirmError : ""}
+              {shouldShowError(form.passwordConfirm)
+                ? passwordConfirmError
+                : ""}
             </FieldError>
           </Field>
         </FieldGroup>
@@ -228,11 +240,14 @@ export default function SignupForm() {
         {errorMessage && <FieldError>{errorMessage}</FieldError>}
 
         <div className="flex flex-col gap-10">
-          <SignupSubmitButton
+          <Button
+            type="submit"
+            variant="primary"
             disabled={isSubmitDisabled}
-            isPending={isPending}
-          />
-
+            className="w-full"
+          >
+            {isPending ? "회원가입 중..." : "회원가입"}
+          </Button>
           <div className="flex flex-col gap-4">
             <div className="flex w-full items-center gap-4">
               <div className="h-px flex-1 bg-slate-300" />
