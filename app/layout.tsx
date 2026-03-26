@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import QueryProvider from "./providers/QueryProvider";
+import AuthProvider from "@/features/auth/provider/AuthProvider";
 import { AlertModalGlobal } from "@/shared/ui";
 import { cn } from "@/shared/utils";
 
@@ -19,8 +20,10 @@ export default function RootLayout({
     <html lang="ko">
       <body className={cn("", pretendard.className)}>
         <QueryProvider>
-          {children}
-          <AlertModalGlobal />
+          <AuthProvider>
+            {children}
+            <AlertModalGlobal />
+          </AuthProvider>
         </QueryProvider>
       </body>
     </html>
