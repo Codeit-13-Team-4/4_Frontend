@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useAuthStore } from "@/features/auth/model/authStore";
+
 import { login } from "@/features/auth/api/login";
+import { useAuthStore } from "@/features/auth/model/authStore";
+import SocialLoginButtons from "@/features/auth/ui/SocialLoginButtons";
 import {
   Button,
   Field,
@@ -13,26 +15,20 @@ import {
   FieldLabel,
   Input,
 } from "@/shared/ui";
-import SocialLoginButtons from "@/features/auth/ui/SocialLoginButtons";
 
-interface LoginSubmitButtonProps {
-  disabled: boolean;
-  isPending: boolean;
-}
-
-function LoginSubmitButton({ disabled, isPending }: LoginSubmitButtonProps) {
-  return (
-    <Button type="submit" disabled={disabled} className="w-full">
-      {isPending ? "로그인 중..." : "로그인"}
-    </Button>
-  );
+interface LoginFormValues {
+  email: string;
+  password: string;
 }
 
 export default function LoginForm() {
   const router = useRouter();
   const setUser = useAuthStore((state) => state.setUser);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  const [form, setForm] = useState<LoginFormValues>({
+    email: "",
+    password: "",
+  });
 
   const [isPending, setIsPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -41,25 +37,37 @@ export default function LoginForm() {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const emailError =
-    email.trim() === ""
+    form.email.trim() === ""
       ? "이메일을 입력해주세요."
-      : !emailRegex.test(email)
+      : !emailRegex.test(form.email)
         ? "이메일 형식이 올바르지 않습니다."
         : "";
 
   const passwordError =
-    password.trim() === "" ? "비밀번호를 입력해주세요." : "";
+    form.password.trim() === "" ? "비밀번호를 입력해주세요." : "";
 
   const isValid = !emailError && !passwordError;
   const isSubmitDisabled = !isValid || isPending;
 
-  const showEmailError = isSubmitted || email.length > 0;
-  const showPasswordError = isSubmitted || password.length > 0;
+  const shouldShowError = (value: string) => isSubmitted || value.length > 0;
 
   const getInputClassName = (hasError: boolean) =>
     hasError ? "border border-error" : "";
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    if (errorMessage) {
+      setErrorMessage(null);
+    }
+  };
+
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitted(true);
 
@@ -70,8 +78,8 @@ export default function LoginForm() {
 
     try {
       const data = await login({
-        email,
-        password,
+        email: form.email,
+        password: form.password,
       });
 
       setUser(data.user);
@@ -102,15 +110,18 @@ export default function LoginForm() {
             </FieldLabel>
             <Input
               id="email"
+              name="email"
               type="email"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={form.email}
+              onChange={handleInputChange}
               placeholder="이메일을 입력해주세요"
-              className={getInputClassName(showEmailError && !!emailError)}
+              className={getInputClassName(
+                shouldShowError(form.email) && !!emailError,
+              )}
             />
             <FieldError className="min-h-5">
-              {showEmailError ? emailError : ""}
+              {shouldShowError(form.email) ? emailError : ""}
             </FieldError>
           </Field>
 
@@ -120,17 +131,18 @@ export default function LoginForm() {
             </FieldLabel>
             <Input
               id="password"
+              name="password"
               type="password"
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={form.password}
+              onChange={handleInputChange}
               placeholder="비밀번호를 입력해주세요"
               className={getInputClassName(
-                showPasswordError && !!passwordError,
+                shouldShowError(form.password) && !!passwordError,
               )}
             />
             <FieldError className="min-h-5">
-              {showPasswordError ? passwordError : ""}
+              {shouldShowError(form.password) ? passwordError : ""}
             </FieldError>
           </Field>
         </FieldGroup>
@@ -139,10 +151,13 @@ export default function LoginForm() {
 
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-2">
-            <LoginSubmitButton
+            <Button
+              type="submit"
               disabled={isSubmitDisabled}
-              isPending={isPending}
-            />
+              className="w-full"
+            >
+              {isPending ? "로그인 중..." : "로그인"}
+            </Button>
 
             <p className="flex justify-center gap-1 text-sm text-gray-50">
               서비스가 처음이신가요?
@@ -154,6 +169,7 @@ export default function LoginForm() {
               </Link>
             </p>
           </div>
+
           <SocialLoginButtons />
         </div>
       </form>
