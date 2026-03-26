@@ -2,7 +2,6 @@ interface SignupRequest {
   email: string;
   nickname: string;
   password: string;
-  passwordConfirm: string;
 }
 
 interface SignupResponse {
@@ -14,7 +13,6 @@ export async function signup({
   email,
   nickname,
   password,
-  passwordConfirm,
 }: SignupRequest): Promise<SignupResponse> {
   const response = await fetch("/api/auth/signup", {
     method: "POST",
@@ -25,7 +23,6 @@ export async function signup({
       email: email.trim(),
       nickname: nickname.trim(),
       password: password.trim(),
-      passwordConfirm: passwordConfirm.trim(),
     }),
   });
 
