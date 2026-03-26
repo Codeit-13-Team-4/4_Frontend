@@ -14,8 +14,6 @@ export async function GET() {
         { status: 401 },
       );
     }
-    console.log(accessToken);
-
     const response = await fetch(`${BASE_URL}/users`, {
       method: "GET",
       headers: {
@@ -23,18 +21,13 @@ export async function GET() {
       },
       cache: "no-store",
     });
-    console.log("??");
     const data = await response.json();
-    console.log("???");
     if (!response.ok) {
-      console.log("?!");
-      console.log(data);
       return NextResponse.json(
         { message: data.message || "사용자 정보 조회에 실패했습니다." },
         { status: response.status },
       );
     }
-    console.log("????");
     return NextResponse.json(data, { status: 200 });
   } catch {
     return NextResponse.json(

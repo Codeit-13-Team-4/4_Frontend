@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import {
   getSocialLoginUrl,
@@ -11,22 +12,26 @@ interface SocialButton {
   provider: SocialProvider;
   label: string;
   className: string;
+  logo: string;
 }
 
 const SOCIAL_BUTTONS: SocialButton[] = [
   {
     provider: "google",
+    logo: "/google.svg",
     label: "구글로 계속하기",
     className: "w-full border-none bg-white text-slate-800 hover:bg-slate-100",
   },
   {
     provider: "kakao",
+    logo: "/kakao.svg",
     label: "카카오로 계속하기",
     className:
       "w-full border-none bg-[#FFEE01] text-slate-800 hover:bg-[#f5e400]",
   },
   {
     provider: "github",
+    logo: "/github.svg",
     label: "Github로 계속하기",
     className: "w-full border-none bg-white text-slate-800 hover:bg-slate-100",
   },
@@ -55,7 +60,7 @@ export default function SocialLoginButtons() {
       </div>
 
       <div className="flex flex-col gap-3">
-        {SOCIAL_BUTTONS.map(({ provider, label, className }) => (
+        {SOCIAL_BUTTONS.map(({ provider, label, className, logo }) => (
           <Button
             key={provider}
             type="button"
@@ -64,8 +69,13 @@ export default function SocialLoginButtons() {
             disabled={isPending}
             onClick={() => handleSocialLogin(provider)}
           >
-            <div className="flex items-center gap-3">
-              <span>로고</span>
+            <div className="flex items-center justify-center gap-3">
+              <Image
+                src={logo}
+                alt={`${provider} 로고`}
+                width={20}
+                height={20}
+              />
               <span>{label}</span>
             </div>
           </Button>
