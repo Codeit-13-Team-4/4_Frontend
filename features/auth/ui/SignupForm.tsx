@@ -220,9 +220,7 @@ export default function SignupForm() {
               >
                 <Image
                   src={
-                    showPasswordConfirm
-                      ? "/auth/eyeopen.svg"
-                      : "/auth/eyeclose.svg"
+                    showPassword ? "/auth/eyeopen.svg" : "/auth/eyeclose.svg"
                   }
                   alt={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
                   width={20}
