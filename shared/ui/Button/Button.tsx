@@ -1,17 +1,22 @@
 import { cn } from "@/shared/utils";
 import type { ComponentProps, ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import { Slot } from "radix-ui";
 
 const buttonVariants = cva(
-  "flex items-center justify-center gap-2.5 disabled:cursor-not-allowed disabled:opacity-50 hover:cursor-pointer",
+  "flex items-center justify-center gap-2.5 disabled:cursor-not-allowed disabled:opacity-50 hover:cursor-pointer transition-colors duration-200",
   {
     variants: {
       variant: {
-        default: "border border-gray-200 text-gray-600 bg-gray-50",
-        primary: "bg-mint-500 text-gray-50",
-        dark: "bg-gray-800 text-gray-400 border border-gray-600",
-        destructive: "text-gray-50 border border-error bg-error",
-        disabled: "bg-gray-600 text-gray-300",
+        default:
+          "border border-gray-200 text-gray-600 bg-gray-50 hover:bg-gray-200 active:text-gray-800 active:border-gray-200 active:bg-gray-400",
+        primary:
+          "bg-mint-500 text-gray-50 hover:bg-mint-700 active:bg-mint-900",
+        dark: "bg-gray-800 text-gray-400 border border-gray-600 hover:bg-gray-700 active:bg-gray-900",
+        destructive:
+          "text-gray-50 border border-error bg-error hover:bg-red-400 active:bg-red-700",
+        disabled: "bg-gray-300 text-gray-600",
+        ghost: "text-gray-600 hover:bg-gray-100 hover:text-gray-900",
       },
       size: {
         sm: "h-10 px-4 py-2.5 text-sm rounded-[10px] font-semibold",
@@ -29,6 +34,7 @@ const buttonVariants = cva(
 interface ButtonProps
   extends ComponentProps<"button">, VariantProps<typeof buttonVariants> {
   children: ReactNode;
+  asChild?: boolean;
 }
 
 function Button({
@@ -37,16 +43,24 @@ function Button({
   className,
   variant,
   size,
+  disabled,
+  asChild = false,
   ...props
 }: ButtonProps) {
+  const Component = asChild ? Slot.Root : "button";
+
   return (
-    <button
+    <Component
       type={type}
-      className={cn(buttonVariants({ variant, size }), className)}
+      className={cn(
+        buttonVariants({ variant: disabled ? "disabled" : variant, size }),
+        className,
+      )}
+      disabled={disabled}
       {...props}
     >
       {children}
-    </button>
+    </Component>
   );
 }
 

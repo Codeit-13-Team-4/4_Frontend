@@ -5,9 +5,18 @@ import { Input } from "./Input";
 const meta: Meta<typeof Input> = {
   title: "shared/ui/Input",
   component: Input,
+  args: {
+    size: "lg",
+  },
+  argTypes: {
+    size: {
+      control: "radio",
+      options: ["lg", "sm"],
+    },
+  },
   decorators: [
     (Story) => (
-      <div className="flex min-h-screen items-center justify-center bg-white text-black">
+      <div className="flex min-h-screen items-center justify-center">
         <Story />
       </div>
     ),
@@ -18,30 +27,18 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Email: Story = {
+export const Large: Story = {
   args: {
-    type: "email",
-    placeholder: "이메일을 입력해주세요",
+    size: "lg",
+    placeholder: "lg 사이즈 입력창입니다",
+    className: "w-[456px]",
   },
 };
 
-export const Password: Story = {
+export const Small: Story = {
   args: {
-    type: "password",
-    placeholder: "비밀번호를 입력해주세요",
+    size: "sm",
+    placeholder: "sm 사이즈 입력창입니다",
+    className: "w-[311px]",
   },
 };
-export const Nickname: Story = {
-  args: {
-    type: "text",
-    placeholder: "닉네임을 입력해주세요",
-    className: "w-[350px]",
-  },
-};
-export const Disabled: Story = {
-  args: {
-    type: "text",
-    placeholder: "비활성화된 입력창입니다",
-    disabled: true,
-  },
-}; // ex) 로딩 중, 서버 처리 중일 때 사용
