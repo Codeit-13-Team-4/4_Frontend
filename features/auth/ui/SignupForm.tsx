@@ -219,7 +219,11 @@ export default function SignupForm() {
                 aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
               >
                 <Image
-                  src={showPassword ? "/eyeopen.svg" : "/eyeclose.svg"}
+                  src={
+                    showPasswordConfirm
+                      ? "/auth/eyeopen.svg"
+                      : "/auth/eyeclose.svg"
+                  }
                   alt={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
                   width={20}
                   height={20}
@@ -264,7 +268,11 @@ export default function SignupForm() {
                 }
               >
                 <Image
-                  src={showPasswordConfirm ? "/eyeopen.svg" : "/eyeclose.svg"}
+                  src={
+                    showPasswordConfirm
+                      ? "/auth/eyeopen.svg"
+                      : "/auth/eyeclose.svg"
+                  }
                   alt={
                     showPasswordConfirm ? "비밀번호 숨기기" : "비밀번호 보기"
                   }
