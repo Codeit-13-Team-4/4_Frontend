@@ -5,8 +5,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { signup } from "@/features/auth/api/signup";
-import { Button, Input } from "@/shared/ui";
-import { Field, FieldError, FieldGroup, FieldLabel } from "@/shared/ui";
+import SocialLoginButtons from "@/features/auth/ui/SocialLoginButtons";
+import {
+  Button,
+  Input,
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/shared/ui";
 import { getRandomName } from "@/shared/utils";
 
 interface SignupFormValues {
@@ -29,6 +36,8 @@ export default function SignupForm() {
   const [isPending, setIsPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -190,17 +199,33 @@ export default function SignupForm() {
               비밀번호
             </FieldLabel>
 
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              value={form.password}
-              onChange={handleInputChange}
-              placeholder="비밀번호를 입력해주세요"
-              className={getInputClassName(
-                shouldShowError(form.password) && !!passwordError,
-              )}
-            />
+            <div className="relative">
+              <Input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                value={form.password}
+                onChange={handleInputChange}
+                placeholder="비밀번호를 입력해주세요"
+                className={getInputClassName(
+                  shouldShowError(form.password) && !!passwordError,
+                )}
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute top-1/2 right-4 -translate-y-1/2"
+                aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
+              >
+                <Image
+                  src={showPassword ? "/eyeopen.svg" : "/eyeclose.svg"}
+                  alt={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
+                  width={20}
+                  height={20}
+                />
+              </button>
+            </div>
 
             <FieldError className="min-h-5">
               {shouldShowError(form.password) ? passwordError : ""}
@@ -216,17 +241,38 @@ export default function SignupForm() {
               비밀번호 확인
             </FieldLabel>
 
-            <Input
-              id="passwordConfirm"
-              name="passwordConfirm"
-              type="password"
-              value={form.passwordConfirm}
-              onChange={handleInputChange}
-              placeholder="비밀번호를 입력해주세요"
-              className={getInputClassName(
-                shouldShowError(form.passwordConfirm) && !!passwordConfirmError,
-              )}
-            />
+            <div className="relative">
+              <Input
+                id="passwordConfirm"
+                name="passwordConfirm"
+                type={showPasswordConfirm ? "text" : "password"}
+                value={form.passwordConfirm}
+                onChange={handleInputChange}
+                placeholder="비밀번호를 입력해주세요"
+                className={getInputClassName(
+                  shouldShowError(form.passwordConfirm) &&
+                    !!passwordConfirmError,
+                )}
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPasswordConfirm((prev) => !prev)}
+                className="absolute top-1/2 right-4 -translate-y-1/2"
+                aria-label={
+                  showPasswordConfirm ? "비밀번호 숨기기" : "비밀번호 보기"
+                }
+              >
+                <Image
+                  src={showPasswordConfirm ? "/eyeopen.svg" : "/eyeclose.svg"}
+                  alt={
+                    showPasswordConfirm ? "비밀번호 숨기기" : "비밀번호 보기"
+                  }
+                  width={20}
+                  height={20}
+                />
+              </button>
+            </div>
 
             <FieldError className="min-h-5">
               {shouldShowError(form.passwordConfirm)
@@ -247,50 +293,7 @@ export default function SignupForm() {
           >
             {isPending ? "회원가입 중..." : "회원가입"}
           </Button>
-          <div className="flex flex-col gap-4">
-            <div className="flex w-full items-center gap-4">
-              <div className="h-px flex-1 bg-slate-300" />
-              <span className="shrink-0 text-sm text-slate-500">
-                SNS 계정으로 로그인
-              </span>
-              <div className="h-px flex-1 bg-slate-300" />
-            </div>
-
-            <div className="flex flex-col gap-3">
-              <Button
-                type="button"
-                variant="default"
-                className="w-full border-none bg-white text-slate-800 hover:bg-slate-100"
-              >
-                <div className="flex items-center gap-3">
-                  <span>로고</span>
-                  <span>구글로 계속하기</span>
-                </div>
-              </Button>
-
-              <Button
-                type="button"
-                variant="default"
-                className="w-full border-none bg-[#FFEE01] text-slate-800 hover:bg-[#f5e400]"
-              >
-                <div className="flex items-center gap-3">
-                  <span>로고</span>
-                  <span>카카오로 계속하기</span>
-                </div>
-              </Button>
-
-              <Button
-                type="button"
-                variant="default"
-                className="w-full border-none bg-white text-slate-800 hover:bg-slate-100"
-              >
-                <div className="flex items-center gap-3">
-                  <span>로고</span>
-                  <span>Github로 계속하기</span>
-                </div>
-              </Button>
-            </div>
-          </div>
+          <SocialLoginButtons />
 
           <p className="flex justify-center gap-1 text-sm text-gray-50">
             이미 회원이신가요?
