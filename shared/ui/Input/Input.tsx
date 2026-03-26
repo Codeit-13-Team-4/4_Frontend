@@ -4,7 +4,7 @@ import type { ComponentProps } from "react";
 import { cn } from "@/shared/utils";
 
 const inputVariants = cva(
-  "w-full bg-gray-900 text-gray-50 outline-none placeholder:text-gray-400 font-normal",
+  "w-full bg-gray-800 text-gray-50 outline-none placeholder:text-gray-400 font-normal border border-border-default",
   {
     variants: {
       size: {
