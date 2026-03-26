@@ -97,7 +97,6 @@ export default function SignupForm() {
         email: form.email,
         nickname: form.nickname,
         password: form.password,
-        passwordConfirm: form.passwordConfirm,
       });
 
       router.replace("/login");

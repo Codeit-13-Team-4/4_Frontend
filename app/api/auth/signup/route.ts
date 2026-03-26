@@ -15,7 +15,6 @@ export async function POST(request: NextRequest) {
         email: body.email,
         nickname: body.nickname,
         password: body.password,
-        passwordConfirm: body.passwordConfirm,
       }),
       cache: "no-store",
     });
