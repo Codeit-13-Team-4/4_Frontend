@@ -79,7 +79,7 @@ function AlertModalTitle({
 }: React.ComponentProps<typeof AlertDialog.Title>) {
   return (
     <AlertDialog.Title
-      className={cn("text-2xl font-semibold", className)}
+      className={cn("text-xl font-semibold sm:text-2xl", className)}
       {...props}
     />
   );
@@ -92,7 +92,7 @@ function AlertModalDescription({
   return (
     <AlertDialog.Description
       className={cn(
-        "text-lg text-balance text-gray-400 md:text-pretty",
+        "text-base text-balance text-gray-400 sm:text-lg md:text-pretty",
         className,
       )}
       {...props}

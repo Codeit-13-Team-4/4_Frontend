@@ -1,6 +1,7 @@
 "use client";
 
 import { useAlertModal } from "@/shared/store/AlertModal";
+import { CompleteAnimation } from "@/shared/ui/CompleteAnimation/CompleteAnimation";
 import { AlertModal } from "./AlertModal";
 
 function AlertModalGlobal() {
@@ -22,6 +23,9 @@ function AlertModalGlobal() {
       <AlertModal.Content>
         <AlertModal.Header>
           <AlertModal.Close onClick={handleCancelClick} />
+          {store.showCompleteAnimation && (
+            <CompleteAnimation className="mb-4 size-10 sm:size-12.5" />
+          )}
           <AlertModal.Title>{store.title}</AlertModal.Title>
           <AlertModal.Description>{store.description}</AlertModal.Description>
         </AlertModal.Header>
