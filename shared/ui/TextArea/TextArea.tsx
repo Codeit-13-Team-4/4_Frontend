@@ -22,10 +22,13 @@ const textAreaWrapperVariants = cva(
 interface TextAreaProps
   extends
     ComponentProps<"textarea">,
-    VariantProps<typeof textAreaWrapperVariants> {}
+    VariantProps<typeof textAreaWrapperVariants> {
+  wrapperClassName?: string;
+}
 
 function TextArea({
   className,
+  wrapperClassName,
   size,
   maxLength,
   onChange,
@@ -41,7 +44,7 @@ function TextArea({
   });
 
   return (
-    <div className={textAreaWrapperVariants({ size })}>
+    <div className={cn(textAreaWrapperVariants({ size }), wrapperClassName)}>
       <textarea
         {...props}
         disabled={disabled}
