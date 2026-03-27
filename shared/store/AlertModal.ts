@@ -13,6 +13,7 @@ type OpenState = {
   confirmText?: string;
   actionVariant?: ButtonVariant;
   cancelVariant?: ButtonVariant;
+  showCompleteAnimation?: boolean;
   onPositive?: () => void;
   onNegative?: () => void;
 };
