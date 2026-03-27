@@ -1,18 +1,28 @@
 import { create } from "zustand";
 import { combine, devtools } from "zustand/middleware";
-import { buttonVariants } from "@/shared/ui";
+import { buttonVariants, gradientButtonVariants } from "@/shared/ui";
 import { type VariantProps } from "class-variance-authority";
 
 type ButtonVariant = VariantProps<typeof buttonVariants>["variant"];
+type GradientButtonVariant = VariantProps<
+  typeof gradientButtonVariants
+>["variant"];
+
+type AlertModalButtonType =
+  | { type: "default"; variant?: ButtonVariant }
+  | { type: "gradient"; variant?: GradientButtonVariant };
+
+export type AlertModalButton = {
+  text?: string;
+  button?: AlertModalButtonType;
+};
 
 type OpenState = {
   isOpen: true;
   title: string;
   description: string;
-  calcelText?: string;
-  confirmText?: string;
-  actionVariant?: ButtonVariant;
-  cancelVariant?: ButtonVariant;
+  positive?: AlertModalButton;
+  negative?: AlertModalButton;
   showCompleteAnimation?: boolean;
   onPositive?: () => void;
   onNegative?: () => void;
