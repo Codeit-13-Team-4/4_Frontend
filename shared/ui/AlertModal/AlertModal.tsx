@@ -104,9 +104,13 @@ function AlertModalAction({
   className,
   variant = "primary",
   size = "lg",
+  asChild = false,
   ...props
 }: React.ComponentProps<typeof AlertDialog.Action> &
-  VariantProps<typeof buttonVariants>) {
+  VariantProps<typeof buttonVariants> & { asChild?: boolean }) {
+  if (asChild) {
+    return <AlertDialog.Action asChild {...props} />;
+  }
   return (
     <AlertDialog.Action
       className={cn(buttonVariants({ variant, size }), className)}
@@ -119,9 +123,13 @@ function AlertModalCancel({
   className,
   variant = "default",
   size = "lg",
+  asChild = false,
   ...props
 }: React.ComponentProps<typeof AlertDialog.Cancel> &
-  VariantProps<typeof buttonVariants>) {
+  VariantProps<typeof buttonVariants> & { asChild?: boolean }) {
+  if (asChild) {
+    return <AlertDialog.Cancel asChild {...props} />;
+  }
   return (
     <AlertDialog.Cancel
       className={cn(buttonVariants({ variant, size }), className)}
