@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { GradientButton } from "../GradientButton/GradientButton";
 import { AlertModal } from "./AlertModal";
 
 const meta: Meta = {
@@ -28,14 +29,15 @@ function DefaultExample() {
         </AlertModal.Trigger>
         <AlertModal.Content>
           <AlertModal.Header>
+            <AlertModal.Close />
             <AlertModal.Title>정말 삭제하시겠습니까?</AlertModal.Title>
             <AlertModal.Description>
               이 작업은 되돌릴 수 없습니다.
             </AlertModal.Description>
           </AlertModal.Header>
           <AlertModal.Footer>
-            <AlertModal.Cancel>취소</AlertModal.Cancel>
-            <AlertModal.Action>삭제</AlertModal.Action>
+            <AlertModal.Cancel className="w-full">취소</AlertModal.Cancel>
+            <AlertModal.Action className="w-full">삭제</AlertModal.Action>
           </AlertModal.Footer>
         </AlertModal.Content>
       </AlertModal>
