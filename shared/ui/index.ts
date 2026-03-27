@@ -21,3 +21,4 @@ export {
   FieldTitle,
   FieldError,
 } from "./Field/Field";
+export { ScrollArea, ScrollBar } from "./ScrollArea/ScrollArea";
