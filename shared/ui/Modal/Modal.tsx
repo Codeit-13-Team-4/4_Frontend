@@ -79,9 +79,12 @@ function ModalContent({
       <ModalOverlay />
       <Dialog.Content
         className={cn(
-          "data-open:animate-overlay-in data-closed:animate-overlay-out fixed top-1/2 left-1/2 z-50 grid max-h-[calc(100vh-2rem)] w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 overflow-hidden rounded-[40px] bg-gray-800 p-12 text-gray-400 shadow-xl duration-100 outline-none sm:max-w-136",
+          "data-open:animate-modal-in data-closed:animate-modal-out fixed top-1/2 left-1/2 z-50 grid max-h-[calc(100vh-2rem)] w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 overflow-hidden rounded-[40px] bg-gray-800 p-12 text-gray-400 shadow-xl duration-100 outline-none sm:max-w-136",
           className,
         )}
+        onPointerDownOutside={(e) => e.preventDefault()}
+        onInteractOutside={(e) => e.preventDefault()}
+        onEscapeKeyDown={(e) => e.preventDefault()}
         {...props}
       >
         {children}
