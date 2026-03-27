@@ -1,7 +1,7 @@
 import { cn } from "@/shared/utils";
 import { AlertDialog } from "radix-ui";
 import { type VariantProps } from "class-variance-authority";
-import { buttonVariants } from "../Button/Button";
+import { Button, buttonVariants } from "../Button/Button";
 
 function AlertModal({
   ...props
@@ -70,15 +70,7 @@ function AlertModalFooter({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  return (
-    <div
-      className={cn(
-        "flex flex-col gap-2 sm:flex-row sm:justify-end md:gap-4",
-        className,
-      )}
-      {...props}
-    />
-  );
+  return <div className={cn("flex gap-2 md:gap-4", className)} {...props} />;
 }
 
 function AlertModalTitle({
@@ -143,27 +135,29 @@ function AlertModalClose({
   ...props
 }: React.ComponentProps<typeof AlertDialog.Cancel>) {
   return (
-    <AlertDialog.Cancel
-      className={cn(
-        "mb-4 flex w-full cursor-pointer justify-end text-gray-200",
-        className,
-      )}
-      {...props}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+    <AlertDialog.Cancel {...props} asChild>
+      <Button
+        variant="ghost"
+        className={cn(
+          "ml-auto h-6 p-0 text-gray-400 hover:bg-gray-700 hover:text-white",
+          className,
+        )}
       >
-        <path d="M18 6 6 18" />
-        <path d="m6 6 12 12" />
-      </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      </Button>
     </AlertDialog.Cancel>
   );
 }
