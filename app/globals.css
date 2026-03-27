@@ -11,6 +11,10 @@
   --animate-modal-in: modal-in 0.15s ease-out;
   --animate-modal-out: modal-out 0.15s ease-in;
 
+  --animate-drawCircle: drawCircle 0.5s forwards;
+  --animate-fillCircle: fillCircle 0.5s forwards 0.5s;
+  --animate-showCheck: showCheck 0.6s forwards 0.5s;
+
   @keyframes overlay-in {
     from {
       opacity: 0;
@@ -45,6 +49,40 @@
     to {
       opacity: 0;
       scale: 0.95;
+    }
+  }
+
+  @keyframes drawCircle {
+    0% {
+      stroke-dashoffset: 283;
+      transform: scale(0.1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      stroke-dashoffset: 0;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes fillCircle {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes showCheck {
+    0% {
+      opacity: 0;
+      transform: scale(0.4) rotate(-45deg);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
     }
   }
 }
