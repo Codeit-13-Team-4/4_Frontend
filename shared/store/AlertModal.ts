@@ -1,5 +1,9 @@
 import { create } from "zustand";
 import { combine, devtools } from "zustand/middleware";
+import { buttonVariants } from "@/shared/ui";
+import { type VariantProps } from "class-variance-authority";
+
+type ButtonVariant = VariantProps<typeof buttonVariants>["variant"];
 
 type OpenState = {
   isOpen: true;
@@ -7,6 +11,8 @@ type OpenState = {
   description: string;
   calcelText?: string;
   confirmText?: string;
+  actionVariant?: ButtonVariant;
+  cancelVariant?: ButtonVariant;
   onPositive?: () => void;
   onNegative?: () => void;
 };

@@ -27,10 +27,18 @@ function AlertModalGlobal() {
         </AlertModal.Header>
 
         <AlertModal.Footer>
-          <AlertModal.Cancel onClick={handleCancelClick} className="w-full">
+          <AlertModal.Cancel
+            onClick={handleCancelClick}
+            className="w-full"
+            variant={store.cancelVariant ?? "default"}
+          >
             {store.calcelText ?? "취소"}
           </AlertModal.Cancel>
-          <AlertModal.Action onClick={handleActionClick} className="w-full">
+          <AlertModal.Action
+            onClick={handleActionClick}
+            className="w-full"
+            variant={store.actionVariant ?? "primary"}
+          >
             {store.confirmText ?? "확인"}
           </AlertModal.Action>
         </AlertModal.Footer>
