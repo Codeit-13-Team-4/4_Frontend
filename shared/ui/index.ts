@@ -22,3 +22,7 @@ export {
   FieldError,
 } from "./Field/Field";
 export { ScrollArea, ScrollBar } from "./ScrollArea/ScrollArea";
+export {
+  GradientButton,
+  gradientButtonVariants,
+} from "./GradientButton/GradientButton";
