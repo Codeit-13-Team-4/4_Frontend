@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { GradientButton } from "../GradientButton/GradientButton";
 import { AlertModal } from "./AlertModal";
 
 const meta: Meta = {
