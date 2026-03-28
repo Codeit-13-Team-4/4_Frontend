@@ -81,12 +81,8 @@ export default function LoginForm() {
     setIsPending(true);
 
     try {
-      const data = await login({
-        email: form.email,
-        password: form.password,
-      });
+      await login({ email: form.email, password: form.password });
 
-      setUser(data.user);
       router.replace("/");
     } catch (error) {
       if (error instanceof Error) {
