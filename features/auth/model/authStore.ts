@@ -1,38 +1,44 @@
+import { User } from "@/shared/types/user";
 import { create } from "zustand";
+import { combine, devtools } from "zustand/middleware";
 
-export interface User {
-  id: number;
-  email: string;
-  nickname: string;
-}
-
-interface AuthState {
-  user: User | null;
-  isAuthenticated: boolean;
-  setUser: (user: User) => void;
-  clearUser: () => void;
-}
-
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
+const initialState = {
+  user: null as User | null,
   isAuthenticated: false,
+};
 
-  setUser: (user) =>
-    set({
-      user,
-      isAuthenticated: true,
-    }),
+const useAuthStore = create(
+  devtools(
+    combine(initialState, (set) => ({
+      actions: {
+        setUser: (user: User) => {
+          set({ user, isAuthenticated: true });
+        },
+        clearUser: () => {
+          set({ user: null, isAuthenticated: false });
+        },
+      },
+    })),
+    { name: "authStore" },
+  ),
+);
 
-  clearUser: () =>
-    set({
-      user: null,
-      isAuthenticated: false,
-    }),
-}));
+export const useUserData = () => {
+  const user = useAuthStore((store) => store.user);
+  return user;
+};
 
-export const authSelectors = {
-  user: (state: AuthState) => state.user,
-  isAuthenticated: (state: AuthState) => state.isAuthenticated,
-  setUser: (state: AuthState) => state.setUser,
-  clearUser: (state: AuthState) => state.clearUser,
+export const useIsAuthenticated = () => {
+  const isAuthenticated = useAuthStore((store) => store.isAuthenticated);
+  return isAuthenticated;
+};
+
+export const useSetUser = () => {
+  const setUser = useAuthStore((store) => store.actions.setUser);
+  return setUser;
+};
+
+export const useClearUser = () => {
+  const clearUser = useAuthStore((store) => store.actions.clearUser);
+  return clearUser;
 };
