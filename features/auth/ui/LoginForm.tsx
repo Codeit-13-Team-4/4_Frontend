@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { login } from "@/features/auth/api/login";
-import { useAuthStore } from "@/features/auth/model/authStore";
+import { useSetUser } from "@/features/auth/model/authStore";
 import SocialLoginButtons from "@/features/auth/ui/SocialLoginButtons";
 import {
   Button,
@@ -24,7 +24,7 @@ interface LoginFormValues {
 
 export default function LoginForm() {
   const router = useRouter();
-  const setUser = useAuthStore((state) => state.setUser);
+  const setUser = useSetUser();
 
   const [form, setForm] = useState<LoginFormValues>({
     email: "",
