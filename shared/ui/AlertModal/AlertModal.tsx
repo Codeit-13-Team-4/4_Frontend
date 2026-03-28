@@ -1,7 +1,7 @@
 import { cn } from "@/shared/utils";
 import { AlertDialog } from "radix-ui";
 import { type VariantProps } from "class-variance-authority";
-import { buttonVariants } from "../Button/Button";
+import { Button, buttonVariants } from "../Button/Button";
 
 function AlertModal({
   ...props
@@ -70,15 +70,7 @@ function AlertModalFooter({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  return (
-    <div
-      className={cn(
-        "flex flex-col gap-2 sm:flex-row sm:justify-end md:gap-4",
-        className,
-      )}
-      {...props}
-    />
-  );
+  return <div className={cn("flex gap-2 md:gap-4", className)} {...props} />;
 }
 
 function AlertModalTitle({
@@ -87,7 +79,7 @@ function AlertModalTitle({
 }: React.ComponentProps<typeof AlertDialog.Title>) {
   return (
     <AlertDialog.Title
-      className={cn("text-2xl font-semibold", className)}
+      className={cn("text-xl font-semibold sm:text-2xl", className)}
       {...props}
     />
   );
@@ -100,7 +92,7 @@ function AlertModalDescription({
   return (
     <AlertDialog.Description
       className={cn(
-        "text-lg text-balance text-gray-400 md:text-pretty",
+        "text-base text-balance text-gray-400 sm:text-lg md:text-pretty",
         className,
       )}
       {...props}
@@ -112,9 +104,13 @@ function AlertModalAction({
   className,
   variant = "primary",
   size = "lg",
+  asChild = false,
   ...props
 }: React.ComponentProps<typeof AlertDialog.Action> &
-  VariantProps<typeof buttonVariants>) {
+  VariantProps<typeof buttonVariants> & { asChild?: boolean }) {
+  if (asChild) {
+    return <AlertDialog.Action asChild {...props} />;
+  }
   return (
     <AlertDialog.Action
       className={cn(buttonVariants({ variant, size }), className)}
@@ -127,9 +123,13 @@ function AlertModalCancel({
   className,
   variant = "default",
   size = "lg",
+  asChild = false,
   ...props
 }: React.ComponentProps<typeof AlertDialog.Cancel> &
-  VariantProps<typeof buttonVariants>) {
+  VariantProps<typeof buttonVariants> & { asChild?: boolean }) {
+  if (asChild) {
+    return <AlertDialog.Cancel asChild {...props} />;
+  }
   return (
     <AlertDialog.Cancel
       className={cn(buttonVariants({ variant, size }), className)}
@@ -143,27 +143,29 @@ function AlertModalClose({
   ...props
 }: React.ComponentProps<typeof AlertDialog.Cancel>) {
   return (
-    <AlertDialog.Cancel
-      className={cn(
-        "mb-4 flex w-full cursor-pointer justify-end text-gray-200",
-        className,
-      )}
-      {...props}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+    <AlertDialog.Cancel {...props} asChild>
+      <Button
+        variant="ghost"
+        className={cn(
+          "ml-auto h-6 p-0 text-gray-400 hover:bg-gray-700 hover:text-white",
+          className,
+        )}
       >
-        <path d="M18 6 6 18" />
-        <path d="m6 6 12 12" />
-      </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      </Button>
     </AlertDialog.Cancel>
   );
 }
