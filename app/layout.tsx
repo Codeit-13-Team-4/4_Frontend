@@ -1,6 +1,5 @@
 import localFont from "next/font/local";
 import "./globals.css";
-import AuthProvider from "@/features/auth/provider/AuthProvider";
 import { AlertModalGlobal } from "@/shared/ui";
 import { cn } from "@/shared/utils";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
@@ -31,10 +30,8 @@ export default async function RootLayout({
       <body className={cn("", pretendard.className)}>
         <QueryProvider>
           <HydrationBoundary state={dehydrate(queryClient)}>
-            <AuthProvider>
-              {children}
-              <AlertModalGlobal />
-            </AuthProvider>
+            {children}
+            <AlertModalGlobal />
           </HydrationBoundary>
         </QueryProvider>
       </body>

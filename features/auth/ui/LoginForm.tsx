@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { login } from "@/features/auth/api/login";
+import { useQueryClient } from "@tanstack/react-query";
 import SocialLoginButtons from "@/features/auth/ui/SocialLoginButtons";
 import {
   Button,
@@ -22,6 +23,7 @@ interface LoginFormValues {
 
 export default function LoginForm() {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const [form, setForm] = useState<LoginFormValues>({
     email: "",
@@ -80,6 +82,7 @@ export default function LoginForm() {
     try {
       await login({ email: form.email, password: form.password });
 
+      await queryClient.resetQueries({ queryKey: ["auth", "me"] });
       router.replace("/");
     } catch (error) {
       if (error instanceof Error) {
