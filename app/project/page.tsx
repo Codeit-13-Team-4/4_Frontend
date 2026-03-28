@@ -1,4 +1,6 @@
+import { createSideProject } from "@/features/project/api/createSideProject";
 import { ProjectCard } from "@/features/project/ui/ProjectCard/ProjectCard";
+import { ProjectCreateButton } from "@/features/project/ui/ProjectCreateButton/ProjectCreateButton";
 import { ProjectFilter } from "@/features/project/ui/ProjectFilter/ProjectFilter";
 import { ProjectSortDropdown } from "@/features/project/ui/ProjectSortDropdown/ProjectSortDropdown";
 import { SearchInput } from "@/features/project/ui/SearchInput/SearchInput";
@@ -11,7 +13,6 @@ export default async function ProjectPage({
 }) {
   const params = await searchParams;
   const q = params.q;
-  console.log("🚀 ~ ProjectPage ~ q:", q);
 
   return (
     <main>
@@ -30,9 +31,10 @@ export default async function ProjectPage({
         </div>
       </div>
       <div className="mb-10 flex justify-end font-semibold">
-        <Button variant="primary" className="p-3">
+        {/* <Button variant="primary" className="p-3">
           + 프로젝트 개설
-        </Button>
+        </Button> */}
+        <ProjectCreateButton />
       </div>
 
       <div className="flex justify-between">
