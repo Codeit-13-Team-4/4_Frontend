@@ -1,10 +1,8 @@
-import { createSideProject } from "@/features/project/api/createSideProject";
-import { ProjectCard } from "@/features/project/ui/ProjectCard/ProjectCard";
+import { ProjectCardList } from "@/features/project/ui/ProjectCardList/ProjectCardList";
 import { ProjectCreateButton } from "@/features/project/ui/ProjectCreateButton/ProjectCreateButton";
 import { ProjectFilter } from "@/features/project/ui/ProjectFilter/ProjectFilter";
 import { ProjectSortDropdown } from "@/features/project/ui/ProjectSortDropdown/ProjectSortDropdown";
 import { SearchInput } from "@/features/project/ui/SearchInput/SearchInput";
-import { Button } from "@/shared/ui";
 
 export default async function ProjectPage({
   searchParams,
@@ -42,7 +40,7 @@ export default async function ProjectPage({
         <ProjectSortDropdown />
       </div>
 
-      <ProjectCard />
+      <ProjectCardList />
     </main>
   );
 }
