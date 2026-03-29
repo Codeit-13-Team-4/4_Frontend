@@ -16,19 +16,7 @@ export async function POST(request: Request) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify({
-        title: "테스트 카드1",
-        description: "2026.03.26 사이드 프로젝트 post api 테스트입니다.",
-        projectType: "PORTFOLIO",
-        techStacks: ["JavaScript"],
-        positions: ["PM", "FE"],
-        maxMembers: 2,
-        recruitEndDate: "2026-03-30",
-        projectStartDate: "2026-03-26",
-        projectEndDate: "2026-05-01",
-        contactMethod: "KAKAO_OPEN_CHAT",
-        contactLink: "string",
-      }),
+      body: JSON.stringify(body),
     });
     const data = await response.json();
 
