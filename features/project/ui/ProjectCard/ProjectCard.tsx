@@ -59,7 +59,56 @@ const testPosition: PositionType[] = [
   "ios",
 ];
 
-export function ProjectCard() {
+type ContactMethod = "KAKAO_OPEN_CHAT" | "NOTION" | "DISCORD";
+
+type ProjectStatus =
+  | "RECRUITING"
+  | "RECRUITMENT_CLOSED"
+  | "IN_PROGRESS"
+  | "COMPLETED";
+
+interface ProjectHost {
+  id: number;
+  nickname: string;
+  jobLabel?: PositionType[]; // nullable
+  profileImageUrl?: string; // nullable
+  skills: string[]; // tech stack enum (host용)
+}
+
+type ProjectType = "PORTFOLIO" | "CONTEST" | "HACKATHON" | "STARTUP" | "OTHER";
+
+interface ProjectCardProps {
+  id: number;
+  title: string;
+  description: string;
+  projectType: ProjectType;
+  techStacks: string[]; // enum이라 string[]
+  positions: PositionType[];
+  maxMembers: number;
+  currentMembers: number;
+  recruitEndDate: string;
+  projectStartDate: string;
+  projectEndDate: string;
+  contactMethod: ContactMethod;
+  contactLink: string;
+  status: ProjectStatus;
+  viewCount: number;
+  commentCount: number;
+  liked: boolean;
+  host: ProjectHost;
+}
+
+export function ProjectCard({ data }) {
+  console.log("🚀 ~ ProjectCard ~ data:", data);
+  const {
+    title,
+    description,
+    techStacks,
+    positions,
+    recruitEndDate,
+    viewCount,
+  } = data;
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleOpen = () => setIsOpen(true);
@@ -78,12 +127,10 @@ export function ProjectCard() {
       </header>
       <section className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
-          <h4 className="text-[20px] text-gray-50">프로젝트 제목</h4>
-          <DeadlineBadge endDate="2026-03-25" />
+          <h4 className="text-[20px] text-gray-50">{title}</h4>
+          <DeadlineBadge endDate={recruitEndDate} />
         </div>
-        <p className="text-[14px] text-gray-400">
-          프로젝트 소개글입니다 .프로젝트 소개글입니다. 프로젝트 소개글입니다.
-        </p>
+        <p className="text-[14px] text-gray-400">{description}</p>
       </section>
       <section>
         <h4 className="text-[16px] text-gray-400">기술스택</h4>
@@ -102,7 +149,7 @@ export function ProjectCard() {
               width={24}
               height={24}
             />
-            <span className="text-[14px] text-gray-400">76</span>
+            <span className="text-[14px] text-gray-400">{viewCount}</span>
           </div>
           <div className="flex items-center gap-1.25">
             <Image
