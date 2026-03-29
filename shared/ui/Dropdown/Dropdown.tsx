@@ -54,7 +54,7 @@ function DropdownRadioItem({
     <DropdownMenu.RadioItem
       {...props}
       className={cn(
-        "w-full cursor-pointer rounded px-2 py-1 focus:outline-none data-[state=checked]:bg-[#334155] data-[state=checked]:text-[#e2e8f0]",
+        "w-full cursor-pointer rounded px-2 py-1 focus:outline-none data-[state=checked]:bg-gray-700 data-[state=checked]:text-gray-200",
         className,
       )}
     >
@@ -69,7 +69,7 @@ function DropdownSeparator({
 }: React.ComponentProps<typeof DropdownMenu.Separator>) {
   return (
     <DropdownMenu.Separator
-      className={cn("h-px bg-[#334155]", className)}
+      className={cn("h-px bg-gray-700", className)}
       {...props}
     />
   );
