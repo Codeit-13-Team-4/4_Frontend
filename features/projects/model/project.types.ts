@@ -1,0 +1,58 @@
+import { POSITION_LABELS, TECH_STACK } from "./project.constants";
+
+export type ProjectFilterOptions = { value: string; label: string };
+
+export type TechStackType = keyof typeof TECH_STACK;
+
+export type PositionType = keyof typeof POSITION_LABELS;
+
+export type ProjectType =
+  | "portfolio"
+  | "contest"
+  | "hackathon"
+  | "startup"
+  | "other";
+
+export type ContactMethod = "kakao_open_chat" | "notion" | "discord";
+
+export type ProjectStatus =
+  | "recruiting"
+  | "recruitment_closed"
+  | "in_progress"
+  | "completed";
+
+export interface ProjectHost {
+  id: number;
+  nickname: string;
+  jobLabel?: PositionType[];
+  profileImageUrl?: string;
+  skills?: TechStackType[];
+}
+
+export interface ProjectCardProps {
+  id: number;
+  title: string;
+  description: string;
+  projectType: ProjectType;
+  techStacks: TechStackType[];
+  positions: PositionType[];
+  maxMembers: number;
+  currentMembers: number;
+  recruitEndDate: string;
+  projectStartDate: string;
+  projectEndDate: string;
+  contactMethod: ContactMethod;
+  contactLink: string;
+  status: ProjectStatus;
+  viewCount: number;
+  commentCount: number;
+  liked: boolean;
+  host: ProjectHost;
+}
+
+export type ProjectFilter = {
+  keyword?: string;
+  status?: string;
+  projectType?: string[];
+  positions?: string[];
+};
