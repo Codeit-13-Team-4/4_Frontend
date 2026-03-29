@@ -14,7 +14,7 @@ export async function GET() {
         { status: 401 },
       );
     }
-    const response = await fetch(`${BASE_URL}/users`, {
+    const response = await fetch(`${BASE_URL}/users/me`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
