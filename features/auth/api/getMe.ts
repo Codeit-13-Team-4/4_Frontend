@@ -1,8 +1,4 @@
-export interface User {
-  id: number;
-  email: string;
-  nickname: string;
-}
+import { User } from "@/shared/types/user";
 
 export async function getMe(): Promise<User> {
   const response = await fetch("/api/users/me", {

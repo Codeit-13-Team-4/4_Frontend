@@ -1,9 +1,11 @@
 import localFont from "next/font/local";
 import "./globals.css";
-import QueryProvider from "./providers/QueryProvider";
-import AuthProvider from "@/features/auth/provider/AuthProvider";
 import { AlertModalGlobal } from "@/shared/ui";
 import { cn } from "@/shared/utils";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { getQueryClient } from "./providers/getQueryClient";
+import { QueryProvider } from "./providers/QueryProvider";
+import { getMeServer } from "@/features/auth/api/getMeServer";
 
 const pretendard = localFont({
   src: "../fonts/PretendardVariable.woff2",
@@ -11,19 +13,26 @@ const pretendard = localFont({
   weight: "100 900",
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const queryClient = getQueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["auth", "me"],
+    queryFn: getMeServer,
+  });
+
   return (
     <html lang="ko">
       <body className={cn("", pretendard.className)}>
         <QueryProvider>
-          <AuthProvider>
+          <HydrationBoundary state={dehydrate(queryClient)}>
             {children}
             <AlertModalGlobal />
-          </AuthProvider>
+          </HydrationBoundary>
         </QueryProvider>
       </body>
     </html>
