@@ -1,0 +1,54 @@
+import { ProjectCardList } from "@/features/projects/ui/ProjectCardList/ProjectCardList";
+import { ProjectCreateButton } from "@/features/projects/ui/ProjectCreateButton/ProjectCreateButton";
+import { ProjectFilter } from "@/features/projects/ui/ProjectFilter/ProjectFilter";
+import { ProjectSortDropdown } from "@/features/projects/ui/ProjectSortDropdown/ProjectSortDropdown";
+import { SearchInput } from "@/features/projects/ui/SearchInput/SearchInput";
+
+export default async function ProjectPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const params = await searchParams;
+  const filters = {
+    keyword: typeof params.search === "string" ? params.search : undefined,
+    status: typeof params.status === "string" ? params.status : undefined,
+    projectType:
+      typeof params.projectType === "string"
+        ? [params.projectType]
+        : params.projectType,
+    positions:
+      typeof params.positions === "string"
+        ? [params.positions]
+        : params.positions,
+  };
+
+  return (
+    <main>
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h4 className="text-[30px] font-semibold text-gray-50">
+            사이드 프로젝트
+          </h4>
+          <p className="text-[20px] font-medium text-[#BDBDBD]">
+            아이디어를 현실로 만들어요. 팀원을 모집하고 함께 성장하세요.
+          </p>
+        </div>
+
+        <div>
+          <SearchInput />
+        </div>
+      </div>
+      <div className="mb-10 flex justify-end font-semibold">
+        <ProjectCreateButton />
+      </div>
+
+      <div className="flex justify-between">
+        <ProjectFilter />
+        <ProjectSortDropdown />
+      </div>
+
+      <ProjectCardList filters={filters} />
+    </main>
+  );
+}
