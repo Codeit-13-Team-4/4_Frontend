@@ -9,7 +9,7 @@ const meta: Meta = {
   parameters: { layout: "centered" },
   decorators: [
     (Story) => (
-      <div className="flex min-h-screen items-center justify-center bg-gray-900 p-6">
+      <div className="flex min-h-screen justify-center bg-gray-900 p-6 pt-10">
         <div className="w-80">
           <Story />
         </div>
