@@ -2,4 +2,4 @@ export { cn } from "./cn/cn";
 export * from "./toast/toast";
 export { getRandomName } from "./randomName/randomName";
 export { getDeadlineCalculate } from "./deadlineCalculate/deadlineCalculate";
-export { formatDate, formatDateRange } from "./formatDate/formatDate";
+export { formatDate } from "./formatDate/formatDate";
