@@ -4,6 +4,7 @@ import { ProjectCardProps, ProjectFilter } from "@/features/projects/model";
 import { ProjectCard } from "./ProjectCard/ProjectCard";
 import { ProjectCardSkeleton } from "./ProjectCard/ProjectCardSkeleton";
 import Image from "next/image";
+import Link from "next/link";
 
 export function ProjectCardList({ filters }: { filters?: ProjectFilter }) {
   const { data, isLoading, isFetching } = useGetProjectList(filters);
@@ -36,12 +37,16 @@ export function ProjectCardList({ filters }: { filters?: ProjectFilter }) {
   return (
     <div className="flex flex-wrap justify-center gap-2 lg:justify-start lg:gap-3">
       {cardData?.map((item) => {
-        return <ProjectCard data={item} key={item.id} />;
+        return (
+          <Link href={`/projects/${item.id}`} key={item.id}>
+            <ProjectCard data={item} />
+          </Link>
+        );
       })}
 
       {isFetching &&
-        Array.from({ length: 3 }).map((_, index) => (
-          <ProjectCardSkeleton key={`fetch-${index}`} />
+        cardData?.map((item) => (
+          <ProjectCardSkeleton key={`fetch-${item.id}`} />
         ))}
     </div>
   );
