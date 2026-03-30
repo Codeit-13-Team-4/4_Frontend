@@ -27,7 +27,7 @@ export default async function ProjectPage({
 
   return (
     <main className="flex flex-col">
-      <div className="mb-6 items-center md:flex md:justify-between">
+      <div className="mb-6 flex flex-col md:flex-row md:md:items-center md:justify-between">
         <div>
           <h4 className="text-[30px] font-semibold text-gray-50">
             사이드 프로젝트
@@ -47,7 +47,9 @@ export default async function ProjectPage({
 
       <div className="flex justify-between">
         <ProjectFilter />
-        <ProjectSortDropdown />
+        <div className="mr-5 flex items-center">
+          <ProjectSortDropdown />
+        </div>
       </div>
 
       <ProjectCardList filters={filters} />
