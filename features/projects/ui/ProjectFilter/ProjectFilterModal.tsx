@@ -5,6 +5,7 @@ import { useMultiSelect } from "../../hooks/useMultiSelect";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ProjectFilterCheckBoxInput } from "./ProjectFilterCheckBoxInput";
+import { POSITION_LABELS, PROJECT_TYPE_LABEL } from "@/features/projects/model";
 
 const statusOptions = [
   { value: "all", label: "전체" },
@@ -14,23 +15,18 @@ const statusOptions = [
 
 const purposeOptions = [
   { value: "all", label: "전체" },
-  { value: "portfolio", label: "포트폴리오" },
-  { value: "contest", label: "공모전" },
-  { value: "hackathon", label: "해커톤" },
-  { value: "startup", label: "창업" },
-  { value: "other", label: "기타" },
+  ...Object.entries(PROJECT_TYPE_LABEL).map(([value, label]) => ({
+    value,
+    label,
+  })),
 ];
 
 const positionOptions = [
   { value: "all", label: "전체" },
-  { value: "fe", label: "FE" },
-  { value: "be", label: "BE" },
-  { value: "pm", label: "PM" },
-  { value: "marketer", label: "Marketer" },
-  { value: "designer", label: "Designer" },
-  { value: "android", label: "Android" },
-  { value: "ios", label: "iOS" },
-  { value: "devops", label: "DevOPS" },
+  ...Object.entries(POSITION_LABELS).map(([value, label]) => ({
+    value,
+    label,
+  })),
 ];
 
 type ProjectFilterModalProps = {
@@ -54,8 +50,6 @@ export function ProjectFilterModal({
   const searchParams = useSearchParams();
 
   const handleReset = () => {
-    const params = new URLSearchParams(searchParams.toString());
-
     setStatus("all");
     resetProjectType();
     resetPositions();

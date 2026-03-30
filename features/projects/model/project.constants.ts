@@ -55,3 +55,9 @@ export const PROJECT_TYPE_LABEL = {
   startup: "창업",
   other: "기타",
 };
+
+export const SORT_LABEL = {
+  createdAt: "최신순",
+  viewCount: "조회수 순",
+  recruitEndDate: "마감 임박순",
+};
