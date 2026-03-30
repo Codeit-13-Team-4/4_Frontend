@@ -1,42 +1,85 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui";
-import Link from "next/link";
-import HeaderBell from "./HeaderBell";
+"use client";
 
-// TODO: 병합 후 User 타입 import로 교체
-interface User {
-  nickname: string;
-  profileImageUrl: string | null;
+import { useState } from "react";
+import { cn } from "@/shared/utils";
+import { User } from "@/shared/types/user";
+import Link from "next/link";
+import Image from "next/image";
+import NotificationDropdown from "@/features/notification/ui/NotificationDropdown";
+import NotificationSidebar from "@/features/notification/ui/NotificationSidebar";
+import { useNotifications } from "@/features/notification/hooks/useNotifications";
+import UserProfileMenu from "./UserProfileMenu";
+import Sidebar from "./Sidebar";
+
+interface UserAreaProps {
+  userData: User | undefined;
 }
 
-export default function UserArea() {
-  const userData: User | null = {
-    nickname: "test123",
-    profileImageUrl: "",
-  };
+export default function UserArea({ userData }: UserAreaProps) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
+  const { data } = useNotifications();
+  const notifications = data?.pages.flatMap((page) => page.data) ?? [];
+  const hasUnread = notifications.some((n) => !n.isRead);
 
   return (
-    <div className="font-medium">
-      {userData ? (
-        <div className="flex items-center gap-6">
-          <HeaderBell />
-          <button aria-label="프로필">
-            <Avatar>
-              <AvatarImage
-                src={userData.profileImageUrl ?? ""}
-                alt={userData.nickname}
-              />
-              <AvatarFallback>{userData.nickname[0]}</AvatarFallback>
-            </Avatar>
+    <>
+      {/* 데스크탑 */}
+      <div className={cn("hidden font-medium md:flex")}>
+        {userData ? (
+          <div className="flex items-center gap-6">
+            <NotificationDropdown />
+            <UserProfileMenu userData={userData} />
+          </div>
+        ) : (
+          <Link
+            href="/login"
+            className="px-7.25 py-4 transition-colors duration-100 hover:text-gray-50"
+          >
+            로그인
+          </Link>
+        )}
+      </div>
+
+      {/* 모바일 */}
+      <div className="flex items-center gap-6 md:hidden">
+        {userData && (
+          <button
+            aria-label="알림"
+            className="hover:cursor-pointer"
+            onClick={() => setIsNotificationOpen(true)}
+          >
+            <Image
+              src={
+                hasUnread
+                  ? "/header/large-bell-active.svg"
+                  : "/header/large-bell.svg"
+              }
+              alt="알림"
+              width={24}
+              height={24}
+            />
           </button>
-        </div>
-      ) : (
-        <Link
-          href={"/login"}
-          className="px-7.25 py-4 transition-colors duration-100 hover:text-gray-50"
+        )}
+        <button
+          aria-label="메뉴 열기"
+          className="hover:cursor-pointer"
+          onClick={() => setIsSidebarOpen(true)}
         >
-          로그인
-        </Link>
-      )}
-    </div>
+          <Image src="/header/menu.svg" alt="메뉴" width={32} height={32} />
+        </button>
+      </div>
+
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        userData={userData}
+      />
+      <NotificationSidebar
+        isOpen={isNotificationOpen}
+        onClose={() => setIsNotificationOpen(false)}
+      />
+    </>
   );
 }

@@ -1,19 +1,16 @@
 "use client";
 
+import { cn } from "@/shared/utils";
 import { usePathname } from "next/navigation";
 import { NAV_ITEMS } from "../constants/constants";
 import NavigationItem from "./NavigationItem";
+import { getIsActive } from "../utils/getIsActive";
 
-function getIsActive(pathname: string, href: string) {
-  if (href === "/") return pathname === "/";
-  return pathname.startsWith(href);
-}
-
-export default function NavigationMenu() {
+export default function NavigationMenu({ className }: { className?: string }) {
   const pathname = usePathname();
 
   return (
-    <ul className="flex">
+    <ul className={cn("flex", className)}>
       {NAV_ITEMS.map((item) => (
         <NavigationItem
           key={item.href}
