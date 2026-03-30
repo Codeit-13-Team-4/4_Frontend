@@ -2,7 +2,6 @@ import { ProjectFilter } from "../model";
 
 export async function getProjectList(filters: ProjectFilter) {
   const { keyword, status, projectType, positions } = filters;
-  console.log("🚀 ~ getProjectList ~ keyword:", keyword);
   const params = new URLSearchParams({
     start: "0",
     perPage: "10",
@@ -35,7 +34,6 @@ export async function getProjectList(filters: ProjectFilter) {
   }
 
   const data = await response.json();
-  // console.log("🚀 ~ getProjectList ~ data:", data);
 
   return data;
 }

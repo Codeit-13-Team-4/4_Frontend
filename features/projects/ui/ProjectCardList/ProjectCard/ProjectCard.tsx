@@ -28,7 +28,9 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
 
   const handleOpen = () => setIsOpen(true);
 
-  const handleClose = () => setIsOpen(false);
+  const handleClose = () => {
+    setIsOpen(false);
+  };
   return (
     <article className="flex h-133 w-104.5 flex-col gap-4 rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5">
       <header className="flex items-center justify-between">
@@ -44,7 +46,6 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
         <section className="flex min-h-27.5 flex-col">
           <div className="mb-2 flex items-center justify-between">
             <h4 className="line-clamp-2 text-[20px] text-gray-50">{title}</h4>
-            {/* 디자이너님 의견 듣고 수정예정 */}
             <DeadlineBadge
               endDate={recruitEndDate}
               className="self-start text-nowrap"
@@ -85,7 +86,14 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
             <span className="text-[14px] text-gray-400">{commentCount}</span>
           </div>
         </div>
-        <Button size="sm" onClick={handleOpen}>
+        <Button
+          size="sm"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleOpen();
+          }}
+        >
           지원하기
         </Button>
         <ProjectApplyModal

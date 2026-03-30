@@ -36,7 +36,7 @@ export function ProjectApplyModal({
     setAlertOpen(true);
   };
 
-  const handleCancelClick = () => {
+  const handleCancelClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     onClose();
     setConfirmAlertOpen(true);
   };
@@ -45,7 +45,12 @@ export function ProjectApplyModal({
     <>
       <Modal open={isOpen} onOpenChange={onClose}>
         <Modal.Overlay />
-        <Modal.Content className="gap-0 p-10">
+        <Modal.Content
+          className="gap-0 p-10"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           <Modal.Header className="mb-2 text-center">
             <Modal.CloseIcon />
             <Modal.Title>프로젝트 참여 신청하기</Modal.Title>
@@ -72,7 +77,7 @@ export function ProjectApplyModal({
               variant="default"
               className="flex-1 text-[20px]"
               size="lg"
-              onClick={handleCancelClick}
+              onClick={(e) => handleCancelClick(e)}
             >
               취소
             </Button>
@@ -104,13 +109,20 @@ export function ProjectApplyModal({
           </AlertModal.Header>
           <AlertModal.Footer>
             <AlertModal.Cancel asChild>
-              <GradientButton variant="dark" className="w-full">
+              <GradientButton
+                variant="dark"
+                className="w-full"
+                onClick={(e) => e.stopPropagation()}
+              >
                 계속 둘러보기
               </GradientButton>
             </AlertModal.Cancel>
             <AlertModal.Action
               className="w-full"
-              onClick={() => router.push("/")}
+              onClick={(e) => {
+                e.stopPropagation();
+                router.push("/");
+              }}
               // 수정- 나중에 mypage로 변경
             >
               지원 내역 확인
@@ -131,9 +143,11 @@ export function ProjectApplyModal({
             <AlertModal.Cancel asChild>
               <Button
                 className="w-full"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setPosition(undefined);
                   setTextValue("");
+                  setConfirmAlertOpen(false);
                 }}
               >
                 나가기
@@ -141,7 +155,8 @@ export function ProjectApplyModal({
             </AlertModal.Cancel>
             <AlertModal.Action
               className="w-full"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setConfirmAlertOpen(false);
                 setIsOpen?.(true);
               }}
