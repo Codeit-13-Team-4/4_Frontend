@@ -1,7 +1,8 @@
+"use client";
+import { POSITION_LABELS, PositionType } from "@/features/projects/model";
 import { Dropdown } from "@/shared/ui";
 import Image from "next/image";
 import { useState } from "react";
-import { POSITION_LABELS, PositionType } from "../../model";
 
 export function ProjectPositionDropdown({
   position,

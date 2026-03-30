@@ -1,3 +1,4 @@
+"use client";
 import {
   AlertModal,
   Button,
@@ -5,11 +6,11 @@ import {
   Modal,
   TextArea,
 } from "@/shared/ui";
-import { ProjectPositionDropdown } from "./ProjectPositionDropdown";
 import { useState } from "react";
-import { PositionType } from "../../model/project.types";
-import { CompleteAnimation } from "@/shared/ui/CompleteAnimation/CompleteAnimation";
 import { useRouter } from "next/navigation";
+import { PositionType } from "@/features/projects/model";
+import { ProjectPositionDropdown } from "@/features/projects/ui";
+import { CompleteAnimation } from "@/shared/ui/CompleteAnimation/CompleteAnimation";
 
 type ProjectPositionModalProps = {
   isOpen: boolean;
@@ -29,8 +30,6 @@ export function ProjectApplyModal({
   const router = useRouter();
 
   const handleSubmit = () => {
-    console.log("희망 포지션", position);
-    console.log("입력한 내용:", textValue);
     setPosition(undefined);
     setTextValue("");
     onClose();

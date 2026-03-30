@@ -1,21 +1,15 @@
 "use client";
 import { Button, DeadlineBadge, StatusBadge } from "@/shared/ui";
-import { ProjectBadge } from "../ProjectBadge/ProjectBadge";
-import { LikeButton } from "../LikeButton/LikeButton";
-import { TechStackList } from "../TechStackList/TechStackList";
-import { PositionBadgeList } from "../PositionBadgeList/PositionBadgeList";
 import Image from "next/image";
-import { ProjectApplyModal } from "./ProjectApplyModal";
 import { useState } from "react";
 import {
-  ContactMethod,
-  PositionType,
-  ProjectCardProps,
-  ProjectHost,
-  ProjectStatus,
-  ProjectType,
-  TechStackType,
-} from "../../model";
+  LikeButton,
+  PositionBadgeList,
+  ProjectApplyModal,
+  ProjectBadge,
+  TechStackList,
+} from "@/features/projects/ui";
+import { ProjectCardProps } from "@/features/projects/model";
 
 export function ProjectCard({ data }: { data: ProjectCardProps }) {
   const {
