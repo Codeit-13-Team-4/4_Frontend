@@ -1,9 +1,10 @@
+"use client";
 import { Button, Modal } from "@/shared/ui";
 import { ProjectFilterRadioInput } from "./ProjectFilterRadioInput";
-import { ProjectFilterCheckboxInput } from "./ProejctFilterCheckBoxInput";
 import { useMultiSelect } from "../../hooks/useMultiSelect";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { ProjectFilterCheckBoxInput } from "./ProjectFilterCheckBoxInput";
 
 const statusOptions = [
   { value: "all", label: "전체" },
@@ -120,7 +121,7 @@ export function ProjectFilterModal({
                 <legend className="mb-5 text-gray-400">참여 목적</legend>
                 <ul className="flex flex-wrap gap-2">
                   {purposeOptions.map((item) => (
-                    <ProjectFilterCheckboxInput
+                    <ProjectFilterCheckBoxInput
                       key={item.value}
                       item={item}
                       selectedValues={projectType}
@@ -134,7 +135,7 @@ export function ProjectFilterModal({
                 <legend className="mb-5 text-gray-400">포지션</legend>
                 <ul className="flex flex-wrap gap-2">
                   {positionOptions.map((item) => (
-                    <ProjectFilterCheckboxInput
+                    <ProjectFilterCheckBoxInput
                       key={item.value}
                       item={item}
                       selectedValues={positions}

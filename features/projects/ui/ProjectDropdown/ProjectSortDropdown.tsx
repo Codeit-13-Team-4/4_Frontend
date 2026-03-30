@@ -1,5 +1,4 @@
 "use client";
-
 import { Dropdown } from "@/shared/ui";
 import { useState } from "react";
 import Image from "next/image";

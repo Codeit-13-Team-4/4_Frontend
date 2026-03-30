@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { TECH_STACK, TechStackType } from "../../model";
+import { TECH_STACK, TechStackType } from "@/features/projects/model";
 
 export function TechBadge({ tech }: { tech: TechStackType }) {
   const { icon, label } = TECH_STACK[tech];

@@ -1,4 +1,4 @@
-import { ProjectFilterOptions } from "../../model/project.types";
+import { ProjectFilterOptions } from "@/features/projects/model";
 
 type ProjectFilterRadioProps = {
   item: ProjectFilterOptions;
