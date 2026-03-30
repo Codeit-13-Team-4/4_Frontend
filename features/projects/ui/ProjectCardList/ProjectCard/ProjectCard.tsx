@@ -1,5 +1,10 @@
 "use client";
-import { Button, DeadlineBadge, StatusBadge } from "@/shared/ui";
+import {
+  Button,
+  DeadlineBadge,
+  GradientButton,
+  StatusBadge,
+} from "@/shared/ui";
 import Image from "next/image";
 import { useState } from "react";
 import {
@@ -26,7 +31,11 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const handleOpen = () => setIsOpen(true);
+  const handleOpen = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsOpen(true);
+  };
 
   const handleClose = () => {
     setIsOpen(false);
@@ -38,9 +47,8 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
           <StatusBadge status={status} />
           <ProjectBadge type={projectType} />
         </div>
-        <div>
-          <LikeButton />
-        </div>
+
+        <LikeButton />
       </header>
       <div className="flex flex-col gap-6">
         <section className="flex min-h-27.5 flex-col">
@@ -86,16 +94,9 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
             <span className="text-[14px] text-gray-400">{commentCount}</span>
           </div>
         </div>
-        <Button
-          size="sm"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            handleOpen();
-          }}
-        >
+        <GradientButton size="sm" onClick={handleOpen}>
           지원하기
-        </Button>
+        </GradientButton>
         <ProjectApplyModal
           isOpen={isOpen}
           onClose={handleClose}

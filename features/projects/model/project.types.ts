@@ -1,4 +1,8 @@
-import { POSITION_LABELS, TECH_STACK } from "./project.constants";
+import {
+  POSITION_LABELS,
+  SORT_LABEL,
+  TECH_STACK,
+} from "@/features/projects/model";
 
 export type ProjectFilterOptions = { value: string; label: string };
 
@@ -55,4 +59,7 @@ export type ProjectFilter = {
   status?: string;
   projectType?: string[];
   positions?: string[];
+  sort?: string;
 };
+
+export type ProjectSortType = keyof typeof SORT_LABEL;
