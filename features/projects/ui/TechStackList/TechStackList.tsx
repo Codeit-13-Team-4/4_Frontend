@@ -1,5 +1,5 @@
-import { TechStackType } from "../../model";
-import { TechBadge } from "../TechBadge/TechBadge";
+import { TechBadge } from "@/features/projects/ui";
+import { TechStackType } from "@/features/projects/model";
 
 export function TechStackList({ techs }: { techs: TechStackType[] }) {
   const maxVisible = 5;

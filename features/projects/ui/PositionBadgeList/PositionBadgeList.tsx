@@ -1,5 +1,5 @@
-import { PositionType } from "../../model";
-import PositionBadge from "../PositionBadge/PositionBadge";
+import { PositionType } from "@/features/projects/model";
+import PositionBadge from "./PositionBadge";
 
 export function PositionBadgeList({
   positions,

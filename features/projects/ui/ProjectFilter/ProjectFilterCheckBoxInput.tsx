@@ -1,4 +1,4 @@
-import { ProjectFilterOptions } from "../../model/project.types";
+import { ProjectFilterOptions } from "@/features/projects/model";
 
 type ProjectFilterCheckboxProps = {
   item: ProjectFilterOptions;
@@ -7,7 +7,7 @@ type ProjectFilterCheckboxProps = {
   name: string;
 };
 
-export function ProjectFilterCheckboxInput({
+export function ProjectFilterCheckBoxInput({
   item,
   selectedValues,
   onChange,

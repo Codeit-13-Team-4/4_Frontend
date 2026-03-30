@@ -4,8 +4,8 @@ export default function ProjectLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mx-auto w-full max-w-7xl flex-1 bg-gray-900">
-      <main className="h-full">{children}</main>
+    <div className="mx-auto min-h-screen w-full max-w-7xl flex-1 bg-gray-900">
+      <main className="h-full md:px-17 lg:px-0">{children}</main>
     </div>
   );
 }

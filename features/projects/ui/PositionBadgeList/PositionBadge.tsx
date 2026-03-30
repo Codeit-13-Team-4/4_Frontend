@@ -1,5 +1,5 @@
 import { cva } from "class-variance-authority";
-import { POSITION_LABELS, PositionType } from "../../model";
+import { POSITION_LABELS, PositionType } from "@/features/projects/model";
 
 const positionBadgeVariants = cva(
   "font-medium rounded-3xl bg-[#0F172A] inline-flex items-center px-3 py-1 gap-1 border text-[14px]",

@@ -1,8 +1,10 @@
-import { ProjectCardList } from "@/features/projects/ui/ProjectCardList/ProjectCardList";
-import { ProjectCreateButton } from "@/features/projects/ui/ProjectCreateButton/ProjectCreateButton";
-import { ProjectFilter } from "@/features/projects/ui/ProjectFilter/ProjectFilter";
-import { ProjectSortDropdown } from "@/features/projects/ui/ProjectSortDropdown/ProjectSortDropdown";
-import { SearchInput } from "@/features/projects/ui/SearchInput/SearchInput";
+import {
+  ProjectCardList,
+  ProjectCreateButton,
+  ProjectFilter,
+  ProjectSortDropdown,
+  SearchInput,
+} from "@/features/projects/ui";
 
 export default async function ProjectPage({
   searchParams,
@@ -24,8 +26,8 @@ export default async function ProjectPage({
   };
 
   return (
-    <main>
-      <div className="mb-6 flex items-center justify-between">
+    <main className="flex flex-col">
+      <div className="mb-6 items-center md:flex md:justify-between">
         <div>
           <h4 className="text-[30px] font-semibold text-gray-50">
             사이드 프로젝트
