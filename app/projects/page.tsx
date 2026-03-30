@@ -23,6 +23,7 @@ export default async function ProjectPage({
       typeof params.positions === "string"
         ? [params.positions]
         : params.positions,
+    sort: typeof params.sort === "string" ? params.sort : undefined,
   };
 
   return (
