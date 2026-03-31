@@ -142,7 +142,7 @@ export function ProjectApplyModal({
           <AlertModal.Footer>
             <AlertModal.Cancel asChild>
               <Button
-                className="w-full"
+                className="h-full w-full"
                 onClick={(e) => {
                   e.stopPropagation();
                   setPosition(undefined);

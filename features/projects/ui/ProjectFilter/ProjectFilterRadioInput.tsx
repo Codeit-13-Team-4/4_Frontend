@@ -4,7 +4,7 @@ import { cn } from "@/shared/utils";
 type ProjectFilterRadioProps = {
   item: ProjectFilterOptions;
   name: "status" | "projectType" | "position";
-  selectedValue: string;
+  selectedValue: string | undefined;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   className?: string;
 };
