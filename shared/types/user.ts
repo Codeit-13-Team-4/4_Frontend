@@ -1,14 +1,14 @@
 export type AccountType = "local" | "google" | "github" | "kakao";
 
 export type JobLabelType =
-  | "PM"
-  | "Marketer"
-  | "FE"
-  | "BE"
-  | "Designer"
-  | "iOS"
-  | "Android"
-  | "DevOps";
+  | "pm"
+  | "marketer"
+  | "fe"
+  | "be"
+  | "designer"
+  | "ios"
+  | "android"
+  | "devops";
 
 export interface User {
   id: number;
