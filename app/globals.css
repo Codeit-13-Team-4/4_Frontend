@@ -210,3 +210,32 @@ body {
   }
   scrollbar-width: none;
 }
+
+@utility range-devup {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  background: transparent;
+
+  &::-webkit-slider-runnable-track {
+    background: transparent;
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 15px;
+    background: white;
+    border: 1px solid #00d7a0;
+    cursor: pointer;
+    margin-top: 10px;
+    z-index: 10;
+    transition: transform 0.15s ease;
+  }
+
+  &::-webkit-slider-thumb:active {
+    transform: scale(1.1);
+  }
+}
