@@ -5,6 +5,7 @@ import ProjectDetailLeftPanel from "@/features/projectsDetail/ui/ProjectDetailLe
 import ProjectDetailRightPanel from "@/features/projectsDetail/ui/ProjectDetailRightPanel";
 import { useProjectsDetail } from "@/features/projectsDetail/hooks/useProjectsDetail";
 import ProjectDetailFooter from "@/features/projectsDetail/ui/ProjectDetailFooter";
+import ProjectDetailCardSkeleton from "@/widgets/projectsDetail/ui/ProjectDetailCardSkeleton";
 import BackButton from "@/widgets/projectsDetail/ui/BackButton";
 import { notFound } from "next/navigation";
 
@@ -18,7 +19,7 @@ export default function ProjectDetailCard({
   const { data: project, isError } = useProjectsDetail(projectId);
 
   if (isError) notFound();
-  if (!project) return null;
+  if (!project) return <ProjectDetailCardSkeleton />;
 
   return (
     <>
