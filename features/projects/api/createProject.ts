@@ -1,22 +1,31 @@
-export async function createSideProject() {
+import {
+  ContactMethod,
+  PositionType,
+  ProjectType,
+  TechStackType,
+} from "../model";
+
+interface CreateSideProjectBody {
+  title: string;
+  description: string;
+  projectType: ProjectType;
+  techStacks: TechStackType[];
+  positions: PositionType[];
+  maxMembers: number;
+  recruitEndDate: string;
+  projectStartDate: string;
+  projectEndDate: string;
+  contactMethod: ContactMethod;
+  contactLink: string;
+}
+
+export async function createSideProject(body: CreateSideProjectBody) {
   const response = await fetch("/api/projects/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      title: "프로젝트 타입 필수값 체크입니다.",
-      description: "테스트에용",
-      projectType: "PORTFOLIO",
-      techStacks: ["JavaScript"],
-      positions: ["PM", "FE"],
-      maxMembers: 2,
-      recruitEndDate: "2026-03-30",
-      projectStartDate: "2026-03-26",
-      projectEndDate: "2026-05-01",
-      contactMethod: "KAKAO_OPEN_CHAT",
-      contactLink: "string",
-    }),
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {
