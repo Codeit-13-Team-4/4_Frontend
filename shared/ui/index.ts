@@ -35,3 +35,4 @@ export {
 export { Calendar } from "./Calendar/Calendar";
 export { DatePicker } from "./DatePicker/DatePicker";
 export { SidebarOverlay } from "./SidebarOverlay/SidebarOverlay";
+export { LikeButton } from "./LikeButton/LikeButton";
