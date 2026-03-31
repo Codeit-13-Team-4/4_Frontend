@@ -1,3 +1,5 @@
+import { ContactMethod } from "./project.types";
+
 export const TECH_STACK = {
   react: { label: "React", icon: "/icons/tech/react-icon.svg" },
   figma: { label: "Figma", icon: "/icons/tech/figma-icon.svg" },
@@ -60,4 +62,11 @@ export const SORT_LABEL = {
   createdAt: "최신순",
   viewCount: "조회수 순",
   recruitEndDate: "마감 임박순",
+};
+
+export const CONTACT_METHOD = {
+  kakao_open_chat: "오픈채팅",
+  email: "이메일",
+  discord: "디스코드",
+  google_form: "구글 폼",
 };
