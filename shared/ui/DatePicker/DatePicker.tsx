@@ -30,6 +30,7 @@ interface DatePickerRangeProps {
   onChange?: (range: DateRange | undefined) => void;
   placeholder?: string;
   className?: string;
+  showLabel?: boolean;
 }
 
 type DatePickerProps = DatePickerSingleProps | DatePickerRangeProps;
@@ -88,6 +89,7 @@ function RangeDatePicker({
   onChange,
   placeholder = "YYYY-MM-DD",
   className,
+  showLabel = true,
 }: DatePickerRangeProps) {
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState<DateRange | undefined>(value);
@@ -109,7 +111,9 @@ function RangeDatePicker({
       <PopoverTrigger asChild>
         <div className={cn("flex items-end gap-6", className)}>
           <div className="flex flex-1 flex-col gap-1">
-            <span className="text-sm font-medium text-gray-400">시작일</span>
+            {showLabel && (
+              <span className="text-sm font-medium text-gray-400">시작일</span>
+            )}
             <button className={triggerBase}>
               <Image
                 src="/common/icon/calendar.svg"
@@ -124,7 +128,9 @@ function RangeDatePicker({
             </button>
           </div>
           <div className="flex flex-1 flex-col gap-1">
-            <span className="text-sm font-medium text-gray-400">종료일</span>
+            {showLabel && (
+              <span className="text-sm font-medium text-gray-400">종료일</span>
+            )}
             <button className={triggerBase}>
               <Image
                 src="/common/icon/calendar.svg"
