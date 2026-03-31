@@ -1,6 +1,7 @@
-import { AlertModal, Button, CompleteAnimation } from "@/shared/ui";
+import { AlertModal, Button } from "@/shared/ui";
 import Link from "next/link";
 import { ProjectAlertModalProps } from "@/features/projects/model";
+import { CompleteAnimation } from "@/shared/ui/CompleteAnimation/CompleteAnimation";
 
 export function CreateAlertModal({
   open,
