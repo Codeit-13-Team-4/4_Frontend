@@ -6,6 +6,7 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient } from "./providers/getQueryClient";
 import { QueryProvider } from "./providers/QueryProvider";
 import { getMeServer } from "@/features/auth/api/getMeServer";
+import Header from "@/widgets/layout/Header/ui/Header";
 
 const pretendard = localFont({
   src: "../fonts/PretendardVariable.woff2",
@@ -30,6 +31,7 @@ export default async function RootLayout({
       <body className={cn("", pretendard.className)}>
         <QueryProvider>
           <HydrationBoundary state={dehydrate(queryClient)}>
+            <Header />
             {children}
             <AlertModalGlobal />
           </HydrationBoundary>
