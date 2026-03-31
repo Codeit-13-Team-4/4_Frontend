@@ -1,11 +1,17 @@
-export type SocialProvider = "kakao" | "google" | "github";
+import { Get } from "@/shared/api";
 
-const SOCIAL_LOGIN_PATH: Record<SocialProvider, string> = {
-  kakao: "/auth/oauth/kakao",
-  google: "/auth/oauth/google",
-  github: "/auth/oauth/github",
-};
+export type SocialType = "kakao" | "google" | "github";
+
+export interface SocialProvider {
+  type: SocialType;
+  redirectUri: string | undefined;
+}
+
+interface SocialLoginResponse {
+  url: string;
+}
 
 export function getSocialLoginUrl(provider: SocialProvider) {
-  return `${process.env.NEXT_PUBLIC_API_BASE_URL}${SOCIAL_LOGIN_PATH[provider]}`;
+  const url = `/api/auth/oauth?type=${provider.type}&redirectUri=${encodeURIComponent(provider.redirectUri ?? "")}`;
+  return Get<SocialLoginResponse>(url);
 }

@@ -4,12 +4,13 @@ import Image from "next/image";
 import { useState } from "react";
 import {
   getSocialLoginUrl,
-  type SocialProvider,
+  type SocialType,
 } from "@/features/auth/api/getSocialLoginUrl";
 import { Button } from "@/shared/ui";
+import { toast } from "@/shared/utils/toast/toast";
 
 interface SocialButton {
-  provider: SocialProvider;
+  provider: SocialType;
   label: string;
   className: string;
   logo: string;
@@ -40,13 +41,34 @@ const SOCIAL_BUTTONS: SocialButton[] = [
 export default function SocialLoginButtons() {
   const [isPending, setIsPending] = useState(false);
 
-  const handleSocialLogin = (provider: SocialProvider) => {
-    if (isPending) return;
+  const kakaoRedirectUri = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
+  const googleRedirectUri = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI;
+  const githubRedirectUri = process.env.NEXT_PUBLIC_GITHUB_REDIRECT_URI;
 
+  const redirectUriMap = {
+    google: googleRedirectUri,
+    kakao: kakaoRedirectUri,
+    github: githubRedirectUri,
+  };
+
+  const handleSocialLogin = async (provider: SocialType) => {
+    if (isPending) return;
     setIsPending(true);
 
-    const startUrl = getSocialLoginUrl(provider);
-    window.location.assign(startUrl);
+    const socialLoginReqJson = {
+      //요청 보내는거 하나의 변수로 묶음
+      type: provider,
+      redirectUri: redirectUriMap[provider],
+    };
+
+    if (!redirectUriMap[provider]) {
+      //uri가 없는 경우 - 예외처리
+      toast("로그인 도중 문제가 발생했습니다.");
+      return;
+    }
+
+    const { url } = await getSocialLoginUrl(socialLoginReqJson); //응답값 = 요청보낼 값 파라미터로 타입, 리다이렉트uri호출
+    window.location.replace(url); //구조분해한걸로 이동
   };
 
   return (
