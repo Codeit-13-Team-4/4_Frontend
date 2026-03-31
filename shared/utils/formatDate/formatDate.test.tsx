@@ -1,0 +1,19 @@
+import { formatDate } from "./formatDate";
+
+describe("formatDate 유틸 함수 테스트", () => {
+  describe("formatDate 함수가 올바르게 작동하는지 테스트", () => {
+    test("Date 객체를 yyyy-MM-dd 형식의 문자열로 반환한다.", () => {
+      const date = new Date(2026, 2, 30);
+      expect(formatDate(date)).toBe("2026-03-30");
+    });
+
+    test("월과 일이 한 자리일 때 앞에 0을 붙여 반환한다.", () => {
+      const date = new Date(2026, 0, 5);
+      expect(formatDate(date)).toBe("2026-01-05");
+    });
+
+    test("undefined를 넣으면 undefined를 반환한다.", () => {
+      expect(formatDate(undefined)).toBeUndefined();
+    });
+  });
+});
