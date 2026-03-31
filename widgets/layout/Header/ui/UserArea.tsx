@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { cn } from "@/shared/utils";
-import { User } from "@/shared/types/user";
 import Link from "next/link";
 import Image from "next/image";
 import NotificationDropdown from "@/features/notification/ui/NotificationDropdown";
@@ -10,17 +9,16 @@ import NotificationSidebar from "@/features/notification/ui/NotificationSidebar"
 import { useNotifications } from "@/features/notification/hooks/useNotifications";
 import UserProfileMenu from "./UserProfileMenu";
 import Sidebar from "./Sidebar";
+import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 
-interface UserAreaProps {
-  userData: User | undefined;
-}
-
-export default function UserArea({ userData }: UserAreaProps) {
+export default function UserArea() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
-  const { data } = useNotifications();
-  const notifications = data?.pages.flatMap((page) => page.data) ?? [];
+  const { data: userData } = useUserData();
+  const { data: notificationsData } = useNotifications();
+  const notifications =
+    notificationsData?.pages.flatMap((page) => page.data) ?? [];
   const hasUnread = notifications.some((n) => !n.isRead);
 
   return (
