@@ -4,14 +4,16 @@ import { Avatar, AvatarFallback, AvatarImage, Dropdown } from "@/shared/ui";
 import { User } from "@/shared/types/user";
 import Image from "next/image";
 import Link from "next/link";
+import { useLogout } from "@/features/auth/hooks/queries/useLogout";
 
 interface UserProfileMenuProps {
   userData: User;
 }
 
 export default function UserProfileMenu({ userData }: UserProfileMenuProps) {
+  const { mutate: logoutMutate } = useLogout();
   const handleLogout = () => {
-    // TODO: 로그아웃 API 연동 후 구현
+    logoutMutate();
   };
 
   return (
