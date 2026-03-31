@@ -1,4 +1,5 @@
 import {
+  CONTACT_METHOD,
   POSITION_LABELS,
   SORT_LABEL,
   TECH_STACK,
@@ -9,6 +10,7 @@ export type ProjectFilterOptions = { value: string; label: string };
 export type TechStackType = keyof typeof TECH_STACK;
 
 export type PositionType = keyof typeof POSITION_LABELS;
+export type ContactMethod = keyof typeof CONTACT_METHOD;
 
 export type ProjectType =
   | "portfolio"
@@ -16,8 +18,6 @@ export type ProjectType =
   | "hackathon"
   | "startup"
   | "other";
-
-export type ContactMethod = "kakao_open_chat" | "notion" | "discord";
 
 export type ProjectStatus =
   | "recruiting"
@@ -63,3 +63,8 @@ export type ProjectFilter = {
 };
 
 export type ProjectSortType = keyof typeof SORT_LABEL;
+
+export interface ProjectAlertModalProps {
+  open: boolean;
+  onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
+}
