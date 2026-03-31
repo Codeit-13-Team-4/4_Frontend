@@ -1,5 +1,4 @@
-import { getQueryClient } from "@/app/providers/getQueryClient";
-import { getProjectDetail } from "@/features/projectsDetail/api/getProjectsDetail";
+import ProjectDetailCard from "@/widgets/projectsDetail/ui/ProjectDetailCard";
 
 export default async function ProjectsDetailPage({
   params,
@@ -9,11 +8,5 @@ export default async function ProjectsDetailPage({
   const { projectId } = await params;
   const id = Number(projectId);
 
-  const queryClient = getQueryClient();
-  await queryClient.prefetchQuery({
-    queryKey: ["projects", id],
-    queryFn: () => getProjectDetail(id),
-  });
-
-  return <div>Projects Detail Page입니다</div>;
+  return <ProjectDetailCard projectId={id} />;
 }
