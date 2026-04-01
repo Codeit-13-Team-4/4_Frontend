@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/shared/ui";
-import { createSideProject } from "../../api/createProject";
+import { createSideProject } from "../../api/createSideProject";
 import Link from "next/link";
 
 export function ProjectCreateButton() {
