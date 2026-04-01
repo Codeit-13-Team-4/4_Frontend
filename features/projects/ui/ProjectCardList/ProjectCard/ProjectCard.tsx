@@ -51,7 +51,7 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
   return (
     <article
       onClick={handleCardClick}
-      className="flex h-100 w-104.5 cursor-pointer flex-col gap-4 rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5 md:h-130.5 md:w-85.5 lg:h-133"
+      className="flex h-120 w-104.5 cursor-pointer flex-col gap-4 rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5 md:h-130.5 md:w-85.5 lg:h-133 lg:w-104.5"
     >
       <header className="flex items-center justify-between">
         <div className="flex gap-2">
@@ -64,7 +64,9 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
       <div className="flex flex-col gap-6">
         <section className="flex flex-col lg:min-h-27.5">
           <div className="mb-2 flex items-center justify-between">
-            <h4 className="line-clamp-2 text-[20px] text-gray-50">{title}</h4>
+            <h4 className="line-clamp-1 text-[20px] text-gray-50 lg:line-clamp-2">
+              {title}
+            </h4>
             <DeadlineBadge
               endDate={recruitEndDate}
               className="self-start text-nowrap"

@@ -6,7 +6,7 @@ export function TechStackList({ techs }: { techs: TechStackType[] }) {
   const visibleTechs = techs.slice(0, maxVisible);
   const remaining = techs.length - maxVisible;
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2 lg:flex">
       {visibleTechs.map((tech, index) => (
         <TechBadge key={`${tech}-${index}`} tech={tech} />
       ))}
