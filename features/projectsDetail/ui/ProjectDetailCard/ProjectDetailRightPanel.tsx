@@ -1,5 +1,5 @@
 import type { ProjectDetail } from "@/features/projectsDetail/types/projectsDetail";
-import { Progress } from "@/shared/ui";
+import { Progress, Separator } from "@/shared/ui";
 import Image from "next/image";
 import {
   PositionBadge,
@@ -49,6 +49,8 @@ export default function ProjectDetailRightPanel({
           ))}
         </div>
       </div>
+
+      <Separator className="my-10 hidden bg-gray-700 lg:block" />
 
       <div className="flex items-center gap-1.5 text-sm text-gray-500 lg:text-lg">
         <Image
