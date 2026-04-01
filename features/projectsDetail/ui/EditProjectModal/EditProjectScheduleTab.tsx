@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { type DateRange } from "react-day-picker";
-import { Field, FieldGroup, FieldLabel, Input } from "@/shared/ui";
+import { Field, FieldGroup, FieldLabel, FieldError, Input } from "@/shared/ui";
 import { DatePicker } from "@/shared/ui/DatePicker/DatePicker";
 import { CONTACT_METHOD } from "@/features/projectsDetail/model/projects.constants";
 import type { ContactMethodType } from "@/features/projectsDetail/types/projectsDetail";
@@ -15,7 +15,11 @@ const CONTACT_METHOD_ENTRIES = Object.entries(CONTACT_METHOD) as [
 ][];
 
 export function EditProjectScheduleTab() {
-  const { register, control } = useFormContext<EditFormValues>();
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext<EditFormValues>();
   const [contactOpen, setContactOpen] = useState(false);
   const contactRef = useRef<HTMLDivElement>(null);
 
@@ -138,6 +142,9 @@ export function EditProjectScheduleTab() {
           placeholder="연락 링크를 입력해주세요"
           {...register("contactLink")}
         />
+        {errors.contactLink && (
+          <FieldError>{errors.contactLink.message}</FieldError>
+        )}
       </Field>
 
       {/* 모집 인원 */}
@@ -147,9 +154,12 @@ export function EditProjectScheduleTab() {
           type="number"
           min={1}
           placeholder="모집 인원을 입력해주세요"
-          {...register("maxMembers", { valueAsNumber: true })}
           className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+          {...register("maxMembers", { valueAsNumber: true })}
         />
+        {errors.maxMembers && (
+          <FieldError>{errors.maxMembers.message}</FieldError>
+        )}
       </Field>
     </FieldGroup>
   );
