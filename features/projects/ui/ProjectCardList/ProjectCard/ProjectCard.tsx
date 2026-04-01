@@ -1,10 +1,5 @@
 "use client";
-import {
-  Button,
-  DeadlineBadge,
-  GradientButton,
-  StatusBadge,
-} from "@/shared/ui";
+import { DeadlineBadge, GradientButton, StatusBadge } from "@/shared/ui";
 import Image from "next/image";
 import { useState } from "react";
 import {
@@ -56,7 +51,7 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
   return (
     <article
       onClick={handleCardClick}
-      className="flex h-133 w-104.5 cursor-pointer flex-col gap-4 rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5"
+      className="flex h-100 w-104.5 cursor-pointer flex-col gap-4 rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5 md:h-130.5 md:w-85.5 lg:h-133"
     >
       <header className="flex items-center justify-between">
         <div className="flex gap-2">
@@ -67,7 +62,7 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
         <LikeButton />
       </header>
       <div className="flex flex-col gap-6">
-        <section className="flex min-h-27.5 flex-col">
+        <section className="flex flex-col lg:min-h-27.5">
           <div className="mb-2 flex items-center justify-between">
             <h4 className="line-clamp-2 text-[20px] text-gray-50">{title}</h4>
             <DeadlineBadge
@@ -75,11 +70,11 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
               className="self-start text-nowrap"
             />
           </div>
-          <p className="line-clamp-2 text-[14px] text-gray-400">
+          <p className="hidden text-[14px] text-gray-400 md:visible md:line-clamp-1 lg:line-clamp-2">
             {description}
           </p>
         </section>
-        <section className="min-h-26">
+        <section className="lg:min-h-26">
           <h5 className="mb-2 text-[16px] text-gray-400">기술스택</h5>
           <TechStackList techs={techStacks} />
         </section>
@@ -111,13 +106,18 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
           </div>
         </div>
 
-        <GradientButton size="sm" onClick={handleOpen}>
+        <GradientButton
+          size="sm"
+          onClick={handleOpen}
+          disabled={status === "recruitment_closed"}
+        >
           지원하기
         </GradientButton>
         <ProjectApplyModal
           isOpen={isOpen}
           onClose={handleClose}
           setIsOpen={setIsOpen}
+          projectId={String(id)}
         />
       </footer>
     </article>

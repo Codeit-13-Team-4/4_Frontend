@@ -54,6 +54,7 @@ export default async function ProjectPage({
       </div>
 
       <ProjectCardList filters={filters} />
+      <div className="pointer-events-none fixed bottom-0 z-50 h-68 w-full bg-linear-to-b from-gray-900/0 to-gray-900" />
     </main>
   );
 }

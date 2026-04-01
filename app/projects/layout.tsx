@@ -1,3 +1,5 @@
+import { ToastContainer } from "@/shared/ui/Toast/Toast";
+
 export default function ProjectLayout({
   children,
 }: {
