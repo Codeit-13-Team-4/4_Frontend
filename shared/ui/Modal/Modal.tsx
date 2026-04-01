@@ -97,9 +97,17 @@ function ModalHeader({ className, ...props }: React.ComponentProps<"div">) {
   return <div className={cn("flex flex-col gap-2", className)} {...props} />;
 }
 
-function ModalBody({ className, children }: React.ComponentProps<"div">) {
+function ModalBody({
+  className,
+  children,
+  scrollbarClassName,
+}: React.ComponentProps<"div"> & { scrollbarClassName?: string }) {
   return (
-    <ScrollArea className="max-h-[50vh]" type="always">
+    <ScrollArea
+      className="max-h-[50vh]"
+      type="always"
+      scrollbarClassName={scrollbarClassName}
+    >
       <div
         data-slot="dialog-body"
         className={cn("flex flex-col gap-6", className)}
