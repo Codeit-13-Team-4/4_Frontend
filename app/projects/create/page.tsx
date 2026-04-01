@@ -1,7 +1,7 @@
-import { Field, FieldLabel, Input, Label } from "@/shared/ui";
+import { Field, FieldLabel, Input } from "@/shared/ui";
 import Image from "next/image";
 
-export default function ProjectCreatePage() {
+export default async function ProjectCreatePage() {
   return (
     <div className="text-gray-400">
       <Image
