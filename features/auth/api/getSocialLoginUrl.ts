@@ -1,5 +1,3 @@
-import { Get } from "@/shared/api";
-
 export type SocialType = "kakao" | "google" | "github";
 
 export interface SocialProvider {
@@ -7,11 +5,10 @@ export interface SocialProvider {
   redirectUri: string | undefined;
 }
 
-interface SocialLoginResponse {
-  url: string;
-}
-
 export function getSocialLoginUrl(provider: SocialProvider) {
-  const url = `/api/auth/oauth?type=${provider.type}&redirectUri=${encodeURIComponent(provider.redirectUri ?? "")}`;
-  return Get<SocialLoginResponse>(url);
+  const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+  return `${BASE_URL}/auth/oauth2?type=${provider.type}&redirect_uri=${encodeURIComponent(
+    provider.redirectUri ?? "",
+  )}`;
 }

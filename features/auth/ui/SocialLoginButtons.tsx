@@ -67,8 +67,9 @@ export default function SocialLoginButtons() {
       return;
     }
 
-    const { url } = await getSocialLoginUrl(socialLoginReqJson); //응답값 = 요청보낼 값 파라미터로 타입, 리다이렉트uri호출
-    window.location.replace(url); //구조분해한걸로 이동
+    const socialLoginUrl = getSocialLoginUrl(socialLoginReqJson);
+    //응답값 = 요청보낼 값 파라미터로 타입, 리다이렉트uri호출
+    window.location.replace(socialLoginUrl);
   };
 
   return (
