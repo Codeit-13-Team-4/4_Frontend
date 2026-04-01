@@ -55,7 +55,11 @@ export type PositionType =
   | "android"
   | "devops";
 
-export type ContactMethodType = "kakao_open_chat" | "notion" | "discord";
+export type ContactMethodType =
+  | "kakao_open_chat"
+  | "email "
+  | "google_form"
+  | "discord";
 
 export type ProjectStatusType =
   | "recruiting"
