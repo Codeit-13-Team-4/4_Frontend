@@ -5,7 +5,7 @@ import { Avatar, AvatarImage, AvatarFallback, Button } from "@/shared/ui";
 import Image from "next/image";
 import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import { useCreateProjectsDetailComment } from "@/features/projectsDetail/hooks/useCreateProjectsDetailComment";
-import CommentInputSkeleton from "@/features/projectsDetail/ui/CommentInputSkeleton";
+import CommentInputSkeleton from "@/features/projectsDetail/ui/Comment/CommentInputSkeleton";
 
 interface CommentInputProps {
   projectId: number;

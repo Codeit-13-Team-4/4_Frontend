@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import type { InfiniteData } from "@tanstack/react-query";
 import type { CommentsResponse } from "@/features/projectsDetail/types/comment";
-import CommentItem from "@/features/projectsDetail/ui/CommentItem";
-import CommentEmpty from "@/features/projectsDetail/ui/CommentEmpty";
+import CommentItem from "@/features/projectsDetail/ui/Comment/CommentItem";
+import CommentEmpty from "@/features/projectsDetail/ui/Comment/CommentEmpty";
 import { Spinner } from "@/shared/ui";
 
 interface CommentListProps {
