@@ -6,9 +6,9 @@ export default function ProjectLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="mx-auto w-full max-w-7xl px-4 py-8 md:px-6 lg:px-8">
+    <div className="mx-auto min-h-screen w-full max-w-7xl flex-1">
       <ToastContainer />
-      {children}
-    </main>
+      <main className="h-full px-4 pt-12 md:px-6 lg:px-0">{children}</main>
+    </div>
   );
 }
