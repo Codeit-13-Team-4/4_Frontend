@@ -4,14 +4,17 @@ import { ScrollArea as ScrollAreaPrimitive } from "radix-ui";
 function ScrollArea({
   className,
   children,
+  scrollbarClassName,
   ...props
-}: React.ComponentProps<typeof ScrollAreaPrimitive.Root>) {
+}: React.ComponentProps<typeof ScrollAreaPrimitive.Root> & {
+  scrollbarClassName?: string;
+}) {
   return (
     <ScrollAreaPrimitive.Root className={cn("relative", className)} {...props}>
       <ScrollAreaPrimitive.Viewport className="focus-visible:ring-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1">
         {children}
       </ScrollAreaPrimitive.Viewport>
-      <ScrollBar />
+      <ScrollBar className={scrollbarClassName} />
     </ScrollAreaPrimitive.Root>
   );
 }
