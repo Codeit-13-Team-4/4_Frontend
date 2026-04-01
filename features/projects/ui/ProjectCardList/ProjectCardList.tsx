@@ -45,7 +45,7 @@ export function ProjectCardList({ filters }: { filters?: ProjectFilter }) {
     );
 
   return (
-    <div className="flex flex-wrap justify-center gap-3 md:mt-6 lg:justify-start">
+    <div className="flex flex-wrap justify-center gap-3 md:mt-6 md:justify-start">
       {cardData?.map((item) => {
         return <ProjectCard data={item} key={item.id} />;
       })}
