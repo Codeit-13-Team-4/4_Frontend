@@ -1,12 +1,10 @@
 import { ProjectFilterOptions } from "@/features/projects/model";
-import { cn } from "@/shared/utils";
 
 type ProjectFilterRadioProps = {
   item: ProjectFilterOptions;
   name: "status" | "projectType" | "position";
   selectedValue: string | undefined;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
-  className?: string;
 };
 
 export function ProjectFilterRadioInput({
@@ -14,7 +12,6 @@ export function ProjectFilterRadioInput({
   item,
   selectedValue,
   onChange,
-  className,
 }: ProjectFilterRadioProps) {
   return (
     <li>
@@ -29,10 +26,7 @@ export function ProjectFilterRadioInput({
       />
       <label
         htmlFor={`${name}_${item.value}`}
-        className={cn(
-          "peer-checked:bg-mint-500 inline-block cursor-pointer rounded-full border border-gray-700 bg-gray-900 px-2 py-1 text-gray-400 peer-checked:text-gray-50",
-          className,
-        )}
+        className="peer-checked:bg-mint-500 inline-block cursor-pointer rounded-full border border-gray-700 bg-gray-900 p-2 text-gray-400 peer-checked:text-gray-50 md:px-2 md:py-1"
       >
         {item.label}
       </label>

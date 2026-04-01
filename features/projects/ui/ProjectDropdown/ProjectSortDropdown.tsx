@@ -15,6 +15,10 @@ export function ProjectSortDropdown() {
   const handleChange = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     if (value && value !== "createdAt") {
+      if (value === "recruitEndDate") {
+        params.set("status", "recruiting");
+        params.set("order", "ASC");
+      }
       params.set("sort", value);
     } else {
       params.delete("sort");
