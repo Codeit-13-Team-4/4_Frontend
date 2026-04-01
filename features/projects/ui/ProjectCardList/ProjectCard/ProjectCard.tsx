@@ -30,6 +30,9 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
   const router = useRouter();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [alertOpen, setAlertOpen] = useState<boolean>(false);
+  const [confirmAlertOpen, setConfirmAlertOpen] = useState<boolean>(false);
+
   const { data: userData } = useUserData();
 
   const handleOpen = (e: React.MouseEvent) => {
@@ -42,7 +45,7 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
   };
 
   const handleCardClick = () => {
-    if (isOpen) return;
+    if (isOpen || alertOpen || confirmAlertOpen) return;
     router.push(`/projects/${id}`);
   };
   const handleClose = () => {
@@ -115,11 +118,16 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
         >
           지원하기
         </GradientButton>
+
         <ProjectApplyModal
           isOpen={isOpen}
-          onClose={handleClose}
           setIsOpen={setIsOpen}
+          onClose={handleClose}
           projectId={String(id)}
+          alertOpen={alertOpen}
+          setAlertOpen={setAlertOpen}
+          confirmAlertOpen={confirmAlertOpen}
+          setConfirmAlertOpen={setConfirmAlertOpen}
         />
       </footer>
     </article>

@@ -17,20 +17,27 @@ import { toast } from "@/shared/utils";
 type ProjectPositionModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   projectId: string;
+  alertOpen: boolean;
+  setAlertOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  confirmAlertOpen: boolean;
+  setConfirmAlertOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
 export function ProjectApplyModal({
   isOpen,
   onClose,
   setIsOpen,
   projectId,
+  alertOpen,
+  setAlertOpen,
+  confirmAlertOpen,
+  setConfirmAlertOpen,
 }: ProjectPositionModalProps) {
   const [textValue, setTextValue] = useState<string>("");
   const [position, setPosition] = useState<PositionType | undefined>(undefined);
 
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [confirmAlertOpen, setConfirmAlertOpen] = useState(false);
   const router = useRouter();
 
   const handleReset = () => {
@@ -172,7 +179,7 @@ export function ProjectApplyModal({
               onClick={(e) => {
                 e.stopPropagation();
                 setConfirmAlertOpen(false);
-                setIsOpen?.(true);
+                setIsOpen(true);
               }}
             >
               이어서 작성하기
