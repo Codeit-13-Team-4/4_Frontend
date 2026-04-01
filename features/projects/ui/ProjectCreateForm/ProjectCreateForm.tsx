@@ -30,8 +30,8 @@ import Image from "next/image";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { formatDate } from "@/shared/utils";
-import { createSideProject } from "@/features/projects/api/createProject";
 import { useRouter } from "next/navigation";
+import { useCreateProject } from "../../hooks/useCreateProject";
 
 type CreateFormErrors = {
   title?: string;
@@ -43,6 +43,7 @@ type CreateFormErrors = {
   projectRange?: string;
   contactLink?: string;
   contactMethod?: string;
+  maxMembers?: string;
 };
 
 interface CreateFormState {
@@ -85,6 +86,9 @@ export function ProjectCreateForm() {
   };
 
   const router = useRouter();
+  const { mutate, isPending } = useCreateProject(() =>
+    setCreateAlertOpen(true),
+  );
 
   const handleBack = () => {
     if (window.history.length > 1) {
@@ -115,6 +119,9 @@ export function ProjectCreateForm() {
     if (!createForm.recruitEndDate) {
       newErrors.recruitEndDate = "모집 마감일을 설정해주세요.";
     }
+    if (createForm.maxMembers === 0) {
+      newErrors.maxMembers = "모집 정원을 설정해주세요.";
+    }
     if (!createForm.projectRange?.from || !createForm.projectRange?.to) {
       newErrors.projectRange = "진행 기간을 설정해주세요.";
     }
@@ -142,8 +149,7 @@ export function ProjectCreateForm() {
         contactLink: createForm.contactLink,
       };
 
-      setCreateAlertOpen(true);
-      createSideProject(data);
+      mutate(data);
     }
   };
 
@@ -304,6 +310,7 @@ export function ProjectCreateForm() {
               count={createForm.maxMembers}
               setCount={(count) => updateForm("maxMembers", count)}
             />
+            {errors.maxMembers && <FieldError>{errors.maxMembers}</FieldError>}
           </Field>
 
           <Field>
@@ -339,6 +346,7 @@ export function ProjectCreateForm() {
           variant="primary"
           className="w-50"
           onClick={handleSubmit}
+          disabled={isPending}
         >
           개설하기
         </Button>

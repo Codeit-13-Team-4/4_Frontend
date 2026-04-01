@@ -65,7 +65,7 @@ export function ProjectCreateTagInput({
           </ul>
         )}
       </div>
-      <ul>
+      <ul className="flex gap-1">
         {tags?.map((item) => {
           const { label } = TECH_STACK[item];
 
