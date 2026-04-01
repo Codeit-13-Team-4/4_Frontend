@@ -5,6 +5,7 @@ import { useInView } from "react-intersection-observer";
 import type { InfiniteData } from "@tanstack/react-query";
 import type { CommentsResponse } from "@/features/projectsDetail/types/comment";
 import CommentItem from "@/features/projectsDetail/ui/CommentItem";
+import CommentEmpty from "@/features/projectsDetail/ui/CommentEmpty";
 import { Spinner } from "@/shared/ui";
 
 interface CommentListProps {
@@ -31,6 +32,10 @@ export default function CommentList({
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const comments = data.pages.flatMap((page) => page.data);
+
+  if (comments.length === 0) {
+    return <CommentEmpty />;
+  }
 
   return (
     <>
