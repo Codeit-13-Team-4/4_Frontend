@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ProjectFilterButton } from "./ProjectFilterButton";
 import { ProjectFilterModal } from "./ProjectFilterModal";
 
-const filterMenu = ["모집 상태", "인원 수", "모집 방식"];
+const filterMenu = ["모집 상태", "참여 목적", "모집 방식"];
 
 export function ProjectFilter() {
   const [isOpen, setIsOpen] = useState<boolean>(false);

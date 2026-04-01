@@ -60,6 +60,8 @@ export type ProjectFilter = {
   projectType?: string[];
   positions?: string[];
   sort?: string;
+  start?: number;
+  perPage?: number;
 };
 
 export type ProjectSortType = keyof typeof SORT_LABEL;

@@ -11,32 +11,53 @@ import { useRouter } from "next/navigation";
 import { PositionType } from "@/features/projects/model";
 import { ProjectPositionDropdown } from "@/features/projects/ui";
 import { CompleteAnimation } from "@/shared/ui/CompleteAnimation/CompleteAnimation";
+import { applicationsProject } from "@/features/projects/api/applicationsProject";
+import { toast } from "@/shared/utils";
 
 type ProjectPositionModalProps = {
   isOpen: boolean;
   onClose: () => void;
   setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  projectId: string;
 };
 export function ProjectApplyModal({
   isOpen,
   onClose,
   setIsOpen,
+  projectId,
 }: ProjectPositionModalProps) {
   const [textValue, setTextValue] = useState<string>("");
   const [position, setPosition] = useState<PositionType | undefined>(undefined);
+
   const [alertOpen, setAlertOpen] = useState(false);
   const [confirmAlertOpen, setConfirmAlertOpen] = useState(false);
-
   const router = useRouter();
 
-  const handleSubmit = () => {
+  const handleReset = () => {
     setPosition(undefined);
     setTextValue("");
-    onClose();
-    setAlertOpen(true);
   };
 
-  const handleCancelClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async () => {
+    if (!projectId || !position) return;
+
+    try {
+      await applicationsProject({ projectId, position, motivation: textValue });
+      setPosition(undefined);
+      handleReset();
+      setAlertOpen(true);
+      onClose();
+    } catch (error) {
+      onClose();
+      handleReset();
+      const err = error as { status?: number; message?: string };
+      if (err.status === 409) {
+        toast(err.message!, { variant: "error" });
+      }
+    }
+  };
+
+  const handleCancelClick = () => {
     onClose();
     setConfirmAlertOpen(true);
   };
@@ -72,7 +93,7 @@ export function ProjectApplyModal({
               variant="default"
               className="flex-1 text-[20px]"
               size="lg"
-              onClick={(e) => handleCancelClick(e)}
+              onClick={handleCancelClick}
             >
               취소
             </Button>
@@ -136,11 +157,10 @@ export function ProjectApplyModal({
           <AlertModal.Footer>
             <AlertModal.Cancel asChild>
               <Button
-                className="w-full"
+                className="h-full w-full"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setPosition(undefined);
-                  setTextValue("");
+                  handleReset();
                   setConfirmAlertOpen(false);
                 }}
               >
