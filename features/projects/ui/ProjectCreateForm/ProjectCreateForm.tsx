@@ -161,7 +161,7 @@ export function ProjectCreateForm() {
   };
 
   return (
-    <div className="pt-12 text-gray-400">
+    <div className="text-gray-400">
       <button onClick={handleBack} className="cursor-pointer">
         <Image
           src="/icons/common/chevron_left-icon.svg"
@@ -325,6 +325,7 @@ export function ProjectCreateForm() {
             <Input
               type="text"
               value={createForm.contactLink}
+              placeholder="연락 링크"
               onChange={(e) => updateForm("contactLink", e.target.value)}
             />
             {errors.contactLink && (
