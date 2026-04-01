@@ -3,7 +3,7 @@ import { cva, VariantProps } from "class-variance-authority";
 import { Avatar as AvatarPrimitive } from "radix-ui";
 
 const avatarVariants = cva(
-  "relative flex shrink-0 overflow-hidden rounded-full bg-gray-200",
+  "relative flex shrink-0 overflow-hidden rounded-full bg-gray-800 border-border-default border",
   {
     variants: {
       size: {
