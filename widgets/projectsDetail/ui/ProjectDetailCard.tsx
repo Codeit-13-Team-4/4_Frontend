@@ -1,10 +1,12 @@
 "use client";
 
-import ProjectDetailHeader from "@/features/projectsDetail/ui/ProjectDetailHeader";
-import ProjectDetailLeftPanel from "@/features/projectsDetail/ui/ProjectDetailLeftPanel";
-import ProjectDetailRightPanel from "@/features/projectsDetail/ui/ProjectDetailRightPanel";
+import {
+  ProjectDetailHeader,
+  ProjectDetailLeftPanel,
+  ProjectDetailRightPanel,
+  ProjectDetailFooter,
+} from "@/features/projectsDetail/ui/ProjectDetailCard";
 import { useProjectsDetail } from "@/features/projectsDetail/hooks/useProjectsDetail";
-import ProjectDetailFooter from "@/features/projectsDetail/ui/ProjectDetailFooter";
 import ProjectDetailCardSkeleton from "@/widgets/projectsDetail/ui/ProjectDetailCardSkeleton";
 import BackButton from "@/widgets/projectsDetail/ui/BackButton";
 import DeleteProjectButton from "@/widgets/projectsDetail/ui/DeleteProjectButton";
