@@ -34,6 +34,7 @@ export default function LoginForm() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isPasswordUpdated, setIsPasswordUpdated] = useState(false);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -50,7 +51,8 @@ export default function LoginForm() {
   const isValid = !emailError && !passwordError;
   const isSubmitDisabled = !isValid || isPending;
 
-  const shouldShowError = (value: string) => isSubmitted || value.length > 0;
+  const shouldShowError = (value: string) =>
+    isSubmitted || value.length > 0 || isPasswordUpdated;
 
   const getInputClassName = (hasError: boolean) =>
     hasError
@@ -58,6 +60,7 @@ export default function LoginForm() {
       : "border border-gray-700 bg-gray-800 ";
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsPasswordUpdated(true);
     const { name, value } = e.target;
 
     setForm((prev) => ({
@@ -96,7 +99,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="my-15 flex w-full max-w-142 flex-col items-center gap-2 rounded-[40px] bg-gray-800 px-14 pt-12 pb-11">
+    <div className="flex w-full max-w-142 flex-col items-center gap-2 rounded-[40px] bg-gray-800 px-14 pt-12 pb-11">
       <form
         onSubmit={handleSubmit}
         className="flex w-full max-w-114 flex-col gap-6"
