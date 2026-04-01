@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
     }
     const data = await response.json();
     return NextResponse.json(data, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: "프로젝트 조회 중 서버 오류가 발생했습니다." },
       { status: 500 },
