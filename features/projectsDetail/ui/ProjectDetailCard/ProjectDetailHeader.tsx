@@ -1,19 +1,9 @@
 "use client";
 
 import { Badge, DeadlineBadge, LikeButton, StatusBadge } from "@/shared/ui";
-import type {
-  ProjectDetail,
-  ProjectType,
-} from "@/features/projectsDetail/types/projectsDetail";
+import type { ProjectDetail } from "@/features/projectsDetail/types/projectsDetail";
 import { useToggleProjectLike } from "@/features/projectsDetail/hooks/useToggleProjectLike";
-
-const PROJECT_TYPE_LABEL: Record<ProjectType, string> = {
-  portfolio: "포트폴리오",
-  contest: "공모전",
-  hackathon: "해커톤",
-  startup: "창업",
-  other: "기타",
-};
+import { PROJECT_TYPE_LABEL } from "@/features/projectsDetail/model/projects.constants";
 
 interface ProjectDetailHeaderProps {
   project: ProjectDetail;
