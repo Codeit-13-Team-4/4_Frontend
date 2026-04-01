@@ -92,7 +92,7 @@ function AlertModalDescription({
   return (
     <AlertDialog.Description
       className={cn(
-        "text-base text-balance text-gray-400 sm:text-lg md:text-pretty",
+        "text-base text-balance whitespace-pre-line text-gray-400 sm:text-lg md:text-pretty",
         className,
       )}
       {...props}
