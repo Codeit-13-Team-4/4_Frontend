@@ -1,5 +1,8 @@
+"use client";
+
 import type { ProjectDetail } from "@/features/projectsDetail/types/projectsDetail";
-import { GradientButton } from "@/shared/ui";
+import { GradientButton, Button } from "@/shared/ui";
+import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import Image from "next/image";
 
 interface ProjectDetailFooterProps {
@@ -9,6 +12,9 @@ interface ProjectDetailFooterProps {
 export default function ProjectDetailFooter({
   project,
 }: ProjectDetailFooterProps) {
+  const { data: userData } = useUserData();
+  const isHost = userData?.id === project.host.id;
+
   return (
     <div className="flex flex-col gap-4 pt-6 lg:flex-row lg:items-center lg:justify-between">
       <div className="flex items-center gap-1.5 text-lg text-gray-500">
@@ -20,9 +26,19 @@ export default function ProjectDetailFooter({
         />
         <span>{project.viewCount}</span>
       </div>
-      <GradientButton size="lg" className="h-13 w-full lg:h-15 lg:max-w-60">
-        지원하기
-      </GradientButton>
+      {isHost ? (
+        <Button
+          variant="primary"
+          size="lg"
+          className="h-13 w-full lg:h-15 lg:max-w-80"
+        >
+          수정하기
+        </Button>
+      ) : (
+        <GradientButton size="lg" className="h-13 w-full lg:h-15 lg:max-w-80">
+          지원하기
+        </GradientButton>
+      )}
     </div>
   );
 }

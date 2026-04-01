@@ -1,5 +1,6 @@
 import type { ProjectDetail } from "@/features/projectsDetail/types/projectsDetail";
 import { formatDate } from "@/shared/utils";
+import { ScrollArea } from "@/shared/ui/ScrollArea/ScrollArea";
 import Image from "next/image";
 
 interface ProjectDetailLeftPanelProps {
@@ -19,11 +20,11 @@ export default function ProjectDetailLeftPanel({
         <p className="text-sm font-medium text-gray-600 lg:text-lg">
           프로젝트 소개
         </p>
-        <div className="rounded-xl border border-gray-700 bg-gray-900 px-4 py-3">
+        <ScrollArea className="h-43 rounded-xl border border-gray-700 bg-gray-900 px-4 py-3">
           <p className="text-sm leading-relaxed text-gray-50 lg:text-base">
             {project.description}
           </p>
-        </div>
+        </ScrollArea>
       </div>
 
       <div className="flex flex-col gap-3">
