@@ -28,7 +28,7 @@ export default async function ProjectPage({
 
   return (
     <main className="flex flex-col">
-      <div className="mb-6 flex flex-col md:flex-row md:md:items-center md:justify-between">
+      <div className="mb-6 flex flex-col md:justify-between lg:flex-row lg:items-center">
         <div>
           <h4 className="text-[18px] font-semibold text-gray-50 md:text-[30px]">
             사이드 프로젝트
@@ -38,7 +38,7 @@ export default async function ProjectPage({
           </p>
         </div>
 
-        <div className="mt-7 md:mt-0">
+        <div className="mt-7 lg:mt-0">
           <SearchInput />
         </div>
       </div>
