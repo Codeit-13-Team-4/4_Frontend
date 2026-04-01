@@ -40,7 +40,7 @@ function AlertModalGlobal() {
           <AlertModal.Description>{store.description}</AlertModal.Description>
         </AlertModal.Header>
 
-        <AlertModal.Footer>
+        <AlertModal.Footer className="flex-col sm:flex-row">
           {negativeButton.type === "gradient" ? (
             <AlertModal.Cancel asChild onClick={handleCancelClick}>
               <GradientButton

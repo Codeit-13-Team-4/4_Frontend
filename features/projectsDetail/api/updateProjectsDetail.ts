@@ -7,17 +7,17 @@ import type {
 
 export interface UpdateProjectDetailParams {
   projectId: number;
-  title: string;
-  description: string;
-  projectType: ProjectType;
-  techStacks: TechStackType[];
-  positions: PositionType[];
-  maxMembers: number;
-  recruitEndDate: string;
-  projectStartDate: string;
-  projectEndDate: string;
-  contactMethod: ContactMethodType;
-  contactLink: string;
+  title?: string;
+  description?: string;
+  projectType?: ProjectType;
+  techStacks?: TechStackType[];
+  positions?: PositionType[];
+  maxMembers?: number;
+  recruitEndDate?: string;
+  projectStartDate?: string;
+  projectEndDate?: string;
+  contactMethod?: ContactMethodType;
+  contactLink?: string;
 }
 
 export async function updateProjectsDetail({
