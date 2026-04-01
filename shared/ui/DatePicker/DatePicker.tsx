@@ -114,7 +114,7 @@ function RangeDatePicker({
             {showLabel && (
               <span className="text-sm font-medium text-gray-400">시작일</span>
             )}
-            <button className={triggerBase}>
+            <button type="button" className={triggerBase}>
               <Image
                 src="/common/icon/calendar.svg"
                 alt="달력"
@@ -131,7 +131,7 @@ function RangeDatePicker({
             {showLabel && (
               <span className="text-sm font-medium text-gray-400">종료일</span>
             )}
-            <button className={triggerBase}>
+            <button type="button" className={triggerBase}>
               <Image
                 src="/common/icon/calendar.svg"
                 alt="달력"
