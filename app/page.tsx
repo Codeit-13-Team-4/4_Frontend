@@ -1,6 +1,7 @@
 import Footer from "@/widgets/layout/Footer/ui/Footer";
 import FirstSection from "@/widgets/landing/ui/FrstSection";
 import ThirdSection from "@/widgets/landing/ui/ThirdSection";
+import SixthSection from "@/widgets/landing/ui/SixthSection";
 
 export default function HomePage() {
   return (
@@ -11,7 +12,9 @@ export default function HomePage() {
       <div className="flex-1">
         <ThirdSection />
       </div>
-
+      <div className="flex-1">
+        <SixthSection />
+      </div>
       <Footer />
     </main>
   );
