@@ -77,7 +77,11 @@ export default function ProjectDetailFooter({
           >
             지원하기
           </GradientButton>
-          <ApplyModal open={applyOpen} onOpenChange={setApplyOpen} />
+          <ApplyModal
+            open={applyOpen}
+            onOpenChange={setApplyOpen}
+            projectId={String(project.id)}
+          />
         </>
       )}
     </div>
