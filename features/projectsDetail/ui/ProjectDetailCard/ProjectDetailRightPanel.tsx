@@ -14,7 +14,6 @@ interface ProjectDetailRightPanelProps {
 export default function ProjectDetailRightPanel({
   project,
 }: ProjectDetailRightPanelProps) {
-  console.log(project);
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-center">
