@@ -8,7 +8,7 @@ export default function LoginPage() {
         <LoginForm />
       </div>
 
-      <div className="flex flex-1">
+      <div className="hidden flex-1 xl:flex">
         <LoginHero />
       </div>
     </main>
