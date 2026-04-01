@@ -1,6 +1,11 @@
 import type { ProjectDetail } from "@/features/projectsDetail/types/projectsDetail";
 import { Progress } from "@/shared/ui";
 import Image from "next/image";
+import {
+  PositionBadge,
+  TechBadge,
+} from "@/features/projectsDetail/ui/ProjectDetailCard";
+import { CONTACT_METHOD } from "@/features/projectsDetail/model/projects.constants";
 
 interface ProjectDetailRightPanelProps {
   project: ProjectDetail;
@@ -9,6 +14,7 @@ interface ProjectDetailRightPanelProps {
 export default function ProjectDetailRightPanel({
   project,
 }: ProjectDetailRightPanelProps) {
+  console.log(project);
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-center">
@@ -23,9 +29,7 @@ export default function ProjectDetailRightPanel({
         </div>
         <div className="flex flex-wrap gap-2">
           {project.positions.map((position) => (
-            <span key={position} className="text-sm text-gray-400 lg:text-lg">
-              {position}
-            </span>
+            <PositionBadge key={position} position={position} />
           ))}
         </div>
       </div>
@@ -42,9 +46,7 @@ export default function ProjectDetailRightPanel({
         </div>
         <div className="flex flex-wrap gap-2">
           {project.techStacks.map((tech) => (
-            <span key={tech} className="text-sm text-gray-400 lg:text-lg">
-              {tech}
-            </span>
+            <TechBadge key={tech} tech={tech} />
           ))}
         </div>
       </div>
@@ -57,9 +59,20 @@ export default function ProjectDetailRightPanel({
           height={18}
         />
         <span>연락 방법</span>
-        <span className="text-sm text-gray-400 lg:text-lg">
-          {project.contactMethod}
-        </span>
+        {project.contactMethod === "email" ? (
+          <span className="text-sm text-gray-400 lg:text-lg">
+            {CONTACT_METHOD[project.contactMethod]} ({project.contactLink})
+          </span>
+        ) : (
+          <a
+            href={project.contactLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-mint-500 text-sm underline-offset-2 hover:underline lg:text-lg"
+          >
+            {CONTACT_METHOD[project.contactMethod]} ({project.contactLink})
+          </a>
+        )}
       </div>
 
       <div className="flex flex-col gap-2">
