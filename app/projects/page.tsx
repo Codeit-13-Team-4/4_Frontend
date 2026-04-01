@@ -30,25 +30,28 @@ export default async function ProjectPage({
     <main className="flex flex-col">
       <div className="mb-6 flex flex-col md:flex-row md:md:items-center md:justify-between">
         <div>
-          <h4 className="text-[30px] font-semibold text-gray-50">
+          <h4 className="text-[18px] font-semibold text-gray-50 md:text-[30px]">
             사이드 프로젝트
           </h4>
-          <p className="text-[20px] font-medium text-[#BDBDBD]">
+          <p className="text-[14px] font-medium text-[#BDBDBD] md:text-[20px]">
             아이디어를 현실로 만들어요. 팀원을 모집하고 함께 성장하세요.
           </p>
         </div>
 
-        <div>
+        <div className="mt-7 md:mt-0">
           <SearchInput />
         </div>
       </div>
-      <div className="mb-10 flex justify-end font-semibold">
+      <div className="mb-10 hidden justify-end font-semibold md:visible md:flex">
         <ProjectCreateButton />
       </div>
+      <div className="md:hidden">
+        <ProjectCreateButton circle />
+      </div>
 
-      <div className="flex justify-between">
+      <div className="flex flex-col items-end md:flex-row md:items-center md:justify-between">
         <ProjectFilter />
-        <div className="mr-5 flex items-center">
+        <div className="mr-5 mb-4 flex items-center md:mb-0">
           <ProjectSortDropdown />
         </div>
       </div>
