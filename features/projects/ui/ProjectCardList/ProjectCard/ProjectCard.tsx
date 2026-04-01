@@ -15,6 +15,8 @@ import {
   TechStackList,
 } from "@/features/projects/ui";
 import { ProjectCardProps } from "@/features/projects/model";
+import { useRouter } from "next/navigation";
+import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 
 export function ProjectCard({ data }: { data: ProjectCardProps }) {
   const {
@@ -27,21 +29,35 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
     viewCount,
     status,
     commentCount,
+    id,
   } = data;
 
+  const router = useRouter();
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { data: userData } = useUserData();
 
   const handleOpen = (e: React.MouseEvent) => {
-    e.preventDefault();
     e.stopPropagation();
+    if (!userData) {
+      router.push("/login");
+      return;
+    }
     setIsOpen(true);
   };
 
+  const handleCardClick = () => {
+    if (isOpen) return;
+    router.push(`/projects/${id}`);
+  };
   const handleClose = () => {
     setIsOpen(false);
   };
   return (
-    <article className="flex h-133 w-104.5 flex-col gap-4 rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5">
+    <article
+      onClick={handleCardClick}
+      className="flex h-133 w-104.5 cursor-pointer flex-col gap-4 rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5"
+    >
       <header className="flex items-center justify-between">
         <div className="flex gap-2">
           <StatusBadge status={status} />
@@ -94,6 +110,7 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
             <span className="text-[14px] text-gray-400">{commentCount}</span>
           </div>
         </div>
+
         <GradientButton size="sm" onClick={handleOpen}>
           지원하기
         </GradientButton>

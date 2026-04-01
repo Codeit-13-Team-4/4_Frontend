@@ -17,7 +17,7 @@ export function ProjectPositionDropdown({
     <Dropdown open={open} onOpenChange={setOpen}>
       <Dropdown.Trigger>
         <button className="group flex items-center justify-between gap-1 rounded-lg bg-gray-900 px-4 py-2.5 text-gray-50">
-          {position ? [position] : "희망 포지션"}
+          {position ? POSITION_LABELS[position] : "희망 포지션"}
           <Image
             src="/icons/common/chevron_down_sm-icon.svg"
             width={17}
