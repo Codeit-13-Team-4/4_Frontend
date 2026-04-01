@@ -1,9 +1,9 @@
 "use client";
 
-import { Badge, DeadlineBadge, LikeButton, StatusBadge } from "@/shared/ui";
+import { DeadlineBadge, LikeButton, StatusBadge } from "@/shared/ui";
 import type { ProjectDetail } from "@/features/projectsDetail/types/projectsDetail";
 import { useToggleProjectLike } from "@/features/projectsDetail/hooks/useToggleProjectLike";
-import { PROJECT_TYPE_LABEL } from "@/features/projectsDetail/model/projects.constants";
+import { ProjectBadge } from "@/features/projectsDetail/ui/ProjectDetailCard";
 
 interface ProjectDetailHeaderProps {
   project: ProjectDetail;
@@ -19,9 +19,7 @@ export default function ProjectDetailHeader({
       <div className="flex flex-col-reverse items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-2">
           <StatusBadge status={project.status} />
-          <Badge variant="auto" size="sm">
-            {PROJECT_TYPE_LABEL[project.projectType]}
-          </Badge>
+          <ProjectBadge type={project.projectType} />
           <DeadlineBadge endDate={project.recruitEndDate} />
         </div>
         <LikeButton
