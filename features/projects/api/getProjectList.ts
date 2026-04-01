@@ -1,10 +1,11 @@
 import { ProjectFilter } from "../model";
 
 const createSearchParams = (filters: ProjectFilter) => {
-  const { keyword, status, projectType, positions, sort } = filters;
+  const { keyword, status, projectType, positions, sort, start, perPage } =
+    filters;
   const params = new URLSearchParams({
-    start: "0",
-    perPage: "10",
+    start: String(start ?? 0),
+    perPage: String(perPage ?? 10),
   });
 
   if (keyword) {
@@ -16,6 +17,9 @@ const createSearchParams = (filters: ProjectFilter) => {
     params.set("status", status);
   }
   if (sort && sort !== "createdAt") {
+    if (sort === "recruitEndDate") {
+      params.set("order", "ASC");
+    }
     params.set("sort", sort);
   }
 
