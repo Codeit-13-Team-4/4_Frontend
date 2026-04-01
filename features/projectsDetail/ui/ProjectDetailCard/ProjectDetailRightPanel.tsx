@@ -50,7 +50,7 @@ export default function ProjectDetailRightPanel({
         </div>
       </div>
 
-      <Separator className="my-10 hidden bg-gray-700 lg:block" />
+      <Separator className="my-5 hidden bg-gray-700 lg:block" />
 
       <div className="flex items-center gap-1.5 text-sm text-gray-500 lg:text-lg">
         <Image
