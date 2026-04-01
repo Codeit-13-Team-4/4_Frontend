@@ -2,8 +2,8 @@ import { ProjectFilterOptions } from "@/features/projects/model";
 
 type ProjectFilterRadioProps = {
   item: ProjectFilterOptions;
-  name: "status" | "purpose" | "position";
-  selectedValue: string;
+  name: "status" | "projectType" | "position";
+  selectedValue: string | undefined;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
