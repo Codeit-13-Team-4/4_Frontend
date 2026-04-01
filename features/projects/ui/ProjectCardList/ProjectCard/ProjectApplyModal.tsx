@@ -45,12 +45,7 @@ export function ProjectApplyModal({
     <>
       <Modal open={isOpen} onOpenChange={onClose}>
         <Modal.Overlay />
-        <Modal.Content
-          className="gap-0 p-10"
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
+        <Modal.Content className="z-50 gap-0 p-10">
           <Modal.Header className="mb-2 text-center">
             <Modal.CloseIcon />
             <Modal.Title>프로젝트 참여 신청하기</Modal.Title>
@@ -121,9 +116,8 @@ export function ProjectApplyModal({
               className="w-full"
               onClick={(e) => {
                 e.stopPropagation();
-                router.push("/");
+                router.push("/mypage");
               }}
-              // 수정- 나중에 mypage로 변경
             >
               지원 내역 확인
             </AlertModal.Action>
