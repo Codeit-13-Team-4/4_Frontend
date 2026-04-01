@@ -25,8 +25,8 @@ export const AllVariants: Story = {
     return (
       <div className="flex gap-2">
         <Badge>Default</Badge>
-        <StatusBadge status="recruit" />
-        <StatusBadge status="closed" />
+        <StatusBadge status="recruiting" />
+        <StatusBadge status="recruitment_closed" />
         <Badge variant="auto">
           <Lock />
           즉시 참여 가능

@@ -57,7 +57,7 @@ export type PositionType =
 
 export type ContactMethodType =
   | "kakao_open_chat"
-  | "email "
+  | "email"
   | "google_form"
   | "discord";
 
