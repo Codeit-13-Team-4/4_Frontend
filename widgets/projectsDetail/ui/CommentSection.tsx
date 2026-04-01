@@ -1,9 +1,11 @@
 "use client";
 
 import { useProjectsDetailComments } from "@/features/projectsDetail/hooks/useProjectsDetailComments";
-import CommentInput from "@/features/projectsDetail/ui/CommentInput";
-import CommentList from "@/features/projectsDetail/ui/CommentList";
-import CommentItemSkeleton from "@/features/projectsDetail/ui/CommentItemSkeleton";
+import {
+  CommentInput,
+  CommentList,
+  CommentItemSkeleton,
+} from "@/features/projectsDetail/ui/Comment";
 
 interface CommentSectionProps {
   projectId: number;
