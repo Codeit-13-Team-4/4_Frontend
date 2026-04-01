@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ProjectFilterButton } from "./ProjectFilterButton";
 import { ProjectFilterModal } from "./ProjectFilterModal";
 
-const filterMenu = ["모집 상태", "인원 수", "모집 방식"];
+const filterMenu = ["모집 상태", "참여 목적", "모집 방식"];
 
 export function ProjectFilter() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -15,7 +15,7 @@ export function ProjectFilter() {
 
   return (
     <>
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-between text-[14px] md:mb-0">
         <div className="flex gap-3">
           {filterMenu.map((item) => (
             <ProjectFilterButton label={item} onClick={handleOpen} key={item} />
