@@ -18,7 +18,7 @@ export { ProjectFilterModal } from "./ProjectFilter/ProjectFilterModal";
 export { ProjectFilterRadioInput } from "./ProjectFilter/ProjectFilterRadioInput";
 export { TechStackList } from "./TechStackList/TechStackList";
 export { ProjectPositionDropdown } from "./ProjectDropdown/ProjectPositionDropdown";
-export { PositionCreatePositionDropdown } from "./ProjectDropdown/ProjectCreatePositionDropdown";
+export { ProjectCreatePositionDropdown } from "./ProjectDropdown/ProjectCreatePositionDropdown";
 export { CreateCancelAlertModal } from "./ProjectCreateModal/CreateCancelAlertModal";
 export { CreateAlertModal } from "./ProjectCreateModal/CreateAlertModal";
 export { ProjectCreateRangeBar } from "./ProjectCreateRangeBar/ProjectCreateRangeBar";
