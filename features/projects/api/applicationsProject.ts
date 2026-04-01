@@ -11,7 +11,7 @@ export async function applicationsProject({
   position,
   motivation,
 }: applyProjectProps) {
-  const response = await fetch(`api/projects/applications`, {
+  const response = await fetch(`/api/projects/applications`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ projectId, position, motivation }),

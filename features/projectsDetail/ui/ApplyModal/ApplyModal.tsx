@@ -1,10 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { AlertModal } from "@/shared/ui/AlertModal/AlertModal";
+import { useRouter } from "next/navigation";
+import { Modal } from "@/shared/ui/Modal/Modal";
 import { Button, TextArea } from "@/shared/ui";
 import { POSITION_LABELS } from "@/features/projectsDetail/model/projects.constants";
 import type { PositionType } from "@/features/projectsDetail/types/projectsDetail";
+import { applicationsProject } from "@/features/projects/api/applicationsProject";
+import { toast } from "@/shared/utils";
+import { useOpenAlertModal } from "@/shared/store/AlertModal";
 
 const POSITION_ENTRIES = Object.entries(POSITION_LABELS) as [
   PositionType,
@@ -14,13 +18,16 @@ const POSITION_ENTRIES = Object.entries(POSITION_LABELS) as [
 interface ApplyModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  projectId: string;
 }
 
-export function ApplyModal({ open, onOpenChange }: ApplyModalProps) {
+export function ApplyModal({ open, onOpenChange, projectId }: ApplyModalProps) {
   const [position, setPosition] = useState<PositionType | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [message, setMessage] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const openAlertModal = useOpenAlertModal();
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -41,23 +48,47 @@ export function ApplyModal({ open, onOpenChange }: ApplyModalProps) {
     onOpenChange(false);
   };
 
-  const handleSubmit = () => {
-    // TODO: 지원하기 API 연동
-    handleClose();
+  const handleSubmit = async () => {
+    if (!projectId || !position) return;
+
+    try {
+      await applicationsProject({ projectId, position, motivation: message });
+      setPosition(null);
+      setMessage("");
+      onOpenChange(false);
+      openAlertModal({
+        title: "프로젝트 참여 신청을 완료했어요",
+        description: "주최자가 승인하면 알림으로 알려드릴게요.",
+        showCompleteAnimation: true,
+        positive: {
+          text: "지원 내역 확인",
+          button: { type: "default", variant: "primary" },
+        },
+        negative: { text: "계속 둘러보기" },
+        onPositive: () => router.push("/mypage"),
+      });
+    } catch (error) {
+      onOpenChange(false);
+      setPosition(null);
+      setMessage("");
+      const err = error as { status?: number; message?: string };
+      if (err.status === 409) {
+        toast(err.message!, { variant: "error" });
+      }
+    }
   };
 
   return (
-    <AlertModal open={open} onOpenChange={onOpenChange}>
-      <AlertModal.Content className="gap-8">
-        <AlertModal.Header>
-          <AlertModal.Close onClick={handleClose} />
-          <AlertModal.Title>프로젝트 참여 신청하기</AlertModal.Title>
-          <AlertModal.Description>
-            작성하신 내용은 주최자에게 전달됩니다.
-          </AlertModal.Description>
-        </AlertModal.Header>
-
-        <div className="flex flex-col gap-4">
+    <Modal open={open} onOpenChange={onOpenChange}>
+      <Modal.Content className="gap-0 p-10">
+        <Modal.Header className="mb-2 text-center">
+          <Modal.CloseIcon />
+          <Modal.Title>프로젝트 참여 신청하기</Modal.Title>
+        </Modal.Header>
+        <Modal.Description className="mb-6 text-center text-[18px]">
+          작성하신 내용은 주최자에게 전달됩니다.
+        </Modal.Description>
+        <Modal.Body>
           <div ref={containerRef} className="relative">
             <button
               type="button"
@@ -120,31 +151,30 @@ export function ApplyModal({ open, onOpenChange }: ApplyModalProps) {
             onChange={(e) => setMessage(e.target.value)}
             placeholder="프로젝트에 참여하고 싶은 이유와 본인의 강점을 적어주세요."
             maxLength={500}
-            wrapperClassName="w-full h-36"
+            wrapperClassName="w-full bg-gray-800 border border-gray-700 mb-14"
+            className="placeholder:text-gray-50"
           />
-        </div>
-
-        <AlertModal.Footer className="flex-col sm:flex-row">
+        </Modal.Body>
+        <Modal.Footer>
           <Button
             variant="default"
+            className="flex-1 text-[20px]"
             size="lg"
-            className="w-full"
             onClick={handleClose}
           >
             취소
           </Button>
-          <AlertModal.Action asChild>
-            <Button
-              size="lg"
-              className="w-full"
-              variant="primary"
-              onClick={handleSubmit}
-            >
-              지원하기
-            </Button>
-          </AlertModal.Action>
-        </AlertModal.Footer>
-      </AlertModal.Content>
-    </AlertModal>
+          <Button
+            variant="primary"
+            className="flex-1 text-[20px]"
+            size="lg"
+            onClick={handleSubmit}
+            disabled={!position || !message.trim()}
+          >
+            지원하기
+          </Button>
+        </Modal.Footer>
+      </Modal.Content>
+    </Modal>
   );
 }
