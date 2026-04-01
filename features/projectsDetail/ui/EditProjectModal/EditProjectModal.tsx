@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { Modal, Button } from "@/shared/ui";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
@@ -9,7 +10,7 @@ import { useUpdateProjectsDetail } from "@/features/projectsDetail/hooks/useUpda
 import type { ProjectDetail } from "@/features/projectsDetail/types/projectsDetail";
 import { EditProjectBasicTab } from "./EditProjectBasicTab";
 import { EditProjectScheduleTab } from "./EditProjectScheduleTab";
-import type { EditFormValues } from "./types";
+import { editProjectSchema, type EditFormValues } from "./types";
 
 const TABS = ["기본 정보", "일정 및 상세"] as const;
 
@@ -30,6 +31,7 @@ export function EditProjectModal({
   );
 
   const methods = useForm<EditFormValues>({
+    resolver: zodResolver(editProjectSchema),
     defaultValues: {
       projectType: project.projectType,
       title: project.title,
