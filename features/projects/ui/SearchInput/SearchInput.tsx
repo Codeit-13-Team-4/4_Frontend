@@ -30,13 +30,11 @@ export function SearchInput() {
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="h-14 w-full rounded-full bg-gray-800 px-4 py-2 pr-10 text-gray-400 placeholder:text-gray-400 focus:outline-none sm:max-w-[300px] md:max-w-[400px] lg:w-137.5 lg:max-w-[550px]"
+        className="h-14 w-full rounded-full bg-gray-800 px-4 py-2 pr-10 text-gray-400 placeholder:text-[14px] placeholder:text-gray-400 focus:outline-none sm:max-w-75 md:max-w-100 md:placeholder:text-[16px] lg:w-137.5 lg:max-w-137.5"
       />
       <button onClick={handleSearch} className="cursor-pointer">
         <svg
-          className="absolute top-1/2 right-3 -translate-y-1/2"
-          width="24"
-          height="24"
+          className="absolute top-1/2 right-3 h-4.5 w-4.5 -translate-y-1/2 md:h-6 md:w-6"
           viewBox="0 0 18 18"
           fill="#00d7a0"
           xmlns="http://www.w3.org/2000/svg"

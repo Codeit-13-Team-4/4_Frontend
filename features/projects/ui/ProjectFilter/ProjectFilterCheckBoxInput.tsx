@@ -25,7 +25,7 @@ export function ProjectFilterCheckBoxInput({
       />
       <label
         htmlFor={`${name}_${item.value}`}
-        className="peer-checked:border-mint-500 peer-checked:text-mint-500 inline-block cursor-pointer rounded-full border border-gray-700 px-2 py-1 text-gray-400 peer-checked:bg-gray-900"
+        className="peer-checked:border-mint-500 peer-checked:text-mint-500 inline-block cursor-pointer rounded-full border border-gray-700 p-2 text-gray-400 peer-checked:bg-gray-900 md:px-2 md:py-1"
       >
         {item.label}
       </label>

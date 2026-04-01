@@ -15,7 +15,7 @@ export function ProjectFilter() {
 
   return (
     <>
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-between text-[14px] md:mb-0">
         <div className="flex gap-3">
           {filterMenu.map((item) => (
             <ProjectFilterButton label={item} onClick={handleOpen} key={item} />

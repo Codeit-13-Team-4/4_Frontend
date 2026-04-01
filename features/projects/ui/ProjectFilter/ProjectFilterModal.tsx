@@ -87,9 +87,9 @@ export function ProjectFilterModal({
   return (
     <Modal open={isOpen} onOpenChange={onClose}>
       <Modal.Overlay />
-      <Modal.Content className="bg-gray-800 p-12">
+      <Modal.Content className="bg-gray-800 p-6 md:p-12">
         <Modal.Header className="flex-row items-center justify-between">
-          <Modal.Title className="text-gray-200">필터</Modal.Title>
+          <Modal.Title className="text-[24px] text-gray-200">필터</Modal.Title>
           <Modal.CloseIcon className="static text-gray-200" />
         </Modal.Header>
 
