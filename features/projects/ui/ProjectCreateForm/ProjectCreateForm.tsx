@@ -10,8 +10,8 @@ import {
 import {
   CreateAlertModal,
   CreateCancelAlertModal,
-  PositionCreatePositionDropdown,
   ProjectContactLinkDropdown,
+  ProjectCreatePositionDropdown,
   ProjectCreateRangeBar,
   ProjectCreateTagInput,
   ProjectFilterRadioInput,
@@ -214,7 +214,7 @@ export function ProjectCreateForm() {
 
           <Field>
             <FieldLabel required>모집 포지션</FieldLabel>
-            <PositionCreatePositionDropdown
+            <ProjectCreatePositionDropdown
               items={createForm.positions}
               setItems={(positions) => updateForm("positions", positions)}
             />

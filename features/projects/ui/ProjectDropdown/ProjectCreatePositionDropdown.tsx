@@ -4,7 +4,7 @@ import { POSITION_LABELS, PositionType } from "../../model";
 import { Dropdown } from "@/shared/ui";
 import Image from "next/image";
 
-export function PositionCreatePositionDropdown({
+export function ProjectCreatePositionDropdown({
   items,
   setItems,
 }: {
