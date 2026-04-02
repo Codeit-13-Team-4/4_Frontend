@@ -42,9 +42,9 @@ export interface ChallengesDetail {
   viewCount: number;
   commentCount: number;
   isBookmarked: boolean;
-  liked: boolean;
   isHost: boolean;
   isMember: boolean;
+  isLiked: boolean;
   myParticipationStatus: MyParticipationStatusType;
   isJoinable: boolean;
   host: Pick<User, "id" | "nickname">;
