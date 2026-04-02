@@ -14,5 +14,5 @@ export async function getChallengesDetail(
     throw new Error(data.message || "챌린지 조회에 실패했습니다.");
   }
 
-  return data;
+  return data.data;
 }

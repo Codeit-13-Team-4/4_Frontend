@@ -1,3 +1,5 @@
+import ChallengeDetailCard from "@/widgets/challengesDetail/ui/ChallengeDetailCard";
+
 export default async function ChallengesPage({
   params,
 }: {
@@ -6,5 +8,5 @@ export default async function ChallengesPage({
   const { challengeId } = await params;
   const id = Number(challengeId);
 
-  return <></>;
+  return <ChallengeDetailCard challengeId={id} />;
 }
