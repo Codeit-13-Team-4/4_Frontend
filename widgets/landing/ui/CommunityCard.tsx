@@ -14,8 +14,8 @@ export default function CommunityCard({
   content,
 }: CommunityCardProps) {
   return (
-    <article className="h-[220px] rounded-[20px] bg-[#16233d] p-6">
-      <div className="mb-5 flex items-start gap-6">
+    <article className="rounded-[20px] bg-[#16233d] px-6 py-5">
+      <div className="mb-5 flex items-center gap-3">
         <div className="flex h-14 w-14 items-center justify-center">
           <Image
             src="/landing/user-icon.svg"
