@@ -3,6 +3,7 @@ export type SocialType = "google" | "kakao" | "github";
 export interface SocialTokenRequest {
   token: string;
   type: SocialType;
+  remember: boolean;
 }
 
 export interface SocialLoginSuccessResponse {
@@ -16,20 +17,11 @@ export interface SocialLoginSuccessResponse {
   };
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-export async function verifySocialToken({
+export async function socialLogin({
   token,
   type,
-}: SocialTokenRequest): Promise<SocialLoginSuccessResponse> {
-  console.log(
-    JSON.stringify({
-      token,
-      type,
-    }),
-  );
-
-  const response = await fetch(`${BASE_URL}/auth/social/token`, {
+}: SocialTokenRequest): Promise<SocialLoginSuccessResponse | null> {
+  const response = await fetch(`/api/auth/social/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -38,9 +30,11 @@ export async function verifySocialToken({
     body: JSON.stringify({
       token,
       type,
+      remember: true,
     }),
   });
 
+  console.log(response);
   if (response.status === 404) {
     throw new Error("NOT_REGISTERED");
   }
@@ -50,5 +44,11 @@ export async function verifySocialToken({
     throw new Error(errorText || "소셜 로그인 처리에 실패했습니다.");
   }
 
-  return response.json();
+  const contentType = response.headers.get("content-type") ?? "";
+
+  if (contentType.includes("application/json")) {
+    return response.json();
+  }
+
+  return null;
 }
