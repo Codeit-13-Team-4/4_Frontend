@@ -33,7 +33,7 @@ export function ProjectCardList({ filters }: { filters?: ProjectFilter }) {
   }
   if (cardData?.length === 0)
     return (
-      <div className="mt-21 flex items-center justify-center text-gray-400">
+      <div className="mt-21 flex flex-col items-center justify-center gap-6 text-gray-400">
         <Image
           src="/images/img_empty.png"
           alt="프로젝트 목록 없음"

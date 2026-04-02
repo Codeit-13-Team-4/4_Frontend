@@ -15,7 +15,7 @@ export function ProjectFilterButton({
     <button
       onClick={onClick}
       {...props}
-      className="flex items-center gap-2 rounded-lg bg-gray-700 p-2 text-gray-200"
+      className="flex cursor-pointer items-center gap-2 rounded-lg bg-gray-700 p-2 text-gray-200"
     >
       {label}
 
