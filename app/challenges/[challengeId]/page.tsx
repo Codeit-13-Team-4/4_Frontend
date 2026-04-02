@@ -8,5 +8,9 @@ export default async function ChallengesPage({
   const { challengeId } = await params;
   const id = Number(challengeId);
 
-  return <ChallengeDetailCard challengeId={id} />;
+  return (
+    <>
+      <ChallengeDetailCard challengeId={id} />
+    </>
+  );
 }
