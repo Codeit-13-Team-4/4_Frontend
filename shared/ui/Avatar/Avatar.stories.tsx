@@ -30,7 +30,10 @@ type Story = StoryObj<typeof meta>;
 export const WithImage: Story = {
   render: (args) => (
     <Avatar {...args}>
-      <AvatarImage src="https://i.pravatar.cc/150" alt="프로필 이미지" />
+      <AvatarImage
+        src="/common/avatar/default-avatar-md.svg"
+        alt="프로필 이미지"
+      />
       <AvatarFallback>Dev</AvatarFallback>
     </Avatar>
   ),
@@ -49,15 +52,24 @@ export const Sizes: Story = {
   render: () => (
     <div className="flex items-center gap-4">
       <Avatar size="sm">
-        <AvatarImage src="https://i.pravatar.cc/150" alt="프로필 이미지" />
+        <AvatarImage
+          src="/common/avatar/default-avatar-sm.svg"
+          alt="프로필 이미지"
+        />
         <AvatarFallback>SM</AvatarFallback>
       </Avatar>
       <Avatar size="default">
-        <AvatarImage src="https://i.pravatar.cc/150" alt="프로필 이미지" />
+        <AvatarImage
+          src="/common/avatar/default-avatar-md.svg"
+          alt="프로필 이미지"
+        />
         <AvatarFallback>MD</AvatarFallback>
       </Avatar>
       <Avatar size="lg">
-        <AvatarImage src="https://i.pravatar.cc/150" alt="프로필 이미지" />
+        <AvatarImage
+          src="/common/avatar/default-avatar-lg.svg"
+          alt="프로필 이미지"
+        />
         <AvatarFallback>LG</AvatarFallback>
       </Avatar>
     </div>
