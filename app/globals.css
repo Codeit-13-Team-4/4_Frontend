@@ -14,6 +14,8 @@
   --animate-drawCircle: drawCircle 0.5s forwards;
   --animate-fillCircle: fillCircle 0.5s forwards 0.5s;
   --animate-showCheck: showCheck 0.6s forwards 0.5s;
+  --animate-marquee-up: marquee-up 18s linear infinite;
+  --animate-marquee-down: marquee-down 18s linear infinite;
 
   @keyframes overlay-in {
     from {
@@ -95,7 +97,26 @@
       opacity: 0;
     }
   }
+
+  @keyframes marquee-up {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-50%);
+    }
+  }
+
+  @keyframes marquee-down {
+    from {
+      transform: translateY(-50%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
 }
+
 .animate-blink {
   animation: blink 1s step-end infinite;
 }
