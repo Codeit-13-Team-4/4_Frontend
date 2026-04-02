@@ -41,7 +41,7 @@ export default function ChallengeDetailHeader({
       });
       return;
     }
-    toggleLike(challenge.liked);
+    toggleLike(challenge.isLiked);
   };
 
   return (
@@ -61,7 +61,7 @@ export default function ChallengeDetailHeader({
         </div>
         <LikeButton
           className="ml-auto"
-          liked={challenge.liked}
+          liked={challenge.isLiked}
           onToggle={handleLikeToggle}
         />
       </div>
