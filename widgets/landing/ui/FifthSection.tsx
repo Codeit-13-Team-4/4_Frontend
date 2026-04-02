@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import DemoProjectCard, {
-  DemoProjectCardData,
+  type DemoProjectCardData,
 } from "@/widgets/landing/ui/DemoDayCard";
 
 const demoProjects: DemoProjectCardData[] = [
@@ -59,16 +59,18 @@ interface TimeLeft {
   seconds: string;
 }
 
+const INITIAL_TIME_LEFT: TimeLeft = {
+  days: "00",
+  hours: "00",
+  minutes: "00",
+  seconds: "00",
+};
+
 function getTimeLeft(targetDate: string): TimeLeft {
   const diff = new Date(targetDate).getTime() - Date.now();
 
   if (diff <= 0) {
-    return {
-      days: "00",
-      hours: "00",
-      minutes: "00",
-      seconds: "00",
-    };
+    return INITIAL_TIME_LEFT;
   }
 
   const totalSeconds = Math.floor(diff / 1000);
@@ -88,7 +90,10 @@ function getTimeLeft(targetDate: string): TimeLeft {
 function CountdownCard({ value, label }: { value: string; label: string }) {
   return (
     <div className="flex h-[88px] w-[68px] flex-col items-center justify-center rounded-[20px] border border-white/12 bg-[#12213f]/72 backdrop-blur-md md:h-[116px] md:w-[94px]">
-      <span className="text-[28px] leading-none font-bold text-white md:text-[42px]">
+      <span
+        suppressHydrationWarning
+        className="text-[28px] leading-none font-bold text-white md:text-[42px]"
+      >
         {value}
       </span>
       <span className="mt-2 text-sm text-gray-300 md:text-base">{label}</span>
@@ -97,9 +102,7 @@ function CountdownCard({ value, label }: { value: string; label: string }) {
 }
 
 export default function FifthSection() {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>(() =>
-    getTimeLeft(DEMO_DAY_DATE),
-  );
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>(INITIAL_TIME_LEFT);
 
   useEffect(() => {
     const interval = window.setInterval(() => {
