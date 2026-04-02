@@ -1,8 +1,17 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import { GradientButton } from "@/shared/ui";
 import TypingText from "@/widgets/landing/ui/TypingText";
 import Image from "next/image";
 
 export default function HomePage() {
+  const router = useRouter();
+
+  function handleClickExplore() {
+    router.push("/login");
+  }
+
   return (
     <main className="flex min-h-screen flex-col bg-gray-900">
       <div className="flex-1">
@@ -37,6 +46,7 @@ export default function HomePage() {
             <GradientButton
               size="lg"
               variant="dark"
+              onClick={handleClickExplore}
               className="m-15 rounded-l-2xl"
             >
               지금 바로 모임 탐색하기
