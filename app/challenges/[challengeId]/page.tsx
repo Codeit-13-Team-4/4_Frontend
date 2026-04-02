@@ -1,4 +1,5 @@
 import ChallengeDetailCard from "@/widgets/challengesDetail/ui/ChallengeDetailCard";
+import CommentSection from "@/widgets/challengesDetail/ui/CommentSection";
 
 export default async function ChallengesPage({
   params,
@@ -11,6 +12,7 @@ export default async function ChallengesPage({
   return (
     <>
       <ChallengeDetailCard challengeId={id} />
+      <CommentSection challengeId={id} />
     </>
   );
 }
