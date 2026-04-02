@@ -11,8 +11,8 @@ interface BadgeStatus {
 const BADGE_STATUS = {
   recruiting: { label: "모집중", type: "recruit" },
   recruitment_closed: { label: "모집완료", type: "closed" },
-  in_progress: { label: "모집중", type: "default" },
-  completed: { label: "모집완료", type: "default" },
+  in_progress: { label: "진행중", type: "default" },
+  completed: { label: "완료", type: "default" },
 } satisfies Record<string, BadgeStatus>;
 
 type StatusKey = keyof typeof BADGE_STATUS;

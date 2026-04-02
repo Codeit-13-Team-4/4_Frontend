@@ -47,7 +47,7 @@ export function ToastContainer() {
           duration={item.duration}
           className={cn(
             toastVariants({ variant: item.variant }),
-            "data-[state=open]:animate-toast-in",
+            "data-open:animate-toast-in",
           )}
         >
           <span
