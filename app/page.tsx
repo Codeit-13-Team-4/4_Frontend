@@ -4,6 +4,7 @@ import ThirdSection from "@/widgets/landing/ui/ThirdSection";
 import SixthSection from "@/widgets/landing/ui/SixthSection";
 import FourthSection from "@/widgets/landing/ui/FourthSection";
 import SecondSection from "@/widgets/landing/ui/SecondSection";
+import FifthSection from "@/widgets/landing/ui/FifthSection";
 
 export default function HomePage() {
   return (
@@ -19,6 +20,9 @@ export default function HomePage() {
       </div>
       <div className="flex-1">
         <FourthSection />
+      </div>
+      <div className="flex-1">
+        <FifthSection />
       </div>
       <div className="flex-1">
         <SixthSection />
