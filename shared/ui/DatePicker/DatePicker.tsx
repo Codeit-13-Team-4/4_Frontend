@@ -78,6 +78,7 @@ function SingleDatePicker({
             onChange?.(date);
             setOpen(false);
           }}
+          disabled={{ before: new Date() }}
         />
       </PopoverContent>
     </Popover>
@@ -153,6 +154,7 @@ function RangeDatePicker({
             selected={draft}
             onSelect={setDraft}
             className="rounded-b-none"
+            disabled={{ before: new Date() }}
           />
           <div className="flex gap-3 bg-gray-900 px-4 pb-4">
             <Button
