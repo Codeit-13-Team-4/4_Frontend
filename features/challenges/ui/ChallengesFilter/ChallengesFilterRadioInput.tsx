@@ -2,7 +2,7 @@ import { ChallengesFilterOptions } from "@/features/challenges/model";
 
 type ChallengesFilterRadioProps = {
   item: ChallengesFilterOptions;
-  name: "status" | "participationType";
+  name: string;
   selectedValue: string | undefined;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 };

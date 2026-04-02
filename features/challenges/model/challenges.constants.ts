@@ -19,3 +19,17 @@ export const CHALLENGES_SORT_LABEL = {
   deadline: "마감 임박순",
   oldest: "오래된 순",
 };
+
+export const JOIN_TYPE_OPTIONS = [
+  {
+    value: "INSTANT",
+    title: "즉시 참여가능",
+    description: "별도의 승인 절차 없이 신청 즉시 모임에 합류해요",
+  },
+  {
+    value: "APPROVAL",
+    title: "참여 신청 및 승인",
+    description:
+      "참여자의 지원 사유 내용을 확인하고 주최자가 직접 수락 여부를 결정해요",
+  },
+];
