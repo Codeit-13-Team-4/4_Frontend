@@ -7,6 +7,12 @@ export interface GetChallengesResDtoHost {
 
 export type ChallengesFilterOptions = { value: string; label: string };
 export type ParticipationType = "INSTANT" | "APPROVAL";
+export type VerificationFrequencyType =
+  | "ONCE_A_DAY"
+  | "EVERY_WEEKDAY"
+  | "ONCE_A_WEEK"
+  | "THREE_TIMES_A_WEEK"
+  | "USER_INPUT";
 
 export interface ChallengeCardProps {
   id: number;
@@ -15,12 +21,7 @@ export interface ChallengeCardProps {
   status: "RECRUITING" | "RECRUITMENT_CLOSED" | "IN_PROGRESS" | "COMPLETED";
   participationType: ParticipationType;
   tags: string[];
-  verificationFrequency:
-    | "ONCE_A_DAY"
-    | "EVERY_WEEKDAY"
-    | "ONCE_A_WEEK"
-    | "THREE_TIMES_A_WEEK"
-    | "USER_INPUT";
+  verificationFrequency: VerificationFrequencyType;
   startDate: string;
   endDate: string;
   recruitDeadline: string;
@@ -47,3 +48,8 @@ export type ChallengesFilter = {
   page?: number;
   limit?: number;
 };
+
+export interface ChallengesAlertModalProps {
+  open: boolean;
+  onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
+}
