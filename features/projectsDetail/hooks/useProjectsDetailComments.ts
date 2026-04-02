@@ -12,7 +12,7 @@ export function useProjectsDetailComments(projectId: number) {
         start: pageParam,
         perPage: PER_PAGE,
         sort: "createdAt",
-        order: "DESC",
+        order: "ASC",
       }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, _allPages, lastPageParam) => {
