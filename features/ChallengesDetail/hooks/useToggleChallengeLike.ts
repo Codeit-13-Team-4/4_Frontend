@@ -15,7 +15,7 @@ export function useToggleChallengeLike(challengeId: number) {
       const previous = queryClient.getQueryData<ChallengesDetail>(queryKey);
 
       queryClient.setQueryData<ChallengesDetail>(queryKey, (old) =>
-        old ? { ...old, isBookmarked: !currentLiked } : old,
+        old ? { ...old, liked: !currentLiked } : old,
       );
 
       return { previous };

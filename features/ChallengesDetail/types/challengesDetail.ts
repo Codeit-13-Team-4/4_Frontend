@@ -4,7 +4,7 @@ export type ChallengesStatusType =
   | "RECRUITING"
   | "RECRUITMENT_CLOSED"
   | "IN_PROGRESS"
-  | "COMPLETED ";
+  | "COMPLETED";
 
 export type VerificationMethodType = "IMAGE_AND_TEXT" | "TEXT" | "IMAGE";
 
@@ -42,6 +42,7 @@ export interface ChallengesDetail {
   viewCount: number;
   commentCount: number;
   isBookmarked: boolean;
+  liked: boolean;
   isHost: boolean;
   isMember: boolean;
   myParticipationStatus: MyParticipationStatusType;
