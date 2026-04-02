@@ -74,7 +74,7 @@ export default function NotificationDropdown() {
                     !notification.isRead && "bg-gray-800",
                   )}
                 >
-                  <div className="border-color-default flex size-8 h-6 w-6 shrink-0 items-center justify-center rounded-full border bg-gray-800">
+                  <div className="flex size-8 h-6 w-6 shrink-0 items-center justify-center rounded-full border border-gray-700 bg-gray-800">
                     <Image
                       src="/header/large-bell.svg"
                       alt="알림 아이콘"
