@@ -1,18 +1,18 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getProjectsDetailComments } from "@/features/projectsDetail/api/getProjectsDetailComment";
+import { getChallengesDetailComments } from "@/features/challengesDetail/api/getChallengesDetailComment";
 
 const PER_PAGE = 10;
 
-export function useProjectsDetailComments(projectId: number) {
+export function useChallengesDetailComments(challengeId: number) {
   return useInfiniteQuery({
-    queryKey: ["projects", "comments", projectId],
+    queryKey: ["challenges", "comments", challengeId],
     queryFn: ({ pageParam }) =>
-      getProjectsDetailComments({
-        projectId,
+      getChallengesDetailComments({
+        challengeId,
         start: pageParam,
         perPage: PER_PAGE,
         sort: "createdAt",
-        order: "ASC",
+        order: "DESC",
       }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, _allPages, lastPageParam) => {
