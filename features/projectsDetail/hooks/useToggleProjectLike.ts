@@ -27,6 +27,7 @@ export function useToggleProjectLike(projectId: number) {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey });
+      queryClient.invalidateQueries({ queryKey: ["projectList"] });
     },
   });
 }

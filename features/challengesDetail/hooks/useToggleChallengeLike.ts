@@ -27,6 +27,7 @@ export function useToggleChallengeLike(challengeId: number) {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey });
+      queryClient.invalidateQueries({ queryKey: ["challengesList"] });
     },
   });
 }
