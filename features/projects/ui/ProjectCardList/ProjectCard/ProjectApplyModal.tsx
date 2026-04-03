@@ -132,19 +132,18 @@ export function ProjectApplyModal({
           </AlertModal.Header>
           <AlertModal.Footer>
             <AlertModal.Cancel asChild>
-              <GradientButton
-                variant="dark"
-                className="w-full"
+              <Button
+                className="h-full w-full"
                 onClick={(e) => e.stopPropagation()}
               >
                 계속 둘러보기
-              </GradientButton>
+              </Button>
             </AlertModal.Cancel>
             <AlertModal.Action
               className="w-full"
               onClick={(e) => {
                 e.stopPropagation();
-                router.push("/mypage");
+                router.push(`/projects/${projectId}`);
               }}
             >
               지원 내역 확인

@@ -90,7 +90,10 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
     setIsOpen(false);
   };
 
-  const badgeStatus = CHALLENGES_STATUS[status].value;
+  const badgeStatus =
+    CHALLENGES_STATUS[status].value === "recruiting"
+      ? "recruiting"
+      : "recruitment_closed";
 
   return (
     <article

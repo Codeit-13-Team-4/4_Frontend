@@ -71,6 +71,9 @@ export function ChallengesCreateForm() {
     joinType: undefined,
     verificationMethod: "TEXT",
   });
+  const [createdChallengeId, setCreatedChallengeId] = useState<
+    number | undefined
+  >(undefined);
 
   const updateForm = <K extends keyof CreateFormState>(
     key: K,
@@ -80,9 +83,10 @@ export function ChallengesCreateForm() {
   };
 
   const router = useRouter();
-  const { mutate, isPending } = useCreateChallenges(() =>
-    setCreateAlertOpen(true),
-  );
+  const { mutate, isPending } = useCreateChallenges((data) => {
+    setCreatedChallengeId(data.id);
+    setCreateAlertOpen(true);
+  });
 
   const handleBack = () => {
     if (window.history.length > 1) {
@@ -136,13 +140,6 @@ export function ChallengesCreateForm() {
 
       mutate(data);
     }
-  };
-
-  const handleTagDelete = (tag: string) => {
-    updateForm(
-      "tags",
-      createForm.tags.filter((t) => t !== tag),
-    );
   };
 
   return (
@@ -317,6 +314,7 @@ export function ChallengesCreateForm() {
       <ChallengesCreateAlertModal
         open={createAlertOpen}
         onOpenChange={setCreateAlertOpen}
+        id={createdChallengeId}
       />
     </div>
   );

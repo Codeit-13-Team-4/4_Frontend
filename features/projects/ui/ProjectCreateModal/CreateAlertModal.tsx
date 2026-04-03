@@ -6,6 +6,7 @@ import { CompleteAnimation } from "@/shared/ui/CompleteAnimation/CompleteAnimati
 export function CreateAlertModal({
   open,
   onOpenChange,
+  id,
 }: ProjectAlertModalProps) {
   return (
     <AlertModal open={open} onOpenChange={onOpenChange}>
@@ -27,7 +28,7 @@ export function CreateAlertModal({
             </Link>
           </AlertModal.Cancel>
           <AlertModal.Action className="w-full">
-            <Link href="/">지원 내역 확인</Link>
+            <Link href={`/projects/${id}`}>개설한 프로젝트 확인</Link>
           </AlertModal.Action>
         </AlertModal.Footer>
       </AlertModal.Content>

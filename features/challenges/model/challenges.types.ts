@@ -53,4 +53,5 @@ export type ChallengesFilter = {
 export interface ChallengesAlertModalProps {
   open: boolean;
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
+  id?: number;
 }
