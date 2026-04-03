@@ -60,7 +60,7 @@ export default function ThirdSection() {
                   {card.id}
                 </div>
 
-                <h3 className="text-2xl font-bold text-[#e2e8f0]">
+                <h3 className="text-2xl font-bold text-shadow-gray-200">
                   {card.title}
                 </h3>
               </div>

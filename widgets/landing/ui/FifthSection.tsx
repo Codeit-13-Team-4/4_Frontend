@@ -89,7 +89,7 @@ function getTimeLeft(targetDate: string): TimeLeft {
 
 function CountdownCard({ value, label }: { value: string; label: string }) {
   return (
-    <div className="flex h-[88px] w-[68px] flex-col items-center justify-center rounded-[20px] border border-white/12 bg-[#12213f]/72 backdrop-blur-md md:h-[116px] md:w-[94px]">
+    <div className="flex h-22 w-17 flex-col items-center justify-center rounded-[20px] border border-white/12 bg-[#12213f]/72 backdrop-blur-md md:h-29 md:w-23.5">
       <span
         suppressHydrationWarning
         className="text-[28px] leading-none font-bold text-white md:text-[42px]"
@@ -123,9 +123,9 @@ export default function FifthSection() {
   );
 
   return (
-    <section className="overflow-hidden bg-[#071634] px-5 text-white md:px-10 lg:px-16">
+    <section className="overflow-hidden bg-gray-900 px-5 text-white md:px-10 lg:px-16">
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center">
-        <div className="flex max-w-[760px] flex-col items-center gap-7 text-center">
+        <div className="flex max-w-190 flex-col items-center gap-7 text-center">
           <p className="text-mint-500 text-lg font-semibold">{"// DEMO DAY"}</p>
 
           <h2 className="text-3xl leading-tight font-bold md:text-5xl">
@@ -142,14 +142,14 @@ export default function FifthSection() {
         </div>
 
         <div className="relative mt-20 w-full">
-          <div className="relative mx-auto h-[360px] w-full max-w-[1280px] overflow-hidden md:h-[450px]">
+          <div className="relative mx-auto h-90 w-full max-w-7xl overflow-hidden md:h-122.5">
             <div className="pointer-events-none absolute inset-0 z-10 bg-[#071634]/12 backdrop-blur-[2px]" />
 
             <div className="relative z-0 hidden h-full items-start justify-center gap-6 md:flex">
               {demoProjects.map((project) => (
                 <div
                   key={project.id}
-                  className="w-[418px] shrink-0 opacity-40 blur-[10px]"
+                  className="w-104.5 shrink-0 opacity-40 blur-[10px]"
                 >
                   <DemoProjectCard data={project} />
                 </div>
