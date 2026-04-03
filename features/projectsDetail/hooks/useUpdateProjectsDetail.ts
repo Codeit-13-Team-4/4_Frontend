@@ -16,6 +16,10 @@ export function useUpdateProjectsDetail(projectId: number) {
       queryClient.invalidateQueries({
         queryKey: ["projects", projectId],
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["projectList"],
+      });
     },
   });
 }
