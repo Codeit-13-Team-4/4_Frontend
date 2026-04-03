@@ -10,6 +10,9 @@ export function useDeleteChallengesDetail(challengeId: number) {
       queryClient.removeQueries({
         queryKey: ["challenges", challengeId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["challengesList"],
+      });
     },
   });
 }
