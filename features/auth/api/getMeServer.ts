@@ -18,11 +18,15 @@ export async function getMeServer(): Promise<User | null> {
     },
   );
 
-  const data = await response.json();
+  const data = await response.json().catch(() => null);
 
-  if (!response.ok) {
-    throw new Error(data.message || "사용자 정보 조회에 실패했습니다.");
+  if (response.status === 401) {
+    return null;
   }
 
-  return data;
+  if (!response.ok) {
+    throw new Error(data?.message || "사용자 정보 조회에 실패했습니다.");
+  }
+
+  return data as User;
 }
