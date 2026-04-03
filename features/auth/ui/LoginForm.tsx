@@ -194,7 +194,7 @@ export default function LoginForm() {
             </p>
           </div>
 
-          <SocialLoginButtons />
+          {/* <SocialLoginButtons /> */}
         </div>
       </form>
     </div>
