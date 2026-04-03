@@ -6,6 +6,7 @@ import { ChallengesAlertModalProps } from "@/features/challenges/model";
 export function ChallengesCreateAlertModal({
   open,
   onOpenChange,
+  id,
 }: ChallengesAlertModalProps) {
   return (
     <AlertModal open={open} onOpenChange={onOpenChange}>
@@ -27,7 +28,7 @@ export function ChallengesCreateAlertModal({
             </Link>
           </AlertModal.Cancel>
           <AlertModal.Action className="w-full">
-            <Link href="/">개설한 챌린지 확인</Link>
+            <Link href={`/challenges/${id}`}>개설한 챌린지 확인</Link>
           </AlertModal.Action>
         </AlertModal.Footer>
       </AlertModal.Content>
