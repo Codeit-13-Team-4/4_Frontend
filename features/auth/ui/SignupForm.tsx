@@ -299,7 +299,7 @@ export default function SignupForm() {
           >
             {isPending ? "회원가입 중..." : "회원가입"}
           </Button>
-          <SocialLoginButtons />
+          {/* <SocialLoginButtons /> */}
 
           <p className="flex justify-center gap-1 text-sm text-gray-50">
             이미 회원이신가요?
