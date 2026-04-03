@@ -64,7 +64,9 @@ export function ProjectCreateForm() {
   const [confirmAlertOpen, setConfirmAlertOpen] = useState(false);
   const [createAlertOpen, setCreateAlertOpen] = useState(false);
   const [errors, setErrors] = useState<CreateFormErrors>({});
-
+  const [createdProjectId, setCreatedProjectId] = useState<number | undefined>(
+    undefined,
+  );
   const [createForm, setCreateForm] = useState<CreateFormState>({
     title: "",
     projectType: undefined,
@@ -86,9 +88,11 @@ export function ProjectCreateForm() {
   };
 
   const router = useRouter();
-  const { mutate, isPending } = useCreateProject(() =>
-    setCreateAlertOpen(true),
-  );
+
+  const { mutate, isPending } = useCreateProject((data) => {
+    setCreatedProjectId(data.id);
+    setCreateAlertOpen(true);
+  });
 
   const handleBack = () => {
     if (window.history.length > 1) {
@@ -359,6 +363,7 @@ export function ProjectCreateForm() {
       <CreateAlertModal
         open={createAlertOpen}
         onOpenChange={setCreateAlertOpen}
+        id={createdProjectId}
       />
     </div>
   );

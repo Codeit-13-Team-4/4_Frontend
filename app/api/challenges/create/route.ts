@@ -9,7 +9,6 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    console.log("🚀 ~ POST ~ body:", body);
 
     const response = await fetch(`${BASE_URL}/challenges`, {
       method: "POST",
