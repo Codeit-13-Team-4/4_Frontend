@@ -16,6 +16,10 @@ export function useUpdateChallengesDetail(challengeId: number) {
       queryClient.invalidateQueries({
         queryKey: ["challenges", challengeId],
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["challengesList"],
+      });
     },
   });
 }
