@@ -36,6 +36,7 @@ export interface ChallengeCardProps {
   joinButtonLabel: string;
   isMember: boolean;
   isHost: boolean;
+  isLiked: boolean;
 }
 
 export type ChallengesSortType = keyof typeof CHALLENGES_SORT_LABEL;
