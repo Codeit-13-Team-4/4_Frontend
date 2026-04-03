@@ -18,6 +18,7 @@ export default function SocialCallbackPage() {
     const token = searchParams.get("token");
     const typeFromQuery = searchParams.get("type");
     const providerFromPath = params.provider;
+    console.log({ token, typeFromQuery });
 
     const provider =
       typeof providerFromPath === "string" ? providerFromPath : typeFromQuery;

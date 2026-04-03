@@ -17,7 +17,6 @@ export async function POST(request: NextRequest) {
       }),
       cache: "no-store",
     });
-    console.log("토큰발급응답\n", response);
 
     const data = await response.json();
     if (!response.ok) {
