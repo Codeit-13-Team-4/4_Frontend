@@ -77,7 +77,7 @@ function AnimatedColumn({ cards, direction, play }: AnimatedColumnProps) {
   const loopCards = [...cards, ...cards];
 
   return (
-    <div className="h-[720px] overflow-hidden md:h-[760px]">
+    <div className="h-180 overflow-hidden md:h-190">
       <div
         className={[
           "flex flex-col gap-4 will-change-transform",
@@ -125,7 +125,7 @@ export default function FourthSection() {
   return (
     <section
       ref={sectionRef}
-      className="overflow-hidden bg-[#071634] px-5 py-20 text-white md:px-10 md:py-28 lg:px-16"
+      className="overflow-hidden bg-gray-900 px-5 py-20 text-white md:px-10 md:py-28 lg:px-16"
     >
       <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[minmax(280px,420px)_1fr] lg:gap-16">
         <div className="flex max-w-md flex-col gap-7">
@@ -146,9 +146,9 @@ export default function FourthSection() {
           </p>
         </div>
 
-        <div className="relative h-[720px] overflow-hidden md:h-[760px]">
-          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-24 bg-gradient-to-b from-[#071634] to-transparent" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-gradient-to-t from-[#071634] to-transparent" />
+        <div className="relative h-180 overflow-hidden md:h-190">
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-24 bg-linear-to-b from-[#071634] to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-linear-to-t from-[#071634] to-transparent" />
 
           <div className="grid h-full grid-cols-1 gap-4 md:grid-cols-2">
             <AnimatedColumn cards={leftCards} direction="up" play={play} />
