@@ -44,7 +44,7 @@ export default function HomePage() {
             </p>
 
             <GradientButton
-              size="lg"
+              size="md"
               variant="dark"
               onClick={handleClickExplore}
               className="m-15 rounded-l-2xl"
