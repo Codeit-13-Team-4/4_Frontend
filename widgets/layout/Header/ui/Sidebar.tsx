@@ -13,6 +13,7 @@ import {
   AvatarImage,
   SidebarOverlay,
 } from "@/shared/ui";
+import { useLogout } from "@/features/auth/hooks/queries/useLogout";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -23,8 +24,14 @@ interface SidebarProps {
 export default function Sidebar({ isOpen, onClose, userData }: SidebarProps) {
   const pathname = usePathname();
 
+  const { mutate: logoutMutate } = useLogout({
+    onSuccess: () => {
+      onClose();
+    },
+  });
+
   const handleLogout = () => {
-    // TODO: 로그아웃 API 연동 후 구현
+    logoutMutate();
   };
 
   return (
