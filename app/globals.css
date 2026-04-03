@@ -87,6 +87,47 @@
   }
 }
 
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes marquee-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes marquee-down {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@utility animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+@utility animate-marquee-up {
+  animation: marquee-up 18s linear infinite;
+}
+
+@utility animate-marquee-down {
+  animation: marquee-down 18s linear infinite;
+}
+
 :root {
   --background: #0f172a;
   --foreground: #f8fafc;
