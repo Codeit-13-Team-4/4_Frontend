@@ -24,7 +24,7 @@ export function ProjectCardList({ filters }: { filters?: ProjectFilter }) {
 
   if (isLoading) {
     return (
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap justify-center gap-3 md:mt-6 md:justify-start">
         {Array.from({ length: 6 }).map((_, index) => (
           <ProjectCardSkeleton key={index} />
         ))}
