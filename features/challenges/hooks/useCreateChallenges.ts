@@ -2,14 +2,17 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createChallengesProject } from "../api/createChallenges";
+import { ChallengeCardProps } from "../model";
 
-export const useCreateChallenges = (onSuccess: () => void) => {
+export const useCreateChallenges = (
+  onSuccess: (data: ChallengeCardProps) => void,
+) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createChallengesProject,
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["challengesList"] });
-      onSuccess();
+      onSuccess(data.data);
     },
   });
 };

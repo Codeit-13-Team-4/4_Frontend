@@ -1,11 +1,5 @@
 "use client";
-import {
-  AlertModal,
-  Button,
-  GradientButton,
-  Modal,
-  TextArea,
-} from "@/shared/ui";
+import { AlertModal, Button, Modal, TextArea } from "@/shared/ui";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CompleteAnimation } from "@/shared/ui/CompleteAnimation/CompleteAnimation";
@@ -139,22 +133,21 @@ export function ChallengesApplyModal({
           </AlertModal.Header>
           <AlertModal.Footer>
             <AlertModal.Cancel asChild>
-              <GradientButton
-                variant="dark"
-                className="w-full"
+              <Button
+                className="h-full w-full text-[20px] text-gray-600"
                 onClick={(e) => e.stopPropagation()}
               >
                 계속 둘러보기
-              </GradientButton>
+              </Button>
             </AlertModal.Cancel>
             <AlertModal.Action
-              className="w-full"
+              className="w-full text-[20px]"
               onClick={(e) => {
                 e.stopPropagation();
-                router.push("/mypage");
+                router.push(`/challenges/${challengeId}`);
               }}
             >
-              지원 내역 확인
+              내 챌린지로 이동
             </AlertModal.Action>
           </AlertModal.Footer>
         </AlertModal.Content>
@@ -165,13 +158,13 @@ export function ChallengesApplyModal({
           <AlertModal.Header>
             <AlertModal.Title>작성을 중단하시겠어요?</AlertModal.Title>
             <AlertModal.Description>
-              지금 나가면 작성 중인 지원 내용이 저장되지 않고 사라져요.
+              지금 나가면 작성 중인 신청 사유가 저장되지 않고 사라져요.
             </AlertModal.Description>
           </AlertModal.Header>
           <AlertModal.Footer>
             <AlertModal.Cancel asChild>
               <Button
-                className="h-full w-full"
+                className="h-full w-full text-[20px] text-gray-600"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleReset();
@@ -182,7 +175,7 @@ export function ChallengesApplyModal({
               </Button>
             </AlertModal.Cancel>
             <AlertModal.Action
-              className="w-full"
+              className="w-full text-[20px]"
               onClick={(e) => {
                 e.stopPropagation();
                 setConfirmAlertOpen(false);

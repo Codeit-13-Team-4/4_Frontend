@@ -69,4 +69,5 @@ export type ProjectSortType = keyof typeof SORT_LABEL;
 export interface ProjectAlertModalProps {
   open: boolean;
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
+  id?: number;
 }
