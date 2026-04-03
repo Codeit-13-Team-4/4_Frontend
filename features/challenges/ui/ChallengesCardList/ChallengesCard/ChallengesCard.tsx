@@ -19,6 +19,8 @@ import {
   ChallengesApplyModal,
   ChallengesBadge,
 } from "@/features/challenges/ui";
+import { useToggleChallengeLike } from "@/features/challengesDetail/hooks/useToggleChallengeLike";
+import { useOpenAlertModal } from "@/shared/store/AlertModal";
 
 export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
   const {
@@ -38,7 +40,7 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
     // progressRate,
     viewCount,
     commentCount,
-    isBookmarked,
+    isLiked,
     // isJoinable,
     // joinButtonLabel,
     // isMember,
@@ -50,8 +52,9 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [confirmAlertOpen, setConfirmAlertOpen] = useState<boolean>(false);
-
+  const openAlertModal = useOpenAlertModal();
   const { data: userData } = useUserData();
+  const { mutate: toggleLike } = useToggleChallengeLike(id);
 
   const handleOpen = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -60,6 +63,23 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
       return;
     }
     setIsOpen(true);
+  };
+
+  const handleLikeToggle = () => {
+    if (!userData) {
+      openAlertModal({
+        title: "로그인이 필요합니다",
+        description: "좋아요 기능은 로그인 후 이용할 수 있습니다.",
+        positive: {
+          text: "로그인하기",
+          button: { type: "default", variant: "primary" },
+        },
+        negative: { text: "취소" },
+        onPositive: () => router.push("/login"),
+      });
+      return;
+    }
+    toggleLike(isLiked);
   };
 
   const handleCardClick = () => {
@@ -82,8 +102,13 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
           <StatusBadge status={badgeStatus} />
           <ChallengesBadge type={participationType} />
         </div>
-
-        <LikeButton liked={isBookmarked} onToggle={() => {}} />
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <LikeButton liked={isLiked} onToggle={handleLikeToggle} />
+        </div>
       </header>
       <div className="mb-7 flex flex-col">
         <section className="flex flex-col">
@@ -144,7 +169,7 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
         <GradientButton
           size="sm"
           onClick={handleOpen}
-          disabled={status !== "RECRUITING" || !isHost}
+          disabled={status !== "RECRUITING" || isHost}
         >
           참여하기
         </GradientButton>
