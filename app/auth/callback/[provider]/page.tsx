@@ -43,18 +43,18 @@ export default function SocialCallbackPage() {
     const handleSocialCallback = async () => {
       //소셜로그인 여부 검증
       try {
-        if (!typeFromQuery || !token) {
-          router.replace("/login");
-          return;
-        }
-        const socialCertToken = await socialToken({
-          type: typeFromQuery,
-          socialToken: token,
-        });
-        if (!socialCertToken) {
-          router.replace("/login");
-          return;
-        }
+        //   if (!typeFromQuery || !token) {
+        //     router.replace("/login");
+        //     return;
+        //   }
+        // const socialCertToken = await socialToken({
+        //   type: typeFromQuery,
+        //   socialToken: token,
+        // });
+        // if (!socialCertToken) {
+        //   router.replace("/login");
+        //   return;
+        // }
         await socialLogin({
           token,
           type: provider,
@@ -82,7 +82,19 @@ export default function SocialCallbackPage() {
           router.replace(`/signup?${query.toString()}`); //여기로 이동 + 쿼리파라미터 같이보냄
           return;
         }
+        const query = new URLSearchParams({
+          token,
+          type: provider,
+        });
+        if (parsedUser?.email) {
+          query.set("email", parsedUser.email);
+        }
 
+        if (parsedUser?.name) {
+          query.set("name", parsedUser.name);
+        }
+
+        router.replace(`/signup?${query.toString()}`); //여기로 이동 + 쿼리파라미터 같이보냄
         // router.replace("/login?error=social_login_failed"); //그 외 에러면 여기로 이동
       }
     };

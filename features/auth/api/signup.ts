@@ -42,7 +42,7 @@ export async function signup({
 }
 
 export async function socialSignup({
-  //로그인 검증용함수
+  //회원가입용
   type,
   token,
   nickname,
