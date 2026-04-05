@@ -10,6 +10,5 @@ export function getErrorMessage(
   status: number,
   backendMessage?: string,
 ): string {
-  if (status === 409) return backendMessage ?? "이미 처리된 요청입니다.";
   return ERROR_MESSAGES[status] ?? backendMessage ?? "요청에 실패했습니다.";
 }

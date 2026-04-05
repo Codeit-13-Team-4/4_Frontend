@@ -22,6 +22,7 @@ function makeQueryClient() {
       },
 
       onError(error) {
+        if (error instanceof ApiError && error.status === 409) return;
         const message =
           error instanceof ApiError ? error.message : "요청에 실패했습니다.";
         toast.error(message);
