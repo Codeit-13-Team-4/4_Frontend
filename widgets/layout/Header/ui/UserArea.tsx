@@ -72,7 +72,7 @@ export default function UserArea() {
       <Sidebar
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
-        userData={userData}
+        userData={userData || null}
       />
       <NotificationSidebar
         isOpen={isNotificationOpen}
