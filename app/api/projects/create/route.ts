@@ -1,34 +1,28 @@
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { fetchWithAuthRetry } from "@/shared/lib/server/auth";
+import { ApiError } from "@/shared/lib/errors/ApiError";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export async function POST(req: NextRequest) {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
-
   try {
     const body = await req.json();
-
-    const response = await fetch(`${BASE_URL}/projects`, {
+    const data = await fetchWithAuthRetry(`${BASE_URL}/projects`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    if (!response.ok) {
-      throw new Error(
-        `사이드 프로젝트 생성을 실패했습니다. (${response.status})`,
-      );
-    }
-    const data = await response.json();
-
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.error("에러:", error);
-
-    return NextResponse.json({ message: "서버 에러" }, { status: 500 });
+    if (error instanceof ApiError) {
+      return NextResponse.json(
+        { message: error.message },
+        { status: error.status },
+      );
+    }
+    return NextResponse.json(
+      { message: "서버 오류가 발생했습니다." },
+      { status: 500 },
+    );
   }
 }
