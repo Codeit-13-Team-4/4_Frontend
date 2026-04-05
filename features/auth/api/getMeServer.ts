@@ -3,13 +3,10 @@ import { User } from "@/shared/types/user";
 
 export async function getMeServer(): Promise<User | null> {
   try {
-    const result = await fetchWithAuthRetry<User>(
+    return await fetchWithAuthRetry<User>(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/me`,
     );
-    console.log("[getMeServer] success:", result);
-    return result;
-  } catch (e) {
-    console.error("[getMeServer] error:", e);
+  } catch {
     return null;
   }
 }
