@@ -47,6 +47,7 @@ export async function socialSignup({
   token,
   nickname,
 }: SocialSignupRequest): Promise<SignupResponse> {
+  console.log(type, "\n", token, "\n", nickname);
   const response = await fetch("/api/auth/socialsignup", {
     method: "POST",
     headers: {

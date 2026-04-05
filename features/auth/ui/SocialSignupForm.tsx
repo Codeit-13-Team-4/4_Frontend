@@ -83,24 +83,28 @@ const SocialSignupForm = (props: SocialSignupFormProps) => {
             isPending={isPending}
           />
         </FieldGroup>
-      </form>
-      <div className="flex flex-col gap-10">
-        <Button
-          type="submit"
-          variant="primary"
-          disabled={isPending}
-          className="w-full"
-        >
-          {isPending ? "회원가입 중..." : "회원가입"}
-        </Button>
 
-        <p className="flex justify-center gap-1 text-sm text-gray-50">
-          이미 회원이신가요?
-          <Link href="/login" className="text-mint-500 font-semibold underline">
-            로그인
-          </Link>
-        </p>
-      </div>
+        <div className="flex flex-col gap-10">
+          <Button
+            type="submit"
+            variant="primary"
+            disabled={isPending}
+            className="w-full"
+          >
+            {isPending ? "회원가입 중..." : "회원가입"}
+          </Button>
+
+          <p className="flex justify-center gap-1 text-sm text-gray-50">
+            이미 회원이신가요?
+            <Link
+              href="/login"
+              className="text-mint-500 font-semibold underline"
+            >
+              로그인
+            </Link>
+          </p>
+        </div>
+      </form>
     </div>
   );
 };

@@ -46,7 +46,7 @@ export default async function ProjectPage({
         <ProjectCreateButton />
       </div>
       <div className="md:hidden">
-        <ProjectCreateButton circle />
+        <ProjectCreateButton />
       </div>
 
       <div className="flex flex-col items-end md:flex-row md:items-center md:justify-between">
