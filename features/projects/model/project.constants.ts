@@ -1,5 +1,3 @@
-import { ContactMethod } from "./project.types";
-
 export const TECH_STACK = {
   react: { label: "React", icon: "/icons/tech/react-icon.svg" },
   figma: { label: "Figma", icon: "/icons/tech/figma-icon.svg" },
@@ -69,4 +67,11 @@ export const CONTACT_METHOD = {
   email: "이메일",
   discord: "디스코드",
   google_form: "구글 폼",
+};
+
+export const STATUS_LABEL = {
+  recruiting: "모집중",
+  recruitment_closed: "모집완료",
+  in_progress: "진행중",
+  completed: "완료",
 };
