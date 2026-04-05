@@ -12,6 +12,7 @@ export function useUpdateChallengesDetailComment(challengeId: number) {
   return useMutation({
     mutationFn: ({ commentId, content }: UpdateCommentVariables) =>
       updateChallengesDetailComment({ challengeId, commentId, content }),
+    meta: { successMessage: "댓글이 수정되었습니다." },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["challenges", "comments", challengeId],

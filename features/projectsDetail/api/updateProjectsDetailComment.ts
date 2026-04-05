@@ -1,3 +1,5 @@
+import { fetchClient } from "@/shared/lib/client/fetchClient";
+
 interface UpdateCommentParams {
   projectId: number;
   commentId: number;
@@ -9,19 +11,9 @@ export async function updateProjectsDetailComment({
   commentId,
   content,
 }: UpdateCommentParams): Promise<void> {
-  const response = await fetch(
-    `/api/projects/${projectId}/comments/${commentId}`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ content }),
-    },
-  );
-
-  if (!response.ok) {
-    const data = await response.json();
-    throw new Error(data.message || "댓글 수정에 실패했습니다.");
-  }
+  await fetchClient(`/api/projects/${projectId}/comments/${commentId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ content }),
+  });
 }

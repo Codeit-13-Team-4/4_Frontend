@@ -1,3 +1,4 @@
+import { fetchClient } from "@/shared/lib/client/fetchClient";
 import { ParticipationType, VerificationFrequencyType } from "../model";
 
 interface CreateChallengesBody {
@@ -14,19 +15,10 @@ interface CreateChallengesBody {
 }
 
 export async function createChallengesProject(body: CreateChallengesBody) {
-  const response = await fetch("/api/challenges/create", {
+  const response = await fetchClient("/api/challenges/create", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
-
-  if (!response.ok) {
-    throw new Error(`챌린지 생성을 실패했습니다. (${response.status})`);
-  }
-
-  const data = await response.json();
-
-  return data;
+  return response.json();
 }
