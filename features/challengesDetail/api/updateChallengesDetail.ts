@@ -1,3 +1,4 @@
+import { fetchClient } from "@/shared/lib/client/fetchClient";
 import type {
   VerificationMethodType,
   JoinType,
@@ -22,16 +23,9 @@ export async function updateChallengesDetail({
   challengeId,
   ...body
 }: UpdateChallengesDetailParams): Promise<void> {
-  const response = await fetch(`/api/challenges/${challengeId}`, {
+  await fetchClient(`/api/challenges/${challengeId}`, {
     method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
-
-  if (!response.ok) {
-    const data = await response.json();
-    throw new Error(data.message || "챌린지 수정에 실패했습니다.");
-  }
 }

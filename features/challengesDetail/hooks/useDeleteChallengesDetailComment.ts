@@ -7,6 +7,7 @@ export function useDeleteChallengesDetailComment(challengeId: number) {
   return useMutation({
     mutationFn: (commentId: number) =>
       deleteChallengesDetailComment({ challengeId, commentId }),
+    meta: { successMessage: "댓글이 삭제되었습니다." },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["challenges", "comments", challengeId],

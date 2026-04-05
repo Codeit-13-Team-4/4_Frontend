@@ -1,10 +1,5 @@
-export async function readNotification(id: number): Promise<void> {
-  const response = await fetch(`/api/notifications/${id}`, {
-    method: "PATCH",
-  });
+import { fetchClient } from "@/shared/lib/client/fetchClient";
 
-  if (!response.ok) {
-    const data = await response.json();
-    throw new Error(data.message || "알림 읽음 처리에 실패했습니다.");
-  }
+export async function readNotification(id: number): Promise<void> {
+  await fetchClient(`/api/notifications/${id}`, { method: "PATCH" });
 }

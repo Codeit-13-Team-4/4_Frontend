@@ -1,3 +1,4 @@
+import { fetchClient } from "@/shared/lib/client/fetchClient";
 import type {
   ProjectType,
   TechStackType,
@@ -24,16 +25,9 @@ export async function updateProjectsDetail({
   projectId,
   ...body
 }: UpdateProjectDetailParams): Promise<void> {
-  const response = await fetch(`/api/projects/${projectId}`, {
+  await fetchClient(`/api/projects/${projectId}`, {
     method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
-
-  if (!response.ok) {
-    const data = await response.json();
-    throw new Error(data.message || "프로젝트 수정에 실패했습니다.");
-  }
 }
