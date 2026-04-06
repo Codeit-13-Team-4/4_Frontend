@@ -98,7 +98,7 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
   return (
     <article
       onClick={handleCardClick}
-      className="flex h-90.5 w-104.5 cursor-pointer flex-col rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5 md:w-85.5 lg:w-104.5"
+      className="flex h-90.5 w-full cursor-pointer flex-col rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5"
     >
       <header className="mb-7 flex items-center justify-between">
         <div className="flex gap-2">
@@ -115,7 +115,7 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
       </header>
       <div className="mb-7 flex flex-col">
         <section className="flex flex-col">
-          <div className="mb-2 flex items-center justify-between">
+          <div className="mb-2 flex items-center justify-between gap-1">
             <h4 className="line-clamp-1 text-[20px] text-gray-50 lg:line-clamp-2">
               {title}
             </h4>

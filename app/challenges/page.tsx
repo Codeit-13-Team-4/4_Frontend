@@ -50,16 +50,14 @@ export default async function ChallengesPage({
         <div className="md:hidden">
           <ChallengesCreateButton circle />
         </div>
-
         <div className="flex flex-col items-end md:flex-row md:items-center md:justify-between">
           <ChallengesFilter />
           <div className="mr-5 mb-4 flex items-center md:mb-0">
             <ChallengesSortDropdown />
           </div>
         </div>
-
         <ChallengesCardList filters={filters} />
-        <div className="pointer-events-none fixed bottom-0 z-50 h-68 w-full bg-linear-to-b from-gray-900/0 to-gray-900" />
+        <div className="pointer-events-none fixed bottom-0 z-45 h-68 w-full bg-linear-to-b from-gray-900/0 to-gray-900" />{" "}
       </main>
     </HydrationBoundary>
   );
