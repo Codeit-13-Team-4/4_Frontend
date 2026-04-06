@@ -27,6 +27,7 @@ export async function proxy(request: NextRequest) {
   }
 
   const data = await refreshResponse.json();
+  if (!data.accessToken) return NextResponse.next();
 
   response.cookies.set("accessToken", data.accessToken, {
     httpOnly: true,
