@@ -57,14 +57,9 @@ export function ProjectApplyModal({
           setAlertOpen(true);
           onClose();
         },
-        onError: (error) => {
+        onError: () => {
           handleReset();
           onClose();
-
-          const err = error as { status?: number; message?: string };
-          if (err.status === 409) {
-            toast(err.message!, { variant: "error" });
-          }
         },
       },
     );

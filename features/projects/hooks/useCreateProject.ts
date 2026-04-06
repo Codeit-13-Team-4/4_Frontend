@@ -10,6 +10,7 @@ export const useCreateProject = (
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createSideProject,
+    meta: { successMessage: "프로젝트 생성에 성공했습니다." },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["projectList"] });
       onSuccess(data);
