@@ -53,6 +53,7 @@ export interface ProjectCardProps {
   liked: boolean;
   host: ProjectHost;
   hasApplication: boolean;
+  isHost: boolean;
 }
 
 export type ProjectFilter = {

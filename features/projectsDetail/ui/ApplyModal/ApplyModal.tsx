@@ -67,14 +67,10 @@ export function ApplyModal({ open, onOpenChange, projectId }: ApplyModalProps) {
         negative: { text: "계속 둘러보기" },
         onPositive: () => router.push("/mypage"),
       });
-    } catch (error) {
+    } catch {
       onOpenChange(false);
       setPosition(null);
       setMessage("");
-      const err = error as { status?: number; message?: string };
-      if (err.status === 409) {
-        toast(err.message!, { variant: "error" });
-      }
     }
   };
 
