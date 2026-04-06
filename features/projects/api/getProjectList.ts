@@ -1,3 +1,4 @@
+import { fetchClient } from "@/shared/lib/client/fetchClient";
 import { ProjectFilter } from "../model";
 
 const createSearchParams = (filters: ProjectFilter) => {
@@ -13,13 +14,9 @@ const createSearchParams = (filters: ProjectFilter) => {
     return params;
   }
 
-  if (status) {
-    params.set("status", status);
-  }
+  if (status) params.set("status", status);
   if (sort && sort !== "createdAt") {
-    if (sort === "recruitEndDate") {
-      params.set("order", "ASC");
-    }
+    if (sort === "recruitEndDate") params.set("order", "ASC");
     params.set("sort", sort);
   }
 
@@ -30,13 +27,8 @@ const createSearchParams = (filters: ProjectFilter) => {
 };
 
 export async function getProjectList(filters: ProjectFilter) {
-  const response = await fetch(`/api/projects?${createSearchParams(filters)}`);
-
-  if (!response.ok) {
-    throw new Error(`프로젝트 조회 실패 (${response.status})`);
-  }
-
-  const data = await response.json();
-
-  return data;
+  const response = await fetchClient(
+    `/api/projects?${createSearchParams(filters)}`,
+  );
+  return response.json();
 }

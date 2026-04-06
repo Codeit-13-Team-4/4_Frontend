@@ -1,3 +1,4 @@
+import { fetchClient } from "@/shared/lib/client/fetchClient";
 import type { CommentsResponse } from "@/features/projectsDetail/types/comment";
 
 interface GetCommentsParams {
@@ -23,19 +24,9 @@ export async function getProjectsDetailComments({
   if (sort) searchParams.set("sort", sort);
   if (order) searchParams.set("order", order);
 
-  const response = await fetch(
+  const response = await fetchClient(
     `/api/projects/${projectId}/comments?${searchParams}`,
-    {
-      method: "GET",
-      cache: "no-store",
-    },
+    { cache: "no-store" },
   );
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "댓글 조회에 실패했습니다.");
-  }
-
-  return data;
+  return response.json();
 }
