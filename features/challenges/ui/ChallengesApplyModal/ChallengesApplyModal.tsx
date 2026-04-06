@@ -3,8 +3,6 @@ import { AlertModal, Button, Modal, TextArea } from "@/shared/ui";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CompleteAnimation } from "@/shared/ui/CompleteAnimation/CompleteAnimation";
-import { toast } from "@/shared/utils";
-import { applicationsChallenges } from "../../api/applicationsChallenges";
 import { ParticipationType } from "@/features/challenges/model";
 import { useApplyChallenge } from "../../hooks/useApplyChallenge";
 
@@ -53,13 +51,9 @@ export function ChallengesApplyModal({
           setAlertOpen(true);
           onClose();
         },
-        onError: (error) => {
+        onError: () => {
           onClose();
           handleReset();
-          const err = error as { status?: number; message?: string };
-          if (err.status === 409) {
-            toast(err.message!, { variant: "error" });
-          }
         },
       },
     );
