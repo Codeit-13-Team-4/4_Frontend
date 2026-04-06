@@ -25,7 +25,7 @@ export default function ProfileInfo({
         </h2>
         {jobLabel && <ProfileJobBadge jobLabel={jobLabel} />}
       </div>
-      {bio && (
+      {bio ? (
         <div className="text-sm text-gray-400 md:text-base">
           <p className={expanded ? "" : "line-clamp-1 md:line-clamp-none"}>
             {bio}
@@ -37,6 +37,8 @@ export default function ProfileInfo({
             {expanded ? "접기" : "더보기"}
           </button>
         </div>
+      ) : (
+        <p className="text-sm text-gray-600">자기소개를 작성해주세요.</p>
       )}
     </div>
   );
