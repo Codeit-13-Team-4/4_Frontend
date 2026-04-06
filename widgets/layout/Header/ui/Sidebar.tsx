@@ -18,7 +18,7 @@ import { useLogout } from "@/features/auth/hooks/queries/useLogout";
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
-  userData: User | undefined;
+  userData: User | null;
 }
 
 export default function Sidebar({ isOpen, onClose, userData }: SidebarProps) {
