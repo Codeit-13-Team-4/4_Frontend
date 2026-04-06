@@ -32,6 +32,7 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
     commentCount,
     id,
     liked,
+    hasApplication,
   } = data;
 
   const router = useRouter();
@@ -142,9 +143,9 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
         <GradientButton
           size="sm"
           onClick={handleOpen}
-          disabled={status === "recruitment_closed"}
+          disabled={status === "recruitment_closed" || hasApplication}
         >
-          지원하기
+          {hasApplication ? "지원완료" : "지원하기"}
         </GradientButton>
 
         <ProjectApplyModal
