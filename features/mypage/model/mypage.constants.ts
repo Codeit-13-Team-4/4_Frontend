@@ -50,6 +50,21 @@ export const TECH_STACK: Record<string, { label: string; icon: string }> = {
   nextjs: { label: "Next.js", icon: "/icons/tech/nextjs-icon.svg" },
 };
 
+export const PROFILE_LINK_ITEMS = [
+  {
+    key: "githubLink" as const,
+    label: "Github",
+  },
+  {
+    key: "blogLink" as const,
+    label: "블로그",
+  },
+  {
+    key: "portfolioLink" as const,
+    label: "포트폴리오",
+  },
+];
+
 export const MY_ROLE_TABS = [
   { value: "MEMBER", label: "멤버" },
   { value: "HOST", label: "호스트" },
