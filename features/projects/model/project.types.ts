@@ -52,6 +52,7 @@ export interface ProjectCardProps {
   commentCount: number;
   liked: boolean;
   host: ProjectHost;
+  hasApplication: boolean;
 }
 
 export type ProjectFilter = {

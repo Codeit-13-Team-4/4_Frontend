@@ -13,6 +13,7 @@ import { ProjectPositionDropdown } from "@/features/projects/ui";
 import { CompleteAnimation } from "@/shared/ui/CompleteAnimation/CompleteAnimation";
 import { applicationsProject } from "@/features/projects/api/applicationsProject";
 import { toast } from "@/shared/utils";
+import { useApplyProject } from "@/features/projects/hooks/useApplyProject";
 
 type ProjectPositionModalProps = {
   isOpen: boolean;
@@ -37,6 +38,7 @@ export function ProjectApplyModal({
 }: ProjectPositionModalProps) {
   const [textValue, setTextValue] = useState<string>("");
   const [position, setPosition] = useState<PositionType | undefined>(undefined);
+  const { mutate } = useApplyProject();
 
   const router = useRouter();
 
@@ -44,24 +46,28 @@ export function ProjectApplyModal({
     setPosition(undefined);
     setTextValue("");
   };
-
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!projectId || !position) return;
 
-    try {
-      await applicationsProject({ projectId, position, motivation: textValue });
-      setPosition(undefined);
-      handleReset();
-      setAlertOpen(true);
-      onClose();
-    } catch (error) {
-      onClose();
-      handleReset();
-      const err = error as { status?: number; message?: string };
-      if (err.status === 409) {
-        toast(err.message!, { variant: "error" });
-      }
-    }
+    mutate(
+      { projectId, position, motivation: textValue },
+      {
+        onSuccess: () => {
+          handleReset();
+          setAlertOpen(true);
+          onClose();
+        },
+        onError: (error) => {
+          handleReset();
+          onClose();
+
+          const err = error as { status?: number; message?: string };
+          if (err.status === 409) {
+            toast(err.message!, { variant: "error" });
+          }
+        },
+      },
+    );
   };
 
   const handleCancelClick = () => {
