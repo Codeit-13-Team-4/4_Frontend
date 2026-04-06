@@ -7,6 +7,7 @@ export function useCreateChallengesDetailComment(challengeId: number) {
   return useMutation({
     mutationFn: (content: string) =>
       createChallengesDetailComment({ challengeId, content }),
+    meta: { successMessage: "댓글이 작성되었습니다." },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["challenges", "comments", challengeId],

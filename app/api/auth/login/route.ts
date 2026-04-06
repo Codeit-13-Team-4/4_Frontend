@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const ACCESS_TOKEN_MAX_AGE = 60 * 15;
+const REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 7;
 
 export async function POST(request: NextRequest) {
   try {
@@ -45,6 +47,7 @@ export async function POST(request: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
+      maxAge: ACCESS_TOKEN_MAX_AGE,
     });
 
     responseToClient.cookies.set("refreshToken", refreshToken, {
@@ -52,6 +55,7 @@ export async function POST(request: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
+      maxAge: REFRESH_TOKEN_MAX_AGE,
     });
 
     return responseToClient;

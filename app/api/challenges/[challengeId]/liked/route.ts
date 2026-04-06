@@ -1,5 +1,6 @@
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { fetchWithAuthRetry } from "@/shared/lib/server/auth";
+import { ApiError } from "@/shared/lib/errors/ApiError";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -9,36 +10,18 @@ export async function POST(
 ) {
   try {
     const { challengeId } = await params;
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("accessToken")?.value;
-
-    if (!accessToken) {
-      return NextResponse.json(
-        { message: "로그인되어 있지 않습니다." },
-        { status: 401 },
-      );
-    }
-
-    const response = await fetch(
+    await fetchWithAuthRetry(
       `${BASE_URL}/challenges/${Number(challengeId)}/liked`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
+      { method: "POST" },
     );
-
-    if (!response.ok) {
-      const data = await response.json();
+    return new NextResponse(null, { status: 204 });
+  } catch (error) {
+    if (error instanceof ApiError) {
       return NextResponse.json(
-        { message: data.message || "찜하기에 실패했습니다." },
-        { status: response.status },
+        { message: error.message },
+        { status: error.status },
       );
     }
-
-    return new NextResponse(null, { status: 204 });
-  } catch {
     return NextResponse.json(
       { message: "서버 오류가 발생했습니다." },
       { status: 500 },
@@ -52,36 +35,18 @@ export async function DELETE(
 ) {
   try {
     const { challengeId } = await params;
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("accessToken")?.value;
-
-    if (!accessToken) {
-      return NextResponse.json(
-        { message: "로그인되어 있지 않습니다." },
-        { status: 401 },
-      );
-    }
-
-    const response = await fetch(
+    await fetchWithAuthRetry(
       `${BASE_URL}/challenges/${Number(challengeId)}/liked`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
+      { method: "DELETE" },
     );
-
-    if (!response.ok) {
-      const data = await response.json();
+    return new NextResponse(null, { status: 204 });
+  } catch (error) {
+    if (error instanceof ApiError) {
       return NextResponse.json(
-        { message: data.message || "찜하기 취소에 실패했습니다." },
-        { status: response.status },
+        { message: error.message },
+        { status: error.status },
       );
     }
-
-    return new NextResponse(null, { status: 204 });
-  } catch {
     return NextResponse.json(
       { message: "서버 오류가 발생했습니다." },
       { status: 500 },

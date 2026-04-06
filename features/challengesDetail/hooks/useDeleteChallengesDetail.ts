@@ -6,6 +6,7 @@ export function useDeleteChallengesDetail(challengeId: number) {
 
   return useMutation({
     mutationFn: () => deleteChallengesDetail(challengeId),
+    meta: { successMessage: "챌린지가 삭제되었습니다." },
     onSuccess: () => {
       queryClient.removeQueries({
         queryKey: ["challenges", challengeId],

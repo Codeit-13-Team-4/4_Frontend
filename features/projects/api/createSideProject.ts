@@ -1,3 +1,4 @@
+import { fetchClient } from "@/shared/lib/client/fetchClient";
 import {
   ContactMethod,
   PositionType,
@@ -20,21 +21,10 @@ interface CreateSideProjectBody {
 }
 
 export async function createSideProject(body: CreateSideProjectBody) {
-  const response = await fetch("/api/projects/create", {
+  const response = await fetchClient("/api/projects/create", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
-
-  if (!response.ok) {
-    throw new Error(
-      `사이드 프로젝트 생성을 실패했습니다. (${response.status})`,
-    );
-  }
-
-  const data = await response.json();
-
-  return data;
+  return response.json();
 }

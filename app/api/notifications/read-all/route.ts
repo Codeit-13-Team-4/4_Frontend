@@ -1,39 +1,22 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { fetchWithAuthRetry } from "@/shared/lib/server/auth";
+import { ApiError } from "@/shared/lib/errors/ApiError";
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export async function PATCH() {
   try {
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("accessToken")?.value;
-
-    if (!accessToken) {
-      return NextResponse.json(
-        { message: "로그인되어 있지 않습니다." },
-        { status: 401 },
-      );
-    }
-
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/notifications/read-all`,
-      {
-        method: "PATCH",
-        headers: { Authorization: `Bearer ${accessToken}` },
-      },
-    );
-
-    if (!response.ok) {
-      const data = await response.json();
-      return NextResponse.json(
-        {
-          message: data.message || "알림 읽음 처리에 실패했습니다.",
-          code: data.code || null,
-        },
-        { status: response.status },
-      );
-    }
-
+    await fetchWithAuthRetry(`${BASE_URL}/notifications/read-all`, {
+      method: "PATCH",
+    });
     return new NextResponse(null, { status: 204 });
-  } catch {
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return NextResponse.json(
+        { message: error.message },
+        { status: error.status },
+      );
+    }
     return NextResponse.json(
       { message: "서버 오류가 발생했습니다." },
       { status: 500 },

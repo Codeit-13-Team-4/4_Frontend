@@ -7,6 +7,7 @@ export function useDeleteProjectsDetailComment(projectId: number) {
   return useMutation({
     mutationFn: (commentId: number) =>
       deleteProjectsDetailComment({ projectId, commentId }),
+    meta: { successMessage: "댓글이 삭제되었습니다." },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["projects", "comments", projectId],

@@ -1,3 +1,4 @@
+import { fetchClient } from "@/shared/lib/client/fetchClient";
 import { ChallengesFilter } from "../model";
 
 const createSearchParams = (filters: ChallengesFilter) => {
@@ -17,15 +18,8 @@ const createSearchParams = (filters: ChallengesFilter) => {
 };
 
 export async function getChallengesList(filters: ChallengesFilter) {
-  const response = await fetch(
+  const response = await fetchClient(
     `/api/challenges?${createSearchParams(filters)}`,
   );
-
-  if (!response.ok) {
-    throw new Error(`챌린지 조회 실패 (${response.status})`);
-  }
-
-  const data = await response.json();
-
-  return data;
+  return response.json();
 }
