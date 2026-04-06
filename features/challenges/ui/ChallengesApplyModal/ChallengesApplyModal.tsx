@@ -65,29 +65,6 @@ export function ChallengesApplyModal({
     );
   };
 
-  // const handleSubmit = async () => {
-  //   if (!challengeId) return;
-
-  //   try {
-  //     await applicationsChallenges({
-  //       challengeId,
-  //       name,
-  //       motivation: textValue,
-  //     });
-
-  //     handleReset();
-  //     setAlertOpen(true);
-  //     onClose();
-  //   } catch (error) {
-  //     onClose();
-  //     handleReset();
-  //     const err = error as { status?: number; message?: string };
-  //     if (err.status === 409) {
-  //       toast(err.message!, { variant: "error" });
-  //     }
-  //   }
-  // };
-
   const handleCancelClick = () => {
     onClose();
     setConfirmAlertOpen(true);
