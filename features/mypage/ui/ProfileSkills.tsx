@@ -18,7 +18,7 @@ export default function ProfileSkills({ skills }: ProfileSkillsProps) {
   const desktopHiddenCount = skills.length - DESKTOP_MAX;
 
   return (
-    <ul className="flex flex-wrap gap-2">
+    <ul className="flex flex-wrap items-center gap-2">
       {skills.map((skill, index) => (
         <li
           key={skill}
@@ -33,13 +33,13 @@ export default function ProfileSkills({ skills }: ProfileSkillsProps) {
           <ProfileSkillBadge skill={skill} />
         </li>
       ))}
-      {!expanded && (
+      {!expanded ? (
         <>
           {mobileHiddenCount > 0 && (
             <li className="md:hidden">
               <button
                 onClick={() => setExpanded(true)}
-                className="inline-flex items-center gap-2 rounded-sm px-2 py-1 text-gray-400 hover:cursor-pointer"
+                className="inline-flex items-center gap-2 rounded-sm text-gray-400 hover:cursor-pointer"
               >
                 +{mobileHiddenCount}개 더보기
               </button>
@@ -49,13 +49,22 @@ export default function ProfileSkills({ skills }: ProfileSkillsProps) {
             <li className="hidden md:block">
               <button
                 onClick={() => setExpanded(true)}
-                className="inline-flex items-center gap-2 rounded-sm px-2 py-1 text-gray-400 hover:cursor-pointer"
+                className="inline-flex items-center text-gray-400 hover:cursor-pointer"
               >
                 +{desktopHiddenCount}개 더보기
               </button>
             </li>
           )}
         </>
+      ) : (
+        <li>
+          <button
+            onClick={() => setExpanded(false)}
+            className="inline-flex items-center gap-2 rounded-sm px-2 py-1 text-gray-400 hover:cursor-pointer"
+          >
+            접기
+          </button>
+        </li>
       )}
     </ul>
   );
