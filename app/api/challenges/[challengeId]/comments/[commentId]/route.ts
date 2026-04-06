@@ -1,12 +1,8 @@
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { fetchWithAuthRetry } from "@/shared/lib/server/auth";
+import { ApiError } from "@/shared/lib/errors/ApiError";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-async function getAuthToken() {
-  const cookieStore = await cookies();
-  return cookieStore.get("accessToken")?.value;
-}
 
 export async function PATCH(
   request: NextRequest,
@@ -14,39 +10,23 @@ export async function PATCH(
 ) {
   try {
     const { challengeId, commentId } = await params;
-    const accessToken = await getAuthToken();
-
-    if (!accessToken) {
-      return NextResponse.json(
-        { message: "로그인되어 있지 않습니다." },
-        { status: 401 },
-      );
-    }
-
     const body = await request.json();
-
-    const response = await fetch(
+    await fetchWithAuthRetry(
       `${BASE_URL}/challenges/${Number(challengeId)}/comments/${Number(commentId)}`,
       {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content: body.content }),
       },
     );
-
-    if (!response.ok) {
-      const data = await response.json();
+    return new NextResponse(null, { status: 204 });
+  } catch (error) {
+    if (error instanceof ApiError) {
       return NextResponse.json(
-        { message: data.message || "댓글 수정에 실패했습니다." },
-        { status: response.status },
+        { message: error.message },
+        { status: error.status },
       );
     }
-
-    return new NextResponse(null, { status: 204 });
-  } catch {
     return NextResponse.json(
       { message: "서버 오류가 발생했습니다." },
       { status: 500 },
@@ -60,35 +40,18 @@ export async function DELETE(
 ) {
   try {
     const { challengeId, commentId } = await params;
-    const accessToken = await getAuthToken();
-
-    if (!accessToken) {
-      return NextResponse.json(
-        { message: "로그인되어 있지 않습니다." },
-        { status: 401 },
-      );
-    }
-
-    const response = await fetch(
+    await fetchWithAuthRetry(
       `${BASE_URL}/challenges/${Number(challengeId)}/comments/${Number(commentId)}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
+      { method: "DELETE" },
     );
-
-    if (!response.ok) {
-      const data = await response.json();
+    return new NextResponse(null, { status: 204 });
+  } catch (error) {
+    if (error instanceof ApiError) {
       return NextResponse.json(
-        { message: data.message || "댓글 삭제에 실패했습니다." },
-        { status: response.status },
+        { message: error.message },
+        { status: error.status },
       );
     }
-
-    return new NextResponse(null, { status: 204 });
-  } catch {
     return NextResponse.json(
       { message: "서버 오류가 발생했습니다." },
       { status: 500 },

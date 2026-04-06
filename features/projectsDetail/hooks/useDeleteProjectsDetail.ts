@@ -6,6 +6,7 @@ export function useDeleteProjectsDetail(projectId: number) {
 
   return useMutation({
     mutationFn: () => deleteProjectsDetail(projectId),
+    meta: { successMessage: "프로젝트가 삭제되었습니다." },
     onSuccess: () => {
       queryClient.removeQueries({
         queryKey: ["projects", projectId],
