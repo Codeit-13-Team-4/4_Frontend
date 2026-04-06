@@ -12,6 +12,7 @@ export function useUpdateProjectsDetail(projectId: number) {
   return useMutation({
     mutationFn: (variables: UpdateVariables) =>
       updateProjectsDetail({ projectId, ...variables }),
+    meta: { successMessage: "프로젝트가 수정되었습니다." },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["projects", projectId],

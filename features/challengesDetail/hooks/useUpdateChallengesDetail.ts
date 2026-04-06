@@ -12,6 +12,7 @@ export function useUpdateChallengesDetail(challengeId: number) {
   return useMutation({
     mutationFn: (variables: UpdateVariables) =>
       updateChallengesDetail({ challengeId, ...variables }),
+    meta: { successMessage: "챌린지가 수정되었습니다." },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["challenges", challengeId],

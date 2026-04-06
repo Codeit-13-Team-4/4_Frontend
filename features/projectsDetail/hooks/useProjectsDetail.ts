@@ -6,5 +6,6 @@ export function useProjectsDetail(id: number) {
     queryKey: ["projects", id],
     queryFn: () => getProjectDetail(id),
     staleTime: 1000 * 60 * 5,
+    throwOnError: true,
   });
 }

@@ -1,86 +1,62 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
-import {
-  getSocialLoginUrl,
-  type SocialProvider,
-} from "@/features/auth/api/getSocialLoginUrl";
-import { Button } from "@/shared/ui";
+type SocialType = "google" | "kakao" | "github";
 
-interface SocialButton {
-  provider: SocialProvider;
-  label: string;
-  className: string;
-  logo: string;
-}
-
-const SOCIAL_BUTTONS: SocialButton[] = [
-  {
-    provider: "google",
-    logo: "/auth/google.svg",
-    label: "구글로 계속하기",
-    className: "w-full border-none bg-white text-slate-800 hover:bg-slate-100",
-  },
-  {
-    provider: "kakao",
-    logo: "/auth/kakao.svg",
-    label: "카카오로 계속하기",
-    className:
-      "w-full border-none bg-[#FFEE01] text-slate-800 hover:bg-[#f5e400]",
-  },
-  {
-    provider: "github",
-    logo: "/auth/github.svg",
-    label: "Github로 계속하기",
-    className: "w-full border-none bg-white text-slate-800 hover:bg-slate-100",
-  },
-];
+const SOCIAL_LOGIN_URL: Record<SocialType, string> = {
+  google: `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/oauth2/authorization/google?redirect_uri=${encodeURIComponent(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback/google`)}`,
+  kakao: `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/oauth2/authorization/kakao?redirect_uri=${encodeURIComponent(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback/kakao`)}`,
+  github: `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/oauth2/authorization/github?redirect_uri=${encodeURIComponent(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback/github`)}`,
+};
 
 export default function SocialLoginButtons() {
-  const [isPending, setIsPending] = useState(false);
-
-  const handleSocialLogin = (provider: SocialProvider) => {
-    if (isPending) return;
-
-    setIsPending(true);
-
-    const startUrl = getSocialLoginUrl(provider);
-    window.location.assign(startUrl);
+  const handleSocialLogin = (provider: SocialType) => {
+    window.location.href = SOCIAL_LOGIN_URL[provider];
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex w-full items-center gap-4">
-        <div className="h-px flex-1 bg-slate-300" />
-        <span className="shrink-0 text-sm text-slate-500">
-          SNS 계정으로 로그인
-        </span>
-        <div className="h-px flex-1 bg-slate-300" />
-      </div>
+    <div className="flex flex-col gap-3">
+      <button
+        type="button"
+        onClick={() => handleSocialLogin("google")}
+        className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white text-black"
+      >
+        <Image
+          src="/auth/google.svg"
+          alt="구글 로그인"
+          width={20}
+          height={20}
+        />
+        <span>구글로 시작하기</span>
+      </button>
 
-      <div className="flex flex-col gap-3">
-        {SOCIAL_BUTTONS.map(({ provider, label, className, logo }) => (
-          <Button
-            key={provider}
-            type="button"
-            variant="default"
-            className={className}
-            disabled={isPending}
-            onClick={() => handleSocialLogin(provider)}
-          >
-            <div className="flex items-center justify-center gap-3">
-              <Image
-                src={logo}
-                alt={`${provider} 로고`}
-                width={20}
-                height={20}
-              />
-              <span>{label}</span>
-            </div>
-          </Button>
-        ))}
-      </div>
+      <button
+        type="button"
+        onClick={() => handleSocialLogin("kakao")}
+        className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-yellow-300 text-black"
+      >
+        <Image
+          src="/auth/kakao.svg"
+          alt="카카오 로그인"
+          width={20}
+          height={20}
+        />
+        <span>카카오로 시작하기</span>
+      </button>
+
+      <button
+        type="button"
+        onClick={() => handleSocialLogin("github")}
+        className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white text-slate-800"
+      >
+        <Image
+          src="/auth/github.svg"
+          alt="깃허브 로그인"
+          width={20}
+          height={20}
+        />
+        <span>GitHub로 시작하기</span>
+      </button>
     </div>
   );
 }
