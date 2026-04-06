@@ -41,9 +41,9 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
     viewCount,
     commentCount,
     isLiked,
-    // isJoinable,
+    isJoinable,
     // joinButtonLabel,
-    // isMember,
+    isMember,
     isHost,
   } = data;
 
@@ -172,9 +172,11 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
         <GradientButton
           size="sm"
           onClick={handleOpen}
-          disabled={status !== "RECRUITING" || isHost}
+          disabled={
+            status !== "RECRUITING" || isHost || isMember || !isJoinable
+          }
         >
-          참여하기
+          {isMember ? "참여중" : "참여하기"}
         </GradientButton>
         {userData && (
           <ChallengesApplyModal
