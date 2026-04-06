@@ -6,6 +6,7 @@ export function useApplyChallenge() {
 
   return useMutation({
     mutationFn: applicationsChallenges,
+    meta: { successMessage: "챌린지 지원에 성공했습니다." },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["challengesList"] });
     },

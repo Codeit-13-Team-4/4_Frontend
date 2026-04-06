@@ -22,7 +22,6 @@ const createSearchParams = (filters: ChallengesFilter) => {
 export async function getChallengesListServer(filters: ChallengesFilter) {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
-  console.log("dd", `${BASE_URL}/challenges?${createSearchParams(filters)}`);
 
   const response = await fetch(
     `${BASE_URL}/challenges?${createSearchParams(filters)}`,
