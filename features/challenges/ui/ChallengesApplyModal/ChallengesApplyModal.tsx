@@ -6,6 +6,7 @@ import { CompleteAnimation } from "@/shared/ui/CompleteAnimation/CompleteAnimati
 import { toast } from "@/shared/utils";
 import { applicationsChallenges } from "../../api/applicationsChallenges";
 import { ParticipationType } from "@/features/challenges/model";
+import { useApplyChallenge } from "../../hooks/useApplyChallenge";
 
 type ProjectPositionModalProps = {
   isOpen: boolean;
@@ -35,6 +36,7 @@ export function ChallengesApplyModal({
   const [textValue, setTextValue] = useState<string>("");
   const isAuto = participationType === "INSTANT";
   const router = useRouter();
+  const { mutate } = useApplyChallenge();
 
   const handleReset = () => {
     setTextValue("");
@@ -43,25 +45,48 @@ export function ChallengesApplyModal({
   const handleSubmit = async () => {
     if (!challengeId) return;
 
-    try {
-      await applicationsChallenges({
-        challengeId,
-        name,
-        motivation: textValue,
-      });
-
-      handleReset();
-      setAlertOpen(true);
-      onClose();
-    } catch (error) {
-      onClose();
-      handleReset();
-      const err = error as { status?: number; message?: string };
-      if (err.status === 409) {
-        toast(err.message!, { variant: "error" });
-      }
-    }
+    mutate(
+      { challengeId, name, motivation: textValue },
+      {
+        onSuccess: () => {
+          handleReset();
+          setAlertOpen(true);
+          onClose();
+        },
+        onError: (error) => {
+          onClose();
+          handleReset();
+          const err = error as { status?: number; message?: string };
+          if (err.status === 409) {
+            toast(err.message!, { variant: "error" });
+          }
+        },
+      },
+    );
   };
+
+  // const handleSubmit = async () => {
+  //   if (!challengeId) return;
+
+  //   try {
+  //     await applicationsChallenges({
+  //       challengeId,
+  //       name,
+  //       motivation: textValue,
+  //     });
+
+  //     handleReset();
+  //     setAlertOpen(true);
+  //     onClose();
+  //   } catch (error) {
+  //     onClose();
+  //     handleReset();
+  //     const err = error as { status?: number; message?: string };
+  //     if (err.status === 409) {
+  //       toast(err.message!, { variant: "error" });
+  //     }
+  //   }
+  // };
 
   const handleCancelClick = () => {
     onClose();
