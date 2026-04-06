@@ -31,7 +31,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json(
+    const accessToken =
+      typeof data.accessToken === "string" ? data.accessToken : null;
+    const refreshToken =
+      typeof data.refreshToken === "string" ? data.refreshToken : null;
+
+    if (!accessToken) {
+      return NextResponse.json(
+        {
+          message: "회원가입 응답 형식이 올바르지 않습니다.",
+        },
+        { status: 502 },
+      );
+    }
+
+    const responseToClient = NextResponse.json(
       {
         message: "회원가입에 성공했습니다.",
         user: {
@@ -39,11 +53,27 @@ export async function POST(request: NextRequest) {
           email: data.email,
           nickname: data.nickname,
         },
-        accessToken: data.accessToken,
-        refreshToken: data.refreshToken,
       },
       { status: response.status },
     );
+
+    responseToClient.cookies.set("accessToken", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+    });
+
+    if (refreshToken) {
+      responseToClient.cookies.set("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+      });
+    }
+
+    return responseToClient;
   } catch {
     return NextResponse.json(
       {

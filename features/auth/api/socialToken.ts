@@ -29,5 +29,5 @@ export async function socialToken({
     throw new Error(data.message || "회원가입에 실패했습니다.");
   }
 
-  return data.token;
+  return data;
 }
