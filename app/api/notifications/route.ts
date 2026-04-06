@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     const data = await fetchWithAuthRetry(
       `${BASE_URL}/notifications?${params}`,
     );
-    return NextResponse.json(data);
+    return NextResponse.json(data, { status: 200 });
   } catch (error) {
     if (error instanceof ApiError) {
       return NextResponse.json(

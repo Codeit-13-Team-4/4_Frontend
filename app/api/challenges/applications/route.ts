@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
         }),
       },
     );
-    return NextResponse.json(data, { status: 200 });
+    return NextResponse.json(data, { status: 201 });
   } catch (error) {
     if (error instanceof ApiError) {
       return NextResponse.json(
