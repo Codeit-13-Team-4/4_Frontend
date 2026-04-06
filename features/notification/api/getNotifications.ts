@@ -1,3 +1,4 @@
+import { fetchClient } from "@/shared/lib/client/fetchClient";
 import { NotificationResponse } from "@/shared/types/notification";
 import { NotificationsParamsType } from "@/features/notification/types/notifications";
 
@@ -13,16 +14,8 @@ export async function getNotifications(
   if (params?.isRead !== undefined)
     searchParams.set("isRead", String(params.isRead));
 
-  const response = await fetch(`/api/notifications?${searchParams}`, {
-    method: "GET",
+  const response = await fetchClient(`/api/notifications?${searchParams}`, {
     cache: "no-store",
   });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "알림 조회에 실패했습니다.");
-  }
-
-  return data;
+  return response.json();
 }

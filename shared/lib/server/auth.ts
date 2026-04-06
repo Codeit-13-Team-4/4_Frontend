@@ -1,4 +1,6 @@
 import { cookies } from "next/headers";
+import { ApiError } from "@/shared/lib/errors/ApiError";
+import { getErrorMessage } from "@/shared/lib/errors/errorMessage";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const ACCESS_TOKEN_MAX_AGE = 60 * 15;
@@ -11,39 +13,20 @@ interface RefreshTokenResponse {
 }
 
 type RefreshAccessTokenResult =
-  | {
-      ok: true;
-      accessToken: string;
-    }
-  | {
-      ok: false;
-      status: number;
-      message: string;
-    };
-
-interface FetchWithAuthResult<T> {
-  data: T | null;
-  error: string | null;
-  status: number;
-}
+  | { ok: true; accessToken: string }
+  | { ok: false; status: number; message: string };
 
 async function refreshAccessToken(): Promise<RefreshAccessTokenResult> {
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get("refreshToken")?.value;
 
   if (!refreshToken) {
-    return {
-      ok: false,
-      status: 401,
-      message: "리프레시 토큰이 없습니다.",
-    };
+    return { ok: false, status: 401, message: "리프레시 토큰이 없습니다." };
   }
 
   const response = await fetch(`${BASE_URL}/auth/refresh-token`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     cache: "no-store",
     body: JSON.stringify({ refreshToken }),
   });
@@ -78,16 +61,13 @@ async function refreshAccessToken(): Promise<RefreshAccessTokenResult> {
     });
   }
 
-  return {
-    ok: true,
-    accessToken: data.accessToken,
-  };
+  return { ok: true, accessToken: data.accessToken };
 }
 
 export async function fetchWithAuthRetry<T>(
   url: string,
   options?: RequestInit,
-): Promise<FetchWithAuthResult<T>> {
+): Promise<T> {
   const cookieStore = await cookies();
   let accessToken = cookieStore.get("accessToken")?.value;
 
@@ -97,12 +77,7 @@ export async function fetchWithAuthRetry<T>(
     if (!refreshResult.ok) {
       cookieStore.delete("accessToken");
       cookieStore.delete("refreshToken");
-
-      return {
-        data: null,
-        error: refreshResult.message,
-        status: refreshResult.status,
-      };
+      throw new ApiError(refreshResult.status, refreshResult.message);
     }
 
     accessToken = refreshResult.accessToken;
@@ -123,12 +98,7 @@ export async function fetchWithAuthRetry<T>(
     if (!refreshResult.ok) {
       cookieStore.delete("accessToken");
       cookieStore.delete("refreshToken");
-
-      return {
-        data: null,
-        error: refreshResult.message,
-        status: refreshResult.status,
-      };
+      throw new ApiError(refreshResult.status, refreshResult.message);
     }
 
     response = await fetch(url, {
@@ -146,16 +116,11 @@ export async function fetchWithAuthRetry<T>(
     | null;
 
   if (!response.ok) {
-    return {
-      data: null,
-      error: data?.message ?? "요청에 실패했습니다.",
-      status: response.status,
-    };
+    throw new ApiError(
+      response.status,
+      getErrorMessage(response.status, data?.message),
+    );
   }
 
-  return {
-    data: data as T,
-    error: null,
-    status: response.status,
-  };
+  return data as T;
 }
