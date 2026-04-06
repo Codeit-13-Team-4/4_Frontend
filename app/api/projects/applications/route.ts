@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
         body: JSON.stringify({ position, motivation }),
       },
     );
-    return NextResponse.json(data, { status: 200 });
+    return NextResponse.json(data, { status: 201 });
   } catch (error) {
     if (error instanceof ApiError) {
       return NextResponse.json(
