@@ -16,7 +16,8 @@ export default function ProfileLinks({
 
   const links = PROFILE_LINK_ITEMS.filter(({ key }) => values[key] !== null);
 
-  if (links.length === 0) return null;
+  if (links.length === 0)
+    return <p className="text-sm text-gray-600">등록된 링크가 없습니다.</p>;
 
   return (
     <ul className="flex gap-4">

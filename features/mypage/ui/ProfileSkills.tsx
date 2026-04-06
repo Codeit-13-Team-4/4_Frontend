@@ -17,6 +17,9 @@ export default function ProfileSkills({ skills }: ProfileSkillsProps) {
   const mobileHiddenCount = skills.length - MOBILE_MAX;
   const desktopHiddenCount = skills.length - DESKTOP_MAX;
 
+  if (skills.length === 0)
+    return <p className="text-sm text-gray-600">등록된 기술스택이 없습니다.</p>;
+
   return (
     <ul className="flex flex-wrap items-center gap-2">
       {skills.map((skill, index) => (
