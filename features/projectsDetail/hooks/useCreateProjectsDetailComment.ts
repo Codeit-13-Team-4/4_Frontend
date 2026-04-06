@@ -7,6 +7,7 @@ export function useCreateProjectsDetailComment(projectId: number) {
   return useMutation({
     mutationFn: (content: string) =>
       createProjectsDetailComment({ projectId, content }),
+    meta: { successMessage: "댓글이 작성되었습니다." },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["projects", "comments", projectId],

@@ -1,6 +1,6 @@
 import localFont from "next/font/local";
 import "./globals.css";
-import { AlertModalGlobal } from "@/shared/ui";
+import { AlertModalGlobal, Toaster } from "@/shared/ui";
 import { cn } from "@/shared/utils";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient } from "./providers/getQueryClient";
@@ -33,6 +33,7 @@ export default async function RootLayout({
           <HydrationBoundary state={dehydrate(queryClient)}>
             <Header />
             {children}
+            <Toaster richColors position="bottom-center" />
             <AlertModalGlobal />
           </HydrationBoundary>
         </QueryProvider>

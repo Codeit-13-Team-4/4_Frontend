@@ -6,5 +6,6 @@ export function useChallengesDetail(id: number) {
     queryKey: ["challenges", id],
     queryFn: () => getChallengesDetail(id),
     staleTime: 1000 * 60 * 5,
+    throwOnError: true,
   });
 }
