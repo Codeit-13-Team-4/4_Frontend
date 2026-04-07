@@ -3,12 +3,13 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getProjectList } from "../api/getProjectList";
 import { ProjectFilter } from "@/features/projects/model";
+import { projectKeys } from "@/features/projects/model/projects.queryKey";
 
 const PER_PAGE = 10;
 
 export const useGetProjectList = (filters: ProjectFilter = {}) => {
   return useInfiniteQuery({
-    queryKey: ["projectList", filters],
+    queryKey: projectKeys.list(filters),
     queryFn: ({ pageParam }) => {
       return getProjectList({
         ...filters,

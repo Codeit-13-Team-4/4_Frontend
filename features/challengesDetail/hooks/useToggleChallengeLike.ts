@@ -1,10 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleChallengeLike } from "@/features/challengesDetail/api/toggleChallengeLike";
 import type { ChallengesDetail } from "@/features/challengesDetail/types/challengesDetail";
+import { challengeKeys } from "@/features/challenges/model/challenges.queryKey";
 
 export function useToggleChallengeLike(challengeId: number) {
   const queryClient = useQueryClient();
-  const queryKey = ["challenges", challengeId];
+  const queryKey = challengeKeys.detail(challengeId);
 
   return useMutation({
     mutationFn: (currentLiked: boolean) =>
@@ -27,7 +28,7 @@ export function useToggleChallengeLike(challengeId: number) {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey });
-      queryClient.invalidateQueries({ queryKey: ["challengesList"] });
+      queryClient.invalidateQueries({ queryKey: challengeKeys.lists() });
     },
   });
 }

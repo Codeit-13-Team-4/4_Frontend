@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteProjectsDetail } from "@/features/projectsDetail/api/deleteProjectsDetail";
+import { projectKeys } from "@/features/projects/model/projects.queryKey";
 
 export function useDeleteProjectsDetail(projectId: number) {
   const queryClient = useQueryClient();
@@ -9,10 +10,10 @@ export function useDeleteProjectsDetail(projectId: number) {
     meta: { successMessage: "프로젝트가 삭제되었습니다." },
     onSuccess: () => {
       queryClient.removeQueries({
-        queryKey: ["projects", projectId],
+        queryKey: projectKeys.detail(projectId),
       });
       queryClient.invalidateQueries({
-        queryKey: ["projectList"],
+        queryKey: projectKeys.lists(),
       });
     },
   });
