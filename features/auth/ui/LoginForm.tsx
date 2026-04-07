@@ -87,7 +87,7 @@ export default function LoginForm() {
       await login({ email: form.email, password: form.password });
 
       await queryClient.resetQueries({ queryKey: authKeys.me() });
-      router.replace("/");
+      router.replace("/mypage");
     } catch (error) {
       if (error instanceof Error) {
         setErrorMessage(error.message);
