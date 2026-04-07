@@ -1,11 +1,12 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getProjectsDetailComments } from "@/features/projectsDetail/api/getProjectsDetailComment";
+import { projectKeys } from "@/features/projects/model/projects.queryKey";
 
 const PER_PAGE = 10;
 
 export function useProjectsDetailComments(projectId: number) {
   return useInfiniteQuery({
-    queryKey: ["projects", "comments", projectId],
+    queryKey: projectKeys.comments(projectId),
     queryFn: ({ pageParam }) =>
       getProjectsDetailComments({
         projectId,
