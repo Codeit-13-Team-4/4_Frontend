@@ -1,8 +1,8 @@
 "use client";
 import { Dropdown } from "@/shared/ui";
-import Image from "next/image";
 import { useState } from "react";
 import { CONTACT_METHOD, ContactMethod } from "@/features/projects/model";
+import { ChevronDownIcon, ChevronUpIcon } from "@/shared/icons";
 
 export function ProjectContactLinkDropdown({
   value,
@@ -17,20 +17,14 @@ export function ProjectContactLinkDropdown({
       <Dropdown.Trigger>
         <button className="group border-border-default flex items-center justify-between gap-1 rounded-lg border px-4 py-2.5 text-gray-50">
           {value ? CONTACT_METHOD[value] : "연락 방법"}
-          <Image
-            src="/icons/common/chevron_down_sm-icon.svg"
+          <ChevronDownIcon
             width={17}
             height={17}
-            alt=""
-            aria-hidden="true"
             className="group-data-open:hidden"
           />
-          <Image
-            src="/icons/common/chevron_up_sm-icon.svg"
+          <ChevronUpIcon
             width={17}
             height={17}
-            alt=""
-            aria-hidden="true"
             className="hidden group-data-open:block"
           />
         </button>

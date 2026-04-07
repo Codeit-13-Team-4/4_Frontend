@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { AvatarIcon } from "@/shared/icons";
 
 interface CommunityCardProps {
   name: string;
@@ -17,12 +17,7 @@ export default function CommunityCard({
     <article className="rounded-[20px] bg-[#16233d] px-6 py-5">
       <div className="mb-5 flex items-center gap-3">
         <div className="flex h-14 w-14 items-center justify-center">
-          <Image
-            src="/landing/user-icon.svg"
-            alt="User"
-            width={56}
-            height={56}
-          />
+          <AvatarIcon width={56} height={56} className="text-transparent" />
         </div>
 
         <div>

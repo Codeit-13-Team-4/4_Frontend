@@ -2,7 +2,7 @@ import type { ChallengesDetail } from "@/features/challengesDetail/types/challen
 import { formatDate } from "@/shared/utils";
 import { Progress } from "@/shared/ui";
 import { VERIFICATION_FREQUENCY_LABEL } from "@/features/challengesDetail/model/challenges.constants";
-import { Calendar, Clock, Fire, People } from "@/shared/icons";
+import { CalendarIcon, Clock, Fire, People } from "@/shared/icons";
 
 interface ChallengeDetailRightPanelProps {
   challenge: ChallengesDetail;
@@ -34,7 +34,7 @@ export default function ChallengeDetailRightPanel({
 
       <div className="flex items-center gap-3">
         <div className="flex shrink-0 items-center gap-1.5 text-sm text-gray-500 lg:text-lg">
-          <Calendar width={14} height={14} className="text-gray-600" />
+          <CalendarIcon width={18} height={18} className="text-gray-600" />
           <span>진행 기간</span>
         </div>
         <span className="text-sm text-gray-400 lg:text-lg">
@@ -44,7 +44,7 @@ export default function ChallengeDetailRightPanel({
 
       <div className="flex items-center gap-3">
         <div className="flex shrink-0 items-center gap-1.5 text-sm text-gray-500 lg:text-lg">
-          <Fire width={18} height={18} text-gray-600 />
+          <Fire width={18} height={18} className="text-gray-600" />
           <span>인증 주기</span>
         </div>
         <span className="text-sm text-gray-400 lg:text-lg">
