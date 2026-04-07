@@ -32,7 +32,7 @@ export default function CommentInput({ challengeId }: { challengeId: number }) {
             alt={userData?.nickname ?? ""}
           />
           <AvatarFallback delayMs={0}>
-            <AvatarIcon width={56} height={56} className="text-[#1E293B]" />
+            <AvatarIcon width={56} height={56} className="text-gray-800" />
           </AvatarFallback>
         </Avatar>
         <div className="flex-1 rounded-2xl bg-gray-800">

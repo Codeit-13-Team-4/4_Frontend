@@ -28,7 +28,7 @@ export default function SecondSection() {
           <div className="relative hidden lg:block">
             <div className="relative h-150 w-275 overflow-hidden rounded-[40px]">
               <Image
-                src="/landing/section-02-pc.svg"
+                src="images/section-02-pc.svg"
                 alt="DevUp 데스크톱 화면"
                 fill
               />
@@ -56,7 +56,7 @@ export default function SecondSection() {
 
             <div className="relative h-105 w-162.5 overflow-hidden rounded-[23px] border border-white/10 bg-[#07142D]">
               <Image
-                src="/landing/section-02-pc.svg"
+                src="images/section-02-pc.svg"
                 alt="DevUp 태블릿 화면"
                 fill
                 className="object-cover"
@@ -85,7 +85,7 @@ export default function SecondSection() {
 
             <div className="relative h-135 w-62.5 overflow-hidden rounded-2xl border border-white/10 bg-[#07142D]">
               <Image
-                src="/landing/section-02-mobile.svg"
+                src="images/section-02-mobile.svg"
                 alt="DevUp 모바일 화면"
                 fill
                 className="object-cover"

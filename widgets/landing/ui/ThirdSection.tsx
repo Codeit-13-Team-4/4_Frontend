@@ -6,25 +6,25 @@ const projectCards = [
   {
     id: 1,
     title: "포트폴리오",
-    image: "/landing/portfolio.svg",
+    image: "images/portfolio.svg",
     alt: "포트폴리오 아이콘",
   },
   {
     id: 2,
     title: "공모전",
-    image: "/landing/contest.svg",
+    image: "images/contest.svg",
     alt: "공모전 아이콘",
   },
   {
     id: 3,
     title: "해커톤",
-    image: "/landing/hackathon.svg",
+    image: "images/hackathon.svg",
     alt: "해커톤 아이콘",
   },
   {
     id: 4,
     title: "창업",
-    image: "/landing/startup.svg",
+    image: "images/startup.svg",
     alt: "창업 아이콘",
   },
 ];

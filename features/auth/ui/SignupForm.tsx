@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -15,7 +14,7 @@ import {
   FieldLabel,
 } from "@/shared/ui";
 import { getRandomName } from "@/shared/utils";
-import { Eyeclose, Eyeopen } from "@/shared/icons";
+import { Eyeclose, Eyeopen, RandomIcon } from "@/shared/icons";
 
 interface SignupFormValues {
   nickname: string;
@@ -159,12 +158,7 @@ export default function SignupForm() {
                   onClick={handleRandomNickname}
                   className="text-mint-500 flex shrink-0 items-center gap-1 text-sm"
                 >
-                  <Image
-                    src="/auth/randomIcon.svg"
-                    alt="랜덤설정 아이콘"
-                    width={24}
-                    height={24}
-                  />
+                  <RandomIcon width={24} height={24} />
                   <span>랜덤설정</span>
                 </button>
               </div>

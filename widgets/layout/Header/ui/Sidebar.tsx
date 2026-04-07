@@ -13,8 +13,7 @@ import {
   SidebarOverlay,
 } from "@/shared/ui";
 import { useLogout } from "@/features/auth/hooks/queries/useLogout";
-import { XIcon } from "lucide-react";
-import { AvatarIcon } from "@/shared/icons";
+import { AvatarIcon, XIcon } from "@/shared/icons";
 
 interface SidebarProps {
   isOpen: boolean;
