@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getNotifications } from "@/features/notification/api/getNotifications";
 import { NotificationsParamsType } from "@/features/notification/types/notifications";
+import { notificationKeys } from "@/features/notification/model/notification.queryKey";
 
 const PER_PAGE = 10;
 
@@ -8,7 +9,7 @@ export function useNotifications(
   params?: Omit<NotificationsParamsType, "start" | "perPage">,
 ) {
   return useInfiniteQuery({
-    queryKey: ["notifications", params],
+    queryKey: notificationKeys.list(params),
     queryFn: ({ pageParam }) =>
       getNotifications({ ...params, start: pageParam, perPage: PER_PAGE }),
     initialPageParam: 0,

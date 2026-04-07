@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteChallengesDetail } from "@/features/challengesDetail/api/deleteChallengesDetail";
+import { challengeKeys } from "@/features/challenges/model/challenges.queryKey";
 
 export function useDeleteChallengesDetail(challengeId: number) {
   const queryClient = useQueryClient();
@@ -9,10 +10,10 @@ export function useDeleteChallengesDetail(challengeId: number) {
     meta: { successMessage: "챌린지가 삭제되었습니다." },
     onSuccess: () => {
       queryClient.removeQueries({
-        queryKey: ["challenges", challengeId],
+        queryKey: challengeKeys.detail(challengeId),
       });
       queryClient.invalidateQueries({
-        queryKey: ["challengesList"],
+        queryKey: challengeKeys.lists(),
       });
     },
   });
