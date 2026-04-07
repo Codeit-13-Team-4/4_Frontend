@@ -59,7 +59,7 @@ export default function SocialCallbackPage() {
           remember: true,
         });
 
-        router.replace("/"); //회원이면
+        router.replace("/mypage"); //회원이면
       } catch (error) {
         //회원아닌 에러발생
         if (error instanceof Error && error.message === "NOT_REGISTERED") {

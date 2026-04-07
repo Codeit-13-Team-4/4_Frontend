@@ -1,12 +1,11 @@
 "use client";
-import { Button, FieldGroup } from "@/shared/ui";
+import { Button, FieldError, FieldGroup } from "@/shared/ui";
 import { useState } from "react";
 import NicknameInput from "./NicknameInput";
 import { getRandomName } from "@/shared/utils/randomName/randomName";
 import { useRouter } from "next/navigation";
 import { socialSignup } from "@/features/auth/api/signup";
 import EmailInput from "./EmailInput";
-import Link from "next/link";
 
 interface SocialSignupFormProps {
   type: string;
@@ -52,7 +51,7 @@ const SocialSignupForm = (props: SocialSignupFormProps) => {
         nickname: form.nickname,
       });
 
-      router.replace("/");
+      router.replace("/mypage");
     } catch (error) {
       if (error instanceof Error) {
         setErrorMessage(error.message);
@@ -89,6 +88,8 @@ const SocialSignupForm = (props: SocialSignupFormProps) => {
         </FieldGroup>
 
         <div className="flex flex-col gap-10">
+          {errorMessage && <FieldError>{errorMessage}</FieldError>}
+
           <Button
             type="submit"
             variant="primary"
