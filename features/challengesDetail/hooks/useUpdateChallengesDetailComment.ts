@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateChallengesDetailComment } from "@/features/challengesDetail/api/updateChallengesDetailComment";
+import { challengeKeys } from "@/features/challenges/model/challenges.queryKey";
 
 interface UpdateCommentVariables {
   commentId: number;
@@ -15,7 +16,7 @@ export function useUpdateChallengesDetailComment(challengeId: number) {
     meta: { successMessage: "댓글이 수정되었습니다." },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["challenges", "comments", challengeId],
+        queryKey: challengeKeys.comments(challengeId),
       });
     },
   });
