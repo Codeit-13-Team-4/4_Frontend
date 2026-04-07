@@ -1,8 +1,8 @@
 import type { ChallengesDetail } from "@/features/challengesDetail/types/challengesDetail";
 import { formatDate } from "@/shared/utils";
 import { Progress } from "@/shared/ui";
-import Image from "next/image";
 import { VERIFICATION_FREQUENCY_LABEL } from "@/features/challengesDetail/model/challenges.constants";
+import { Calendar, Clock, Fire, People } from "@/shared/icons";
 
 interface ChallengeDetailRightPanelProps {
   challenge: ChallengesDetail;
@@ -19,12 +19,7 @@ export default function ChallengeDetailRightPanel({
     <div className="flex flex-col gap-5">
       <div className="flex items-center gap-3">
         <div className="flex shrink-0 items-center gap-1.5 text-sm text-gray-500 lg:text-lg">
-          <Image
-            src="/icons/common/clock.svg"
-            alt="모집 마감"
-            width={18}
-            height={18}
-          />
+          <Clock width={18} height={18} className="text-gray-600" />
           <span>모집 마감</span>
         </div>
         <span className="text-sm text-gray-400 lg:text-lg">
@@ -39,12 +34,7 @@ export default function ChallengeDetailRightPanel({
 
       <div className="flex items-center gap-3">
         <div className="flex shrink-0 items-center gap-1.5 text-sm text-gray-500 lg:text-lg">
-          <Image
-            src="/icons/common/calendar.svg"
-            alt="진행 기간"
-            width={18}
-            height={18}
-          />
+          <Calendar width={14} height={14} className="text-gray-600" />
           <span>진행 기간</span>
         </div>
         <span className="text-sm text-gray-400 lg:text-lg">
@@ -54,12 +44,7 @@ export default function ChallengeDetailRightPanel({
 
       <div className="flex items-center gap-3">
         <div className="flex shrink-0 items-center gap-1.5 text-sm text-gray-500 lg:text-lg">
-          <Image
-            src="/icons/common/fire.svg"
-            alt="인증 주기"
-            width={18}
-            height={18}
-          />
+          <Fire width={18} height={18} text-gray-600 />
           <span>인증 주기</span>
         </div>
         <span className="text-sm text-gray-400 lg:text-lg">
@@ -70,12 +55,7 @@ export default function ChallengeDetailRightPanel({
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-sm text-gray-500 lg:text-lg">
-            <Image
-              src="/icons/common/people.svg"
-              alt="참여인원"
-              width={18}
-              height={18}
-            />
+            <People width={18} height={18} className="text-gray-600" />
             <span>참여인원</span>
           </div>
           <span className="text-sm text-gray-400 lg:text-lg">

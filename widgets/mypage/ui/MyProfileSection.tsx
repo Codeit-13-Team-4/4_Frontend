@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import ProfileInfo from "@/features/mypage/ui/ProfileInfo";
 import ProfileLinks from "@/features/mypage/ui/ProfileLinks";
@@ -12,18 +11,13 @@ import {
   Label,
 } from "@/shared/ui";
 import { User } from "@/shared/types/user";
+import { AvatarIcon } from "@/shared/icons";
 
 const AVATAR = ({ userData }: { userData: User }) => (
   <Avatar size="lg" className="size-20 md:size-30">
     <AvatarImage src={userData.profileImageUrl ?? ""} alt={userData.nickname} />
     <AvatarFallback>
-      <Image
-        src="/common/avatar/default-avatar-xl.svg"
-        alt="기본 아바타"
-        width={120}
-        height={120}
-        priority
-      />
+      <AvatarIcon width={120} height={120} className="text-transparent" />
     </AvatarFallback>
   </Avatar>
 );

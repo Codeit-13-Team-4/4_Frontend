@@ -1,11 +1,12 @@
 import type { SVGProps } from "react";
+
 export function Fire(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="1em"
       height="1em"
-      fill="currentColor"
+      fill="none"
       viewBox="0 0 18 18"
       {...props}
     >
