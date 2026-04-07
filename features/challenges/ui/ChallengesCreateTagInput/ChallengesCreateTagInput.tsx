@@ -1,7 +1,7 @@
 "use client";
 
+import { XIcon } from "@/shared/icons";
 import { Button, Input } from "@/shared/ui";
-import Image from "next/image";
 
 interface ProjectCreateTagInputProps {
   input: string;
@@ -57,12 +57,7 @@ export function ChallengesCreateTagInput({
                 onClick={() => handleTagDelete(item)}
                 className="cursor-pointer"
               >
-                <Image
-                  src="/icons/common/x-icon.svg"
-                  width={8}
-                  height={8}
-                  alt=""
-                />
+                <XIcon width={8} height={8} />
               </button>
             </li>
           );

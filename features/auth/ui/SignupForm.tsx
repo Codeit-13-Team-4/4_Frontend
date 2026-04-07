@@ -15,6 +15,7 @@ import {
   FieldLabel,
 } from "@/shared/ui";
 import { getRandomName } from "@/shared/utils";
+import { Eyeclose, Eyeopen } from "@/shared/icons";
 
 interface SignupFormValues {
   nickname: string;
@@ -221,14 +222,15 @@ export default function SignupForm() {
                     showPassword ? "비밀번호 숨기기" : "비밀번호 보기"
                   }
                 >
-                  <Image
-                    src={
-                      showPassword ? "/auth/eyeopen.svg" : "/auth/eyeclose.svg"
-                    }
-                    alt={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
-                    width={20}
-                    height={20}
-                  />
+                  {showPassword ? (
+                    <Eyeopen width={20} height={20} className="text-gray-400" />
+                  ) : (
+                    <Eyeclose
+                      width={20}
+                      height={20}
+                      className="text-gray-400"
+                    />
+                  )}
                 </button>
               </div>
 
@@ -268,18 +270,15 @@ export default function SignupForm() {
                     showPasswordConfirm ? "비밀번호 숨기기" : "비밀번호 보기"
                   }
                 >
-                  <Image
-                    src={
-                      showPasswordConfirm
-                        ? "/auth/eyeopen.svg"
-                        : "/auth/eyeclose.svg"
-                    }
-                    alt={
-                      showPasswordConfirm ? "비밀번호 숨기기" : "비밀번호 보기"
-                    }
-                    width={20}
-                    height={20}
-                  />
+                  {showPassword ? (
+                    <Eyeopen width={20} height={20} className="text-gray-400" />
+                  ) : (
+                    <Eyeclose
+                      width={20}
+                      height={20}
+                      className="text-gray-400"
+                    />
+                  )}
                 </button>
               </div>
 

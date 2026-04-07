@@ -1,11 +1,11 @@
 import { Field, FieldError, FieldLabel, Input } from "@/shared/ui";
-import Image from "next/image";
 import {
   getInputClassName,
   handleInputChange,
   handleRandomNickname,
 } from "../util/signupUtil";
 import { SocialSignupFormValues } from "./SocialSignupForm";
+import { RandomIcon } from "@/shared/icons";
 
 interface NicknameInputProps {
   nickName: string;
@@ -36,12 +36,7 @@ const NicknameInput = (props: NicknameInputProps) => {
           onClick={() => handleRandomNickname(setForm)}
           className="text-mint-500 flex shrink-0 items-center gap-1 text-sm"
         >
-          <Image
-            src="/auth/randomIcon.svg"
-            alt="랜덤설정 아이콘"
-            width={24}
-            height={24}
-          />
+          <RandomIcon width={24} height={24} className="text-500-mint" />
           <span>랜덤설정</span>
         </button>
       </div>
