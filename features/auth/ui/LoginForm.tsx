@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { login } from "@/features/auth/api/login";
 import { useQueryClient } from "@tanstack/react-query";
+import { authKeys } from "@/features/auth/model/auth.queryKey";
 import SocialLoginButtons from "@/features/auth/ui/SocialLoginButtons";
 import {
   Button,
@@ -85,7 +86,7 @@ export default function LoginForm() {
     try {
       await login({ email: form.email, password: form.password });
 
-      await queryClient.resetQueries({ queryKey: ["auth", "me"] });
+      await queryClient.resetQueries({ queryKey: authKeys.me() });
       router.replace("/");
     } catch (error) {
       if (error instanceof Error) {
