@@ -27,7 +27,7 @@ function IconGallery() {
             </span>
             의 아이콘이
             <code className="mx-1 rounded bg-gray-100 px-1.5 py-0.5 font-mono text-sm dark:bg-gray-800">
-              public/icons
+              shared/icons
             </code>
             에 정의되어 있습니다.
           </p>
