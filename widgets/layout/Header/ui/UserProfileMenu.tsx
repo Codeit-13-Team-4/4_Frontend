@@ -73,7 +73,7 @@ export default function UserProfileMenu({ userData }: UserProfileMenuProps) {
               asChild
               className="w-full px-4 py-2.5 text-base font-medium text-gray-50 hover:bg-gray-800"
             >
-              <Link href="/my">마이페이지</Link>
+              <Link href="/mypage">마이페이지</Link>
             </Dropdown.Item>
 
             <Dropdown.Item
