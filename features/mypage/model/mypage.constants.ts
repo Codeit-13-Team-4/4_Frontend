@@ -1,0 +1,87 @@
+import { JobLabelType } from "@/shared/types/user";
+
+export const JOB_LABEL_MAP: Record<JobLabelType, string> = {
+  fe: "FE",
+  be: "BE",
+  pm: "PM",
+  devops: "DevOps",
+  marketer: "Marketer",
+  designer: "Designer",
+  android: "Android",
+  ios: "iOS",
+};
+
+export const TECH_STACK: Record<string, { label: string; icon: string }> = {
+  react: { label: "React", icon: "/icons/tech/react-icon.svg" },
+  figma: { label: "Figma", icon: "/icons/tech/figma-icon.svg" },
+  golang: { label: "Golang", icon: "/icons/tech/golang-icon.svg" },
+  html: { label: "HTML", icon: "/icons/tech/html-icon.svg" },
+  java: { label: "Java", icon: "/icons/tech/java-icon.svg" },
+  javascript: { label: "JavaScript", icon: "/icons/tech/javascript-icon.svg" },
+  mysql: { label: "MySQL", icon: "/icons/tech/mysql-icon.svg" },
+  nestjs: { label: "NestJs", icon: "/icons/tech/nestjs-icon.svg" },
+  nodejs: { label: "Node.js", icon: "/icons/tech/nodejs-icon.svg" },
+  photoshop: { label: "Photoshop", icon: "/icons/tech/photoshop-icon.svg" },
+  python: { label: "Python", icon: "/icons/tech/python-icon.svg" },
+  spring: { label: "Spring", icon: "/icons/tech/spring-icon.svg" },
+  typescript: { label: "TypeScript", icon: "/icons/tech/typescript-icon.svg" },
+  unity: { label: "Unity", icon: "/icons/tech/unity-icon.svg" },
+  vuejs: { label: "Vue.js", icon: "/icons/tech/vuejs-icon.svg" },
+  aws: { label: "AWS", icon: "/icons/tech/aws-icon.svg" },
+  c: { label: "C", icon: "/icons/tech/c-icon.svg" },
+  cpp: { label: "C++", icon: "/icons/tech/cpp-icon.svg" },
+  django: { label: "Django", icon: "/icons/tech/django-icon.svg" },
+  docker: { label: "Docker", icon: "/icons/tech/docker-icon.svg" },
+  expressjs: { label: "Express.js", icon: "/icons/tech/expressjs-icon.svg" },
+  firebase: { label: "Firebase", icon: "/icons/tech/firebase-icon.svg" },
+  flutter: { label: "Flutter", icon: "/icons/tech/flutter-icon.svg" },
+  git: { label: "Git", icon: "/icons/tech/git-icon.svg" },
+  github: { label: "GitHub", icon: "/icons/tech/github-icon.svg" },
+  graphql: { label: "GraphQL", icon: "/icons/tech/graphql-icon.svg" },
+  kotlin: { label: "Kotlin", icon: "/icons/tech/kotlin-icon.svg" },
+  kubernetes: { label: "Kubernetes", icon: "/icons/tech/kubernetes-icon.svg" },
+  mongodb: { label: "MongoDB", icon: "/icons/tech/mongodb-icon.svg" },
+  php: { label: "PHP", icon: "/icons/tech/php-icon.svg" },
+  postgresql: { label: "PostgreSQL", icon: "/icons/tech/postgresql-icon.svg" },
+  redis: { label: "Redis", icon: "/icons/tech/redis-icon.svg" },
+  supabase: { label: "Supabase", icon: "/icons/tech/supabase-icon.svg" },
+  svelte: { label: "Svelte", icon: "/icons/tech/svelte-icon.svg" },
+  swift: { label: "Swift", icon: "/icons/tech/swift-icon.svg" },
+  nextjs: { label: "Next.js", icon: "/icons/tech/nextjs-icon.svg" },
+};
+
+export const PROFILE_LINK_ITEMS = [
+  {
+    key: "githubLink" as const,
+    label: "Github",
+  },
+  {
+    key: "blogLink" as const,
+    label: "블로그",
+  },
+  {
+    key: "portfolioLink" as const,
+    label: "포트폴리오",
+  },
+];
+
+export const MY_ROLE_TABS = [
+  { value: "MEMBER", label: "멤버" },
+  { value: "HOST", label: "호스트" },
+] as const;
+
+export const MY_CHALLENGE_STATUS_FILTERS = [
+  { value: "", label: "전체" },
+  { value: "RECRUITING", label: "승인 대기" },
+  { value: "RECRUITMENT_CLOSED", label: "모집중" },
+  { value: "IN_PROGRESS", label: "진행중" },
+  { value: "COMPLETED", label: "종료" },
+] as const;
+
+export const MY_PROJECT_STATUS_FILTERS = [
+  { value: "", label: "전체" },
+  { value: "RECRUITING", label: "승인 대기" },
+  { value: "RECRUITMENT_CLOSED", label: "모집중" },
+  { value: "IN_PROGRESS", label: "진행중" },
+  { value: "COMPLETED", label: "종료" },
+];
