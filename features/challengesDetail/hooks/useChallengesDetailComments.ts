@@ -1,11 +1,12 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getChallengesDetailComments } from "@/features/challengesDetail/api/getChallengesDetailComment";
+import { challengeKeys } from "@/features/challenges/model/challenges.queryKey";
 
 const PER_PAGE = 10;
 
 export function useChallengesDetailComments(challengeId: number) {
   return useInfiniteQuery({
-    queryKey: ["challenges", "comments", challengeId],
+    queryKey: challengeKeys.comments(challengeId),
     queryFn: ({ pageParam }) =>
       getChallengesDetailComments({
         challengeId,

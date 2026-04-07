@@ -3,6 +3,7 @@ import {
   updateProjectsDetail,
   type UpdateProjectDetailParams,
 } from "@/features/projectsDetail/api/updateProjectsDetail";
+import { projectKeys } from "@/features/projects/model/projects.queryKey";
 
 type UpdateVariables = Omit<UpdateProjectDetailParams, "projectId">;
 
@@ -15,11 +16,11 @@ export function useUpdateProjectsDetail(projectId: number) {
     meta: { successMessage: "프로젝트가 수정되었습니다." },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["projects", projectId],
+        queryKey: projectKeys.detail(projectId),
       });
 
       queryClient.invalidateQueries({
-        queryKey: ["projectList"],
+        queryKey: projectKeys.lists(),
       });
     },
   });

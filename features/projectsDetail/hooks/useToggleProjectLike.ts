@@ -1,10 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleProjectLike } from "@/features/projectsDetail/api/toggleProjectLike";
 import type { ProjectDetail } from "@/features/projectsDetail/types/projectsDetail";
+import { projectKeys } from "@/features/projects/model/projects.queryKey";
 
 export function useToggleProjectLike(projectId: number) {
   const queryClient = useQueryClient();
-  const queryKey = ["projects", projectId];
+  const queryKey = projectKeys.detail(projectId);
 
   return useMutation({
     mutationFn: (currentLiked: boolean) =>
@@ -27,7 +28,7 @@ export function useToggleProjectLike(projectId: number) {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey });
-      queryClient.invalidateQueries({ queryKey: ["projectList"] });
+      queryClient.invalidateQueries({ queryKey: projectKeys.lists() });
     },
   });
 }

@@ -122,7 +122,7 @@ export default function Sidebar({ isOpen, onClose, userData }: SidebarProps) {
         {userData && (
           <div className="flex flex-col border-t border-gray-700 py-4">
             <Link
-              href="/my"
+              href="/mypage"
               onClick={onClose}
               className="px-4 py-2.5 text-base font-medium text-gray-50 transition-colors"
             >
