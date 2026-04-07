@@ -31,13 +31,7 @@ export async function signup({
       password: password.trim(),
     }),
   });
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "회원가입에 실패했습니다.");
-  }
-
-  return data;
+  return response.json();
 }
 
 export async function socialSignup({
@@ -47,7 +41,7 @@ export async function socialSignup({
   token,
   nickname,
 }: SocialSignupRequest): Promise<SignupResponse> {
-  const response = await fetch("/api/auth/socialsignup", {
+  const response = await fetchClient("/api/auth/socialsignup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -58,12 +52,5 @@ export async function socialSignup({
       nickname: nickname.trim(),
     }),
   });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "회원가입에 실패했습니다.");
-  }
-
-  return data;
+  return response.json();
 }
