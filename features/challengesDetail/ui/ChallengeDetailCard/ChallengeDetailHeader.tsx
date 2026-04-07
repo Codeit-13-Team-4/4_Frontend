@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Badge, LikeButton } from "@/shared/ui";
 import type { ChallengesDetail } from "@/features/challengesDetail/types/challengesDetail";
 import { useToggleChallengeLike } from "@/features/challengesDetail/hooks/useToggleChallengeLike";
@@ -43,6 +42,7 @@ export default function ChallengeDetailHeader({
     }
     toggleLike(challenge.isLiked);
   };
+  const Icon = joinInfo.icon;
 
   return (
     <div className="mb-5 flex flex-col gap-4">
@@ -50,12 +50,7 @@ export default function ChallengeDetailHeader({
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>
           <Badge variant={joinInfo.variant}>
-            <Image
-              src={joinInfo.icon}
-              alt={joinInfo.label}
-              width={24}
-              height={24}
-            />
+            <Icon width={24} height={24} />
             {joinInfo.label}
           </Badge>
         </div>
