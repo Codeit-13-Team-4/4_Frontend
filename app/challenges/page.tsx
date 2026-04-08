@@ -29,7 +29,7 @@ export default async function ChallengesPage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <main className="flex flex-col">
+      <main className="flex flex-col pt-12">
         <div className="mb-6 flex flex-col md:justify-between lg:flex-row lg:items-center">
           <div>
             <h4 className="text-[18px] font-semibold text-gray-50 md:text-[30px]">

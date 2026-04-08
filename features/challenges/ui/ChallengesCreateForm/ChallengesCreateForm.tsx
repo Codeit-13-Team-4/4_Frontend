@@ -143,7 +143,7 @@ export function ChallengesCreateForm() {
   };
 
   return (
-    <div className="text-gray-400">
+    <div className="pt-12 text-gray-400">
       <button onClick={handleBack} className="cursor-pointer">
         <Image
           src="/icons/common/chevron_left-icon.svg"
