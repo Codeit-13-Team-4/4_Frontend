@@ -1,5 +1,4 @@
 import { fetchClient } from "@/shared/lib/client/fetchClient";
-import { ApiError } from "@/shared/lib/errors/ApiError";
 
 interface SocialSignupRequest {
   type?: string;
@@ -57,7 +56,7 @@ export async function socialSignup({
 
     return response.json();
   } catch (error) {
-    if (error instanceof ApiError && error.code === "social_account_exists") {
+    if (error instanceof Error && error.message === "social_account_exists") {
       throw new Error("SOCIAL_ACCOUNT_EXISTS");
     }
 
