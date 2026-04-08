@@ -45,6 +45,7 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
     // joinButtonLabel,
     isMember,
     isHost,
+    myParticipationStatus,
   } = data;
 
   const router = useRouter();
@@ -173,10 +174,18 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
           size="sm"
           onClick={handleOpen}
           disabled={
-            status !== "RECRUITING" || isHost || isMember || !isJoinable
+            status !== "RECRUITING" ||
+            isHost ||
+            isMember ||
+            !isJoinable ||
+            myParticipationStatus === "PENDING"
           }
         >
-          {isMember ? "참여중" : "참여하기"}
+          {isMember
+            ? "참여중"
+            : myParticipationStatus === "PENDING"
+              ? "승인 대기중"
+              : "참여하기"}
         </GradientButton>
         {userData && (
           <ChallengesApplyModal

@@ -37,6 +37,7 @@ export interface ChallengeCardProps {
   isMember: boolean;
   isHost: boolean;
   isLiked: boolean;
+  myParticipationStatus: "NONE" | "PENDING" | "JOINED" | "REJECTED";
 }
 
 export type ChallengesSortType = keyof typeof CHALLENGES_SORT_LABEL;
