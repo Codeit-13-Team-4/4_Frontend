@@ -25,7 +25,7 @@ export function ThirdSection() {
           </p>
         </div>
 
-        <div className="mt-30 grid grid-cols-2 gap-2 lg:grid-cols-4">
+        <div className="mt-30 grid grid-cols-2 gap-2 md:grid-cols-4">
           <PortfolioIcon className="text-mint-900 hover:text-mint-500 w-full max-w-78" />
           <ContestIcon className="text-mint-900 hover:text-mint-500 w-full max-w-78" />
           <HackathonIcon className="text-mint-900 hover:text-mint-500 w-full max-w-78" />
