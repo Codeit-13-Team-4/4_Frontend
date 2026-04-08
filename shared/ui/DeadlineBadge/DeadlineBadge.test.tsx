@@ -12,14 +12,15 @@ describe("DeadlineBadge", () => {
     future.setDate(today.getDate() + 3);
 
     render(<DeadlineBadge endDate={formatDate(future)} />);
-    const badge = screen.getByText("모집마감 D-3");
+
+    const badge = screen.getByText("마감 D-3");
     expect(badge).toBeInTheDocument();
   });
 
   test("오늘 날짜를 넣으면 D-day 라벨이 나온다", () => {
     const today = new Date();
     render(<DeadlineBadge endDate={formatDate(today)} />);
-    const badge = screen.getByText("모집마감 D-day");
+    const badge = screen.getByText("마감 D-day");
     expect(badge).toBeInTheDocument();
   });
 
@@ -29,7 +30,7 @@ describe("DeadlineBadge", () => {
     past.setDate(today.getDate() - 3);
 
     render(<DeadlineBadge endDate={formatDate(past)} />);
-    const badge = screen.queryByText(/모집마감/);
+    const badge = screen.queryByText(/마감/);
     expect(badge).toBeNull();
   });
 });
