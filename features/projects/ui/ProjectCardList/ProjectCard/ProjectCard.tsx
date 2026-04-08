@@ -1,9 +1,7 @@
 "use client";
 import { DeadlineBadge, LikeButton, StatusBadge } from "@/shared/ui";
-import { useState } from "react";
 import {
   PositionBadgeList,
-  ProjectApplyModal,
   ProjectBadge,
   TechStackList,
 } from "@/features/projects/ui";
@@ -30,11 +28,6 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
   } = data;
 
   const router = useRouter();
-
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [alertOpen, setAlertOpen] = useState<boolean>(false);
-  const [confirmAlertOpen, setConfirmAlertOpen] = useState<boolean>(false);
-
   const { data: userData } = useUserData();
   const { mutate: toggleLike } = useToggleProjectLike(id);
   const openAlertModal = useOpenAlertModal();
@@ -57,12 +50,9 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
   };
 
   const handleCardClick = () => {
-    if (isOpen || alertOpen || confirmAlertOpen) return;
     router.push(`/projects/${id}`);
   };
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+
   return (
     <article
       onClick={handleCardClick}
@@ -89,11 +79,11 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
         </section>
 
         <section>
-          <h5 className="mb-2 text-[16px] text-gray-400">모집 포지션</h5>
+          <h5 className="mb-2 text-gray-400">모집 포지션</h5>
           <PositionBadgeList positions={positions} />
         </section>
         <section>
-          <h5 className="mb-2 text-[16px] text-gray-400">기술스택</h5>
+          <h5 className="mb-2 text-gray-400">기술스택</h5>
           <TechStackList techs={techStacks} />
         </section>
       </div>
@@ -113,16 +103,6 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
         <DeadlineBadge
           endDate={recruitEndDate}
           className="self-start text-nowrap"
-        />
-        <ProjectApplyModal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          onClose={handleClose}
-          projectId={String(id)}
-          alertOpen={alertOpen}
-          setAlertOpen={setAlertOpen}
-          confirmAlertOpen={confirmAlertOpen}
-          setConfirmAlertOpen={setConfirmAlertOpen}
         />
       </footer>
     </article>
