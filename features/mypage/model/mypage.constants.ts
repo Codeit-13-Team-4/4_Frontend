@@ -82,6 +82,4 @@ export const MY_PROJECT_STATUS_FILTERS = [
   { value: "", label: "전체" },
   { value: "RECRUITING", label: "승인 대기" },
   { value: "RECRUITMENT_CLOSED", label: "모집중" },
-  { value: "IN_PROGRESS", label: "진행중" },
-  { value: "COMPLETED", label: "종료" },
-];
+] as const;
