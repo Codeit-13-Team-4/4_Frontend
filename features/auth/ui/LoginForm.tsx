@@ -29,6 +29,10 @@ interface LoginFieldErrors {
 }
 
 function getRouteErrorMessage(error: string | null) {
+  if (error === "social_account_exists") {
+    return "해당 이메일은 다른 소셜 계정으로 가입되어 있습니다. 해당 소셜 계정으로 로그인해주세요.";
+  }
+
   if (error === "social_email_exists") {
     return "이미 가입된 이메일입니다. 기존 계정으로 로그인해주세요.";
   }
