@@ -58,7 +58,7 @@ export default function MyProfileSection({ userData }: { userData: User }) {
           <ProfileStats stats={userData.stats} />
         </div>
         <Button asChild variant="primary" className="mt-8 w-full">
-          <Link href="/profile/edit">수정하기</Link>
+          <Link href="/mypage/edit">수정하기</Link>
         </Button>
       </div>
 
@@ -73,7 +73,7 @@ export default function MyProfileSection({ userData }: { userData: User }) {
             <ProfileStats stats={userData.stats} />
           </div>
           <Button asChild variant="primary" className="h-10">
-            <Link href="/profile/edit">프로필 수정</Link>
+            <Link href="/mypage/edit">프로필 수정</Link>
           </Button>
         </div>
 
