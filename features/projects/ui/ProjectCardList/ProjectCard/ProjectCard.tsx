@@ -33,6 +33,8 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
     commentCount,
     id,
     liked,
+    hasApplication,
+    isHost,
   } = data;
 
   const router = useRouter();
@@ -81,7 +83,7 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
   return (
     <article
       onClick={handleCardClick}
-      className="flex h-120 w-104.5 cursor-pointer flex-col gap-4 rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5 md:h-130.5 md:w-85.5 lg:h-133 lg:w-104.5"
+      className="flex h-120 w-full cursor-pointer flex-col gap-4 rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5 md:h-125.5"
     >
       <header className="flex items-center justify-between">
         <div className="flex gap-2">
@@ -95,7 +97,7 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
       </header>
       <div className="flex flex-col gap-6">
         <section className="flex flex-col lg:min-h-27.5">
-          <div className="mb-2 flex items-center justify-between">
+          <div className="mb-2 flex items-center justify-between gap-1">
             <h4 className="line-clamp-1 text-[20px] text-gray-50 lg:line-clamp-2">
               {title}
             </h4>
@@ -133,9 +135,9 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
         <GradientButton
           size="sm"
           onClick={handleOpen}
-          disabled={status === "recruitment_closed"}
+          disabled={status === "recruitment_closed" || hasApplication || isHost}
         >
-          지원하기
+          {hasApplication ? "지원완료" : "지원하기"}
         </GradientButton>
 
         <ProjectApplyModal
