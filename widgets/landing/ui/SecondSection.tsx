@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function SecondSection() {
   return (
     <section className="relative overflow-hidden px-5 py-20 text-white md:px-10 md:py-28 lg:px-16">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,215,160,0.08),transparent_45%)]" />
+      {/* <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,215,160,0.08),transparent_45%)]" /> */}
 
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center">
         <div className="flex max-w-180 flex-col items-center gap-7 text-center">
@@ -26,27 +26,28 @@ export default function SecondSection() {
 
         <div className="relative mt-16 flex w-full justify-center md:mt-20">
           <div className="relative hidden lg:block">
-            <div className="relative h-150 w-275 overflow-hidden rounded-[40px]">
+            <div className="relative h-150 w-275 rounded-[40px] shadow-[0_0_30px_5px_rgba(0,215,160,0.6)]">
               <Image
                 src="images/section-02-pc.svg"
                 alt="DevUp 데스크톱 화면"
                 fill
+                className="scale-105"
               />
             </div>
 
-            <div className="absolute top-[33%] left-[-4%] flex h-20 w-20 items-center justify-center rounded-full border border-white/30 bg-white/10 text-4xl backdrop-blur-md">
+            <div className="border-mint-500/30 absolute top-[33%] left-[-4%] flex h-20 w-20 items-center justify-center rounded-full border bg-gray-700/70 text-4xl backdrop-blur-md">
               👏
             </div>
 
-            <div className="absolute top-[66%] left-[2%] rounded-full border border-white/30 bg-white/10 px-7 py-3.5 text-lg text-white/90 backdrop-blur-md">
+            <div className="border-mint-500/30 absolute top-[66%] left-[2%] rounded-full border bg-gray-700/70 px-7 py-3.5 text-lg text-white/90 backdrop-blur-md">
               오늘 하루도 알차게 보내셨네요 멋져요!
             </div>
 
-            <div className="absolute top-[10%] right-[-4%] flex h-20 w-20 items-center justify-center rounded-full border border-white/30 bg-white/10 text-4xl backdrop-blur-md">
+            <div className="border-mint-500/30 absolute top-[10%] right-[-4%] flex h-20 w-20 items-center justify-center rounded-full border bg-gray-700/70 text-4xl backdrop-blur-md">
               👍
             </div>
 
-            <div className="absolute top-[43%] right-[-6%] rounded-full border border-white/30 bg-white/10 px-7 py-3.5 text-lg text-white/90 backdrop-blur-md">
+            <div className="border-mint-500/30 absolute top-[43%] right-[-6%] rounded-full border bg-gray-700/70 px-7 py-3.5 text-lg text-white/90 backdrop-blur-md">
               같이 으쌰으쌰할 수 있어서 너무 좋아요~
             </div>
           </div>
