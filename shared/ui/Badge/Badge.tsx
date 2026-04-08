@@ -7,12 +7,12 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default: "bg-white px-3 py-2",
-        recruit: "bg-mint-500 border-none text-gray-900 px-3 py-2.5",
-        closed: "bg-gray-400 border-none text-gray-900 px-3 py-2.5",
-        auto: "bg-gray-900 border border-blue-500 text-blue-500 px-3 py-2",
-        approve: "bg-gray-900 border border-amber-200 text-amber-200 px-3 py-2",
-        deadline: "border border-mint-500 text-mint-500 px-2 py-1",
-        dday: "border-pink-400 text-pink-400 px-2 py-1",
+        recruit: "bg-mint-900 border-none text-mint-500 px-3 py-2.5",
+        closed: "bg-gray-900 border-none text-gray-400 px-3 py-2.5",
+        auto: "bg-gray-800 border border-blue-500 text-blue-500 px-3 py-2",
+        approve: "bg-gray-800 border border-amber-200 text-amber-200 px-3 py-2",
+        deadline: "border-none bg-gray-700 text-mint-500 px-2 py-1",
+        dday: "border-none bg-gray-700 text-pink-400 px-2 py-1",
       },
       size: {
         default: "text-md",
