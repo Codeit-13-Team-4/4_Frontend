@@ -2,10 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { GradientButton } from "@/shared/ui";
-import TypingText from "@/widgets/landing/ui/TypingText";
+import { TypingText } from "@/widgets/landing/ui";
 import Image from "next/image";
 
-export default function HomePage() {
+export function FirstSection() {
   const router = useRouter();
 
   function handleClickExplore() {
@@ -44,10 +44,10 @@ export default function HomePage() {
             </p>
 
             <GradientButton
-              size="md"
+              size="lg"
               variant="dark"
               onClick={handleClickExplore}
-              className="m-15 rounded-l-2xl"
+              className="mt-30"
             >
               지금 바로 모임 탐색하기
             </GradientButton>
