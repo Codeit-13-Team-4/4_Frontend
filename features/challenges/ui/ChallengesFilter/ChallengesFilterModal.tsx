@@ -96,7 +96,7 @@ export function ChallengesFilterModal({
               </fieldset>
 
               <fieldset>
-                <legend className="mb-5 text-gray-400">참여 목적</legend>
+                <legend className="mb-5 text-gray-400">모집 방식</legend>
                 <ul className="flex gap-2">
                   {participationTypeOptions.map((item) => (
                     <ChallengesFilterRadioInput

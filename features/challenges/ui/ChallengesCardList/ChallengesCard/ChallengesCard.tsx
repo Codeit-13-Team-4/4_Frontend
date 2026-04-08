@@ -1,12 +1,5 @@
 "use client";
-import {
-  DeadlineBadge,
-  GradientButton,
-  LikeButton,
-  Progress,
-  StatusBadge,
-} from "@/shared/ui";
-import { useState } from "react";
+import { DeadlineBadge, LikeButton, Progress, StatusBadge } from "@/shared/ui";
 import { useRouter } from "next/navigation";
 import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import {
@@ -14,10 +7,7 @@ import {
   CHALLENGES_STATUS,
   VERIFICATION_FREQUENCY_LABEL,
 } from "@/features/challenges/model";
-import {
-  ChallengesApplyModal,
-  ChallengesBadge,
-} from "@/features/challenges/ui";
+import { ChallengesBadge } from "@/features/challenges/ui";
 import { useToggleChallengeLike } from "@/features/challengesDetail/hooks/useToggleChallengeLike";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
 import { CommentIcon, Eyeopen } from "@/shared/icons";
@@ -26,45 +16,23 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
   const {
     id,
     title,
-    // host,
     status,
     participationType,
     tags,
     verificationFrequency,
-    // startDate,
-    // endDate,
     recruitDeadline,
-    // daysLeft,
     participantCount,
     maxParticipants,
-    // progressRate,
     viewCount,
     commentCount,
     isLiked,
-    isJoinable,
-    // joinButtonLabel,
-    isMember,
-    isHost,
-    myParticipationStatus,
   } = data;
 
   const router = useRouter();
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [alertOpen, setAlertOpen] = useState<boolean>(false);
-  const [confirmAlertOpen, setConfirmAlertOpen] = useState<boolean>(false);
   const openAlertModal = useOpenAlertModal();
   const { data: userData } = useUserData();
   const { mutate: toggleLike } = useToggleChallengeLike(id);
-
-  const handleOpen = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!userData) {
-      router.push("/login");
-      return;
-    }
-    setIsOpen(true);
-  };
 
   const handleLikeToggle = () => {
     if (!userData) {
@@ -84,11 +52,7 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
   };
 
   const handleCardClick = () => {
-    if (isOpen || alertOpen || confirmAlertOpen) return;
     router.push(`/challenges/${id}`);
-  };
-  const handleClose = () => {
-    setIsOpen(false);
   };
 
   const badgeStatus =
@@ -99,7 +63,7 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
   return (
     <article
       onClick={handleCardClick}
-      className="flex h-90.5 w-full cursor-pointer flex-col rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5"
+      className="flex h-90.5 w-full cursor-pointer flex-col rounded-[20px] border-2 border-gray-700 bg-gray-800 px-4 pt-6 pb-5"
     >
       <header className="mb-7 flex items-center justify-between">
         <div className="flex gap-2">
@@ -120,12 +84,8 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
             <h4 className="line-clamp-1 text-[20px] text-gray-50 lg:line-clamp-2">
               {title}
             </h4>
-            <DeadlineBadge
-              endDate={recruitDeadline}
-              className="self-start text-nowrap"
-            />
           </div>
-          <ul className="flex gap-3 text-[14px] text-gray-400">
+          <ul className="line-clamp-1 flex gap-3 text-gray-400">
             {tags.map((item) => (
               <li key={item}>#{item}</li>
             ))}
@@ -133,11 +93,11 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
         </section>
       </div>
       <section className="mb-5 flex gap-2">
-        <span className="text-[16px] text-gray-400">인증 주기</span>
+        <span className="text-gray-400">인증 주기</span>
         <span>{VERIFICATION_FREQUENCY_LABEL[verificationFrequency]}</span>
       </section>
       <section className="flex items-center gap-2">
-        <span className="text-[16px] text-gray-400">참여인원</span>
+        <span className="text-gray-400">참여인원</span>
         <Progress
           value={participantCount}
           max={maxParticipants}
@@ -160,37 +120,10 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
           </div>
         </div>
 
-        <GradientButton
-          size="sm"
-          onClick={handleOpen}
-          disabled={
-            status !== "RECRUITING" ||
-            isHost ||
-            isMember ||
-            !isJoinable ||
-            myParticipationStatus === "PENDING"
-          }
-        >
-          {isMember
-            ? "참여중"
-            : myParticipationStatus === "PENDING"
-              ? "승인 대기중"
-              : "참여하기"}
-        </GradientButton>
-        {userData && (
-          <ChallengesApplyModal
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            onClose={handleClose}
-            challengeId={id}
-            alertOpen={alertOpen}
-            setAlertOpen={setAlertOpen}
-            confirmAlertOpen={confirmAlertOpen}
-            setConfirmAlertOpen={setConfirmAlertOpen}
-            name={userData.nickname}
-            participationType={participationType}
-          />
-        )}
+        <DeadlineBadge
+          endDate={recruitDeadline}
+          className="self-start text-nowrap"
+        />
       </footer>
     </article>
   );
