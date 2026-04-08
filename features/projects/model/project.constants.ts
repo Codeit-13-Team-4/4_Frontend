@@ -68,3 +68,10 @@ export const CONTACT_METHOD = {
   discord: "디스코드",
   google_form: "구글 폼",
 };
+
+export const STATUS_LABEL = {
+  recruiting: "모집중",
+  recruitment_closed: "모집완료",
+  in_progress: "진행중",
+  completed: "완료",
+};

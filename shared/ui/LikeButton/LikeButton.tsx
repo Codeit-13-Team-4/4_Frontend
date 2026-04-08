@@ -15,7 +15,7 @@ function LikeButton({
       type="button"
       onClick={onToggle}
       className={cn(
-        "flex items-center justify-center rounded-full p-2 transition-all duration-100 hover:cursor-pointer active:scale-90",
+        "flex items-center justify-center rounded-full transition-all duration-100 hover:cursor-pointer active:scale-90",
         className,
       )}
       {...props}
