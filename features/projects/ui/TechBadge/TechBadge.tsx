@@ -6,7 +6,7 @@ export function TechBadge({ tech }: { tech: TechStackType }) {
   return (
     <div className="inline-flex items-center gap-2 rounded-sm bg-gray-700 px-2 py-1">
       <Image src={icon} alt={label} width={16} height={16} />
-      <span className="text-gray-200">{label}</span>
+      <span className="text-[14px] text-gray-200">{label}</span>
     </div>
   );
 }

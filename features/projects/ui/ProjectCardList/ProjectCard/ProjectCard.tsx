@@ -1,11 +1,5 @@
 "use client";
-import {
-  DeadlineBadge,
-  GradientButton,
-  LikeButton,
-  StatusBadge,
-} from "@/shared/ui";
-import Image from "next/image";
+import { DeadlineBadge, LikeButton, StatusBadge } from "@/shared/ui";
 import { useState } from "react";
 import {
   PositionBadgeList,
@@ -33,8 +27,6 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
     commentCount,
     id,
     liked,
-    hasApplication,
-    isHost,
   } = data;
 
   const router = useRouter();
@@ -64,15 +56,6 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
     toggleLike(liked);
   };
 
-  const handleOpen = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!userData) {
-      router.push("/login");
-      return;
-    }
-    setIsOpen(true);
-  };
-
   const handleCardClick = () => {
     if (isOpen || alertOpen || confirmAlertOpen) return;
     router.push(`/projects/${id}`);
@@ -83,7 +66,7 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
   return (
     <article
       onClick={handleCardClick}
-      className="flex h-120 w-full cursor-pointer flex-col gap-4 rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5 md:h-125.5"
+      className="flex h-100 w-full cursor-pointer flex-col gap-4 rounded-[20px] border-2 border-gray-700 bg-gray-800 px-4 pt-6 pb-5"
     >
       <header className="flex items-center justify-between">
         <div className="flex gap-2">
@@ -96,27 +79,22 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
         </div>
       </header>
       <div className="flex flex-col gap-6">
-        <section className="flex flex-col lg:min-h-27.5">
+        <section className="flex flex-col">
           <div className="mb-2 flex items-center justify-between gap-1">
-            <h4 className="line-clamp-1 text-[20px] text-gray-50 lg:line-clamp-2">
-              {title}
-            </h4>
-            <DeadlineBadge
-              endDate={recruitEndDate}
-              className="self-start text-nowrap"
-            />
+            <h4 className="line-clamp-1 text-[20px] text-gray-50">{title}</h4>
           </div>
-          <p className="hidden text-[14px] text-gray-400 md:visible md:line-clamp-1 lg:line-clamp-2">
+          <p className="hidden text-[14px] text-gray-400 md:visible md:line-clamp-1">
             {description}
           </p>
         </section>
-        <section className="lg:min-h-26">
-          <h5 className="mb-2 text-[16px] text-gray-400">기술스택</h5>
-          <TechStackList techs={techStacks} />
-        </section>
-        <section className="min-h-25.5">
+
+        <section>
           <h5 className="mb-2 text-[16px] text-gray-400">모집 포지션</h5>
           <PositionBadgeList positions={positions} />
+        </section>
+        <section>
+          <h5 className="mb-2 text-[16px] text-gray-400">기술스택</h5>
+          <TechStackList techs={techStacks} />
         </section>
       </div>
 
@@ -132,14 +110,10 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
           </div>
         </div>
 
-        <GradientButton
-          size="sm"
-          onClick={handleOpen}
-          disabled={status === "recruitment_closed" || hasApplication || isHost}
-        >
-          {hasApplication ? "지원완료" : "지원하기"}
-        </GradientButton>
-
+        <DeadlineBadge
+          endDate={recruitEndDate}
+          className="self-start text-nowrap"
+        />
         <ProjectApplyModal
           isOpen={isOpen}
           setIsOpen={setIsOpen}

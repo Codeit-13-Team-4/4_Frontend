@@ -2,7 +2,7 @@ import { TechBadge } from "@/features/projects/ui";
 import { TechStackType } from "@/features/projects/model";
 
 export function TechStackList({ techs }: { techs: TechStackType[] }) {
-  const maxVisible = 5;
+  const maxVisible = 3;
   const visibleTechs = techs.slice(0, maxVisible);
   const remaining = techs.length - maxVisible;
   return (
@@ -10,7 +10,7 @@ export function TechStackList({ techs }: { techs: TechStackType[] }) {
       {visibleTechs.map((tech, index) => (
         <TechBadge key={`${tech}-${index}`} tech={tech} />
       ))}
-      {remaining > 0 && <span className="text-gray-50">+{remaining}</span>}
+      {remaining > 0 && <span className="text-gray-400">+{remaining}</span>}
     </div>
   );
 }
