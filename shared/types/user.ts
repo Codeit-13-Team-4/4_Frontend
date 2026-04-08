@@ -1,3 +1,5 @@
+import { TechStackKey } from "@/shared/types/techStack";
+
 export type AccountType = "local" | "google" | "github" | "kakao";
 
 export type JobLabelType =
@@ -17,7 +19,7 @@ export interface User {
   jobLabel: JobLabelType;
   bio: string | null;
   profileImageUrl: string | null;
-  skills: string[];
+  skills: TechStackKey[];
   githubLink: string | null;
   blogLink: string | null;
   portfolioLink: string | null;
