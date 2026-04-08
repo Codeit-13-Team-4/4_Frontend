@@ -82,7 +82,7 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
   return (
     <article
       onClick={handleCardClick}
-      className="flex h-120 w-full cursor-pointer flex-col gap-4 rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5 md:h-130.5 lg:h-133"
+      className="flex h-120 w-full cursor-pointer flex-col gap-4 rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5 md:h-125.5"
     >
       <header className="flex items-center justify-between">
         <div className="flex gap-2">
