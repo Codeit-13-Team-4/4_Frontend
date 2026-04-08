@@ -10,7 +10,6 @@ import {
   Input,
   TextArea,
 } from "@/shared/ui";
-import Image from "next/image";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { formatDate } from "@/shared/utils";
@@ -30,6 +29,7 @@ import {
   ChallengesJoinTypeRadioInput,
 } from "@/features/challenges/ui";
 import { ProjectCreateRangeBar } from "@/features/projects/ui";
+import { ChevronLeftIcon } from "@/shared/icons";
 
 type CreateFormErrors = {
   title?: string;
@@ -145,12 +145,7 @@ export function ChallengesCreateForm() {
   return (
     <div className="text-gray-400">
       <button onClick={handleBack} className="cursor-pointer">
-        <Image
-          src="/icons/common/chevron_left-icon.svg"
-          alt=""
-          width={16}
-          height={16}
-        />
+        <ChevronLeftIcon width={16} height={16} className="text-gray-200" />
       </button>
 
       <section>
