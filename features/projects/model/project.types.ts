@@ -71,3 +71,8 @@ export interface ProjectAlertModalProps {
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
   id?: number;
 }
+
+export interface ProjectsResponse {
+  data: ProjectCardProps[];
+  total: number;
+}

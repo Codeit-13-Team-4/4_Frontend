@@ -1,9 +1,11 @@
 import { User } from "@/shared/types/user";
+import { ChallengesResponse } from "@/features/challenges/model/challenges.types";
 import {
   MY_CHALLENGE_STATUS_FILTERS,
   MY_PROJECT_STATUS_FILTERS,
   MY_ROLE_TABS,
 } from "./mypage.constants";
+import { ProjectsResponse } from "@/features/projects/model";
 
 export type MyTab = "challenges" | "projects" | "comments";
 
@@ -23,6 +25,9 @@ export type MyChallengesParams = {
   page?: number;
   limit?: number;
 };
+
+export type MyChallengesResponse = ChallengesResponse;
+export type MyProjectsResponse = ProjectsResponse;
 
 export type MyProjectsParams = {
   isMember?: boolean;
