@@ -63,7 +63,7 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
   return (
     <article
       onClick={handleCardClick}
-      className="flex h-90.5 w-104.5 cursor-pointer flex-col rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5 md:w-85.5 lg:w-104.5"
+      className="flex h-90.5 w-full cursor-pointer flex-col rounded-[20px] border-2 border-gray-700 bg-gray-800 px-4 pt-6 pb-5"
     >
       <header className="mb-7 flex items-center justify-between">
         <div className="flex gap-2">

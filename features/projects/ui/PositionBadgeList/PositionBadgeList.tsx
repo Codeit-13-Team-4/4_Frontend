@@ -10,7 +10,7 @@ export function PositionBadgeList({
   const visiblePositions = positions.slice(0, maxVisible);
   const remaining = positions.length - maxVisible;
   return (
-    <ul className="flex flex-wrap items-center gap-2">
+    <ul className="flex flex-wrap items-center gap-3">
       {visiblePositions.map((position, index) => {
         return <li key={index}>{POSITION_LABELS[position]}</li>;
       })}
