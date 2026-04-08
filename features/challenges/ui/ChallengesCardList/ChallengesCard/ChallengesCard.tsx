@@ -1,5 +1,9 @@
 "use client";
 import {
+  buildCurrentPath,
+  buildLoginPath,
+} from "@/features/auth/lib/authRedirect";
+import {
   DeadlineBadge,
   GradientButton,
   LikeButton,
@@ -8,7 +12,7 @@ import {
 } from "@/shared/ui";
 import Image from "next/image";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import {
   ChallengeCardProps,
@@ -48,6 +52,9 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
   } = data;
 
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const loginPath = buildLoginPath(buildCurrentPath(pathname, searchParams));
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
@@ -59,7 +66,7 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
   const handleOpen = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!userData) {
-      router.push("/login");
+      router.push(loginPath);
       return;
     }
     setIsOpen(true);
@@ -75,7 +82,7 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
           button: { type: "default", variant: "primary" },
         },
         negative: { text: "취소" },
-        onPositive: () => router.push("/login"),
+        onPositive: () => router.push(loginPath),
       });
       return;
     }

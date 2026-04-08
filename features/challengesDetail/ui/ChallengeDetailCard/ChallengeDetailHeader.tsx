@@ -1,12 +1,16 @@
 "use client";
 
 import Image from "next/image";
+import {
+  buildCurrentPath,
+  buildLoginPath,
+} from "@/features/auth/lib/authRedirect";
 import { Badge, LikeButton } from "@/shared/ui";
 import type { ChallengesDetail } from "@/features/challengesDetail/types/challengesDetail";
 import { useToggleChallengeLike } from "@/features/challengesDetail/hooks/useToggleChallengeLike";
 import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   CHALLENGE_STATUS_LABEL,
   JOIN_TYPE_LABEL,
@@ -23,6 +27,9 @@ export default function ChallengeDetailHeader({
   const { data: userData } = useUserData();
   const openAlertModal = useOpenAlertModal();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const loginPath = buildLoginPath(buildCurrentPath(pathname, searchParams));
 
   const statusInfo = CHALLENGE_STATUS_LABEL[challenge.status];
   const joinInfo = JOIN_TYPE_LABEL[challenge.joinType];
@@ -37,7 +44,7 @@ export default function ChallengeDetailHeader({
           button: { type: "default", variant: "primary" },
         },
         negative: { text: "취소" },
-        onPositive: () => router.push("/login"),
+        onPositive: () => router.push(loginPath),
       });
       return;
     }

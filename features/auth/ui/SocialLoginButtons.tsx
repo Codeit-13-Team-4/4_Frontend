@@ -1,17 +1,26 @@
 "use client";
 
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import {
+  buildPathWithQuery,
+  getSafeRedirectPath,
+} from "@/features/auth/lib/authRedirect";
+
 type SocialType = "google" | "kakao" | "github";
 
-const SOCIAL_LOGIN_URL: Record<SocialType, string> = {
-  google: `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/oauth2/authorization/google?redirect_uri=${encodeURIComponent(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback/google`)}`,
-  kakao: `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/oauth2/authorization/kakao?redirect_uri=${encodeURIComponent(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback/kakao`)}`,
-  github: `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/oauth2/authorization/github?redirect_uri=${encodeURIComponent(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback/github`)}`,
-};
-
 export default function SocialLoginButtons() {
+  const searchParams = useSearchParams();
+  const redirectPath = getSafeRedirectPath(searchParams.get("redirect"));
+
   const handleSocialLogin = (provider: SocialType) => {
-    window.location.href = SOCIAL_LOGIN_URL[provider];
+    const callbackPath = buildPathWithQuery(`/auth/callback/${provider}`, {
+      redirect: redirectPath,
+    });
+    const callbackUrl = `${process.env.NEXT_PUBLIC_BASE_URL}${callbackPath}`;
+    const socialLoginUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/oauth2/authorization/${provider}?redirect_uri=${encodeURIComponent(callbackUrl)}`;
+
+    window.location.href = socialLoginUrl;
   };
 
   return (

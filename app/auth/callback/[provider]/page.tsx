@@ -4,6 +4,11 @@ import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams, useParams } from "next/navigation";
 import { authKeys } from "@/features/auth/model/auth.queryKey";
+import {
+  buildLoginPath,
+  buildSignupPath,
+  getSafeRedirectPath,
+} from "@/features/auth/lib/authRedirect";
 import { logout } from "@/features/auth/api/logout";
 import { socialLogin, type SocialType } from "@/features/auth/api/socialLogin";
 
@@ -26,9 +31,12 @@ export default function SocialCallbackPage() {
       typeof providerFromPath === "string" ? providerFromPath : typeFromQuery;
 
     const userParam = searchParams.get("user");
+    const redirectPath = getSafeRedirectPath(searchParams.get("redirect"));
 
     if (!token || !provider || !isValidSocialType(provider)) {
-      router.replace("/login?error=invalid_social_callback");
+      router.replace(
+        buildLoginPath(redirectPath, { error: "invalid_social_callback" }),
+      );
       return;
     }
 
@@ -74,7 +82,7 @@ export default function SocialCallbackPage() {
         });
 
         await queryClient.resetQueries({ queryKey: authKeys.me() });
-        router.replace("/mypage"); //회원이면
+        router.replace(redirectPath ?? "/mypage"); //회원이면
       } catch (error) {
         //회원아닌 에러발생
         if (error instanceof Error && error.message === "NOT_REGISTERED") {
@@ -93,7 +101,9 @@ export default function SocialCallbackPage() {
             query.set("name", parsedUser.name);
           }
 
-          router.replace(`/signup?${query.toString()}`); //여기로 이동 + 쿼리파라미터 같이보냄
+          router.replace(
+            buildSignupPath(redirectPath, Object.fromEntries(query.entries())),
+          ); //여기로 이동 + 쿼리파라미터 같이보냄
           return;
         }
 
@@ -102,11 +112,15 @@ export default function SocialCallbackPage() {
           error.message === "EMAIL_ALREADY_REGISTERED"
         ) {
           await clearAuthState();
-          router.replace("/login?error=social_email_exists");
+          router.replace(
+            buildLoginPath(redirectPath, { error: "social_email_exists" }),
+          );
           return;
         }
 
-        router.replace("/login?error=social_login_failed");
+        router.replace(
+          buildLoginPath(redirectPath, { error: "social_login_failed" }),
+        );
       }
     };
     handleSocialCallback();

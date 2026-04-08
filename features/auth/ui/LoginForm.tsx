@@ -7,6 +7,10 @@ import { useState } from "react";
 import { login } from "@/features/auth/api/login";
 import { useQueryClient } from "@tanstack/react-query";
 import { authKeys } from "@/features/auth/model/auth.queryKey";
+import {
+  buildSignupPath,
+  getSafeRedirectPath,
+} from "@/features/auth/lib/authRedirect";
 import SocialLoginButtons from "@/features/auth/ui/SocialLoginButtons";
 import { ApiError } from "@/shared/lib/errors/ApiError";
 import {
@@ -68,6 +72,7 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const redirectPath = getSafeRedirectPath(searchParams.get("redirect"));
   const routeErrorMessage = getRouteErrorMessage(searchParams.get("error"));
 
   const emailError =
@@ -155,7 +160,7 @@ export default function LoginForm() {
       await login({ email: form.email, password: form.password });
 
       await queryClient.resetQueries({ queryKey: authKeys.me() });
-      router.replace("/mypage");
+      router.replace(redirectPath ?? "/mypage");
     } catch (error) {
       const fieldError = getLoginFieldError(error);
 
@@ -262,7 +267,7 @@ export default function LoginForm() {
             <p className="flex justify-center gap-1 text-sm text-gray-50">
               서비스가 처음이신가요?
               <Link
-                href="/signup"
+                href={buildSignupPath(redirectPath)}
                 className="text-mint-500 font-semibold underline"
               >
                 회원가입

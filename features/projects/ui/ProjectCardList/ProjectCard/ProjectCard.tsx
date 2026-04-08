@@ -1,5 +1,9 @@
 "use client";
 import {
+  buildCurrentPath,
+  buildLoginPath,
+} from "@/features/auth/lib/authRedirect";
+import {
   DeadlineBadge,
   GradientButton,
   LikeButton,
@@ -14,7 +18,7 @@ import {
   TechStackList,
 } from "@/features/projects/ui";
 import { ProjectCardProps } from "@/features/projects/model";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import { useToggleProjectLike } from "@/features/projectsDetail/hooks/useToggleProjectLike";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
@@ -35,6 +39,9 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
   } = data;
 
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const loginPath = buildLoginPath(buildCurrentPath(pathname, searchParams));
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
@@ -54,7 +61,7 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
           button: { type: "default", variant: "primary" },
         },
         negative: { text: "취소" },
-        onPositive: () => router.push("/login"),
+        onPositive: () => router.push(loginPath),
       });
       return;
     }
@@ -64,7 +71,7 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
   const handleOpen = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!userData) {
-      router.push("/login");
+      router.push(loginPath);
       return;
     }
     setIsOpen(true);

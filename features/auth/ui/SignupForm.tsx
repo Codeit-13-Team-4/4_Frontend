@@ -2,9 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { signup } from "@/features/auth/api/signup";
+import {
+  buildLoginPath,
+  getSafeRedirectPath,
+} from "@/features/auth/lib/authRedirect";
 import { ApiError } from "@/shared/lib/errors/ApiError";
 import {
   Button,
@@ -80,6 +84,8 @@ function validatePasswordConfirm(
 
 export default function SignupForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectPath = getSafeRedirectPath(searchParams.get("redirect"));
 
   const [form, setForm] = useState<SignupFormValues>({
     nickname: "",
@@ -152,7 +158,7 @@ export default function SignupForm() {
         password: form.password,
       });
 
-      router.replace("/login");
+      router.replace(buildLoginPath(redirectPath));
     } catch (error) {
       if (error instanceof ApiError && error.status === 409) {
         setServerFieldErrors({
@@ -354,7 +360,7 @@ export default function SignupForm() {
             <p className="flex justify-center gap-1 text-sm text-gray-50">
               이미 회원이신가요?
               <Link
-                href="/login"
+                href={buildLoginPath(redirectPath)}
                 className="text-mint-500 font-semibold underline"
               >
                 로그인
