@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
 
 export async function POST() {
   const cookieStore = await cookies();
@@ -33,7 +34,7 @@ export async function POST() {
 
   response.cookies.set("accessToken", "", {
     httpOnly: true,
-    secure: true,
+    secure: IS_PRODUCTION,
     sameSite: "lax",
     expires: new Date(0),
     path: "/",
@@ -41,7 +42,7 @@ export async function POST() {
 
   response.cookies.set("refreshToken", "", {
     httpOnly: true,
-    secure: true,
+    secure: IS_PRODUCTION,
     sameSite: "lax",
     expires: new Date(0),
     path: "/",
