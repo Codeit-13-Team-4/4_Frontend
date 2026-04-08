@@ -57,6 +57,11 @@ const SocialSignupForm = (props: SocialSignupFormProps) => {
       await queryClient.resetQueries({ queryKey: authKeys.me() });
       router.replace("/mypage");
     } catch (error) {
+      if (error instanceof Error && error.message === "SOCIAL_ACCOUNT_EXISTS") {
+        router.replace("/login?error=social_account_exists");
+        return;
+      }
+
       if (error instanceof Error) {
         setErrorMessage(error.message);
       } else {

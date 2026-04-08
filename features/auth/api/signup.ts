@@ -1,4 +1,5 @@
 import { fetchClient } from "@/shared/lib/client/fetchClient";
+import { ApiError } from "@/shared/lib/errors/ApiError";
 
 interface SocialSignupRequest {
   type?: string;
@@ -41,16 +42,25 @@ export async function socialSignup({
   token,
   nickname,
 }: SocialSignupRequest): Promise<SignupResponse> {
-  const response = await fetchClient("/api/auth/socialsignup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      type: type!.trim(),
-      token: token?.trim(),
-      nickname: nickname.trim(),
-    }),
-  });
-  return response.json();
+  try {
+    const response = await fetchClient("/api/auth/socialsignup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        type: type!.trim(),
+        token: token?.trim(),
+        nickname: nickname.trim(),
+      }),
+    });
+
+    return response.json();
+  } catch (error) {
+    if (error instanceof ApiError && error.code === "social_account_exists") {
+      throw new Error("SOCIAL_ACCOUNT_EXISTS");
+    }
+
+    throw error;
+  }
 }
