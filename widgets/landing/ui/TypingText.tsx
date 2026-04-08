@@ -10,7 +10,7 @@ interface TypingTextProps {
   cursorClassName?: string;
 }
 
-export default function TypingText({
+export function TypingText({
   text,
   speed = 120,
   className = "",
