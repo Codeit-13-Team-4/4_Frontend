@@ -80,7 +80,7 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
       </header>
       <div className="mb-7 flex flex-col">
         <section className="flex flex-col">
-          <div className="mb-2 flex items-center justify-between">
+          <div className="mb-2 flex items-center justify-between gap-1">
             <h4 className="line-clamp-1 text-[20px] text-gray-50 lg:line-clamp-2">
               {title}
             </h4>

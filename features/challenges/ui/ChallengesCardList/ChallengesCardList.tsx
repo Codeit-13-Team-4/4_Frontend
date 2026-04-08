@@ -56,7 +56,6 @@ export function ChallengesCardList({
       {cardData?.map((item) => {
         return <ChallengesCard data={item} key={item.id} />;
       })}
-
       {isFetchingNextPage &&
         Array.from({ length: 3 }).map((_, i) => (
           <ChallengesCardSkeleton key={i} />

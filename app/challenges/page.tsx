@@ -1,3 +1,4 @@
+import { prefetchChallengesList } from "@/features/challenges/api/prefetchChallengesList";
 import { ParticipationType } from "@/features/challenges/model";
 import {
   ChallengesCardList,
@@ -6,6 +7,7 @@ import {
   ChallengesSearchInput,
   ChallengesSortDropdown,
 } from "@/features/challenges/ui";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 export default async function ChallengesPage({
   searchParams,
@@ -23,38 +25,42 @@ export default async function ChallengesPage({
     sort: typeof params.sort === "string" ? params.sort : undefined,
   };
 
+  const queryClient = await prefetchChallengesList(filters);
+
   return (
-    <main className="flex flex-col pt-12">
-      <div className="mb-6 flex flex-col md:justify-between lg:flex-row lg:items-center">
-        <div>
-          <h4 className="text-[18px] font-semibold text-gray-50 md:text-[30px]">
-            챌린지
-          </h4>
-          <p className="text-[14px] font-medium text-[#BDBDBD] md:text-[20px]">
-            목표를 설정하고 함께 도전하며 성장해요
-          </p>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <main className="flex flex-col pt-12">
+        <div className="mb-6 flex flex-col md:justify-between lg:flex-row lg:items-center">
+          <div>
+            <h4 className="text-[18px] font-semibold text-gray-50 md:text-[30px]">
+              챌린지
+            </h4>
+            <p className="text-[14px] font-medium text-[#BDBDBD] md:text-[20px]">
+              목표를 설정하고 함께 도전하며 성장해요
+            </p>
+          </div>
+
+          <div className="mt-7 lg:mt-0">
+            <ChallengesSearchInput />
+          </div>
+        </div>
+        <div className="mb-10 hidden justify-end font-semibold md:visible md:flex">
+          <ChallengesCreateButton />
+        </div>
+        <div className="md:hidden">
+          <ChallengesCreateButton circle />
         </div>
 
-        <div className="mt-7 lg:mt-0">
-          <ChallengesSearchInput />
+        <div className="flex flex-col items-end md:flex-row md:items-center md:justify-between">
+          <ChallengesFilter />
+          <div className="mr-5 mb-4 flex items-center md:mb-0">
+            <ChallengesSortDropdown />
+          </div>
         </div>
-      </div>
-      <div className="mb-10 hidden justify-end font-semibold md:visible md:flex">
-        <ChallengesCreateButton />
-      </div>
-      <div className="md:hidden">
-        <ChallengesCreateButton circle />
-      </div>
 
-      <div className="flex flex-col items-end md:flex-row md:items-center md:justify-between">
-        <ChallengesFilter />
-        <div className="mr-5 mb-4 flex items-center md:mb-0">
-          <ChallengesSortDropdown />
-        </div>
-      </div>
-
-      <ChallengesCardList filters={filters} />
-      <div className="pointer-events-none fixed bottom-0 z-50 h-30 w-full bg-linear-to-b from-gray-900/0 to-gray-900" />
-    </main>
+        <ChallengesCardList filters={filters} />
+        <div className="pointer-events-none fixed bottom-0 z-50 h-30 w-full bg-linear-to-b from-gray-900/0 to-gray-900" />
+      </main>
+    </HydrationBoundary>
   );
 }
