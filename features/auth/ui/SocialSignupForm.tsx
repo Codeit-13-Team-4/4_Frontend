@@ -1,10 +1,12 @@
 "use client";
 import { Button, FieldError, FieldGroup } from "@/shared/ui";
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import NicknameInput from "./NicknameInput";
 import { getRandomName } from "@/shared/utils/randomName/randomName";
 import { useRouter } from "next/navigation";
 import { socialSignup } from "@/features/auth/api/signup";
+import { authKeys } from "@/features/auth/model/auth.queryKey";
 import EmailInput from "./EmailInput";
 
 interface SocialSignupFormProps {
@@ -20,6 +22,7 @@ export interface SocialSignupFormValues extends SocialSignupFormProps {
 const SocialSignupForm = (props: SocialSignupFormProps) => {
   const { type, email, token } = props;
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const [form, setForm] = useState<SocialSignupFormValues>({
     type: type,
@@ -51,6 +54,7 @@ const SocialSignupForm = (props: SocialSignupFormProps) => {
         nickname: form.nickname,
       });
 
+      await queryClient.resetQueries({ queryKey: authKeys.me() });
       router.replace("/mypage");
     } catch (error) {
       if (error instanceof Error) {
@@ -98,6 +102,7 @@ const SocialSignupForm = (props: SocialSignupFormProps) => {
           >
             {isPending ? "회원가입 중..." : "회원가입"}
           </Button>
+          {/* //버튼 누르기 전에 가입된 이메일인지 확인 */}
         </div>
       </form>
     </div>
