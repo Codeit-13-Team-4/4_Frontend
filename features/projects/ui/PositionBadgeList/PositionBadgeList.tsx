@@ -1,18 +1,20 @@
 import { PositionType } from "@/features/projects/model";
-import PositionBadge from "./PositionBadge";
+import { POSITION_LABELS } from "@/features/projectsDetail/model/projects.constants";
 
 export function PositionBadgeList({
   positions,
 }: {
   positions: PositionType[];
 }) {
+  const maxVisible = 6;
+  const visiblePositions = positions.slice(0, maxVisible);
+  const remaining = positions.length - maxVisible;
   return (
-    <div className="flex flex-wrap gap-2">
-      {positions.map((position, index) => {
-        return (
-          <PositionBadge position={position} key={`${position}-${index}`} />
-        );
+    <ul className="flex flex-wrap items-center gap-3">
+      {visiblePositions.map((position, index) => {
+        return <li key={index}>{POSITION_LABELS[position]}</li>;
       })}
-    </div>
+      {remaining > 0 && <span className="text-gray-400">+{remaining}</span>}
+    </ul>
   );
 }

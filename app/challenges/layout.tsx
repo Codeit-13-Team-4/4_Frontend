@@ -6,7 +6,7 @@ export default function ChallengesLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mx-auto min-h-screen w-full max-w-7xl flex-1">
+    <div className="mx-auto w-full max-w-7xl flex-1">
       <ToastContainer />
       <main className="px-4">{children}</main>
     </div>
