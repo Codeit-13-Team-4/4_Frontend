@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import CommunityCard from "@/widgets/landing/ui/CommunityCard";
+import { CommunityCard } from "@/widgets/landing/ui";
 
 const leftCards = [
   {
@@ -101,7 +101,7 @@ function AnimatedColumn({ cards, direction, play }: AnimatedColumnProps) {
   );
 }
 
-export default function FourthSection() {
+export function FourthSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [play, setPlay] = useState(false);
 
@@ -123,17 +123,14 @@ export default function FourthSection() {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="overflow-hidden bg-gray-900 px-5 py-20 text-white md:px-10 md:py-28 lg:px-16"
-    >
+    <section ref={sectionRef} className="overflow-hidden bg-gray-900 px-5">
       <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[minmax(280px,420px)_1fr] lg:gap-16">
         <div className="flex max-w-md flex-col gap-7">
           <p className="text-mint-500 text-lg font-semibold">
             {"// COMMUNITY"}
           </p>
 
-          <h2 className="text-2xl leading-tight font-bold md:text-5xl">
+          <h2 className="text-2xl leading-tight font-bold text-gray-50 md:text-5xl">
             미리 엿보는
             <br />
             모임의 분위기
@@ -147,8 +144,8 @@ export default function FourthSection() {
         </div>
 
         <div className="relative h-180 overflow-hidden md:h-190">
-          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-24 bg-linear-to-b from-[#071634] to-transparent" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-linear-to-t from-[#071634] to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-24 bg-linear-to-t from-gray-900/0 to-gray-900" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-linear-to-b from-gray-900/0 to-gray-900" />
 
           <div className="grid h-full grid-cols-1 gap-4 md:grid-cols-2">
             <AnimatedColumn cards={leftCards} direction="up" play={play} />
