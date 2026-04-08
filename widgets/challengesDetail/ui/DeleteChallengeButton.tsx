@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useDeleteChallengesDetail } from "@/features/challengesDetail/hooks/useDeleteChallengesDetail";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
 import { Button } from "@/shared/ui";
+import { Trash } from "@/shared/icons";
 
 interface DeleteChallengeButtonProps {
   challengeId: number;
@@ -39,7 +40,7 @@ export default function DeleteChallengeButton({
       size="sm"
       className="hover:bg-error/40 bg-error/20"
     >
-      <Image src="/icons/common/trash.svg" alt="삭제" width={18} height={18} />
+      <Trash width={18} height={18} />
       삭제
     </Button>
   );

@@ -52,7 +52,7 @@ export default function HomePage() {
               지금 바로 모임 탐색하기
             </GradientButton>
             <Image
-              src="/landing/first-section-down-icon.svg"
+              src="images/first-section-down-icon.svg"
               alt="down Image"
               width={41}
               height={41}
