@@ -68,18 +68,18 @@ export const PROFILE_LINK_ITEMS = [
 export const MY_ROLE_TABS = [
   { value: "MEMBER", label: "멤버" },
   { value: "HOST", label: "호스트" },
+  { value: "PENDING", label: "승인대기" },
 ] as const;
 
 export const MY_CHALLENGE_STATUS_FILTERS = [
   { value: "", label: "전체" },
-  { value: "RECRUITING", label: "승인 대기" },
-  { value: "RECRUITMENT_CLOSED", label: "모집중" },
+  { value: "RECRUITING", label: "모집중" },
   { value: "IN_PROGRESS", label: "진행중" },
   { value: "COMPLETED", label: "종료" },
 ] as const;
 
 export const MY_PROJECT_STATUS_FILTERS = [
   { value: "", label: "전체" },
-  { value: "RECRUITING", label: "승인 대기" },
-  { value: "RECRUITMENT_CLOSED", label: "모집중" },
+  { value: "recruiting", label: "모집중" },
+  { value: "recruitment_closed", label: "모집 완료" },
 ] as const;

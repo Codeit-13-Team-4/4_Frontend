@@ -14,6 +14,8 @@ export type VerificationFrequencyType =
   | "THREE_TIMES_A_WEEK"
   | "USER_INPUT";
 
+export type MyParticipationStatus = "NONE" | "PENDING" | "JOINED" | "REJECTED";
+
 export interface ChallengeCardProps {
   id: number;
   title: string;
@@ -37,6 +39,7 @@ export interface ChallengeCardProps {
   isMember: boolean;
   isHost: boolean;
   isLiked: boolean;
+  myParticipationStatus: MyParticipationStatus;
 }
 
 export type ChallengesSortType = keyof typeof CHALLENGES_SORT_LABEL;
@@ -54,4 +57,17 @@ export interface ChallengesAlertModalProps {
   open: boolean;
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
   id?: number;
+}
+
+export interface ChallengesPagination {
+  page: number;
+  limit: number;
+  totalCount: number;
+  totalPages: number;
+  hasNext: boolean;
+}
+
+export interface ChallengesResponse {
+  data: ChallengeCardProps[];
+  pagination: ChallengesPagination;
 }
