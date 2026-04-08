@@ -15,51 +15,61 @@ export default function SocialLoginButtons() {
   };
 
   return (
-    <div className="flex justify-center gap-3 sm:flex-col">
-      <button
-        type="button"
-        onClick={() => handleSocialLogin("google")}
-        aria-label="구글 로그인"
-        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-black sm:w-full sm:gap-2 sm:rounded-xl"
-      >
-        <Image
-          src="/auth/google.svg"
-          alt="구글 로그인"
-          width={20}
-          height={20}
-        />
-        <span className="hidden sm:inline">구글로 시작하기</span>
-      </button>
+    <div className="flex flex-col gap-3">
+      <div className="flex w-full items-center gap-3 sm:gap-4">
+        <div className="h-px min-w-0 flex-1 bg-slate-300" />
+        <span className="shrink-0 text-sm text-slate-500">
+          SNS 계정으로 로그인
+        </span>
+        <div className="h-px min-w-0 flex-1 bg-slate-300" />
+      </div>
 
-      <button
-        type="button"
-        onClick={() => handleSocialLogin("kakao")}
-        aria-label="카카오 로그인"
-        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-yellow-300 text-black sm:w-full sm:gap-2 sm:rounded-xl"
-      >
-        <Image
-          src="/auth/kakao.svg"
-          alt="카카오 로그인"
-          width={20}
-          height={20}
-        />
-        <span className="hidden sm:inline">카카오로 시작하기</span>
-      </button>
+      <div className="flex justify-center gap-3 sm:flex-col">
+        <button
+          type="button"
+          onClick={() => handleSocialLogin("google")}
+          aria-label="구글 로그인"
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-black sm:w-full sm:gap-2 sm:rounded-xl"
+        >
+          <Image
+            src="/auth/google.svg"
+            alt="구글 로그인"
+            width={20}
+            height={20}
+          />
+          <span className="hidden sm:inline">구글로 시작하기</span>
+        </button>
 
-      <button
-        type="button"
-        onClick={() => handleSocialLogin("github")}
-        aria-label="깃허브 로그인"
-        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-slate-800 sm:w-full sm:gap-2 sm:rounded-xl"
-      >
-        <Image
-          src="/auth/github.svg"
-          alt="깃허브 로그인"
-          width={20}
-          height={20}
-        />
-        <span className="hidden sm:inline">GitHub로 시작하기</span>
-      </button>
+        <button
+          type="button"
+          onClick={() => handleSocialLogin("kakao")}
+          aria-label="카카오 로그인"
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-yellow-300 text-black sm:w-full sm:gap-2 sm:rounded-xl"
+        >
+          <Image
+            src="/auth/kakao.svg"
+            alt="카카오 로그인"
+            width={20}
+            height={20}
+          />
+          <span className="hidden sm:inline">카카오로 시작하기</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => handleSocialLogin("github")}
+          aria-label="깃허브 로그인"
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-slate-800 sm:w-full sm:gap-2 sm:rounded-xl"
+        >
+          <Image
+            src="/auth/github.svg"
+            alt="깃허브 로그인"
+            width={20}
+            height={20}
+          />
+          <span className="hidden sm:inline">GitHub로 시작하기</span>
+        </button>
+      </div>
     </div>
   );
 }
