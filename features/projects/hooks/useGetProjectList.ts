@@ -22,5 +22,6 @@ export const useGetProjectList = (filters: ProjectFilter = {}) => {
       const nextStart = allPages.length * PER_PAGE;
       return nextStart < lastPage.total ? nextStart : undefined;
     },
+    throwOnError: true,
   });
 };
