@@ -179,7 +179,7 @@ export default function SignupForm() {
     hasError ? "border border-error" : "";
 
   return (
-    <div className="my-15 flex w-full max-w-142 flex-col items-center gap-2 rounded-[40px] bg-gray-800 px-14 pt-12 pb-11">
+    <div className="m-4 flex w-full max-w-142 flex-col items-center gap-2 rounded-[40px] bg-gray-800 px-14 pt-12 pb-11 sm:m-16">
       <form
         onSubmit={handleSubmit}
         className="flex w-full max-w-114 flex-col gap-6"
@@ -194,7 +194,7 @@ export default function SignupForm() {
               닉네임
             </FieldLabel>
 
-            <div className="flex items-center gap-1">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-1">
               <Input
                 id="nickname"
                 name="nickname"
@@ -207,7 +207,7 @@ export default function SignupForm() {
               <button
                 type="button"
                 onClick={handleRandomNickname}
-                className="text-mint-500 flex shrink-0 items-center gap-1 text-sm"
+                className="text-mint-500 flex shrink-0 items-center gap-1 self-end text-sm sm:self-auto"
               >
                 <Image
                   src="/auth/randomIcon.svg"
@@ -341,25 +341,28 @@ export default function SignupForm() {
         {errorMessage && <FieldError>{errorMessage}</FieldError>}
 
         <div className="flex flex-col gap-10">
-          <Button
-            type="submit"
-            variant="primary"
-            disabled={isSubmitDisabled}
-            className="w-full"
-          >
-            {isPending ? "회원가입 중..." : "회원가입"}
-          </Button>
-          <SocialLoginButtons />
-
-          <p className="flex justify-center gap-1 text-sm text-gray-50">
-            이미 회원이신가요?
-            <Link
-              href="/login"
-              className="text-mint-500 font-semibold underline"
+          <div className="flex flex-col gap-2">
+            <Button
+              type="submit"
+              variant="primary"
+              disabled={isSubmitDisabled}
+              className="w-full"
             >
-              로그인
-            </Link>
-          </p>
+              {isPending ? "회원가입 중..." : "회원가입"}
+            </Button>
+
+            <p className="flex justify-center gap-1 text-sm text-gray-50">
+              이미 회원이신가요?
+              <Link
+                href="/login"
+                className="text-mint-500 font-semibold underline"
+              >
+                로그인
+              </Link>
+            </p>
+          </div>
+
+          <SocialLoginButtons />
         </div>
       </form>
     </div>
