@@ -65,6 +65,12 @@ export const PROFILE_LINK_ITEMS = [
   },
 ];
 
+export const MY_TAB_ITEMS = [
+  { value: "challenges", label: "챌린지" },
+  { value: "projects", label: "프로젝트" },
+  { value: "comments", label: "댓글 관리" },
+] as const;
+
 export const MY_ROLE_TABS = [
   { value: "MEMBER", label: "멤버" },
   { value: "HOST", label: "호스트" },
