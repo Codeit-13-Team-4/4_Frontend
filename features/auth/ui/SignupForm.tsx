@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { signup } from "@/features/auth/api/signup";
-import SocialLoginButtons from "@/features/auth/ui/SocialLoginButtons";
+import { ApiError } from "@/shared/lib/errors/ApiError";
 import {
   Button,
   Input,
@@ -15,12 +15,67 @@ import {
   FieldLabel,
 } from "@/shared/ui";
 import { getRandomName } from "@/shared/utils";
+import SocialLoginButtons from "./SocialLoginButtons";
 
 interface SignupFormValues {
   nickname: string;
   email: string;
   password: string;
   passwordConfirm: string;
+}
+
+interface SignupFieldErrors {
+  email: string | null;
+}
+
+function validateEmail(email: string, serverFieldError: string | null): string {
+  const trimmedEmail = email.trim();
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (trimmedEmail === "") {
+    return "이메일을 입력해주세요.";
+  }
+
+  if (!emailRegex.test(trimmedEmail)) {
+    return "이메일 주소를 올바르게 입력해주세요.";
+  }
+
+  return serverFieldError ?? "";
+}
+
+function validatePassword(password: string): string {
+  if (password === "") {
+    return "비밀번호를 입력해주세요.";
+  }
+
+  if (password.length < 8) {
+    return "비밀번호는 8자 이상이어야 합니다.";
+  }
+
+  if (password.length > 20) {
+    return "비밀번호는 20자 이하로 입력해주세요.";
+  }
+
+  if (/\s/.test(password)) {
+    return "비밀번호에 공백을 사용할 수 없습니다.";
+  }
+
+  return "";
+}
+
+function validatePasswordConfirm(
+  password: string,
+  passwordConfirm: string,
+): string {
+  if (passwordConfirm === "") {
+    return "비밀번호 확인을 입력해주세요.";
+  }
+
+  if (password !== passwordConfirm) {
+    return "비밀번호가 일치하지 않습니다.";
+  }
+
+  return "";
 }
 
 export default function SignupForm() {
@@ -32,42 +87,25 @@ export default function SignupForm() {
     password: "",
     passwordConfirm: "",
   });
-
   const [isPending, setIsPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [serverFieldErrors, setServerFieldErrors] = useState<SignupFieldErrors>(
+    {
+      email: null,
+    },
+  );
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailError = validateEmail(form.email, serverFieldErrors.email);
+  const passwordError = validatePassword(form.password);
+  const passwordConfirmError = validatePasswordConfirm(
+    form.password,
+    form.passwordConfirm,
+  );
 
-  const nicknameError =
-    form.nickname.trim() === ""
-      ? "닉네임을 입력해주세요."
-      : form.nickname.trim().length < 2 || form.nickname.trim().length > 10
-        ? "닉네임은 2자 이상, 10자 이하로 입력해주세요."
-        : "";
-
-  const emailError =
-    form.email.trim() === ""
-      ? "이메일을 입력해주세요."
-      : !emailRegex.test(form.email)
-        ? "올바른 이메일 형식을 입력해주세요."
-        : "";
-
-  const passwordError =
-    form.password.trim() === "" ? "비밀번호를 입력해주세요." : "";
-
-  const passwordConfirmError =
-    form.passwordConfirm.trim() === ""
-      ? "비밀번호를 입력해주세요."
-      : form.password !== form.passwordConfirm
-        ? "비밀번호가 일치하지 않습니다."
-        : "";
-
-  const isValid =
-    !nicknameError && !emailError && !passwordError && !passwordConfirmError;
-
+  const isValid = !emailError && !passwordError && !passwordConfirmError;
   const isSubmitDisabled = !isValid || isPending;
 
   const shouldShowError = (value: string) => isSubmitted || value.length > 0;
@@ -79,6 +117,12 @@ export default function SignupForm() {
       ...prev,
       [name]: value,
     }));
+
+    if (name === "email") {
+      setServerFieldErrors({
+        email: null,
+      });
+    }
 
     if (errorMessage) {
       setErrorMessage(null);
@@ -110,7 +154,18 @@ export default function SignupForm() {
 
       router.replace("/login");
     } catch (error) {
+      if (error instanceof ApiError && error.status === 409) {
+        setServerFieldErrors({
+          email: "이미 사용 중인 이메일입니다.",
+        });
+        setErrorMessage(null);
+        return;
+      }
+
       if (error instanceof Error) {
+        setServerFieldErrors({
+          email: null,
+        });
         setErrorMessage(error.message);
       } else {
         setErrorMessage("회원가입에 실패했습니다.");
@@ -147,9 +202,6 @@ export default function SignupForm() {
                 value={form.nickname}
                 onChange={handleInputChange}
                 placeholder="닉네임을 입력해주세요"
-                className={getInputClassName(
-                  shouldShowError(form.nickname) && !!nicknameError,
-                )}
               />
 
               <button
@@ -167,9 +219,7 @@ export default function SignupForm() {
               </button>
             </div>
 
-            <FieldError className="min-h-5">
-              {shouldShowError(form.nickname) ? nicknameError : ""}
-            </FieldError>
+            <div className="min-h-5" />
           </Field>
 
           <Field>
@@ -250,7 +300,7 @@ export default function SignupForm() {
                 type={showPasswordConfirm ? "text" : "password"}
                 value={form.passwordConfirm}
                 onChange={handleInputChange}
-                placeholder="비밀번호를 입력해주세요"
+                placeholder="비밀번호 확인을 입력해주세요"
                 className={getInputClassName(
                   shouldShowError(form.passwordConfirm) &&
                     !!passwordConfirmError,
@@ -299,7 +349,7 @@ export default function SignupForm() {
           >
             {isPending ? "회원가입 중..." : "회원가입"}
           </Button>
-          {/* <SocialLoginButtons /> */}
+          <SocialLoginButtons />
 
           <p className="flex justify-center gap-1 text-sm text-gray-50">
             이미 회원이신가요?
