@@ -3,6 +3,7 @@ import {
   updateChallengesDetail,
   type UpdateChallengesDetailParams,
 } from "@/features/challengesDetail/api/updateChallengesDetail";
+import { challengeKeys } from "@/features/challenges/model/challenges.queryKey";
 
 type UpdateVariables = Omit<UpdateChallengesDetailParams, "challengeId">;
 
@@ -15,11 +16,11 @@ export function useUpdateChallengesDetail(challengeId: number) {
     meta: { successMessage: "챌린지가 수정되었습니다." },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["challenges", challengeId],
+        queryKey: challengeKeys.detail(challengeId),
       });
 
       queryClient.invalidateQueries({
-        queryKey: ["challengesList"],
+        queryKey: challengeKeys.lists(),
       });
     },
   });
