@@ -13,6 +13,7 @@ import {
 } from "@/shared/ui";
 import { User } from "@/shared/types/user";
 import { UpdateProfileRequest } from "../model/edit.type";
+import { useOpenAlertModal } from "@/shared/store/AlertModal";
 import { useUpdateProfile } from "../hooks/useUpdateProfile";
 import ProfileImageEditor from "./ProfileImageEditor";
 import JobLabelSelector from "./JobLabelSelector";
@@ -26,12 +27,13 @@ interface Props {
 export default function ProfileEditForm({ userData }: Props) {
   const router = useRouter();
   const { mutate, isPending } = useUpdateProfile();
+  const openAlertModal = useOpenAlertModal();
 
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<UpdateProfileRequest>({
     defaultValues: {
       nickname: userData.nickname,
@@ -47,6 +49,24 @@ export default function ProfileEditForm({ userData }: Props) {
 
   const onSubmit = (data: UpdateProfileRequest) => {
     mutate(data);
+  };
+
+  const handleCancel = () => {
+    if (!isDirty) {
+      router.push("/mypage");
+      return;
+    }
+
+    openAlertModal({
+      title: "수정을 중단하시겠어요?",
+      description: "지금 나가면 수정 내용이 저장되지 않고 사라져요.",
+      negative: {
+        text: "나가기",
+        button: { type: "default", variant: "default" },
+      },
+      positive: { text: "이어서 수정" },
+      onNegative: () => router.push("/mypage"),
+    });
   };
 
   return (
@@ -135,7 +155,7 @@ export default function ProfileEditForm({ userData }: Props) {
         <Button
           type="button"
           variant="default"
-          onClick={() => router.push("/mypage")}
+          onClick={handleCancel}
           disabled={isPending}
           className="w-full md:w-auto md:px-12"
         >
