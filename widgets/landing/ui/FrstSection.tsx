@@ -13,7 +13,7 @@ export default function HomePage() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col bg-gray-900">
+    <main className="flex flex-col bg-gray-900">
       <div className="flex-1">
         <section className="relative flex overflow-hidden px-5 pt-24 pb-20 md:px-10 md:pt-32 md:pb-28 lg:px-16">
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(0,215,160,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,215,160,0.08)_1px,transparent_1px)] bg-size-[64px_64px]" />
@@ -56,6 +56,7 @@ export default function HomePage() {
               alt="down Image"
               width={41}
               height={41}
+              className="mt-30 animate-bounce"
             />
           </div>
         </section>
