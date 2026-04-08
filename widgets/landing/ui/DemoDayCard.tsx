@@ -1,8 +1,8 @@
 "use client";
 
 import { DeadlineBadge, GradientButton, StatusBadge } from "@/shared/ui";
-import Image from "next/image";
 import { ProjectBadge } from "@/features/projects/ui";
+import { CommentIcon, Eyeopen } from "@/shared/icons";
 
 export interface DemoProjectCardData {
   id: number;
@@ -120,22 +120,13 @@ export default function DemoProjectCard({
       <footer className="mt-auto flex items-center justify-between">
         <div className="flex gap-6">
           <div className="flex items-center gap-1.5">
-            <Image
-              src="/icons/common/visibility_on-icon.svg"
-              alt=""
-              width={24}
-              height={24}
-            />
+            <Eyeopen width={24} height={24} />
+
             <span className="text-[14px] text-gray-400">{viewCount}</span>
           </div>
 
           <div className="flex items-center gap-1.5">
-            <Image
-              src="/icons/common/comment-icon.svg"
-              alt=""
-              width={24}
-              height={24}
-            />
+            <CommentIcon width={24} height={24} />
             <span className="text-[14px] text-gray-400">{commentCount}</span>
           </div>
         </div>

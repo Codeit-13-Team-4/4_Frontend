@@ -9,6 +9,7 @@ import { EditProjectModal } from "@/features/projectsDetail/ui/EditProjectModal/
 import { ApplyModal } from "@/features/projectsDetail/ui/ApplyModal/ApplyModal";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Eyeopen } from "@/shared/icons";
 
 interface ProjectDetailFooterProps {
   project: ProjectDetail;
@@ -44,12 +45,7 @@ export default function ProjectDetailFooter({
   return (
     <div className="flex flex-col gap-4 pt-6 lg:flex-row lg:items-center lg:justify-between">
       <div className="flex items-center gap-1.5 text-lg text-gray-500">
-        <Image
-          src="/projectDetail/eyes.svg"
-          alt="조회수"
-          width={22}
-          height={16}
-        />
+        <Eyeopen width={22} height={22} className="text-gray-400" />
         <span>{project.viewCount}</span>
       </div>
       {isHost ? (

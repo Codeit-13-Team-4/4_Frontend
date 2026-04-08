@@ -15,6 +15,7 @@ import { useUpdateProjectsDetailComment } from "@/features/projectsDetail/hooks/
 import { useDeleteProjectsDetailComment } from "@/features/projectsDetail/hooks/useDeleteProjectsDetailComment";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
 import type { Comment } from "@/features/projectsDetail/types/comment";
+import { AvatarIcon, Meetballs } from "@/shared/icons";
 
 interface CommentItemProps {
   comment: Comment;
@@ -68,12 +69,7 @@ export default function CommentItem({ comment, projectId }: CommentItemProps) {
           alt={comment.user.nickname}
         />
         <AvatarFallback delayMs={0}>
-          <Image
-            src="/common/avatar/default-avatar-sm.svg"
-            alt="기본 아바타"
-            width={24}
-            height={24}
-          />
+          <AvatarIcon width={24} height={24} className="text-gray-800" />
         </AvatarFallback>
       </Avatar>
 
@@ -95,12 +91,7 @@ export default function CommentItem({ comment, projectId }: CommentItemProps) {
                   aria-label="댓글 메뉴"
                   className="flex h-6 w-6 items-center justify-center rounded"
                 >
-                  <Image
-                    src="/projectDetail/meetballs.svg"
-                    alt="댓글 메뉴"
-                    width={24}
-                    height={24}
-                  />
+                  <Meetballs width={24} height={24} className="text-gray-400" />
                 </button>
               </Dropdown.Trigger>
               <Dropdown.Content

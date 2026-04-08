@@ -2,9 +2,9 @@
 
 import { Avatar, AvatarFallback, AvatarImage, Dropdown } from "@/shared/ui";
 import { User } from "@/shared/types/user";
-import Image from "next/image";
 import Link from "next/link";
 import { useLogout } from "@/features/auth/hooks/queries/useLogout";
+import { AvatarIcon } from "@/shared/icons";
 
 interface UserProfileMenuProps {
   userData: User;
@@ -25,12 +25,7 @@ export default function UserProfileMenu({ userData }: UserProfileMenuProps) {
             alt={`${userData.nickname} 프로필 이미지`}
           />
           <AvatarFallback delayMs={0}>
-            <Image
-              src="/common/avatar/default-avatar-md.svg"
-              alt="기본 아바타"
-              width={44}
-              height={44}
-            />
+            <AvatarIcon width={44} height={44} className="text-gray-800" />
           </AvatarFallback>
         </Avatar>
       </Dropdown.Trigger>
@@ -47,12 +42,7 @@ export default function UserProfileMenu({ userData }: UserProfileMenuProps) {
                 alt={`${userData.nickname} 프로필 이미지`}
               />
               <AvatarFallback delayMs={0}>
-                <Image
-                  src="/common/avatar/default-avatar-md.svg"
-                  alt="기본 아바타"
-                  width={56}
-                  height={56}
-                />
+                <AvatarIcon width={56} height={56} className="text-gray-800" />
               </AvatarFallback>
             </Avatar>
 
