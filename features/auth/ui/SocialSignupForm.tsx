@@ -4,9 +4,13 @@ import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import NicknameInput from "./NicknameInput";
 import { getRandomName } from "@/shared/utils/randomName/randomName";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { socialSignup } from "@/features/auth/api/signup";
 import { authKeys } from "@/features/auth/model/auth.queryKey";
+import {
+  buildLoginPath,
+  getSafeRedirectPath,
+} from "@/features/auth/lib/authRedirect";
 import EmailInput from "./EmailInput";
 
 interface SocialSignupFormProps {
@@ -22,7 +26,9 @@ export interface SocialSignupFormValues extends SocialSignupFormProps {
 const SocialSignupForm = (props: SocialSignupFormProps) => {
   const { type, email, token } = props;
   const router = useRouter();
+  const searchParams = useSearchParams();
   const queryClient = useQueryClient();
+  const redirectPath = getSafeRedirectPath(searchParams.get("redirect"));
 
   const [form, setForm] = useState<SocialSignupFormValues>({
     type: type,
@@ -55,10 +61,12 @@ const SocialSignupForm = (props: SocialSignupFormProps) => {
       });
 
       await queryClient.resetQueries({ queryKey: authKeys.me() });
-      router.replace("/mypage");
+      router.replace(redirectPath ?? "/mypage");
     } catch (error) {
       if (error instanceof Error && error.message === "SOCIAL_ACCOUNT_EXISTS") {
-        router.replace("/login?error=social_account_exists");
+        router.replace(
+          buildLoginPath(redirectPath, { error: "social_account_exists" }),
+        );
         return;
       }
 

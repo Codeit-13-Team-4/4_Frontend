@@ -2,10 +2,14 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import {
+  buildCurrentPath,
+  buildLoginPath,
+} from "@/features/auth/lib/authRedirect";
 import { GradientButton, Button } from "@/shared/ui";
 import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { ChallengesDetail } from "@/features/challengesDetail/types/challengesDetail";
 import { EditChallengeModal } from "@/features/challengesDetail/ui/EditChallengeModal/EditChallengeModal";
 import { ApplyChallengeModal } from "@/features/challengesDetail/ui/ApplyChallengeModal/ApplyChallengeModal";
@@ -22,6 +26,9 @@ export default function ChallengeDetailFooter({
   const { data: userData } = useUserData();
   const openAlertModal = useOpenAlertModal();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const loginPath = buildLoginPath(buildCurrentPath(pathname, searchParams));
 
   const handleJoinClick = () => {
     if (!userData) {
@@ -33,7 +40,7 @@ export default function ChallengeDetailFooter({
           button: { type: "default", variant: "primary" },
         },
         negative: { text: "취소" },
-        onPositive: () => router.push("/login"),
+        onPositive: () => router.push(loginPath),
       });
       return;
     }

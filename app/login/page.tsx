@@ -1,13 +1,22 @@
 import { getMeServer } from "@/features/auth/api/getMeServer";
+import { getSafeRedirectPath } from "@/features/auth/lib/authRedirect";
 import LoginForm from "@/features/auth/ui/LoginForm";
 import LoginHero from "@/features/auth/ui/LoginHero";
 import { redirect } from "next/navigation";
 
-export default async function LoginPage() {
+interface LoginPageProps {
+  searchParams: Promise<{
+    redirect?: string;
+  }>;
+}
+
+export default async function LoginPage({ searchParams }: LoginPageProps) {
   const user = await getMeServer();
+  const params = await searchParams;
+  const redirectPath = getSafeRedirectPath(params.redirect);
 
   if (user) {
-    redirect("/mypage");
+    redirect(redirectPath ?? "/mypage");
   }
 
   return (

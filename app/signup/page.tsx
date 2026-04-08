@@ -1,4 +1,5 @@
 import { getMeServer } from "@/features/auth/api/getMeServer";
+import { getSafeRedirectPath } from "@/features/auth/lib/authRedirect";
 import SignupForm from "@/features/auth/ui/SignupForm";
 import SocialSignupForm from "@/features/auth/ui/SocialSignupForm";
 import { type SocialType } from "@/features/auth/api/socialLogin";
@@ -10,6 +11,7 @@ interface SignupPageProps {
     type?: string;
     email?: string;
     name?: string;
+    redirect?: string;
   }>;
 }
 
@@ -19,12 +21,12 @@ function isValidSocialType(value: string): value is SocialType {
 
 export default async function SignupPage({ searchParams }: SignupPageProps) {
   const user = await getMeServer();
+  const params = await searchParams;
+  const redirectPath = getSafeRedirectPath(params.redirect);
 
   if (user) {
-    redirect("/mypage");
+    redirect(redirectPath ?? "/mypage");
   }
-
-  const params = await searchParams;
 
   const token = params.token;
   const type = params.type;
