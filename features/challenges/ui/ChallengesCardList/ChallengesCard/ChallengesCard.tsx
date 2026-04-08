@@ -6,7 +6,6 @@ import {
   Progress,
   StatusBadge,
 } from "@/shared/ui";
-import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUserData } from "@/features/auth/hooks/queries/useUserData";
@@ -21,6 +20,7 @@ import {
 } from "@/features/challenges/ui";
 import { useToggleChallengeLike } from "@/features/challengesDetail/hooks/useToggleChallengeLike";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
+import { CommentIcon, Eyeopen } from "@/shared/icons";
 
 export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
   const {
@@ -151,21 +151,11 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
       <footer className="mt-auto flex justify-between">
         <div className="flex gap-6">
           <div className="flex items-center gap-1.25">
-            <Image
-              src="/icons/common/visibility_on-icon.svg"
-              alt=""
-              width={24}
-              height={24}
-            />
+            <Eyeopen width={24} height={24} className="text-gray-400" />
             <span className="text-[14px] text-gray-400">{viewCount}</span>
           </div>
           <div className="flex items-center gap-1.25">
-            <Image
-              src="/icons/common/comment-icon.svg"
-              alt=""
-              width={24}
-              height={24}
-            />
+            <CommentIcon width={24} height={24} className="text-gray-400" />
             <span className="text-[14px] text-gray-400">{commentCount}</span>
           </div>
         </div>

@@ -2,6 +2,7 @@ import type { ProjectDetail } from "@/features/projectsDetail/types/projectsDeta
 import { formatDate } from "@/shared/utils";
 import { ScrollArea } from "@/shared/ui/ScrollArea/ScrollArea";
 import Image from "next/image";
+import { CalendarIcon, Clock } from "@/shared/icons";
 
 interface ProjectDetailLeftPanelProps {
   project: ProjectDetail;
@@ -30,12 +31,7 @@ export default function ProjectDetailLeftPanel({
       <div className="flex flex-col gap-3">
         <div className="flex items-center gap-3">
           <div className="flex shrink-0 items-center gap-1.5 text-sm text-gray-500 lg:text-lg">
-            <Image
-              src="/projectDetail/clock.svg"
-              alt="모집 마감"
-              width={18}
-              height={18}
-            />
+            <Clock width={18} height={18} className="text-gray-600" />
             <span>모집 마감</span>
           </div>
           <div className="flex items-center gap-2">
@@ -47,12 +43,7 @@ export default function ProjectDetailLeftPanel({
 
         <div className="flex items-center gap-3">
           <div className="flex shrink-0 items-center gap-1.5 text-sm text-gray-500 lg:text-lg">
-            <Image
-              src="/projectDetail/calendar.svg"
-              alt="진행 기간"
-              width={18}
-              height={18}
-            />
+            <CalendarIcon width={18} height={18} className="text-gray-600" />
             <span>진행 기간</span>
           </div>
           <span className="text-sm text-gray-400 lg:text-lg">

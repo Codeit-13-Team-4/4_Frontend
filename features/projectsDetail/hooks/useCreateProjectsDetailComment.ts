@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createProjectsDetailComment } from "@/features/projectsDetail/api/createProjectsDetailComment";
+import { projectKeys } from "@/features/projects/model/projects.queryKey";
 
 export function useCreateProjectsDetailComment(projectId: number) {
   const queryClient = useQueryClient();
@@ -10,7 +11,7 @@ export function useCreateProjectsDetailComment(projectId: number) {
     meta: { successMessage: "댓글이 작성되었습니다." },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["projects", "comments", projectId],
+        queryKey: projectKeys.comments(projectId),
       });
     },
   });

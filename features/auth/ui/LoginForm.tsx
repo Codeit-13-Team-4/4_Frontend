@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { login } from "@/features/auth/api/login";
 import { useQueryClient } from "@tanstack/react-query";
+import { authKeys } from "@/features/auth/model/auth.queryKey";
 import SocialLoginButtons from "@/features/auth/ui/SocialLoginButtons";
 import {
   Button,
@@ -15,6 +15,7 @@ import {
   FieldLabel,
   Input,
 } from "@/shared/ui";
+import { Eyeopen, Eyeclose } from "@/shared/icons";
 
 interface LoginFormValues {
   email: string;
@@ -85,7 +86,7 @@ export default function LoginForm() {
     try {
       await login({ email: form.email, password: form.password });
 
-      await queryClient.resetQueries({ queryKey: ["auth", "me"] });
+      await queryClient.resetQueries({ queryKey: authKeys.me() });
       router.replace("/");
     } catch (error) {
       if (error instanceof Error) {
@@ -153,14 +154,11 @@ export default function LoginForm() {
                 className="absolute top-1/2 right-4 -translate-y-1/2"
                 aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
               >
-                <Image
-                  src={
-                    showPassword ? "/auth/eyeopen.svg" : "/auth/eyeclose.svg"
-                  }
-                  alt={showPassword ? "비밀번호 보이기" : "비밀번호 숨기기"}
-                  width={24}
-                  height={24}
-                />
+                {showPassword ? (
+                  <Eyeopen width={24} height={24} className="text-gray-400" />
+                ) : (
+                  <Eyeclose width={24} height={24} className="text-gray-400" />
+                )}
               </button>
             </div>
 

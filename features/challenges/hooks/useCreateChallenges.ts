@@ -3,6 +3,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createChallengesProject } from "../api/createChallenges";
 import { ChallengeCardProps } from "../model";
+import { challengeKeys } from "@/features/challenges/model/challenges.queryKey";
 
 export const useCreateChallenges = (
   onSuccess: (data: ChallengeCardProps) => void,
@@ -12,7 +13,7 @@ export const useCreateChallenges = (
     mutationFn: createChallengesProject,
     meta: { successMessage: "챌린지 생성에 성공했습니다." },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["challengesList"] });
+      queryClient.invalidateQueries({ queryKey: challengeKeys.lists() });
       onSuccess(data.data);
     },
   });

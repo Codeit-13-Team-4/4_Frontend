@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createChallengesDetailComment } from "@/features/challengesDetail/api/createChallengesDetailComment";
+import { challengeKeys } from "@/features/challenges/model/challenges.queryKey";
 
 export function useCreateChallengesDetailComment(challengeId: number) {
   const queryClient = useQueryClient();
@@ -10,7 +11,7 @@ export function useCreateChallengesDetailComment(challengeId: number) {
     meta: { successMessage: "댓글이 작성되었습니다." },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["challenges", "comments", challengeId],
+        queryKey: challengeKeys.comments(challengeId),
       });
     },
   });

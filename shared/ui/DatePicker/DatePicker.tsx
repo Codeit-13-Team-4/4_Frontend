@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { format } from "date-fns";
-import Image from "next/image";
 import { type DateRange } from "react-day-picker";
 import { cn } from "@/shared/utils";
 import { Calendar } from "@/shared/ui/Calendar/Calendar";
@@ -12,6 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/shared/ui/Popover/Popover";
+import { CalendarIcon } from "@/shared/icons";
 
 const triggerBase =
   "flex h-12 w-full cursor-pointer items-center gap-2 rounded-xl border border-[#334155] bg-gray-800 px-3 text-base outline-none py-3";
@@ -54,13 +54,8 @@ function SingleDatePicker({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <button className={cn(triggerBase, className)}>
-          <Image
-            src="/common/icon/calendar.svg"
-            alt="달력"
-            width={16}
-            height={16}
-            className="shrink-0"
-          />
+          <CalendarIcon width={16} height={16} />
+
           <span className="text-gray-50">
             {value ? format(value, "yyyy-MM-dd") : placeholder}
           </span>
@@ -116,13 +111,7 @@ function RangeDatePicker({
               <span className="text-sm font-medium text-gray-400">시작일</span>
             )}
             <button type="button" className={triggerBase}>
-              <Image
-                src="/common/icon/calendar.svg"
-                alt="달력"
-                width={16}
-                height={16}
-                className="shrink-0"
-              />
+              <CalendarIcon width={16} height={16} />
               <span className="text-gray-50">
                 {value?.from ? format(value.from, "yyyy-MM-dd") : placeholder}
               </span>
@@ -133,13 +122,7 @@ function RangeDatePicker({
               <span className="text-sm font-medium text-gray-400">종료일</span>
             )}
             <button type="button" className={triggerBase}>
-              <Image
-                src="/common/icon/calendar.svg"
-                alt="달력"
-                width={16}
-                height={16}
-                className="shrink-0"
-              />
+              <CalendarIcon width={16} height={16} />
               <span className="text-gray-50">
                 {value?.to ? format(value.to, "yyyy-MM-dd") : placeholder}
               </span>

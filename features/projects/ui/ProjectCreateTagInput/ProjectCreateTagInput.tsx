@@ -3,6 +3,7 @@ import { useState } from "react";
 import { TECH_STACK, TechStackType } from "../../model";
 import { Input } from "@/shared/ui";
 import Image from "next/image";
+import { XIcon } from "@/shared/icons";
 
 interface ProjectCreateTagInputProps {
   input: string;
@@ -79,12 +80,7 @@ export function ProjectCreateTagInput({
                 onClick={() => handleTagDelete(item)}
                 className="cursor-pointer"
               >
-                <Image
-                  src="/icons/common/x-icon.svg"
-                  width={8}
-                  height={8}
-                  alt=""
-                />
+                <XIcon width={8} height={8} />
               </button>
             </li>
           );

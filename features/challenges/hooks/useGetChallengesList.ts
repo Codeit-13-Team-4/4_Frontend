@@ -3,12 +3,13 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getChallengesList } from "../api/getChallengesList";
 import { ChallengesFilter } from "@/features/challenges/model";
+import { challengeKeys } from "@/features/challenges/model/challenges.queryKey";
 
 const LIMIT = 10;
 
 export const useGetChallengesList = (filters: ChallengesFilter = {}) => {
   return useInfiniteQuery({
-    queryKey: ["challengesList", filters],
+    queryKey: challengeKeys.list(filters),
     queryFn: ({ pageParam }) => {
       return getChallengesList({
         ...filters,

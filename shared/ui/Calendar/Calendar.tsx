@@ -9,6 +9,7 @@ import {
 } from "react-day-picker";
 import { ko } from "date-fns/locale";
 import { cn } from "@/shared/utils";
+import { ArrowLeft, ArrowRight } from "@/shared/icons";
 
 function Calendar({
   className,
@@ -81,18 +82,16 @@ function Calendar({
       components={{
         Chevron: ({ orientation }) =>
           orientation === "left" ? (
-            <Image
-              src="/common/icon/arrow-left.svg"
-              alt="이전"
+            <ArrowLeft
               width={24}
               height={24}
+              className="cursor-pointer text-gray-200"
             />
           ) : (
-            <Image
-              src="/common/icon/arrow-right.svg"
-              alt="다음"
+            <ArrowRight
               width={24}
               height={24}
+              className="cursor-pointer text-gray-200"
             />
           ),
         DayButton: (dayButtonProps) => (

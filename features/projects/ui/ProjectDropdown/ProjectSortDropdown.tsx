@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { ProjectSortType, SORT_LABEL } from "@/features/projects/model";
 import { useRouter, useSearchParams } from "next/navigation";
+import { ChevronDownIcon, ChevronUpIcon } from "@/shared/icons";
 
 export function ProjectSortDropdown() {
   const [open, setOpen] = useState(false);
@@ -30,20 +31,14 @@ export function ProjectSortDropdown() {
       <Dropdown.Trigger>
         <button className="group flex items-center gap-1 text-[#94A3B8]">
           {SORT_LABEL[sort]}
-          <Image
-            src="/icons/common/chevron_down_sm-icon.svg"
+          <ChevronDownIcon
             width={17}
             height={17}
-            alt=""
-            aria-hidden="true"
             className="group-data-open:hidden"
           />
-          <Image
-            src="/icons/common/chevron_up_sm-icon.svg"
+          <ChevronUpIcon
             width={17}
             height={17}
-            alt=""
-            aria-hidden="true"
             className="hidden group-data-open:block"
           />
         </button>

@@ -5,7 +5,6 @@ import { User } from "@/shared/types/user";
 import { NAV_ITEMS } from "../constants/constants";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { getIsActive } from "../utils/getIsActive";
 import {
   Avatar,
@@ -14,6 +13,7 @@ import {
   SidebarOverlay,
 } from "@/shared/ui";
 import { useLogout } from "@/features/auth/hooks/queries/useLogout";
+import { AvatarIcon, XIcon } from "@/shared/icons";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -50,12 +50,7 @@ export default function Sidebar({ isOpen, onClose, userData }: SidebarProps) {
             aria-label="메뉴 닫기"
             className="cursor-pointer"
           >
-            <Image
-              src="/common/icons/close-md.svg"
-              alt="닫기"
-              width={20}
-              height={20}
-            />
+            <XIcon width={20} height={20} className="text-gray-400" />
           </button>
           {!userData && (
             <Link
@@ -67,7 +62,6 @@ export default function Sidebar({ isOpen, onClose, userData }: SidebarProps) {
             </Link>
           )}
         </div>
-
         {userData && (
           <>
             <div className="flex items-center gap-3 p-6 px-4">
@@ -77,11 +71,10 @@ export default function Sidebar({ isOpen, onClose, userData }: SidebarProps) {
                   alt={`${userData.nickname} 프로필 이미지`}
                 />
                 <AvatarFallback delayMs={0}>
-                  <Image
-                    src="/common/avatar/default-avatar-md.svg"
-                    alt="기본 아바타"
+                  <AvatarIcon
                     width={40}
                     height={40}
+                    className="text-gray-800"
                   />
                 </AvatarFallback>
               </Avatar>
@@ -97,7 +90,6 @@ export default function Sidebar({ isOpen, onClose, userData }: SidebarProps) {
             <div className="border-t border-gray-700" />
           </>
         )}
-
         <nav className="flex-1 px-4 pt-4">
           <ul className="flex flex-col">
             {NAV_ITEMS.map((item) => (
@@ -118,11 +110,10 @@ export default function Sidebar({ isOpen, onClose, userData }: SidebarProps) {
             ))}
           </ul>
         </nav>
-
         {userData && (
           <div className="flex flex-col border-t border-gray-700 py-4">
             <Link
-              href="/my"
+              href="/mypage"
               onClick={onClose}
               className="px-4 py-2.5 text-base font-medium text-gray-50 transition-colors"
             >
