@@ -23,5 +23,6 @@ export const useGetChallengesList = (filters: ChallengesFilter = {}) => {
 
       return hasNext ? page + 1 : undefined;
     },
+    throwOnError: true,
   });
 };
