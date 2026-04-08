@@ -32,7 +32,7 @@ function AlertModalGlobal() {
     <AlertModal open={store.isOpen}>
       <AlertModal.Content>
         <AlertModal.Header>
-          <AlertModal.Close onClick={handleCancelClick} />
+          <AlertModal.Close onClick={store.actions.close} />
           {(store.showCompleteAnimation ?? false) && (
             <CompleteAnimation className="mb-4 size-10 sm:size-12.5" />
           )}
