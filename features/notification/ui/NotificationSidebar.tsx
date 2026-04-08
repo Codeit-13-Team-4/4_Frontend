@@ -7,6 +7,7 @@ import { ScrollArea, SidebarOverlay } from "@/shared/ui";
 import { useInView } from "react-intersection-observer";
 import { useNotifications } from "@/features/notification/hooks/useNotifications";
 import { useReadAllNotification } from "@/features/notification/hooks/useReadAllNotification";
+import { Bell, XIcon } from "@/shared/icons";
 
 interface NotificationSidebarProps {
   isOpen: boolean;
@@ -53,12 +54,7 @@ export default function NotificationSidebar({
             aria-label="알림 닫기"
             className="cursor-pointer"
           >
-            <Image
-              src="/common/icons/close-md.svg"
-              alt="닫기"
-              width={20}
-              height={20}
-            />
+            <XIcon width={12} height={12} className="text-gray-400" />
           </button>
           <button
             className="text-base font-semibold text-slate-400 transition-colors hover:cursor-pointer hover:text-gray-200"
@@ -84,12 +80,7 @@ export default function NotificationSidebar({
                   )}
                 >
                   <div className="border-color-default flex size-6 shrink-0 items-center justify-center rounded-full border bg-gray-800">
-                    <Image
-                      src="/header/large-bell.svg"
-                      alt="알림 아이콘"
-                      width={13}
-                      height={13}
-                    />
+                    <Bell width={13} height={13} />
                   </div>
                   <div className="flex w-full min-w-0 flex-col gap-1">
                     <div className="flex items-center justify-between gap-2">

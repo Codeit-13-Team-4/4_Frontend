@@ -6,6 +6,7 @@ import {
   TechBadge,
 } from "@/features/projectsDetail/ui/ProjectDetailCard";
 import { CONTACT_METHOD } from "@/features/projectsDetail/model/projects.constants";
+import { Check, Link, People, Wand } from "@/shared/icons";
 
 interface ProjectDetailRightPanelProps {
   project: ProjectDetail;
@@ -18,12 +19,7 @@ export default function ProjectDetailRightPanel({
     <div className="flex flex-col gap-5">
       <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-center">
         <div className="flex shrink-0 items-center gap-1.5 text-sm text-gray-500 lg:text-lg">
-          <Image
-            src="/projectDetail/check.svg"
-            alt="모집 포지션"
-            width={18}
-            height={18}
-          />
+          <Check width={18} height={18} className="text-gray-600" />
           <span>모집 포지션</span>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -35,12 +31,7 @@ export default function ProjectDetailRightPanel({
 
       <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-start">
         <div className="flex shrink-0 items-center gap-1.5 text-sm text-gray-500 lg:text-lg">
-          <Image
-            src="/projectDetail/wand.svg"
-            alt="기술스택"
-            width={18}
-            height={18}
-          />
+          <Wand width={18} height={18} className="text-gray-600" />
           <span>기술스택</span>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -53,12 +44,7 @@ export default function ProjectDetailRightPanel({
       <Separator className="my-5 hidden bg-gray-700 lg:block" />
 
       <div className="flex items-center gap-1.5 text-sm text-gray-500 lg:text-lg">
-        <Image
-          src="/projectDetail/link.svg"
-          alt="연락 방법"
-          width={18}
-          height={18}
-        />
+        <Link width={18} height={18} className="text-gray-600" />
         <span>연락 방법</span>
         {project.contactMethod === "email" ? (
           <span className="text-sm text-gray-400 lg:text-lg">
@@ -79,12 +65,7 @@ export default function ProjectDetailRightPanel({
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-sm text-gray-500 lg:text-lg">
-            <Image
-              src="/projectDetail/people.svg"
-              alt="참여인원"
-              width={18}
-              height={18}
-            />
+            <People width={18} height={18} className="text-gray-600" />
             <span>참여인원</span>
           </div>
           <span className="text-sm text-gray-400 lg:text-lg">

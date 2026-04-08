@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-query";
 import { readAllNotifications } from "@/features/notification/api/readAllNotifications";
 import { NotificationResponse } from "@/shared/types/notification";
+import { notificationKeys } from "@/features/notification/model/notification.queryKey";
 
 export function useReadAllNotification() {
   const queryClient = useQueryClient();
@@ -12,14 +13,14 @@ export function useReadAllNotification() {
   return useMutation({
     mutationFn: readAllNotifications,
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ["notifications"] });
+      await queryClient.cancelQueries({ queryKey: notificationKeys.all });
 
       const previous = queryClient.getQueriesData<
         InfiniteData<NotificationResponse>
-      >({ queryKey: ["notifications"] });
+      >({ queryKey: notificationKeys.all });
 
       queryClient.setQueriesData<InfiniteData<NotificationResponse>>(
-        { queryKey: ["notifications"] },
+        { queryKey: notificationKeys.all },
         (old) => {
           if (!old) return old;
           return {
@@ -40,7 +41,7 @@ export function useReadAllNotification() {
       });
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      queryClient.invalidateQueries({ queryKey: notificationKeys.all });
     },
   });
 }
