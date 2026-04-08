@@ -175,7 +175,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex w-full max-w-142 flex-col items-center gap-2 rounded-[40px] bg-gray-800 px-14 pt-12 pb-11">
+    <div className="m-4 flex w-full max-w-142 flex-col items-center gap-2 rounded-[40px] bg-gray-800 px-14 pt-12 pb-11 sm:m-16">
       <form
         onSubmit={handleSubmit}
         className="flex w-full max-w-114 flex-col gap-6"

@@ -15,11 +15,12 @@ export default function SocialLoginButtons() {
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex justify-center gap-3 sm:flex-col">
       <button
         type="button"
         onClick={() => handleSocialLogin("google")}
-        className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white text-black"
+        aria-label="구글 로그인"
+        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-black sm:w-full sm:gap-2 sm:rounded-xl"
       >
         <Image
           src="/auth/google.svg"
@@ -27,13 +28,14 @@ export default function SocialLoginButtons() {
           width={20}
           height={20}
         />
-        <span>구글로 시작하기</span>
+        <span className="hidden sm:inline">구글로 시작하기</span>
       </button>
 
       <button
         type="button"
         onClick={() => handleSocialLogin("kakao")}
-        className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-yellow-300 text-black"
+        aria-label="카카오 로그인"
+        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-yellow-300 text-black sm:w-full sm:gap-2 sm:rounded-xl"
       >
         <Image
           src="/auth/kakao.svg"
@@ -41,13 +43,14 @@ export default function SocialLoginButtons() {
           width={20}
           height={20}
         />
-        <span>카카오로 시작하기</span>
+        <span className="hidden sm:inline">카카오로 시작하기</span>
       </button>
 
       <button
         type="button"
         onClick={() => handleSocialLogin("github")}
-        className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white text-slate-800"
+        aria-label="깃허브 로그인"
+        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-slate-800 sm:w-full sm:gap-2 sm:rounded-xl"
       >
         <Image
           src="/auth/github.svg"
@@ -55,7 +58,7 @@ export default function SocialLoginButtons() {
           width={20}
           height={20}
         />
-        <span>GitHub로 시작하기</span>
+        <span className="hidden sm:inline">GitHub로 시작하기</span>
       </button>
     </div>
   );
