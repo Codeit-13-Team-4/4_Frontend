@@ -1,6 +1,7 @@
 "use client";
 
-import Image from "next/image";
+import { Github, Google, Kakao } from "@/shared/icons";
+
 type SocialType = "google" | "kakao" | "github";
 
 const SOCIAL_LOGIN_URL: Record<SocialType, string> = {
@@ -21,12 +22,7 @@ export default function SocialLoginButtons() {
         onClick={() => handleSocialLogin("google")}
         className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white text-black"
       >
-        <Image
-          src="/auth/google.svg"
-          alt="구글 로그인"
-          width={20}
-          height={20}
-        />
+        <Google width={20} height={20} />
         <span>구글로 시작하기</span>
       </button>
 
@@ -35,12 +31,7 @@ export default function SocialLoginButtons() {
         onClick={() => handleSocialLogin("kakao")}
         className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-yellow-300 text-black"
       >
-        <Image
-          src="/auth/kakao.svg"
-          alt="카카오 로그인"
-          width={20}
-          height={20}
-        />
+        <Kakao width={20} height={20} />
         <span>카카오로 시작하기</span>
       </button>
 
@@ -49,12 +40,7 @@ export default function SocialLoginButtons() {
         onClick={() => handleSocialLogin("github")}
         className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white text-slate-800"
       >
-        <Image
-          src="/auth/github.svg"
-          alt="깃허브 로그인"
-          width={20}
-          height={20}
-        />
+        <Github width={20} height={20} />
         <span>GitHub로 시작하기</span>
       </button>
     </div>

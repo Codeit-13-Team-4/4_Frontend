@@ -3,13 +3,13 @@
 import { useState } from "react";
 import { cn } from "@/shared/utils";
 import Link from "next/link";
-import Image from "next/image";
 import NotificationDropdown from "@/features/notification/ui/NotificationDropdown";
 import NotificationSidebar from "@/features/notification/ui/NotificationSidebar";
 import { useNotifications } from "@/features/notification/hooks/useNotifications";
 import UserProfileMenu from "./UserProfileMenu";
 import Sidebar from "./Sidebar";
 import { useUserData } from "@/features/auth/hooks/queries/useUserData";
+import { Bell, BellActive, Menu } from "@/shared/icons";
 
 export default function UserArea() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -48,16 +48,11 @@ export default function UserArea() {
             className="hover:cursor-pointer"
             onClick={() => setIsNotificationOpen(true)}
           >
-            <Image
-              src={
-                hasUnread
-                  ? "/header/large-bell-active.svg"
-                  : "/header/large-bell.svg"
-              }
-              alt="알림"
-              width={24}
-              height={24}
-            />
+            {hasUnread ? (
+              <BellActive width={24} height={24} className="text-gray-400" />
+            ) : (
+              <Bell width={24} height={24} className="text-gray-400" />
+            )}
           </button>
         )}
         <button
@@ -65,7 +60,7 @@ export default function UserArea() {
           className="hover:cursor-pointer"
           onClick={() => setIsSidebarOpen(true)}
         >
-          <Image src="/header/menu.svg" alt="메뉴" width={32} height={32} />
+          <Menu width={32} height={32} className="text-gray-400" />
         </button>
       </div>
 
