@@ -1,17 +1,4 @@
-import { JobLabelType } from "@/shared/types/user";
-
-export const JOB_LABEL_MAP: Record<JobLabelType, string> = {
-  fe: "FE",
-  be: "BE",
-  pm: "PM",
-  devops: "DevOps",
-  marketer: "Marketer",
-  designer: "Designer",
-  android: "Android",
-  ios: "iOS",
-};
-
-export const TECH_STACK: Record<string, { label: string; icon: string }> = {
+export const TECH_STACK = {
   react: { label: "React", icon: "/tech/react-icon.svg" },
   figma: { label: "Figma", icon: "/tech/figma-icon.svg" },
   golang: { label: "Golang", icon: "/tech/golang-icon.svg" },
@@ -48,40 +35,6 @@ export const TECH_STACK: Record<string, { label: string; icon: string }> = {
   svelte: { label: "Svelte", icon: "/tech/svelte-icon.svg" },
   swift: { label: "Swift", icon: "/tech/swift-icon.svg" },
   nextjs: { label: "Next.js", icon: "/tech/nextjs-icon.svg" },
-};
+} as const;
 
-export const PROFILE_LINK_ITEMS = [
-  {
-    key: "githubLink" as const,
-    label: "Github",
-  },
-  {
-    key: "blogLink" as const,
-    label: "블로그",
-  },
-  {
-    key: "portfolioLink" as const,
-    label: "포트폴리오",
-  },
-];
-
-export const MY_ROLE_TABS = [
-  { value: "MEMBER", label: "멤버" },
-  { value: "HOST", label: "호스트" },
-] as const;
-
-export const MY_CHALLENGE_STATUS_FILTERS = [
-  { value: "", label: "전체" },
-  { value: "RECRUITING", label: "승인 대기" },
-  { value: "RECRUITMENT_CLOSED", label: "모집중" },
-  { value: "IN_PROGRESS", label: "진행중" },
-  { value: "COMPLETED", label: "종료" },
-] as const;
-
-export const MY_PROJECT_STATUS_FILTERS = [
-  { value: "", label: "전체" },
-  { value: "RECRUITING", label: "승인 대기" },
-  { value: "RECRUITMENT_CLOSED", label: "모집중" },
-  { value: "IN_PROGRESS", label: "진행중" },
-  { value: "COMPLETED", label: "종료" },
-];
+export type TechStackKey = keyof typeof TECH_STACK;
