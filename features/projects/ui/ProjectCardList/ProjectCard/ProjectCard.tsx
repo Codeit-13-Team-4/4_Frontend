@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import { useToggleProjectLike } from "@/features/projectsDetail/hooks/useToggleProjectLike";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
+import { CommentIcon, Eyeopen } from "@/shared/icons";
 
 export function ProjectCard({ data }: { data: ProjectCardProps }) {
   const {
@@ -120,21 +121,11 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
       <footer className="mt-auto flex justify-between">
         <div className="flex gap-6">
           <div className="flex items-center gap-1.25">
-            <Image
-              src="/icons/common/visibility_on-icon.svg"
-              alt=""
-              width={24}
-              height={24}
-            />
+            <Eyeopen width={24} height={24} className="text-gray-400" />
             <span className="text-[14px] text-gray-400">{viewCount}</span>
           </div>
           <div className="flex items-center gap-1.25">
-            <Image
-              src="/icons/common/comment-icon.svg"
-              alt=""
-              width={24}
-              height={24}
-            />
+            <CommentIcon width={24} height={24} className="text-gray-400" />
             <span className="text-[14px] text-gray-400">{commentCount}</span>
           </div>
         </div>

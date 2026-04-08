@@ -1,0 +1,22 @@
+import type { SVGProps } from "react";
+
+export function Fire(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 18 18"
+      {...props}
+    >
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+        d="M4.5 7.275a6 6 0 1 0 7.8-1.05Q12 9 9 9.75q2.25-4.5-1.5-9 0 3.75-3 6.525"
+      />
+    </svg>
+  );
+}
