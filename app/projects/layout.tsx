@@ -8,7 +8,7 @@ export default function ProjectLayout({
   return (
     <div className="mx-auto w-full max-w-7xl flex-1">
       <ToastContainer />
-      <main className="px-4 pt-12">{children}</main>
+      <main className="px-4">{children}</main>
     </div>
   );
 }
