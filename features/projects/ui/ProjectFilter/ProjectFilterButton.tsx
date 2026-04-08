@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ChevronDownIcon } from "@/shared/icons";
 
 type ProjectFilterButtonProps =
   React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -19,14 +19,7 @@ export function ProjectFilterButton({
     >
       {label}
 
-      <Image
-        src="/icons/common/chevron_down-icon.svg"
-        width={20}
-        height={20}
-        alt=""
-        aria-hidden="true"
-        className="h-5 w-5"
-      />
+      <ChevronDownIcon width={20} height={20} />
     </button>
   );
 }

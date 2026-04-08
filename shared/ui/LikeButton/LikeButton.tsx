@@ -1,5 +1,5 @@
+import { Heart, HeartActive } from "@/shared/icons";
 import { cn } from "@/shared/utils";
-import Image from "next/image";
 
 function LikeButton({
   liked,
@@ -15,22 +15,16 @@ function LikeButton({
       type="button"
       onClick={onToggle}
       className={cn(
-        "flex items-center justify-center rounded-full border p-2 transition-all duration-100 hover:cursor-pointer active:scale-90",
-        liked ? "border-mint-500" : "border-gray-700",
+        "flex items-center justify-center rounded-full p-2 transition-all duration-100 hover:cursor-pointer active:scale-90",
         className,
       )}
       {...props}
     >
-      <Image
-        src={
-          liked
-            ? "/common/icons/heart-active.svg"
-            : "/common/icons/heart-disable.svg"
-        }
-        alt={liked ? "좋아요 취소" : "좋아요"}
-        width={24}
-        height={24}
-      />
+      {liked ? (
+        <HeartActive width={40} height={40} />
+      ) : (
+        <Heart width={40} height={40} />
+      )}
     </button>
   );
 }

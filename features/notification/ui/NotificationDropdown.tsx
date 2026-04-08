@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { Dropdown, ScrollArea } from "@/shared/ui";
 import { cn } from "@/shared/utils";
 import { useInView } from "react-intersection-observer";
 import { useNotifications } from "@/features/notification/hooks/useNotifications";
 import { useReadAllNotification } from "@/features/notification/hooks/useReadAllNotification";
+import { Bell, BellActive } from "@/shared/icons";
 
 export default function NotificationDropdown() {
   const { data, refetch, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -33,16 +33,11 @@ export default function NotificationDropdown() {
     <Dropdown onOpenChange={handleOnOpenChange}>
       <Dropdown.Trigger asChild>
         <button aria-label="알림">
-          <Image
-            src={
-              hasUnread
-                ? "/header/large-bell-active.svg"
-                : "/header/large-bell.svg"
-            }
-            alt="알림"
-            width={24}
-            height={24}
-          />
+          {hasUnread ? (
+            <Bell width={24} height={24} className="text-gray-400" />
+          ) : (
+            <BellActive width={24} height={24} className="text-gray-400" />
+          )}
         </button>
       </Dropdown.Trigger>
       <Dropdown.Content
@@ -75,12 +70,7 @@ export default function NotificationDropdown() {
                   )}
                 >
                   <div className="flex size-8 h-6 w-6 shrink-0 items-center justify-center rounded-full border border-gray-700 bg-gray-800">
-                    <Image
-                      src="/header/large-bell.svg"
-                      alt="알림 아이콘"
-                      width={13}
-                      height={13}
-                    />
+                    <Bell width={13} height={13} />
                   </div>
                   <div className="flex w-full min-w-0 flex-col gap-1">
                     <div className="flex items-center justify-between gap-2">

@@ -6,7 +6,7 @@ export default function ChallengesDetailNotFound() {
   return (
     <div className="flex h-full min-h-[calc(100vh-64px)] w-full flex-col items-center justify-center gap-6">
       <Image
-        src="/common/icons/empty.svg"
+        src="/images/img_empty.png"
         alt="프로젝트 없음"
         width={121}
         height={72}

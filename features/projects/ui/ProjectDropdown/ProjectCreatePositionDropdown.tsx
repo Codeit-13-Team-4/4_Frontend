@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { POSITION_LABELS, PositionType } from "../../model";
 import { Dropdown } from "@/shared/ui";
-import Image from "next/image";
+import { ChevronDownIcon, ChevronUpIcon } from "@/shared/icons";
 
 export function ProjectCreatePositionDropdown({
   items,
@@ -24,20 +24,14 @@ export function ProjectCreatePositionDropdown({
       <Dropdown.Trigger>
         <button className="group flex w-full items-center justify-between gap-1 rounded-lg bg-gray-900 px-4 py-2.5 text-gray-50">
           포지션
-          <Image
-            src="/icons/common/chevron_down_sm-icon.svg"
+          <ChevronDownIcon
             width={17}
             height={17}
-            alt=""
-            aria-hidden="true"
             className="group-data-open:hidden"
           />
-          <Image
-            src="/icons/common/chevron_up_sm-icon.svg"
+          <ChevronUpIcon
             width={17}
             height={17}
-            alt=""
-            aria-hidden="true"
             className="hidden group-data-open:block"
           />
         </button>

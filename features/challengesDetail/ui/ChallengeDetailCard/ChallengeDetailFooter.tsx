@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { GradientButton, Button } from "@/shared/ui";
 import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
@@ -9,6 +8,7 @@ import { useRouter } from "next/navigation";
 import type { ChallengesDetail } from "@/features/challengesDetail/types/challengesDetail";
 import { EditChallengeModal } from "@/features/challengesDetail/ui/EditChallengeModal/EditChallengeModal";
 import { ApplyChallengeModal } from "@/features/challengesDetail/ui/ApplyChallengeModal/ApplyChallengeModal";
+import { Eyeopen } from "@/shared/icons";
 
 interface ChallengeDetailFooterProps {
   challenge: ChallengesDetail;
@@ -44,12 +44,7 @@ export default function ChallengeDetailFooter({
     <>
       <div className="flex flex-col gap-4 pt-6 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex items-center gap-1.5 text-lg text-gray-500">
-          <Image
-            src="/icons/common/eyes.svg"
-            alt="조회수"
-            width={22}
-            height={16}
-          />
+          <Eyeopen width={22} height={22} className="text-gray-400" />
           <span>{challenge.viewCount}</span>
         </div>
         {challenge.isHost ? (
