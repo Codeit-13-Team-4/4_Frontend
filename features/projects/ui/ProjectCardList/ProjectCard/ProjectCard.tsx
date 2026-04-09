@@ -3,7 +3,6 @@ import {
   buildCurrentPath,
   buildLoginPath,
 } from "@/features/auth/lib/authRedirect";
-import { useState } from "react";
 import { DeadlineBadge, LikeButton, StatusBadge } from "@/shared/ui";
 import {
   PositionBadgeList,
@@ -37,10 +36,6 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
   const searchParams = useSearchParams();
   const loginPath = buildLoginPath(buildCurrentPath(pathname, searchParams));
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [alertOpen, setAlertOpen] = useState<boolean>(false);
-  const [confirmAlertOpen, setConfirmAlertOpen] = useState<boolean>(false);
-
   const { data: userData } = useUserData();
   const { mutate: toggleLike } = useToggleProjectLike(id);
   const openAlertModal = useOpenAlertModal();
@@ -60,15 +55,6 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
       return;
     }
     toggleLike(liked);
-  };
-
-  const handleOpen = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!userData) {
-      router.push(loginPath);
-      return;
-    }
-    setIsOpen(true);
   };
 
   const handleCardClick = () => {
