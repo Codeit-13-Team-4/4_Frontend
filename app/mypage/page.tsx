@@ -1,7 +1,8 @@
 import { getMeServer } from "@/features/auth/api/getMeServer";
 import { buildLoginPath } from "@/features/auth/lib/authRedirect";
-import MyProfileSection from "@/widgets/mypage/ui/MyProfileSection";
 import { redirect } from "next/navigation";
+import MyListSection from "@/widgets/mypage/ui/MyListSection";
+import MyProfileSection from "@/widgets/mypage/ui/MyProfileSection";
 
 export default async function MyPage() {
   const userData = await getMeServer();
@@ -9,8 +10,9 @@ export default async function MyPage() {
   if (!userData) redirect(buildLoginPath("/mypage"));
 
   return (
-    <div>
+    <div className="flex flex-col gap-10 lg:gap-15">
       <MyProfileSection userData={userData} />
+      <MyListSection />
     </div>
   );
 }
