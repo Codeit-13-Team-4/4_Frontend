@@ -2,11 +2,7 @@
 
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import {
-  MyChallengesParams,
-  MyChallengeStatusType,
-  MyRoleType,
-} from "@/features/mypage/model/mypage.types";
+import { MyRoleType } from "@/features/mypage/model/mypage.types";
 import { useGetMyChallenges } from "@/features/mypage/hooks/useGetMyChallenges";
 import MyChallengeCard from "./MyChallengeCard";
 import MyChallengeCardSkeleton from "./MyChallengeCardSkeleton";
@@ -22,15 +18,8 @@ export default function MyChallengeList({
   role,
   status,
 }: MyChallengeListProps) {
-  const params: MyChallengesParams = {
-    ...(role === "MEMBER" && { isMember: true }),
-    ...(role === "HOST" && { isHost: true }),
-    ...(role === "PENDING" && { hasPendingApplication: true }),
-    ...(status && { status: status as MyChallengeStatusType }),
-  };
-
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useGetMyChallenges(params);
+    useGetMyChallenges(role, status);
 
   const { ref, inView } = useInView();
 
