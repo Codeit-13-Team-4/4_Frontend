@@ -4,7 +4,7 @@ import { MemberProgressBar } from "./MemberProgressBar";
 
 export function VerifyMemberSection() {
   return (
-    <section className="grid h-90 grid-cols-[0.8fr_1fr] gap-5">
+    <section className="grid gap-5 md:h-90 md:grid-cols-[0.8fr_1fr]">
       <div className="flex flex-col gap-5 rounded-[20px] bg-gray-800 p-5">
         <div className="flex flex-col items-center justify-center gap-4 pt-5">
           <AvatarIcon width={120} height={120} className="text-gray-800" />
