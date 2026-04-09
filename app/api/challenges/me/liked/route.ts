@@ -1,21 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ApiError } from "@/shared/lib/errors/ApiError";
 import { getLikedChallengeListServer } from "@/features/liked/api/getLikedChallengeList.server";
+import {
+  parseLikedSortParam,
+  parseNumberParam,
+} from "@/features/liked/api/likedRouteParsers";
 import type { LikedChallengeFilter } from "@/features/liked/model";
 import type { ParticipationType } from "@/features/challenges/model";
 
 const DEFAULT_START = 0;
 const DEFAULT_PER_PAGE = 10;
-
-function parseNumber(value: string | null, fallback: number) {
-  const parsed = Number(value);
-
-  if (Number.isNaN(parsed) || parsed < 0) {
-    return fallback;
-  }
-
-  return parsed;
-}
 
 function parseParticipationType(
   value: string | null,
@@ -27,27 +21,14 @@ function parseParticipationType(
   return undefined;
 }
 
-function parseLikedSort(value: string | null): LikedChallengeFilter["sort"] {
-  if (
-    value === "latest" ||
-    value === "popular" ||
-    value === "deadline" ||
-    value === "oldest"
-  ) {
-    return value;
-  }
-
-  return undefined;
-}
-
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
 
     const filters: LikedChallengeFilter = {
-      start: parseNumber(searchParams.get("start"), DEFAULT_START),
-      perPage: parseNumber(searchParams.get("perPage"), DEFAULT_PER_PAGE),
-      sort: parseLikedSort(searchParams.get("sort")),
+      start: parseNumberParam(searchParams.get("start"), DEFAULT_START),
+      perPage: parseNumberParam(searchParams.get("perPage"), DEFAULT_PER_PAGE),
+      sort: parseLikedSortParam(searchParams.get("sort")),
       status: searchParams.get("status") ?? undefined,
       participationType: parseParticipationType(
         searchParams.get("participationType"),
