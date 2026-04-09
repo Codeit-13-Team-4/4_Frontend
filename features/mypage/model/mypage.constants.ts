@@ -80,6 +80,7 @@ export const MY_ROLE_TABS = [
 export const MY_CHALLENGE_STATUS_FILTERS = [
   { value: "", label: "전체" },
   { value: "RECRUITING", label: "모집중" },
+  { value: "RECRUITMENT_CLOSED", label: "모집 종료" },
   { value: "IN_PROGRESS", label: "진행중" },
   { value: "COMPLETED", label: "종료" },
 ] as const;
