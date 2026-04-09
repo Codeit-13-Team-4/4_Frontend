@@ -1,54 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import DemoProjectCard, {
-  type DemoProjectCardData,
-} from "@/widgets/landing/ui/DemoDayCard";
-
-const demoProjects: DemoProjectCardData[] = [
-  {
-    id: 1,
-    title: "SaaS 폼빌더",
-    description:
-      "프로젝트 소개글입니다. 프로젝트 소개글입니다. 프로젝트 소개글입니다.",
-    projectType: "portfolio",
-    techStacks: ["React", "Figma", "Typescript", "MySQL", "Python", "Node.js"],
-    positions: ["프론트엔드", "백엔드", "디자이너"],
-    recruitEndDate: "2026-04-30",
-    viewCount: 124,
-    commentCount: 18,
-    status: "recruiting",
-    accent: "blue",
-  },
-  {
-    id: 2,
-    title: "사용자 맞춤 러닝 서비스",
-    description:
-      "프로젝트 소개글입니다. 프로젝트 소개글입니다. 프로젝트 소개글입니다.",
-    projectType: "portfolio",
-    techStacks: ["React", "Figma", "Typescript", "MySQL", "Python", "Node.js"],
-    positions: ["프론트엔드", "백엔드", "기획"],
-    recruitEndDate: "2026-05-01",
-    viewCount: 98,
-    commentCount: 11,
-    status: "recruiting",
-    accent: "red",
-  },
-  {
-    id: 3,
-    title: "AI 영상 제작 서비스",
-    description:
-      "프로젝트 소개글입니다. 프로젝트 소개글입니다. 프로젝트 소개글입니다.",
-    projectType: "portfolio",
-    techStacks: ["React", "Figma", "Typescript", "MySQL", "Python", "Node.js"],
-    positions: ["프론트엔드", "AI", "디자이너"],
-    recruitEndDate: "2026-04-29",
-    viewCount: 143,
-    commentCount: 23,
-    status: "recruiting",
-    accent: "purple",
-  },
-];
+import Image from "next/image";
 
 const DEMO_DAY_DATE = "2026-04-17T00:00:00+09:00";
 
@@ -89,19 +42,19 @@ function getTimeLeft(targetDate: string): TimeLeft {
 
 function CountdownCard({ value, label }: { value: string; label: string }) {
   return (
-    <div className="flex h-22 w-17 flex-col items-center justify-center rounded-[20px] border border-white/12 bg-[#12213f]/72 backdrop-blur-md md:h-29 md:w-23.5">
+    <div className="flex h-22 w-17 flex-col items-center justify-center rounded-3xl border border-white/12 bg-gray-800/20 backdrop-blur-md md:h-29 md:w-23.5">
       <span
         suppressHydrationWarning
-        className="text-[28px] leading-none font-bold text-white md:text-[42px]"
+        className="text-[28px] leading-none font-bold text-gray-50 md:text-[42px]"
       >
         {value}
       </span>
-      <span className="mt-2 text-sm text-gray-300 md:text-base">{label}</span>
+      <span className="mt-2 text-sm text-gray-400 md:text-base">{label}</span>
     </div>
   );
 }
 
-export default function FifthSection() {
+export function FifthSection() {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>(INITIAL_TIME_LEFT);
 
   useEffect(() => {
@@ -123,9 +76,21 @@ export default function FifthSection() {
   );
 
   return (
-    <section className="overflow-hidden bg-gray-900 px-5 text-white md:px-10 lg:px-16">
-      <div className="mx-auto flex w-full max-w-7xl flex-col items-center">
-        <div className="flex max-w-190 flex-col items-center gap-7 text-center">
+    <section className="relative h-200 overflow-hidden bg-gray-900 md:h-250">
+      <Image
+        src="/images/fifth-section-pc.png"
+        alt="배경"
+        fill
+        className="hidden object-cover md:block"
+      />
+      <Image
+        src="/images/fifth-section-mobile.png"
+        alt="배경"
+        fill
+        className="block md:hidden"
+      />
+      <div className="flex h-full flex-col items-center py-20">
+        <div className="z-10 flex max-w-190 flex-col items-center gap-7 text-center">
           <p className="text-mint-500 text-lg font-semibold">{"// DEMO DAY"}</p>
 
           <h2 className="text-3xl leading-tight font-bold md:text-5xl">
@@ -141,53 +106,47 @@ export default function FifthSection() {
           </p>
         </div>
 
-        <div className="relative mt-20 w-full">
-          <div className="relative mx-auto h-90 w-full max-w-7xl overflow-hidden md:h-122.5">
-            <div className="pointer-events-none absolute inset-0 z-10 bg-[#071634]/12 backdrop-blur-[2px]" />
+        <div className="z-10 mt-auto text-center">
+          <p className="mb-4 text-sm text-gray-300 md:text-base">
+            데모데이까지
+          </p>
 
-            <div className="relative z-0 hidden h-full items-start justify-center gap-6 md:flex">
-              {demoProjects.map((project) => (
-                <div
-                  key={project.id}
-                  className="w-104.5 shrink-0 opacity-40 blur-[10px]"
-                >
-                  <DemoProjectCard data={project} />
-                </div>
-              ))}
-            </div>
-
-            <div className="relative z-0 flex h-full items-start justify-center md:hidden">
-              <div className="w-[320px] max-w-[82vw] opacity-40 blur-[60px]">
-                <DemoProjectCard data={demoProjects[1]} />
+          <div className="mb-4 flex items-center gap-2 md:gap-4">
+            {countdownItems.map((item, index) => (
+              <div
+                key={item.label}
+                className="flex items-center gap-2 md:gap-4"
+              >
+                <CountdownCard value={item.value} label={item.label} />
+                {index < countdownItems.length - 1 && (
+                  <span className="flex items-center text-2xl text-[#5a6b92] md:text-3xl">
+                    <svg
+                      width="5"
+                      height="22"
+                      viewBox="0 0 5 22"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="2.5" cy="2.5" r="2.5" fill="#334155" />
+                      <circle cx="2.5" cy="19.5" r="2.5" fill="#334155" />
+                    </svg>
+                  </span>
+                )}
               </div>
-            </div>
+            ))}
           </div>
 
-          <div className="pointer-events-none absolute inset-x-0 top-[52%] z-20 flex -translate-y-1/2 flex-col items-center px-4 md:top-[60%]">
-            <p className="mb-4 text-sm text-gray-300 md:text-base">
-              데모데이까지
-            </p>
-
-            <div className="flex items-center gap-2 md:gap-4">
-              {countdownItems.map((item, index) => (
-                <div
-                  key={item.label}
-                  className="flex items-center gap-2 md:gap-4"
-                >
-                  <CountdownCard value={item.value} label={item.label} />
-                  {index < countdownItems.length - 1 && (
-                    <span className="pb-6 text-2xl text-[#5a6b92] md:text-3xl">
-                      ·
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <p className="text-mint-500 mt-6 text-base font-semibold md:text-xl">
-              2026. 04. 17 공개 예정
-            </p>
-          </div>
+          <p
+            className="pt-4 font-semibold md:text-xl"
+            style={{
+              background: "var(--color-gradient-devup)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            2026. 04. 17 공개 예정
+          </p>
         </div>
       </div>
     </section>
