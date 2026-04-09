@@ -1,16 +1,24 @@
 "use client";
+import {
+  buildCurrentPath,
+  buildLoginPath,
+} from "@/features/auth/lib/authRedirect";
 import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import { PlusIcon } from "@/shared/icons";
 import { Button } from "@/shared/ui";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export function ProjectCreateButton({ circle }: { circle?: boolean }) {
   const { data: userData } = useUserData();
 
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const loginPath = buildLoginPath(buildCurrentPath(pathname, searchParams));
+
   const handleClick = () => {
     if (!userData) {
-      router.push("/login");
+      router.push(loginPath);
       return;
     }
     router.push("/projects/create");
