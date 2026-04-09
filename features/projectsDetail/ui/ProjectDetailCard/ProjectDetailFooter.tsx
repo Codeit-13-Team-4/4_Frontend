@@ -1,14 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import {
+  buildCurrentPath,
+  buildLoginPath,
+} from "@/features/auth/lib/authRedirect";
 import type { ProjectDetail } from "@/features/projectsDetail/types/projectsDetail";
 import { GradientButton, Button } from "@/shared/ui";
 import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
 import { EditProjectModal } from "@/features/projectsDetail/ui/EditProjectModal/EditProjectModal";
 import { ApplyModal } from "@/features/projectsDetail/ui/ApplyModal/ApplyModal";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Eyeopen } from "@/shared/icons";
 
 interface ProjectDetailFooterProps {
@@ -24,6 +27,9 @@ export default function ProjectDetailFooter({
   const [applyOpen, setApplyOpen] = useState(false);
   const openAlertModal = useOpenAlertModal();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const loginPath = buildLoginPath(buildCurrentPath(pathname, searchParams));
 
   const handleApplyClick = () => {
     if (!userData) {
@@ -35,7 +41,7 @@ export default function ProjectDetailFooter({
           button: { type: "default", variant: "primary" },
         },
         negative: { text: "취소" },
-        onPositive: () => router.push("/login"),
+        onPositive: () => router.push(loginPath),
       });
       return;
     }

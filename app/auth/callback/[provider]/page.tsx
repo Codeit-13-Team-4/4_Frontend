@@ -1,7 +1,15 @@
 "use client";
 
 import { useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams, useParams } from "next/navigation";
+import { authKeys } from "@/features/auth/model/auth.queryKey";
+import {
+  buildLoginPath,
+  buildSignupPath,
+  getSafeRedirectPath,
+} from "@/features/auth/lib/authRedirect";
+import { logout } from "@/features/auth/api/logout";
 import { socialLogin, type SocialType } from "@/features/auth/api/socialLogin";
 
 function isValidSocialType(value: string): value is SocialType {
@@ -10,6 +18,7 @@ function isValidSocialType(value: string): value is SocialType {
 
 export default function SocialCallbackPage() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const params = useParams();
 
@@ -22,9 +31,12 @@ export default function SocialCallbackPage() {
       typeof providerFromPath === "string" ? providerFromPath : typeFromQuery;
 
     const userParam = searchParams.get("user");
+    const redirectPath = getSafeRedirectPath(searchParams.get("redirect"));
 
     if (!token || !provider || !isValidSocialType(provider)) {
-      router.replace("/login?error=invalid_social_callback");
+      router.replace(
+        buildLoginPath(redirectPath, { error: "invalid_social_callback" }),
+      );
       return;
     }
 
@@ -39,6 +51,16 @@ export default function SocialCallbackPage() {
     }
 
     const handleSocialCallback = async () => {
+      const clearAuthState = async () => {
+        try {
+          await logout();
+        } catch {
+          // Ignore logout failures and still clear local auth cache.
+        }
+
+        queryClient.removeQueries({ queryKey: authKeys.all });
+      };
+
       //소셜로그인 여부 검증
       try {
         // if (!typeFromQuery || !token) {
@@ -59,11 +81,13 @@ export default function SocialCallbackPage() {
           remember: true,
         });
 
-        router.replace("/"); //회원이면
+        await queryClient.resetQueries({ queryKey: authKeys.me() });
+        router.replace(redirectPath ?? "/mypage"); //회원이면
       } catch (error) {
         //회원아닌 에러발생
         if (error instanceof Error && error.message === "NOT_REGISTERED") {
           //에러가 이거면
+          await clearAuthState();
           const query = new URLSearchParams({
             token,
             type: provider,
@@ -77,26 +101,30 @@ export default function SocialCallbackPage() {
             query.set("name", parsedUser.name);
           }
 
-          router.replace(`/signup?${query.toString()}`); //여기로 이동 + 쿼리파라미터 같이보냄
+          router.replace(
+            buildSignupPath(redirectPath, Object.fromEntries(query.entries())),
+          ); //여기로 이동 + 쿼리파라미터 같이보냄
           return;
         }
-        const query = new URLSearchParams({
-          token,
-          type: provider,
-        });
-        if (parsedUser?.email) {
-          query.set("email", parsedUser.email);
+
+        if (
+          error instanceof Error &&
+          error.message === "EMAIL_ALREADY_REGISTERED"
+        ) {
+          await clearAuthState();
+          router.replace(
+            buildLoginPath(redirectPath, { error: "social_email_exists" }),
+          );
+          return;
         }
 
-        if (parsedUser?.name) {
-          query.set("name", parsedUser.name);
-        }
-        router.replace(`/signup?${query.toString()}`); //여기로 이동 + 쿼리파라미터 같이보냄
-        // router.replace("/login?error=social_login_failed"); //그 외 에러면 여기로 이동
+        router.replace(
+          buildLoginPath(redirectPath, { error: "social_login_failed" }),
+        );
       }
     };
     handleSocialCallback();
-  }, [params, router, searchParams]);
+  }, [params, queryClient, router, searchParams]);
 
   return <div className="flex min-h-screen bg-gray-900"></div>;
 }
