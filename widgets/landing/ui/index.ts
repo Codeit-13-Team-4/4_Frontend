@@ -1,0 +1,12 @@
+export { FifthSection } from "./FifthSection";
+export { CommunityCard } from "./CommunityCard";
+export { ContestIcon } from "./ContestIcon";
+export { FirstSection } from "./FirstSection";
+export { FourthSection } from "./FourthSection";
+export { HackathonIcon } from "./HackathonIcon";
+export { PortfolioIcon } from "./PortfolioIcon";
+export { SecondSection } from "./SecondSection";
+export { SixthSection } from "./SixthSection";
+export { StartupIcon } from "./StartupIcon";
+export { ThirdSection } from "./ThirdSection";
+export { TypingText } from "./TypingText";

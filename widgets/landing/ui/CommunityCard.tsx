@@ -1,5 +1,3 @@
-"use client";
-
 import { AvatarIcon } from "@/shared/icons";
 
 interface CommunityCardProps {
@@ -8,11 +6,7 @@ interface CommunityCardProps {
   content: string;
 }
 
-export default function CommunityCard({
-  name,
-  date,
-  content,
-}: CommunityCardProps) {
+export function CommunityCard({ name, date, content }: CommunityCardProps) {
   return (
     <article className="rounded-[20px] bg-[#16233d] px-6 py-5">
       <div className="mb-5 flex items-center gap-3">
