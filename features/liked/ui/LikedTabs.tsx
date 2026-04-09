@@ -28,12 +28,14 @@ export function LikedTabs() {
 
   return (
     <div className="w-full border-b border-gray-700">
-      <div className="-mb-px flex gap-6 md:gap-8">
+      <div className="-mb-px flex w-full md:w-fit">
         <Link
           href={challengeHref}
           className={cn(
-            "inline-flex border-b-2 border-transparent pb-4 text-[16px] font-semibold transition-colors",
-            isChallenge ? "border-mint-500 text-mint-500" : "text-gray-400",
+            "inline-flex flex-1 justify-center border-b-2 border-transparent pb-4 text-[16px] font-semibold transition-colors md:w-[159px] md:flex-none",
+            isChallenge
+              ? "border-mint-700 text-mint-700"
+              : "text-gray-600 hover:text-gray-600",
           )}
         >
           챌린지
@@ -42,8 +44,10 @@ export function LikedTabs() {
         <Link
           href={projectHref}
           className={cn(
-            "inline-flex border-b-2 border-transparent pb-4 text-[16px] font-semibold transition-colors",
-            isProject ? "border-mint-500 text-mint-500" : "text-gray-400",
+            "inline-flex flex-1 justify-center border-b-2 border-transparent pb-4 text-[16px] font-semibold transition-colors md:w-[159px] md:flex-none",
+            isProject
+              ? "border-mint-700 text-mint-700"
+              : "text-gray-600 hover:text-gray-600",
           )}
         >
           프로젝트
