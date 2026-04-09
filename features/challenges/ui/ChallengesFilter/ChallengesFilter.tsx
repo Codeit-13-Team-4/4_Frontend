@@ -27,7 +27,7 @@ export function ChallengesFilter() {
     status: status ? FILTER_STATUS_LABEL[status] : "모집 상태",
     participationType: participationType
       ? FILTER_PARTICIPATION_LABELS[participationType]
-      : "참여 목적",
+      : "모집 방식",
   };
 
   const handleOpen = () => setIsOpen(true);
