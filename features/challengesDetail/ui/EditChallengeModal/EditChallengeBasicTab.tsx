@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Controller, useFormContext } from "react-hook-form";
 import { Field, FieldGroup, FieldLabel, FieldError } from "@/shared/ui";
 import type { EditChallengeFormValues } from "./types";
+import { XIcon } from "@/shared/icons";
 
 export function EditChallengeBasicTab() {
   const {
@@ -118,12 +119,7 @@ export function EditChallengeBasicTab() {
                           onClick={() => removeTag(tag)}
                           className="cursor-pointer text-gray-400 hover:text-white"
                         >
-                          <Image
-                            src="/icons/common/x-icon.svg"
-                            alt="삭제"
-                            width={12}
-                            height={12}
-                          />
+                          <XIcon width={12} height={12} />
                         </button>
                       </span>
                     ))}

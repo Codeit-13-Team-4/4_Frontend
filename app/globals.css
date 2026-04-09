@@ -15,75 +15,109 @@
   --animate-fillCircle: fillCircle 0.5s forwards 0.5s;
   --animate-showCheck: showCheck 0.6s forwards 0.5s;
 
-  @keyframes overlay-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-float-right: float-right 3s ease-in-out infinite;
+  --animate-float-left: float-left 3s ease-in-out infinite;
+}
+@keyframes overlay-in {
+  from {
+    opacity: 0;
   }
-  @keyframes overlay-out {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
+  to {
+    opacity: 1;
   }
-  @keyframes modal-in {
-    from {
-      opacity: 0;
-      scale: 0.9;
-    }
-    to {
-      opacity: 1;
-      scale: 1;
-    }
-  }
-  @keyframes modal-out {
-    from {
-      opacity: 1;
-      scale: 1;
-    }
-    to {
-      opacity: 0;
-      scale: 0.95;
-    }
-  }
+}
 
-  @keyframes drawCircle {
-    0% {
-      stroke-dashoffset: 283;
-      transform: scale(0.1);
-    }
-    50% {
-      transform: scale(1.2);
-    }
-    100% {
-      stroke-dashoffset: 0;
-      transform: scale(1);
-    }
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
   }
-
-  @keyframes fillCircle {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
+  50% {
+    transform: translateY(5px);
   }
+}
 
-  @keyframes showCheck {
-    0% {
-      opacity: 0;
-      transform: scale(0.4) rotate(-45deg);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1) rotate(0deg);
-    }
+@keyframes float-right {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0);
+  }
+  50% {
+    transform: translateY(-5px) translateX(5px);
+  }
+}
+
+@keyframes float-left {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-8px) translateX(-8px);
+  }
+}
+
+@keyframes overlay-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    scale: 0.9;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes modal-out {
+  from {
+    opacity: 1;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 0.95;
+  }
+}
+
+@keyframes drawCircle {
+  0% {
+    stroke-dashoffset: 283;
+    transform: scale(0.1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    stroke-dashoffset: 0;
+    transform: scale(1);
+  }
+}
+
+@keyframes fillCircle {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes showCheck {
+  0% {
+    opacity: 0;
+    transform: scale(0.4) rotate(-45deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
   }
 }
 

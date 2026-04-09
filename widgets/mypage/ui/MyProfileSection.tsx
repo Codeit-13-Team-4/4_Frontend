@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import ProfileInfo from "@/features/mypage/ui/ProfileInfo";
 import ProfileLinks from "@/features/mypage/ui/ProfileLinks";
@@ -12,18 +11,13 @@ import {
   Label,
 } from "@/shared/ui";
 import { User } from "@/shared/types/user";
+import { AvatarIcon } from "@/shared/icons";
 
 const AVATAR = ({ userData }: { userData: User }) => (
   <Avatar size="lg" className="size-20 md:size-30">
     <AvatarImage src={userData.profileImageUrl ?? ""} alt={userData.nickname} />
     <AvatarFallback>
-      <Image
-        src="/common/avatar/default-avatar-xl.svg"
-        alt="기본 아바타"
-        width={120}
-        height={120}
-        priority
-      />
+      <AvatarIcon width={120} height={120} className="text-transparent" />
     </AvatarFallback>
   </Avatar>
 );
@@ -58,7 +52,7 @@ export default function MyProfileSection({ userData }: { userData: User }) {
           <ProfileStats stats={userData.stats} />
         </div>
         <Button asChild variant="primary" className="mt-8 w-full">
-          <Link href="/profile/edit">수정하기</Link>
+          <Link href="/mypage/edit">수정하기</Link>
         </Button>
       </div>
 
@@ -73,7 +67,7 @@ export default function MyProfileSection({ userData }: { userData: User }) {
             <ProfileStats stats={userData.stats} />
           </div>
           <Button asChild variant="primary" className="h-10">
-            <Link href="/profile/edit">프로필 수정</Link>
+            <Link href="/mypage/edit">프로필 수정</Link>
           </Button>
         </div>
 

@@ -26,12 +26,12 @@ import {
   Input,
   TextArea,
 } from "@/shared/ui";
-import Image from "next/image";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { formatDate } from "@/shared/utils";
 import { useRouter } from "next/navigation";
 import { useCreateProject } from "../../hooks/useCreateProject";
+import { ChevronLeftIcon, XIcon } from "@/shared/icons";
 
 type CreateFormErrors = {
   title?: string;
@@ -165,14 +165,9 @@ export function ProjectCreateForm() {
   };
 
   return (
-    <div className="text-gray-400">
+    <div className="pt-12 text-gray-400">
       <button onClick={handleBack} className="cursor-pointer">
-        <Image
-          src="/icons/common/chevron_left-icon.svg"
-          alt=""
-          width={16}
-          height={16}
-        />
+        <ChevronLeftIcon width={16} height={16} className="text-gray-200" />
       </button>
       <section>
         <h2 className="mt-10 mb-5 text-[20px] text-gray-50">기본정보</h2>
@@ -239,20 +234,7 @@ export function ProjectCreateForm() {
                     onClick={() => handlePositionDelete(item)}
                     className="cursor-pointer"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="#00d7a0"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M18 6 6 18" />
-                      <path d="m6 6 12 12" />
-                    </svg>
+                    <XIcon width={12} height={12} />
                   </button>
                 </li>
               ))}

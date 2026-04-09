@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback, Button } from "@/shared/ui";
-import Image from "next/image";
 import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import { useCreateProjectsDetailComment } from "@/features/projectsDetail/hooks/useCreateProjectsDetailComment";
 import CommentInputSkeleton from "@/features/projectsDetail/ui/Comment/CommentInputSkeleton";
+import { AvatarIcon } from "@/shared/icons";
 
 interface CommentInputProps {
   projectId: number;
@@ -36,12 +36,7 @@ export default function CommentInput({ projectId }: CommentInputProps) {
             alt={userData?.nickname ?? ""}
           />
           <AvatarFallback delayMs={0}>
-            <Image
-              src="/common/avatar/default-avatar-lg.svg"
-              alt="기본 아바타"
-              width={56}
-              height={56}
-            />
+            <AvatarIcon width={56} height={56} className="text-gray-800" />
           </AvatarFallback>
         </Avatar>
         <div className="flex-1 rounded-2xl bg-gray-800">
