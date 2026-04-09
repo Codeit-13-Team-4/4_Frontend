@@ -139,6 +139,7 @@
   --color-mint-500: #00d7a0;
   --color-mint-700: #00a67b;
   --color-blue-500: #38c4ff;
+  --color-blue-900: #004562;
   --color-gradient-devup: linear-gradient(to bottom right, #00d7a0, #38c4ff);
 
   --color-gray-900: #0f172a;
@@ -192,6 +193,7 @@
   --color-mint-900: #004d39;
 
   --color-blue-500: #38c4ff;
+  --color-blue-900: #004562;
   --color-gradient-devup: linear-gradient(to bottom right, #00d7a0, #38c4ff);
 
   --color-gray-900: #0f172a;
