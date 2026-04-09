@@ -4,6 +4,8 @@ import type {
   VerificationMethodType,
   JoinType,
 } from "@/features/challengesDetail/types/challengesDetail";
+import { Lightning, Lock } from "@/shared/icons";
+import type { ComponentType, SVGProps } from "react";
 
 // 챌린지 상세: 진행중·완료는 모집이 끝난 상태이므로 모집완료로 표시
 export const CHALLENGE_STATUS_LABEL: Record<
@@ -36,16 +38,20 @@ export const VERIFICATION_METHOD_LABEL: Record<VerificationMethodType, string> =
 
 export const JOIN_TYPE_LABEL: Record<
   JoinType,
-  { label: string; variant: "auto" | "approve"; icon: string }
+  {
+    label: string;
+    variant: "auto" | "approve";
+    icon: ComponentType<SVGProps<SVGSVGElement>>;
+  }
 > = {
   INSTANT: {
     label: "즉시 참여 가능",
     variant: "auto",
-    icon: "/icons/common/lightning.svg",
+    icon: Lightning,
   },
   APPROVAL: {
     label: "승인 후 참여 가능",
     variant: "approve",
-    icon: "/icons/common/lock.svg",
+    icon: Lock,
   },
 };

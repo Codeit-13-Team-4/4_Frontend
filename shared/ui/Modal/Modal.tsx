@@ -1,6 +1,7 @@
 import { cn } from "@/shared/utils";
 import { Dialog } from "radix-ui";
 import { Button, ScrollArea } from "@/shared/ui";
+import { XIcon } from "@/shared/icons";
 
 function Modal({ ...props }: React.ComponentProps<typeof Dialog.Root>) {
   return <Dialog.Root data-slot="dialog" {...props} />;
@@ -45,25 +46,12 @@ function ModalCloseIcon({
         variant="ghost"
         size="sm"
         className={cn(
-          "ml-auto h-6 p-0 text-gray-400 hover:bg-gray-700 hover:text-white",
+          "ml-auto h-6 w-6 p-0 text-gray-400 hover:bg-gray-700 hover:text-white",
           className,
         )}
         {...props}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M18 6 6 18" />
-          <path d="m6 6 12 12" />
-        </svg>
+        <XIcon width={16} height={16} className="text-gray-200" />
       </Button>
     </Dialog.Close>
   );

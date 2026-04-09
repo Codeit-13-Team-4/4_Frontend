@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useDeleteProjectsDetail } from "@/features/projectsDetail/hooks/useDeleteProjectsDetail";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
 import { Button } from "@/shared/ui";
+import { Trash } from "@/shared/icons";
 
 interface DeleteProjectButtonProps {
   projectId: number;
@@ -39,7 +39,7 @@ export default function DeleteProjectButton({
       size={"sm"}
       className="hover:bg-error/40 bg-error/20"
     >
-      <Image src="/projectDetail/trash.svg" alt="삭제" width={18} height={18} />
+      <Trash width={18} height={18} />
       삭제
     </Button>
   );

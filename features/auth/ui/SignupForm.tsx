@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -20,6 +19,7 @@ import {
 } from "@/shared/ui";
 import { getRandomName } from "@/shared/utils";
 import SocialLoginButtons from "./SocialLoginButtons";
+import { Eyeclose, Eyeopen, RandomIcon } from "@/shared/icons";
 
 interface SignupFormValues {
   nickname: string;
@@ -31,7 +31,23 @@ interface SignupFormValues {
 interface SignupFieldErrors {
   email: string | null;
 }
+function validateNickname(nickname: string): string {
+  const trimmedNickname = nickname.trim();
 
+  if (trimmedNickname === "") {
+    return "닉네임을 입력해주세요.";
+  }
+
+  if (trimmedNickname.length < 2) {
+    return "닉네임은 2자 이상이어야 합니다.";
+  }
+
+  if (trimmedNickname.length > 10) {
+    return "닉네임은 10자 이하로 입력해주세요.";
+  }
+
+  return "";
+}
 function validateEmail(email: string, serverFieldError: string | null): string {
   const trimmedEmail = email.trim();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -93,6 +109,7 @@ export default function SignupForm() {
     password: "",
     passwordConfirm: "",
   });
+
   const [isPending, setIsPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [serverFieldErrors, setServerFieldErrors] = useState<SignupFieldErrors>(
@@ -103,7 +120,7 @@ export default function SignupForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
-
+  const nicknameError = validateNickname(form.nickname);
   const emailError = validateEmail(form.email, serverFieldErrors.email);
   const passwordError = validatePassword(form.password);
   const passwordConfirmError = validatePasswordConfirm(
@@ -111,7 +128,8 @@ export default function SignupForm() {
     form.passwordConfirm,
   );
 
-  const isValid = !emailError && !passwordError && !passwordConfirmError;
+  const isValid =
+    !nicknameError && !emailError && !passwordError && !passwordConfirmError;
   const isSubmitDisabled = !isValid || isPending;
 
   const shouldShowError = (value: string) => isSubmitted || value.length > 0;
@@ -200,7 +218,7 @@ export default function SignupForm() {
               닉네임
             </FieldLabel>
 
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-1">
+            <div className="flex items-center gap-1">
               <Input
                 id="nickname"
                 name="nickname"
@@ -208,24 +226,24 @@ export default function SignupForm() {
                 value={form.nickname}
                 onChange={handleInputChange}
                 placeholder="닉네임을 입력해주세요"
+                className={getInputClassName(
+                  shouldShowError(form.nickname) && !!nicknameError,
+                )}
               />
 
               <button
                 type="button"
                 onClick={handleRandomNickname}
-                className="text-mint-500 flex shrink-0 items-center gap-1 self-end text-sm sm:self-auto"
+                className="text-mint-500 flex shrink-0 items-center gap-1 text-sm"
               >
-                <Image
-                  src="/auth/randomIcon.svg"
-                  alt="랜덤설정 아이콘"
-                  width={24}
-                  height={24}
-                />
+                <RandomIcon width={24} height={24} />
                 <span>랜덤설정</span>
               </button>
             </div>
 
-            <div className="min-h-5" />
+            <FieldError className="min-h-5">
+              {shouldShowError(form.nickname) ? nicknameError : ""}
+            </FieldError>
           </Field>
 
           <Field>
@@ -274,14 +292,11 @@ export default function SignupForm() {
                 className="absolute top-1/2 right-4 -translate-y-1/2"
                 aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
               >
-                <Image
-                  src={
-                    showPassword ? "/auth/eyeopen.svg" : "/auth/eyeclose.svg"
-                  }
-                  alt={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
-                  width={20}
-                  height={20}
-                />
+                {showPassword ? (
+                  <Eyeopen width={20} height={20} className="text-gray-400" />
+                ) : (
+                  <Eyeclose width={20} height={20} className="text-gray-400" />
+                )}
               </button>
             </div>
 
@@ -306,7 +321,7 @@ export default function SignupForm() {
                 type={showPasswordConfirm ? "text" : "password"}
                 value={form.passwordConfirm}
                 onChange={handleInputChange}
-                placeholder="비밀번호 확인을 입력해주세요"
+                placeholder="비밀번호를 입력해주세요"
                 className={getInputClassName(
                   shouldShowError(form.passwordConfirm) &&
                     !!passwordConfirmError,
@@ -321,18 +336,11 @@ export default function SignupForm() {
                   showPasswordConfirm ? "비밀번호 숨기기" : "비밀번호 보기"
                 }
               >
-                <Image
-                  src={
-                    showPasswordConfirm
-                      ? "/auth/eyeopen.svg"
-                      : "/auth/eyeclose.svg"
-                  }
-                  alt={
-                    showPasswordConfirm ? "비밀번호 숨기기" : "비밀번호 보기"
-                  }
-                  width={20}
-                  height={20}
-                />
+                {showPassword ? (
+                  <Eyeopen width={20} height={20} className="text-gray-400" />
+                ) : (
+                  <Eyeclose width={20} height={20} className="text-gray-400" />
+                )}
               </button>
             </div>
 
@@ -347,28 +355,25 @@ export default function SignupForm() {
         {errorMessage && <FieldError>{errorMessage}</FieldError>}
 
         <div className="flex flex-col gap-10">
-          <div className="flex flex-col gap-2">
-            <Button
-              type="submit"
-              variant="primary"
-              disabled={isSubmitDisabled}
-              className="w-full"
-            >
-              {isPending ? "회원가입 중..." : "회원가입"}
-            </Button>
-
-            <p className="flex justify-center gap-1 text-sm text-gray-50">
-              이미 회원이신가요?
-              <Link
-                href={buildLoginPath(redirectPath)}
-                className="text-mint-500 font-semibold underline"
-              >
-                로그인
-              </Link>
-            </p>
-          </div>
-
+          <Button
+            type="submit"
+            variant="primary"
+            disabled={isSubmitDisabled}
+            className="w-full"
+          >
+            {isPending ? "회원가입 중..." : "회원가입"}
+          </Button>
           <SocialLoginButtons />
+
+          <p className="flex justify-center gap-1 text-sm text-gray-50">
+            이미 회원이신가요?
+            <Link
+              href="/login"
+              className="text-mint-500 font-semibold underline"
+            >
+              로그인
+            </Link>
+          </p>
         </div>
       </form>
     </div>

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -21,6 +20,7 @@ import {
   FieldLabel,
   Input,
 } from "@/shared/ui";
+import { Eyeopen, Eyeclose } from "@/shared/icons";
 
 interface LoginFormValues {
   email: string;
@@ -234,14 +234,11 @@ export default function LoginForm() {
                 className="absolute top-1/2 right-4 -translate-y-1/2"
                 aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
               >
-                <Image
-                  src={
-                    showPassword ? "/auth/eyeopen.svg" : "/auth/eyeclose.svg"
-                  }
-                  alt={showPassword ? "비밀번호 보이기" : "비밀번호 숨기기"}
-                  width={24}
-                  height={24}
-                />
+                {showPassword ? (
+                  <Eyeopen width={24} height={24} className="text-gray-400" />
+                ) : (
+                  <Eyeclose width={24} height={24} className="text-gray-400" />
+                )}
               </button>
             </div>
 

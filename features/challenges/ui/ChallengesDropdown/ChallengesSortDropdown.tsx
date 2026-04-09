@@ -1,12 +1,12 @@
 "use client";
 import { Dropdown } from "@/shared/ui";
 import { useState } from "react";
-import Image from "next/image";
 import {
   ChallengesSortType,
   CHALLENGES_SORT_LABEL,
 } from "@/features/challenges/model";
 import { useRouter, useSearchParams } from "next/navigation";
+import { ChevronDownIcon, ChevronUpIcon } from "@/shared/icons";
 
 export function ChallengesSortDropdown() {
   const [open, setOpen] = useState(false);
@@ -33,20 +33,14 @@ export function ChallengesSortDropdown() {
       <Dropdown.Trigger>
         <button className="group flex items-center gap-1 text-[#94A3B8]">
           {CHALLENGES_SORT_LABEL[sort]}
-          <Image
-            src="/icons/common/chevron_down_sm-icon.svg"
+          <ChevronDownIcon
             width={17}
             height={17}
-            alt=""
-            aria-hidden="true"
             className="group-data-open:hidden"
           />
-          <Image
-            src="/icons/common/chevron_up_sm-icon.svg"
+          <ChevronUpIcon
             width={17}
             height={17}
-            alt=""
-            aria-hidden="true"
             className="hidden group-data-open:block"
           />
         </button>

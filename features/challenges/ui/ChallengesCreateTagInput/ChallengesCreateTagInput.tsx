@@ -1,7 +1,9 @@
 "use client";
 
+import { XIcon } from "@/shared/icons";
 import { Button, Input } from "@/shared/ui";
-import Image from "next/image";
+import React from "react";
+import { toast } from "sonner";
 
 interface ProjectCreateTagInputProps {
   input: string;
@@ -18,16 +20,25 @@ export function ChallengesCreateTagInput({
 }: ProjectCreateTagInputProps) {
   const handleAddTag = (value: string) => {
     if (!value.trim()) {
-      return alert("키워드를 입력해주세요.");
+      return toast.error("키워드를 입력해주세요.");
     }
     if (!tags.includes(value)) {
       setTags([...tags, value]);
     }
     setInput("");
   };
+
   const handleTagDelete = (key: string) => {
     setTags(tags.filter((item) => item !== key));
   };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleAddTag(input);
+    }
+  };
+
   return (
     <div>
       <div className="relative mb-4">
@@ -35,6 +46,7 @@ export function ChallengesCreateTagInput({
           placeholder="태그 키워드 입력"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
         <Button
           variant="primary"
@@ -57,12 +69,7 @@ export function ChallengesCreateTagInput({
                 onClick={() => handleTagDelete(item)}
                 className="cursor-pointer"
               >
-                <Image
-                  src="/icons/common/x-icon.svg"
-                  width={8}
-                  height={8}
-                  alt=""
-                />
+                <XIcon width={8} height={8} />
               </button>
             </li>
           );

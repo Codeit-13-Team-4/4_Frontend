@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback, Button } from "@/shared/ui";
-import Image from "next/image";
 import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import { useCreateChallengesDetailComment } from "../../hooks/useCreateChallengesDetailComment";
 import CommentInputSkeleton from "./CommentInputSkeleton";
+import { AvatarIcon } from "@/shared/icons";
 
 export default function CommentInput({ challengeId }: { challengeId: number }) {
   const [value, setValue] = useState("");
@@ -32,12 +32,7 @@ export default function CommentInput({ challengeId }: { challengeId: number }) {
             alt={userData?.nickname ?? ""}
           />
           <AvatarFallback delayMs={0}>
-            <Image
-              src="/common/avatar/default-avatar-lg.svg"
-              alt="기본 아바타"
-              width={56}
-              height={56}
-            />
+            <AvatarIcon width={56} height={56} className="text-gray-800" />
           </AvatarFallback>
         </Avatar>
         <div className="flex-1 rounded-2xl bg-gray-800">

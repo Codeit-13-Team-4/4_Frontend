@@ -1,35 +1,11 @@
-"use client";
+import {
+  PortfolioIcon,
+  ContestIcon,
+  HackathonIcon,
+  StartupIcon,
+} from "@/widgets/landing/ui";
 
-import Image from "next/image";
-
-const projectCards = [
-  {
-    id: 1,
-    title: "포트폴리오",
-    image: "/landing/portfolio.svg",
-    alt: "포트폴리오 아이콘",
-  },
-  {
-    id: 2,
-    title: "공모전",
-    image: "/landing/contest.svg",
-    alt: "공모전 아이콘",
-  },
-  {
-    id: 3,
-    title: "해커톤",
-    image: "/landing/hackathon.svg",
-    alt: "해커톤 아이콘",
-  },
-  {
-    id: 4,
-    title: "창업",
-    image: "/landing/startup.svg",
-    alt: "창업 아이콘",
-  },
-];
-
-export default function ThirdSection() {
+export function ThirdSection() {
   return (
     <section className="bg-gray-900 px-5 py-20 md:px-10 md:py-28 lg:px-16">
       <div className="mx-auto w-full max-w-7xl">
@@ -49,32 +25,11 @@ export default function ThirdSection() {
           </p>
         </div>
 
-        <div className="mt-30 grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-4">
-          {projectCards.map((card) => (
-            <div
-              key={card.id}
-              className="group hover:border-mint-500 relative h-92 overflow-hidden rounded-3xl border border-[#334155] bg-[#334155]/20 pt-8"
-            >
-              <div className="flex flex-col items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#00A67B]/10 font-semibold">
-                  {card.id}
-                </div>
-
-                <h3 className="text-2xl font-bold text-shadow-gray-200">
-                  {card.title}
-                </h3>
-              </div>
-
-              <div className="absolute right-0 bottom-0 transition-transform duration-300 group-hover:scale-105 group-hover:opacity-100">
-                <Image
-                  src={card.image}
-                  alt={card.alt}
-                  width={240}
-                  height={240}
-                />
-              </div>
-            </div>
-          ))}
+        <div className="mt-30 grid grid-cols-2 gap-2 md:grid-cols-4">
+          <PortfolioIcon className="text-mint-900 hover:text-mint-500 w-full max-w-78" />
+          <ContestIcon className="text-mint-900 hover:text-mint-500 w-full max-w-78" />
+          <HackathonIcon className="text-mint-900 hover:text-mint-500 w-full max-w-78" />
+          <StartupIcon className="text-mint-900 hover:text-mint-500 w-full max-w-78" />
         </div>
       </div>
     </section>
