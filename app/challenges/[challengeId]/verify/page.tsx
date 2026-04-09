@@ -1,7 +1,6 @@
-import VerifyCard from "@/features/challengesVerify/ui/VerifyCard";
+import { VerifyListSection } from "@/features/challengesVerify/ui/VerifyListSection/VerifyListSection";
 import { VerifyMemberSection } from "@/features/challengesVerify/ui/VerifyMemberSection/VerifyMemberSection";
 import { ChevronLeftIcon } from "@/shared/icons";
-
 import Link from "next/link";
 
 export default async function VerifyPage({
@@ -22,12 +21,7 @@ export default async function VerifyPage({
         </h2>
       </header>
       <VerifyMemberSection />
-      <h3 className="mt-11 mb-7 text-[24px] text-gray-50">실시간 인증 현황</h3>
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        <VerifyCard />
-        <VerifyCard />
-        <VerifyCard />
-      </div>
+      <VerifyListSection />
     </div>
   );
 }
