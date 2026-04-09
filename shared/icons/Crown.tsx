@@ -20,7 +20,7 @@ export function Crown() {
           y2="16.6665"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#00D7A0" />
+          <stop stopColor="#00D7A0" />
           <stop offset="1" stopColor="#38C4FF" />
         </linearGradient>
       </defs>
