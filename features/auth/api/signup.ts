@@ -31,13 +31,7 @@ export async function signup({
       password: password.trim(),
     }),
   });
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "회원가입에 실패했습니다.");
-  }
-
-  return data;
+  return response.json();
 }
 
 export async function socialSignup({
@@ -47,23 +41,25 @@ export async function socialSignup({
   token,
   nickname,
 }: SocialSignupRequest): Promise<SignupResponse> {
-  const response = await fetch("/api/auth/socialsignup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      type: type!.trim(),
-      token: token?.trim(),
-      nickname: nickname.trim(),
-    }),
-  });
+  try {
+    const response = await fetchClient("/api/auth/socialsignup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        type: type!.trim(),
+        token: token?.trim(),
+        nickname: nickname.trim(),
+      }),
+    });
 
-  const data = await response.json();
+    return response.json();
+  } catch (error) {
+    if (error instanceof Error && error.message === "social_account_exists") {
+      throw new Error("SOCIAL_ACCOUNT_EXISTS");
+    }
 
-  if (!response.ok) {
-    throw new Error(data.message || "회원가입에 실패했습니다.");
+    throw error;
   }
-
-  return data;
 }

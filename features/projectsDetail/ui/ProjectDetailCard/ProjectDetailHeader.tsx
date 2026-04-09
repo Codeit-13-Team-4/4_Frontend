@@ -1,12 +1,16 @@
 "use client";
 
+import {
+  buildCurrentPath,
+  buildLoginPath,
+} from "@/features/auth/lib/authRedirect";
 import { DeadlineBadge, LikeButton, StatusBadge } from "@/shared/ui";
 import type { ProjectDetail } from "@/features/projectsDetail/types/projectsDetail";
 import { useToggleProjectLike } from "@/features/projectsDetail/hooks/useToggleProjectLike";
 import { ProjectBadge } from "@/features/projectsDetail/ui/ProjectDetailCard";
 import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface ProjectDetailHeaderProps {
   project: ProjectDetail;
@@ -19,6 +23,9 @@ export default function ProjectDetailHeader({
   const { data: userData } = useUserData();
   const openAlertModal = useOpenAlertModal();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const loginPath = buildLoginPath(buildCurrentPath(pathname, searchParams));
 
   const handleLikeToggle = () => {
     if (!userData) {
@@ -30,7 +37,7 @@ export default function ProjectDetailHeader({
           button: { type: "default", variant: "primary" },
         },
         negative: { text: "취소" },
-        onPositive: () => router.push("/login"),
+        onPositive: () => router.push(loginPath),
       });
       return;
     }
