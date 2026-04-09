@@ -1,22 +1,37 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
+import {
+  buildPathWithQuery,
+  getSafeRedirectPath,
+} from "@/features/auth/lib/authRedirect";
 import { Github, Google, Kakao } from "@/shared/icons";
 
 type SocialType = "google" | "kakao" | "github";
 
-const SOCIAL_LOGIN_URL: Record<SocialType, string> = {
-  google: `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/oauth2/authorization/google?redirect_uri=${encodeURIComponent(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback/google`)}`,
-  kakao: `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/oauth2/authorization/kakao?redirect_uri=${encodeURIComponent(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback/kakao`)}`,
-  github: `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/oauth2/authorization/github?redirect_uri=${encodeURIComponent(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback/github`)}`,
-};
-
 export default function SocialLoginButtons() {
+  const searchParams = useSearchParams();
+  const redirectPath = getSafeRedirectPath(searchParams.get("redirect"));
+
   const handleSocialLogin = (provider: SocialType) => {
-    window.location.href = SOCIAL_LOGIN_URL[provider];
+    const callbackPath = buildPathWithQuery(`/auth/callback/${provider}`, {
+      redirect: redirectPath,
+    });
+    const callbackUrl = `${process.env.NEXT_PUBLIC_BASE_URL}${callbackPath}`;
+    const socialLoginUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/oauth2/authorization/${provider}?redirect_uri=${encodeURIComponent(callbackUrl)}`;
+
+    window.location.href = socialLoginUrl;
   };
 
   return (
     <div className="flex flex-col gap-3">
+      <div className="flex w-full items-center gap-3 sm:gap-4">
+        <div className="h-px min-w-0 flex-1 bg-slate-300" />
+        <span className="shrink-0 text-sm text-slate-500">
+          SNS 계정으로 로그인
+        </span>
+        <div className="h-px min-w-0 flex-1 bg-slate-300" />
+      </div>
       <button
         type="button"
         onClick={() => handleSocialLogin("google")}
