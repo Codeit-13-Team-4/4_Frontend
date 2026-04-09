@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { User } from "@/shared/types/user";
-import { ProfileSkillBadge } from "@/features/mypage/ui/ProfileSkillBadge";
+import { ProfileSkillBadge } from "@/features/mypage/ui/profileSection/ProfileSkillBadge";
 
 const MOBILE_MAX = 3;
 const DESKTOP_MAX = 10;

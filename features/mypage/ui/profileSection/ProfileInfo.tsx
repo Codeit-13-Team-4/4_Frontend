@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { User } from "@/shared/types/user";
-import { ProfileJobBadge } from "@/features/mypage/ui/ProfileJobBadge";
+import { ProfileJobBadge } from "@/features/mypage/ui/profileSection/ProfileJobBadge";
 
 type ProfileInfoProps = {
   nickname: User["nickname"];
