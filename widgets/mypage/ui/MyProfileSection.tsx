@@ -1,8 +1,8 @@
 import Link from "next/link";
-import ProfileInfo from "@/features/mypage/ui/ProfileInfo";
-import ProfileLinks from "@/features/mypage/ui/ProfileLinks";
-import ProfileSkills from "@/features/mypage/ui/ProfileSkills";
-import ProfileStats from "@/features/mypage/ui/ProfileStats";
+import ProfileInfo from "@/features/mypage/ui/profileSection/ProfileInfo";
+import ProfileLinks from "@/features/mypage/ui/profileSection/ProfileLinks";
+import ProfileSkills from "@/features/mypage/ui/profileSection/ProfileSkills";
+import ProfileStats from "@/features/mypage/ui/profileSection/ProfileStats";
 import {
   Avatar,
   AvatarFallback,

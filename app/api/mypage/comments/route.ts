@@ -4,18 +4,15 @@ import { ApiError } from "@/shared/lib/errors/ApiError";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams;
+  const queryString = searchParams.toString();
+
   try {
-    const { projectId, position, motivation } = await req.json();
     const data = await fetchWithAuthRetry(
-      `${BASE_URL}/projects/${projectId}/applications`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ position, motivation }),
-      },
+      `${BASE_URL}/mypage/comments?${queryString}`,
     );
-    return NextResponse.json(data, { status: 201 });
+    return NextResponse.json(data, { status: 200 });
   } catch (error) {
     if (error instanceof ApiError) {
       return NextResponse.json(
