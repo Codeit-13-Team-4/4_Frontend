@@ -1,6 +1,5 @@
 "use client";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import {
   ChallengeCardProps,
@@ -9,7 +8,9 @@ import {
 } from "@/features/challenges/model";
 import { challengeKeys } from "@/features/challenges/model/challenges.queryKey";
 import { ChallengesBadge } from "@/features/challenges/ui";
+import type { ChallengesDetail } from "@/features/challengesDetail/types/challengesDetail";
 import { useLikeLoginGuard } from "@/features/liked/hooks/useLikeLoginGuard";
+import { useOptimisticLikedToggle } from "@/features/liked/hooks/useOptimisticLikedToggle";
 import { toggleChallengeLike } from "@/features/challengesDetail/api/toggleChallengeLike";
 import { likedChallengeKeys } from "@/features/liked/model";
 import { CommentIcon, Eyeopen } from "@/shared/icons";
@@ -32,16 +33,18 @@ export function LikedChallengeCard({ data }: { data: ChallengeCardProps }) {
   } = data;
 
   const router = useRouter();
-  const queryClient = useQueryClient();
   const requireLikeLogin = useLikeLoginGuard();
-  const { mutate: toggleLike, isPending } = useMutation({
+  const { mutate: toggleLike, isPending } = useOptimisticLikedToggle<
+    ChallengeCardProps,
+    ChallengesDetail
+  >({
+    itemId: id,
+    detailQueryKey: challengeKeys.detail(id),
+    likedListsQueryKey: likedChallengeKeys.lists(),
+    additionalInvalidateQueryKeys: [challengeKeys.lists()],
     mutationFn: (currentLiked: boolean) =>
       toggleChallengeLike(id, currentLiked),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: likedChallengeKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: challengeKeys.detail(id) });
-      queryClient.invalidateQueries({ queryKey: challengeKeys.lists() });
-    },
+    updateDetail: (detail, nextLiked) => ({ ...detail, isLiked: nextLiked }),
   });
 
   const handleLikeToggle = () => {
