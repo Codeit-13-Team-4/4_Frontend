@@ -3,10 +3,14 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getMeServer } from "@/features/auth/api/getMeServer";
 import { prefetchLikedChallengeList } from "@/features/liked/api/prefetchLikedChallengeList";
 import { prefetchLikedProjectList } from "@/features/liked/api/prefetchLikedProjectList";
+import {
+  parseLikedSort,
+  parseParticipationType,
+  toStringArray,
+} from "@/features/liked/lib/likedSearchParams";
 import type {
   LikedChallengeFilter,
   LikedProjectFilter,
-  LikedSortType,
 } from "@/features/liked/model";
 import {
   LikedChallengeCardList,
@@ -18,39 +22,6 @@ import {
 
 const PAGE_TITLE = "찜한 모임";
 const PAGE_DESCRIPTION = "마감되기 전에 지금 바로 참여해보세요";
-
-function parseParticipationType(
-  value: string | string[] | undefined,
-): LikedChallengeFilter["participationType"] {
-  if (value === "INSTANT" || value === "APPROVAL") {
-    return value;
-  }
-
-  return undefined;
-}
-
-function toStringArray(value: string | string[] | undefined) {
-  if (typeof value === "string") {
-    return [value];
-  }
-
-  return Array.isArray(value) ? value : [];
-}
-
-function parseLikedSort(
-  value: string | string[] | undefined,
-): LikedSortType | undefined {
-  if (
-    value === "latest" ||
-    value === "popular" ||
-    value === "deadline" ||
-    value === "oldest"
-  ) {
-    return value;
-  }
-
-  return undefined;
-}
 
 export default async function LikedPage({
   searchParams,
