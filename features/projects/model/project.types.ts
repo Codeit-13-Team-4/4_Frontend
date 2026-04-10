@@ -25,6 +25,8 @@ export type ProjectStatus =
   | "in_progress"
   | "completed";
 
+export type ApplicationStatusType = "pending" | "approved" | "rejected";
+
 export interface ProjectHost {
   id: number;
   nickname: string;
@@ -54,6 +56,7 @@ export interface ProjectCardProps {
   host: ProjectHost;
   hasApplication: boolean;
   isHost: boolean;
+  applicationStatus: ApplicationStatusType;
 }
 
 export type ProjectFilter = {

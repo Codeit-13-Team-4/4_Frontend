@@ -6,13 +6,12 @@ import {
   MyParticipationStatus,
 } from "@/features/challenges/model";
 import { useRouter } from "next/navigation";
-import { MyRoleType } from "@/features/mypage/model/mypage.types";
 
 interface MyChallengeCardButtonProps {
   id: ChallengeCardProps["id"];
   status: ChallengeCardProps["status"];
   participationStatus: MyParticipationStatus;
-  role: MyRoleType;
+  isHost: ChallengeCardProps["isHost"];
 }
 
 const btnClass = "w-full md:px-6 md:py-3 md:text-base md:rounded-[12px]";
@@ -21,7 +20,7 @@ export default function MyChallengeCardButton({
   id,
   status,
   participationStatus,
-  role,
+  isHost,
 }: MyChallengeCardButtonProps) {
   const router = useRouter();
 
@@ -44,7 +43,7 @@ export default function MyChallengeCardButton({
   }
 
   // 3. HOST
-  if (role === "HOST") {
+  if (isHost) {
     if (status === "IN_PROGRESS") {
       return (
         <GradientButton

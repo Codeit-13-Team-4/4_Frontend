@@ -3,23 +3,20 @@
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { MyRoleType } from "@/features/mypage/model/mypage.types";
-import { useGetMyChallenges } from "@/features/mypage/hooks/useGetMyChallenges";
-import MyChallengeCard from "./MyChallengeCard";
-import MyChallengeCardSkeleton from "./MyChallengeCardSkeleton";
-import MyChallengeEmpty from "./MyChallengeEmpty";
+import { useGetMyProjects } from "@/features/mypage/hooks/useGetMyProjects";
+import MyProjectCard from "./MyProjectCard";
+import MyProjectCardSkeleton from "./MyProjectCardSkeleton";
+import MyProjectEmpty from "./MyProjectEmpty";
 import { Spinner } from "@/shared/ui";
 
-interface MyChallengeListProps {
+interface MyProjectListProps {
   role: MyRoleType;
   status: string;
 }
 
-export default function MyChallengeList({
-  role,
-  status,
-}: MyChallengeListProps) {
+export default function MyProjectList({ role, status }: MyProjectListProps) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useGetMyChallenges(role, status);
+    useGetMyProjects(role, status);
 
   const { ref, inView } = useInView();
 
@@ -29,27 +26,27 @@ export default function MyChallengeList({
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const challenges = data?.pages.flatMap((page) => page.data) ?? [];
+  const projects = data?.pages.flatMap((page) => page.data) ?? [];
 
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {Array.from({ length: 6 }).map((_, i) => (
-          <MyChallengeCardSkeleton key={i} />
+          <MyProjectCardSkeleton key={i} />
         ))}
       </div>
     );
   }
 
-  if (challenges.length === 0) {
-    return <MyChallengeEmpty />;
+  if (projects.length === 0) {
+    return <MyProjectEmpty />;
   }
 
   return (
     <div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {challenges.map((challenge) => (
-          <MyChallengeCard key={challenge.id} data={challenge} role={role} />
+        {projects.map((project) => (
+          <MyProjectCard key={project.id} data={project} role={role} />
         ))}
       </div>
 
