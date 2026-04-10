@@ -1,7 +1,8 @@
 import { getQueryClient } from "@/app/providers/getQueryClient";
-import { getLikedChallengeListServer } from "./getLikedChallengeList.server";
 import type { LikedChallengeFilter } from "@/features/liked/model";
 import { likedChallengeKeys } from "@/features/liked/model";
+import { getLikedChallengeListServer } from "./getLikedChallengeList.server";
+import { LIKED_PER_PAGE } from "./liked.constants";
 
 export async function prefetchLikedChallengeList(
   filters: LikedChallengeFilter,
@@ -14,7 +15,7 @@ export async function prefetchLikedChallengeList(
       getLikedChallengeListServer({
         ...filters,
         start: pageParam,
-        perPage: 10,
+        perPage: LIKED_PER_PAGE,
       }),
     initialPageParam: 0,
   });
