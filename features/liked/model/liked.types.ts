@@ -9,7 +9,6 @@ import type {
   TechStackType,
 } from "@/features/projects/model";
 
-export type LikedSortOrder = "ASC" | "DESC";
 export type LikedSortType = "latest" | "popular" | "deadline" | "oldest";
 
 export interface LikedChallengeFilter {
