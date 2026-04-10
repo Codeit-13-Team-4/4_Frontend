@@ -1,28 +1,29 @@
 import { Badge } from "@/shared/ui";
 import { MyParticipationStatus } from "@/features/challenges/model";
+import { ChallengeCardProps } from "@/features/challenges/model";
+import { MyRoleType } from "@/features/mypage/model/mypage.types";
 
-interface MyStatusBadgeProps {
-  status: string;
+interface MyChallengeStatusBadgeProps {
+  role: MyRoleType;
+  status: ChallengeCardProps["status"];
   participationStatus: MyParticipationStatus;
 }
 
 const badgeClass = "px-3 py-2.5 text-sm";
 
-export default function MyStatusBadge({
+export default function MyChallengeStatusBadge({
+  role,
   status,
   participationStatus,
-}: MyStatusBadgeProps) {
-  const normalizedStatus = status.toLowerCase();
-
-  // if (participationStatus === "REJECTED") {
-  //   return (
-  //     <Badge variant="rejected" className={badgeClass}>
-  //       거절됨
-  //     </Badge>
-  //   );
-  // }
-
-  if (participationStatus === "PENDING") {
+}: MyChallengeStatusBadgeProps) {
+  if (role === "PENDING") {
+    if (participationStatus === "REJECTED") {
+      return (
+        <Badge variant="rejected" className={badgeClass}>
+          거절됨
+        </Badge>
+      );
+    }
     return (
       <Badge
         variant="approve"
@@ -33,7 +34,7 @@ export default function MyStatusBadge({
     );
   }
 
-  if (normalizedStatus === "completed") {
+  if (status === "COMPLETED") {
     return (
       <Badge variant="closed" className={badgeClass}>
         종료
@@ -41,7 +42,7 @@ export default function MyStatusBadge({
     );
   }
 
-  if (normalizedStatus === "recruitment_closed") {
+  if (status === "RECRUITMENT_CLOSED") {
     return (
       <Badge variant="closed" className={badgeClass}>
         모집 종료
@@ -49,7 +50,7 @@ export default function MyStatusBadge({
     );
   }
 
-  if (normalizedStatus === "in_progress") {
+  if (status === "IN_PROGRESS") {
     return (
       <Badge
         variant="recruit"

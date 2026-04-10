@@ -2,13 +2,13 @@ import {
   ChallengeCardProps,
   VERIFICATION_FREQUENCY_LABEL,
 } from "@/features/challenges/model";
-import { MyRoleType } from "@/features/mypage/model/mypage.types";
 import { useRouter } from "next/navigation";
 import { Crown } from "@/shared/icons";
-import MyStatusBadge from "../MyStatusBadge";
+import MyChallengeStatusBadge from "./MyChallengeStatusBadge";
 import { DeadlineBadge, LikeButton, Progress } from "@/shared/ui";
 import MyChallengeCardButton from "./MyChallengeCardButton";
 import { useToggleMyChallengeLike } from "@/features/mypage/hooks/useToggleMyChallengeLike";
+import { MyRoleType } from "@/features/mypage/model/mypage.types";
 
 interface MyChallengeCardProps {
   data: ChallengeCardProps;
@@ -31,7 +31,8 @@ export default function MyChallengeCard({ data, role }: MyChallengeCardProps) {
     >
       {/* 상태배지, 찜하기 */}
       <header className="mb-4 flex items-center justify-between">
-        <MyStatusBadge
+        <MyChallengeStatusBadge
+          role={role}
           status={data.status}
           participationStatus={data.myParticipationStatus}
         />
@@ -39,7 +40,7 @@ export default function MyChallengeCard({ data, role }: MyChallengeCardProps) {
           className="flex items-center gap-2"
           onClick={(e) => e.stopPropagation()}
         >
-          {role === "HOST" ? (
+          {data.isHost ? (
             <Crown />
           ) : (
             <LikeButton
@@ -100,7 +101,7 @@ export default function MyChallengeCard({ data, role }: MyChallengeCardProps) {
           id={data.id}
           status={data.status}
           participationStatus={data.myParticipationStatus}
-          role={role}
+          isHost={data.isHost}
         />
       </footer>
     </article>

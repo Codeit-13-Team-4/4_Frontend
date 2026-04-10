@@ -13,6 +13,7 @@ const badgeVariants = cva(
         approve: "bg-gray-800 border border-amber-200 text-amber-200",
         deadline: "border-none bg-gray-700 text-mint-500",
         dday: "border-none bg-gray-700 text-pink-400",
+        rejected: "bg-red-900 border-none text-red-500",
       },
       size: {
         default: "text-md",
