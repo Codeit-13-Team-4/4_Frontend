@@ -2,7 +2,6 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import {
   ChallengeCardProps,
   CHALLENGES_STATUS,
@@ -10,10 +9,10 @@ import {
 } from "@/features/challenges/model";
 import { challengeKeys } from "@/features/challenges/model/challenges.queryKey";
 import { ChallengesBadge } from "@/features/challenges/ui";
+import { useLikeLoginGuard } from "@/features/liked/hooks/useLikeLoginGuard";
 import { toggleChallengeLike } from "@/features/challengesDetail/api/toggleChallengeLike";
 import { likedChallengeKeys } from "@/features/liked/model";
 import { CommentIcon, Eyeopen } from "@/shared/icons";
-import { useOpenAlertModal } from "@/shared/store/AlertModal";
 import { DeadlineBadge, LikeButton, Progress, StatusBadge } from "@/shared/ui";
 
 export function LikedChallengeCard({ data }: { data: ChallengeCardProps }) {
@@ -34,8 +33,7 @@ export function LikedChallengeCard({ data }: { data: ChallengeCardProps }) {
 
   const router = useRouter();
   const queryClient = useQueryClient();
-  const openAlertModal = useOpenAlertModal();
-  const { data: userData } = useUserData();
+  const requireLikeLogin = useLikeLoginGuard();
   const { mutate: toggleLike, isPending } = useMutation({
     mutationFn: (currentLiked: boolean) =>
       toggleChallengeLike(id, currentLiked),
@@ -47,21 +45,7 @@ export function LikedChallengeCard({ data }: { data: ChallengeCardProps }) {
   });
 
   const handleLikeToggle = () => {
-    if (!userData) {
-      openAlertModal({
-        title: "로그인이 필요합니다",
-        description: "좋아요 기능은 로그인 후 이용할 수 있습니다.",
-        positive: {
-          text: "로그인하기",
-          button: { type: "default", variant: "primary" },
-        },
-        negative: { text: "취소" },
-        onPositive: () => router.push("/login"),
-      });
-      return;
-    }
-
-    toggleLike(isLiked);
+    requireLikeLogin(() => toggleLike(isLiked));
   };
 
   const handleCardClick = () => {
