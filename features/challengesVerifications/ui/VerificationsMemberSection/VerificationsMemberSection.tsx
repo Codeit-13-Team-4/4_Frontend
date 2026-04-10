@@ -3,6 +3,7 @@ import { Button, Progress } from "@/shared/ui";
 import { MemberProgressBar } from "./MemberProgressBar";
 
 const isHost = true;
+const canCreate = true;
 export function VerificationsMemberSection() {
   return (
     <section className="grid gap-5 md:h-90 md:grid-cols-[0.8fr_1fr]">
@@ -23,8 +24,13 @@ export function VerificationsMemberSection() {
             </span>
           </div>
         </div>
-        <Button variant="primary" className="mt-auto w-full">
-          오늘 인증하기
+
+        <Button
+          variant="primary"
+          disabled={!canCreate}
+          className="mt-auto w-full"
+        >
+          {canCreate ? "오늘 인증하기" : "오늘 인증완료"}
         </Button>
       </div>
       <div className="overflow-hidden rounded-[20px] bg-gray-800 p-5">

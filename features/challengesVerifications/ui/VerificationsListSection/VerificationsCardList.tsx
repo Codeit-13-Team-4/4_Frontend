@@ -32,18 +32,18 @@ export function VerificationsCardList({
     );
   }
 
-  if (data.length === 0)
-    return (
-      <div className="mt-21 flex flex-col items-center justify-center gap-6 text-gray-400">
-        <Image
-          src="/images/img_empty.png"
-          alt="인증 내역 없음"
-          width={120}
-          height={70}
-        />
-        아직 팀원들의 인증 내역이 없어요.
-      </div>
-    );
+  // if (data.length === 0)
+  //   return (
+  //     <div className="mt-21 flex flex-col items-center justify-center gap-6 text-gray-400">
+  //       <Image
+  //         src="/images/img_empty.png"
+  //         alt="인증 내역 없음"
+  //         width={120}
+  //         height={70}
+  //       />
+  //       아직 팀원들의 인증 내역이 없어요.
+  //     </div>
+  //   );
 
   return (
     <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
