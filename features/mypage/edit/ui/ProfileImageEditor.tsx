@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Image from "next/image";
 import { PencilIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui";
-import { useUploadProfileImage } from "../hooks/useUploadProfileImage";
+import { useUploadImage } from "@/shared/hooks/useUploadImage";
+import { AvatarIcon } from "@/shared/icons";
 
 interface Props {
   value: string | null;
@@ -14,7 +14,7 @@ interface Props {
 export default function ProfileImageEditor({ value, onChange }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const { mutateAsync, isPending } = useUploadProfileImage();
+  const { mutateAsync, isPending } = useUploadImage();
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -40,13 +40,7 @@ export default function ProfileImageEditor({ value, onChange }: Props) {
         <Avatar size="lg" className="size-20 md:size-28">
           <AvatarImage src={preview ?? value ?? ""} alt="프로필 이미지" />
           <AvatarFallback>
-            <Image
-              src="/common/avatar/default-avatar-xl.svg"
-              alt="기본 아바타"
-              width={120}
-              height={120}
-              priority
-            />
+            <AvatarIcon width={120} height={120} className="text-gray-800" />
           </AvatarFallback>
         </Avatar>
 
