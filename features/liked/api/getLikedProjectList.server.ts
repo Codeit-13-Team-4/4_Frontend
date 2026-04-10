@@ -1,5 +1,6 @@
 import { ApiError } from "@/shared/lib/errors/ApiError";
 import { fetchWithAuthRetry } from "@/shared/lib/server/auth";
+import { LIKED_BACKEND_PER_PAGE } from "./liked.constants";
 import type {
   BackendLikedProjectListResponse,
   LikedProjectCardData,
@@ -10,7 +11,6 @@ import type {
 } from "@/features/liked/model";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const BACKEND_PER_PAGE = 50;
 
 function createSearchParams(filters: LikedProjectFilter) {
   const params = new URLSearchParams({
@@ -101,21 +101,30 @@ async function fetchProjectViewCount(projectId: number) {
   }
 }
 
+async function fetchProjectViewCounts(projectIds: number[]) {
+  const uniqueProjectIds = [...new Set(projectIds)];
+  const viewCountEntries = await Promise.all(
+    uniqueProjectIds.map(
+      async (projectId) =>
+        [projectId, await fetchProjectViewCount(projectId)] as const,
+    ),
+  );
+
+  return new Map(viewCountEntries);
+}
+
 async function sortProjectCards(
   projectCards: LikedProjectCardData[],
   sort: LikedSortType | undefined,
 ) {
   if (sort === "popular") {
-    const cardsWithViewCount = await Promise.all(
-      projectCards.map(async (project) => ({
-        project,
-        viewCount: await fetchProjectViewCount(project.id),
-      })),
+    const viewCounts = await fetchProjectViewCounts(
+      projectCards.map(({ id }) => id),
     );
 
-    return cardsWithViewCount
-      .sort((a, b) => b.viewCount - a.viewCount)
-      .map(({ project }) => project);
+    return [...projectCards].sort(
+      (a, b) => (viewCounts.get(b.id) ?? 0) - (viewCounts.get(a.id) ?? 0),
+    );
   }
 
   if (sort === "deadline") {
@@ -138,17 +147,17 @@ async function fetchAllLikedProjectEntries(filters: LikedProjectFilter) {
     const page = await fetchLikedProjectPage({
       ...filters,
       start,
-      perPage: BACKEND_PER_PAGE,
+      perPage: LIKED_BACKEND_PER_PAGE,
     });
 
     total = page.total;
     entries.push(...page.data);
 
-    if (page.data.length < BACKEND_PER_PAGE) {
+    if (page.data.length < LIKED_BACKEND_PER_PAGE) {
       break;
     }
 
-    start += BACKEND_PER_PAGE;
+    start += LIKED_BACKEND_PER_PAGE;
   } while (start < total);
 
   return entries;
