@@ -1,23 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ApiError } from "@/shared/lib/errors/ApiError";
+import {
+  LIKED_DEFAULT_START,
+  LIKED_PER_PAGE,
+} from "@/features/liked/api/liked.constants";
 import { getLikedProjectListServer } from "@/features/liked/api/getLikedProjectList.server";
 import {
-  parseLikedSortParam,
+  parseLikedSort,
   parseNumberParam,
-} from "@/features/liked/api/likedRouteParsers";
+} from "@/features/liked/lib/likedSearchParams";
 import type { LikedProjectFilter } from "@/features/liked/model";
-
-const DEFAULT_START = 0;
-const DEFAULT_PER_PAGE = 10;
 
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
 
     const filters: LikedProjectFilter = {
-      start: parseNumberParam(searchParams.get("start"), DEFAULT_START),
-      perPage: parseNumberParam(searchParams.get("perPage"), DEFAULT_PER_PAGE),
-      sort: parseLikedSortParam(searchParams.get("sort")),
+      start: parseNumberParam(searchParams.get("start"), LIKED_DEFAULT_START),
+      perPage: parseNumberParam(searchParams.get("perPage"), LIKED_PER_PAGE),
+      sort: parseLikedSort(searchParams.get("sort")),
       status: searchParams.get("status") ?? undefined,
       projectType: searchParams.getAll("projectType"),
       positions: searchParams.getAll("positions"),
