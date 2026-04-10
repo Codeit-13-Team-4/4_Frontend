@@ -1,9 +1,9 @@
-import { VerifyListSection } from "@/features/challengesVerify/ui/VerifyListSection/VerifyListSection";
-import { VerifyMemberSection } from "@/features/challengesVerify/ui/VerifyMemberSection/VerifyMemberSection";
+import { VerificationsListSection } from "@/features/challengesVerifications/ui/VerificationsListSection/VerificationsListSection";
+import { VerificationsMemberSection } from "@/features/challengesVerifications/ui/VerificationsMemberSection/VerificationsMemberSection";
 import { ChevronLeftIcon } from "@/shared/icons";
 import Link from "next/link";
 
-export default async function VerifyPage({
+export default async function VerificationsPage({
   params,
 }: {
   params: Promise<{ challengeId: string }>;
@@ -20,8 +20,8 @@ export default async function VerifyPage({
           챌린지의 제목
         </h2>
       </header>
-      <VerifyMemberSection />
-      <VerifyListSection />
+      <VerificationsMemberSection />
+      <VerificationsListSection />
     </div>
   );
 }

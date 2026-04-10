@@ -3,7 +3,7 @@ import { Button, Progress } from "@/shared/ui";
 import { MemberProgressBar } from "./MemberProgressBar";
 
 const isHost = true;
-export function VerifyMemberSection() {
+export function VerificationsMemberSection() {
   return (
     <section className="grid gap-5 md:h-90 md:grid-cols-[0.8fr_1fr]">
       <div className="flex flex-col gap-5 rounded-[20px] bg-gray-800 p-5">
