@@ -56,7 +56,7 @@ export default async function LikedPage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <main className="flex flex-col pt-12">
+      <section className="flex flex-col pt-12">
         <div className="mb-10">
           <h4 className="text-[18px] font-semibold text-gray-50 md:text-[30px]">
             {PAGE_TITLE}
@@ -84,7 +84,7 @@ export default async function LikedPage({
         )}
 
         <div className="pointer-events-none fixed right-0 bottom-0 left-0 z-40 h-30 bg-linear-to-b from-gray-900/0 to-gray-900" />
-      </main>
+      </section>
     </HydrationBoundary>
   );
 }
