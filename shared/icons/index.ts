@@ -37,3 +37,4 @@ export { Search } from "./Search";
 export { ChallengeIcon } from "./ChallengeIcon";
 export { Folder } from "./Folder";
 export { PlusIcon } from "./PlusIcon";
+export { ImageIcon } from "./ImageIcon";
