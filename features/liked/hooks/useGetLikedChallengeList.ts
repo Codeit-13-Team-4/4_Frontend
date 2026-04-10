@@ -1,11 +1,10 @@
 "use client";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { LIKED_PER_PAGE } from "../api/liked.constants";
 import { getLikedChallengeList } from "../api/getLikedChallengeList";
 import type { LikedChallengeFilter } from "../model";
 import { likedChallengeKeys } from "../model";
-
-const PER_PAGE = 10;
 
 export function useGetLikedChallengeList(filters: LikedChallengeFilter = {}) {
   return useInfiniteQuery({
@@ -14,11 +13,11 @@ export function useGetLikedChallengeList(filters: LikedChallengeFilter = {}) {
       getLikedChallengeList({
         ...filters,
         start: pageParam,
-        perPage: PER_PAGE,
+        perPage: LIKED_PER_PAGE,
       }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
-      const nextStart = allPages.length * PER_PAGE;
+      const nextStart = allPages.length * LIKED_PER_PAGE;
 
       return nextStart < lastPage.total ? nextStart : undefined;
     },

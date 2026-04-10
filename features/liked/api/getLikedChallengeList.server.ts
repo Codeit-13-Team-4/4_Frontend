@@ -2,6 +2,7 @@ import type { ChallengeCardProps } from "@/features/challenges/model";
 import type { ChallengesDetail } from "@/features/challengesDetail/types/challengesDetail";
 import { ApiError } from "@/shared/lib/errors/ApiError";
 import { fetchWithAuthRetry } from "@/shared/lib/server/auth";
+import { LIKED_BACKEND_PER_PAGE } from "./liked.constants";
 import type {
   BackendLikedChallengeListResponse,
   LikedChallengeFilter,
@@ -11,7 +12,6 @@ import type {
 } from "@/features/liked/model";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const BACKEND_PER_PAGE = 50;
 
 function createSearchParams(filters: LikedChallengeFilter) {
   const params = new URLSearchParams({
@@ -153,17 +153,17 @@ async function fetchAllLikedChallengeEntries(filters: LikedChallengeFilter) {
     const page = await fetchLikedChallengePage({
       ...filters,
       start,
-      perPage: BACKEND_PER_PAGE,
+      perPage: LIKED_BACKEND_PER_PAGE,
     });
 
     total = page.total;
     entries.push(...page.data);
 
-    if (page.data.length < BACKEND_PER_PAGE) {
+    if (page.data.length < LIKED_BACKEND_PER_PAGE) {
       break;
     }
 
-    start += BACKEND_PER_PAGE;
+    start += LIKED_BACKEND_PER_PAGE;
   } while (start < total);
 
   return entries;

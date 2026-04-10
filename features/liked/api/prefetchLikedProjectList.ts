@@ -2,6 +2,7 @@ import { getQueryClient } from "@/app/providers/getQueryClient";
 import type { LikedProjectFilter } from "@/features/liked/model";
 import { likedProjectKeys } from "@/features/liked/model";
 import { getLikedProjectListServer } from "./getLikedProjectList.server";
+import { LIKED_PER_PAGE } from "./liked.constants";
 
 export async function prefetchLikedProjectList(filters: LikedProjectFilter) {
   const queryClient = getQueryClient();
@@ -12,7 +13,7 @@ export async function prefetchLikedProjectList(filters: LikedProjectFilter) {
       getLikedProjectListServer({
         ...filters,
         start: pageParam,
-        perPage: 10,
+        perPage: LIKED_PER_PAGE,
       }),
     initialPageParam: 0,
   });
