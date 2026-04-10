@@ -1,29 +1,41 @@
 "use client";
 
 import Link from "next/link";
+import { useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { cn } from "@/shared/utils";
 
+const PROJECT_TAB_VALUE = "project";
+
 export function LikedTabs() {
   const searchParams = useSearchParams();
-  const isProject = searchParams.get("tab") === "project";
-  const challengeParams = new URLSearchParams(searchParams.toString());
-  const projectParams = new URLSearchParams(searchParams.toString());
+  const searchParamsString = searchParams.toString();
+  const { challengeHref, projectHref, isProject } = useMemo(() => {
+    const currentParams = new URLSearchParams(searchParamsString);
+    const challengeParams = new URLSearchParams(searchParamsString);
+    const projectParams = new URLSearchParams(searchParamsString);
+    const isProject = currentParams.get("tab") === PROJECT_TAB_VALUE;
 
-  challengeParams.delete("tab");
-  challengeParams.delete("projectType");
-  challengeParams.delete("positions");
-  challengeParams.delete("status");
-  challengeParams.delete("order");
-  projectParams.set("tab", "project");
-  projectParams.delete("participationType");
-  projectParams.delete("status");
-  projectParams.delete("order");
+    challengeParams.delete("tab");
+    challengeParams.delete("projectType");
+    challengeParams.delete("positions");
+    challengeParams.delete("status");
+    challengeParams.delete("order");
 
-  const challengeQuery = challengeParams.toString();
-  const projectQuery = projectParams.toString();
-  const challengeHref = challengeQuery ? `/liked?${challengeQuery}` : "/liked";
-  const projectHref = projectQuery ? `/liked?${projectQuery}` : "/liked";
+    projectParams.set("tab", PROJECT_TAB_VALUE);
+    projectParams.delete("participationType");
+    projectParams.delete("status");
+    projectParams.delete("order");
+
+    const challengeQuery = challengeParams.toString();
+    const projectQuery = projectParams.toString();
+
+    return {
+      challengeHref: challengeQuery ? `/liked?${challengeQuery}` : "/liked",
+      projectHref: projectQuery ? `/liked?${projectQuery}` : "/liked",
+      isProject,
+    };
+  }, [searchParamsString]);
   const isChallenge = !isProject;
 
   return (
