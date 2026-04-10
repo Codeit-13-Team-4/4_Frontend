@@ -1,10 +1,14 @@
+"use client";
 import { AvatarIcon, Crown, People } from "@/shared/icons";
 import { Button, Progress } from "@/shared/ui";
 import { MemberProgressBar } from "./MemberProgressBar";
+import { useState } from "react";
+import { VerificationsModal } from "../VerificationsModal/VerificationsModal";
 
 const isHost = true;
 const canCreate = true;
 export function VerificationsMemberSection() {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <section className="grid gap-5 md:h-90 md:grid-cols-[0.8fr_1fr]">
       <div className="flex flex-col gap-5 rounded-[20px] bg-gray-800 p-5">
@@ -29,6 +33,7 @@ export function VerificationsMemberSection() {
           variant="primary"
           disabled={!canCreate}
           className="mt-auto w-full"
+          onClick={() => setIsOpen(true)}
         >
           {canCreate ? "오늘 인증하기" : "오늘 인증완료"}
         </Button>
@@ -58,6 +63,11 @@ export function VerificationsMemberSection() {
           <MemberProgressBar />
         </div>
       </div>
+      <VerificationsModal
+        open={isOpen}
+        setIsOpen={setIsOpen}
+        onOpenChange={() => setIsOpen(false)}
+      />
     </section>
   );
 }
