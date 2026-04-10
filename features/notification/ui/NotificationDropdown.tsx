@@ -34,9 +34,9 @@ export default function NotificationDropdown() {
       <Dropdown.Trigger asChild>
         <button aria-label="알림">
           {hasUnread ? (
-            <Bell width={24} height={24} className="text-gray-400" />
-          ) : (
             <BellActive width={24} height={24} className="text-gray-400" />
+          ) : (
+            <Bell width={24} height={24} className="text-gray-400" />
           )}
         </button>
       </Dropdown.Trigger>
