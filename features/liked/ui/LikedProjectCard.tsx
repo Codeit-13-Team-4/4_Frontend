@@ -1,17 +1,20 @@
 "use client";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useLikeLoginGuard } from "@/features/liked/hooks/useLikeLoginGuard";
-import type { LikedProjectCardData } from "@/features/liked/model";
+import { useOptimisticLikedToggle } from "@/features/liked/hooks/useOptimisticLikedToggle";
+import {
+  likedProjectKeys,
+  type LikedProjectCardData,
+} from "@/features/liked/model";
 import { toggleProjectLike } from "@/features/projectsDetail/api/toggleProjectLike";
 import { projectKeys } from "@/features/projects/model/projects.queryKey";
+import type { ProjectDetail } from "@/features/projectsDetail/types/projectsDetail";
 import {
   PositionBadgeList,
   ProjectBadge,
   TechStackList,
 } from "@/features/projects/ui";
-import { likedProjectKeys } from "@/features/liked/model";
 import { DeadlineBadge, LikeButton, StatusBadge } from "@/shared/ui";
 
 export function LikedProjectCard({ data }: { data: LikedProjectCardData }) {
@@ -28,15 +31,17 @@ export function LikedProjectCard({ data }: { data: LikedProjectCardData }) {
   } = data;
 
   const router = useRouter();
-  const queryClient = useQueryClient();
   const requireLikeLogin = useLikeLoginGuard();
-  const { mutate: toggleLike, isPending } = useMutation({
+  const { mutate: toggleLike, isPending } = useOptimisticLikedToggle<
+    LikedProjectCardData,
+    ProjectDetail
+  >({
+    itemId: id,
+    detailQueryKey: projectKeys.detail(id),
+    likedListsQueryKey: likedProjectKeys.lists(),
+    additionalInvalidateQueryKeys: [projectKeys.lists()],
     mutationFn: (currentLiked: boolean) => toggleProjectLike(id, currentLiked),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: likedProjectKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: projectKeys.detail(id) });
-      queryClient.invalidateQueries({ queryKey: projectKeys.lists() });
-    },
+    updateDetail: (detail, nextLiked) => ({ ...detail, liked: nextLiked }),
   });
 
   const handleLikeToggle = () => {
