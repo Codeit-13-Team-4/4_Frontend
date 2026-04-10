@@ -12,6 +12,7 @@ import {
 import { Separator } from "@/shared/ui";
 import MyChallengeList from "@/features/mypage/ui/listSection/challenges/MyChallengeList";
 import MyProjectList from "@/features/mypage/ui/listSection/projects/MyProjectList";
+import MyCommentList from "@/features/mypage/ui/listSection/comments/MyCommentList";
 
 export default function MyListSection() {
   const [tab, setTab] = useState<MyTab>("challenges");
@@ -59,7 +60,7 @@ export default function MyListSection() {
       </div>
       {tab === "challenges" && <MyChallengeList role={role} status={status} />}
       {tab === "projects" && <MyProjectList role={role} status={status} />}
-      {/* {tab === "comments" && <MyCommentList />} */}
+      {tab === "comments" && <MyCommentList />}
     </div>
   );
 }
