@@ -4,6 +4,7 @@ import { Dropdown } from "@/shared/ui";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChevronDownIcon, ChevronUpIcon } from "@/shared/icons";
+import { parseLikedSort } from "@/features/liked/lib/likedSearchParams";
 import type { LikedSortType } from "../model";
 
 const LIKED_SORT_LABEL: Record<LikedSortType, string> = {
@@ -17,12 +18,7 @@ export function LikedSortDropdown() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const currentSort =
-    searchParams.get("sort") === "popular" ||
-    searchParams.get("sort") === "deadline" ||
-    searchParams.get("sort") === "oldest"
-      ? (searchParams.get("sort") as LikedSortType)
-      : "latest";
+  const currentSort = parseLikedSort(searchParams.get("sort")) ?? "latest";
 
   const handleChange = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
