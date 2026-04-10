@@ -2,7 +2,7 @@
 import { useState } from "react";
 import VerificationsCard from "./VerificationsCard";
 import { VerificationsStatusTab } from "./VerificationsStatusTab";
-import { VerificationsSkeletonCard } from "./VerificationsSkeletonCard";
+import { VerificationsCardList } from "./VerificationsCardList";
 
 export type VerificationsTabType = "PENDING" | "REJECTED" | "COMPLETED";
 
@@ -20,12 +20,9 @@ export function VerificationsListSection() {
         <VerificationsStatusTab status={status} onStatusChange={setStatus} />
       )}
 
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        <VerificationsCard />
-        <VerificationsCard />
-        <VerificationsCard />
-        <VerificationsSkeletonCard />
-      </div>
+      <VerificationsCardList status={status} />
+      {/* <VerificationsCard />
+        <VerificationsCard /> */}
     </div>
   );
 }
