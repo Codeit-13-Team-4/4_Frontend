@@ -16,15 +16,15 @@ export default function VerifyCard() {
     const el = descriptionRef.current;
     if (!el) return;
 
-    const checkOverflow = () => {
-      setIsOverflow(el.scrollHeight > el.clientHeight);
-    };
+    const observer = new ResizeObserver(() => {
+      if (el.scrollHeight > el.clientHeight) {
+        setIsOverflow(true);
+      }
+    });
 
-    checkOverflow();
-
-    window.addEventListener("resize", checkOverflow);
-    return () => window.removeEventListener("resize", checkOverflow);
-  }, [description]);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const handleApprove = () => {
     console.log("승인");
