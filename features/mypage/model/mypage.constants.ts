@@ -88,5 +88,5 @@ export const MY_CHALLENGE_STATUS_FILTERS = [
 export const MY_PROJECT_STATUS_FILTERS = [
   { value: "", label: "전체" },
   { value: "recruiting", label: "모집중" },
-  { value: "recruitment_closed", label: "모집 완료" },
+  { value: "recruitment_closed", label: "모집 종료" },
 ] as const;
