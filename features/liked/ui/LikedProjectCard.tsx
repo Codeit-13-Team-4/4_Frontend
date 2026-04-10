@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useUserData } from "@/features/auth/hooks/queries/useUserData";
+import { useLikeLoginGuard } from "@/features/liked/hooks/useLikeLoginGuard";
 import type { LikedProjectCardData } from "@/features/liked/model";
 import { toggleProjectLike } from "@/features/projectsDetail/api/toggleProjectLike";
 import { projectKeys } from "@/features/projects/model/projects.queryKey";
@@ -12,7 +12,6 @@ import {
   TechStackList,
 } from "@/features/projects/ui";
 import { likedProjectKeys } from "@/features/liked/model";
-import { useOpenAlertModal } from "@/shared/store/AlertModal";
 import { DeadlineBadge, LikeButton, StatusBadge } from "@/shared/ui";
 
 export function LikedProjectCard({ data }: { data: LikedProjectCardData }) {
@@ -30,8 +29,7 @@ export function LikedProjectCard({ data }: { data: LikedProjectCardData }) {
 
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { data: userData } = useUserData();
-  const openAlertModal = useOpenAlertModal();
+  const requireLikeLogin = useLikeLoginGuard();
   const { mutate: toggleLike, isPending } = useMutation({
     mutationFn: (currentLiked: boolean) => toggleProjectLike(id, currentLiked),
     onSuccess: () => {
@@ -42,21 +40,7 @@ export function LikedProjectCard({ data }: { data: LikedProjectCardData }) {
   });
 
   const handleLikeToggle = () => {
-    if (!userData) {
-      openAlertModal({
-        title: "로그인이 필요합니다",
-        description: "좋아요 기능은 로그인 후 이용할 수 있습니다.",
-        positive: {
-          text: "로그인하기",
-          button: { type: "default", variant: "primary" },
-        },
-        negative: { text: "취소" },
-        onPositive: () => router.push("/login"),
-      });
-      return;
-    }
-
-    toggleLike(liked);
+    requireLikeLogin(() => toggleLike(liked));
   };
 
   const handleCardClick = () => {
