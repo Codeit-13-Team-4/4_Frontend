@@ -1,24 +1,24 @@
 "use client";
-
-import { useRouter } from "next/navigation";
+import {
+  buildCurrentPath,
+  buildLoginPath,
+} from "@/features/auth/lib/authRedirect";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { DeadlineBadge, LikeButton, Progress } from "@/shared/ui";
+import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import {
   ChallengeCardProps,
   VERIFICATION_FREQUENCY_LABEL,
 } from "@/features/challenges/model";
-import { challengeKeys } from "@/features/challenges/model/challenges.queryKey";
 import {
   ChallengesJoinTypeBadge,
   ChallengesStatusBadge,
 } from "@/features/challenges/ui";
-import type { ChallengesDetail } from "@/features/challenges/detail/model/challengesDetail";
-import { useLikeLoginGuard } from "@/features/liked/hooks/useLikeLoginGuard";
-import { useOptimisticLikedToggle } from "@/features/liked/hooks/useOptimisticLikedToggle";
-import { toggleChallengeLike } from "@/features/challenges/detail/api/toggleChallengeLike";
-import { likedChallengeKeys } from "@/features/liked/model";
+import { useToggleChallengeLike } from "@/features/challenges/detail/hooks/useToggleChallengeLike";
+import { useOpenAlertModal } from "@/shared/store/AlertModal";
 import { CommentIcon, Eyeopen } from "@/shared/icons";
-import { DeadlineBadge, LikeButton, Progress } from "@/shared/ui";
 
-export function LikedChallengeCard({ data }: { data: ChallengeCardProps }) {
+export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
   const {
     id,
     title,
@@ -35,22 +35,29 @@ export function LikedChallengeCard({ data }: { data: ChallengeCardProps }) {
   } = data;
 
   const router = useRouter();
-  const requireLikeLogin = useLikeLoginGuard();
-  const { mutate: toggleLike, isPending } = useOptimisticLikedToggle<
-    ChallengeCardProps,
-    ChallengesDetail
-  >({
-    itemId: id,
-    detailQueryKey: challengeKeys.detail(id),
-    likedListsQueryKey: likedChallengeKeys.lists(),
-    additionalInvalidateQueryKeys: [challengeKeys.lists()],
-    mutationFn: (currentLiked: boolean) =>
-      toggleChallengeLike(id, currentLiked),
-    updateDetail: (detail, nextLiked) => ({ ...detail, isLiked: nextLiked }),
-  });
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const loginPath = buildLoginPath(buildCurrentPath(pathname, searchParams));
+
+  const openAlertModal = useOpenAlertModal();
+  const { data: userData } = useUserData();
+  const { mutate: toggleLike } = useToggleChallengeLike(id);
 
   const handleLikeToggle = () => {
-    requireLikeLogin(() => toggleLike(isLiked));
+    if (!userData) {
+      openAlertModal({
+        title: "로그인이 필요합니다",
+        description: "좋아요 기능은 로그인 후 이용할 수 있습니다.",
+        positive: {
+          text: "로그인하기",
+          button: { type: "default", variant: "primary" },
+        },
+        negative: { text: "취소" },
+        onPositive: () => router.push(loginPath),
+      });
+      return;
+    }
+    toggleLike(isLiked);
   };
 
   const handleCardClick = () => {
@@ -68,15 +75,11 @@ export function LikedChallengeCard({ data }: { data: ChallengeCardProps }) {
           <ChallengesJoinTypeBadge type={participationType} />
         </div>
         <div
-          onClick={(event) => {
-            event.stopPropagation();
+          onClick={(e) => {
+            e.stopPropagation();
           }}
         >
-          <LikeButton
-            liked={isLiked}
-            onToggle={handleLikeToggle}
-            disabled={isPending}
-          />
+          <LikeButton liked={isLiked} onToggle={handleLikeToggle} />
         </div>
       </header>
       <div className="mb-7 flex flex-col">

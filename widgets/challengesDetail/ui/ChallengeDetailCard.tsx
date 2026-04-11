@@ -5,8 +5,8 @@ import {
   ChallengeDetailLeftPanel,
   ChallengeDetailRightPanel,
   ChallengeDetailFooter,
-} from "@/features/challengesDetail/ui/ChallengeDetailCard";
-import { useChallengesDetail } from "@/features/challengesDetail/hooks/useChallengesDetail";
+} from "@/features/challenges/detail/ui/ChallengeDetailCard";
+import { useChallengesDetail } from "@/features/challenges/detail/hooks/useChallengesDetail";
 import ChallengeDetailCardSkeleton from "@/widgets/challengesDetail/ui/ChallengeDetailCardSkeleton";
 import BackButton from "@/widgets/projectsDetail/ui/BackButton";
 import DeleteChallengeButton from "@/widgets/challengesDetail/ui/DeleteChallengeButton";
