@@ -1,8 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useDeleteChallengesDetail } from "@/features/challengesDetail/hooks/useDeleteChallengesDetail";
+import { useDeleteChallengesDetail } from "@/features/challenges/detail/hooks/useDeleteChallengesDetail";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
 import { Button } from "@/shared/ui";
 import { Trash } from "@/shared/icons";

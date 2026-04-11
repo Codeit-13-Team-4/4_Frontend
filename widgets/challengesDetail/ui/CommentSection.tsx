@@ -1,9 +1,9 @@
 "use client";
 
-import { useChallengesDetailComments } from "@/features/challengesDetail/hooks/useChallengesDetailComments";
-import CommentInput from "@/features/challengesDetail/ui/Comment/CommentInput";
-import CommentItemSkeleton from "@/features/challengesDetail/ui/Comment/CommentItemSkeleton";
-import CommentList from "@/features/challengesDetail/ui/Comment/CommentList";
+import { useChallengesDetailComments } from "@/features/challenges/detail/hooks/useChallengesDetailComments";
+import CommentInput from "@/features/challenges/detail/ui/Comment/CommentInput";
+import CommentItemSkeleton from "@/features/challenges/detail/ui/Comment/CommentItemSkeleton";
+import CommentList from "@/features/challenges/detail/ui/Comment/CommentList";
 
 export default function CommentSection({
   challengeId,
