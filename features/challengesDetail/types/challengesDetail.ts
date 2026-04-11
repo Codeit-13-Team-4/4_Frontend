@@ -1,4 +1,11 @@
 import { User } from "@/shared/types/user";
+import {
+  ParticipationType,
+  VerificationFrequencyType,
+  MyParticipationStatus,
+} from "@/features/challenges/model";
+
+export type { VerificationFrequencyType };
 
 export type ChallengesStatusType =
   | "RECRUITING"
@@ -8,20 +15,9 @@ export type ChallengesStatusType =
 
 export type VerificationMethodType = "IMAGE_AND_TEXT" | "TEXT" | "IMAGE";
 
-export type JoinType = "INSTANT" | "APPROVAL";
+export type JoinType = ParticipationType;
 
-export type VerificationFrequencyType =
-  | "ONCE_A_DAY"
-  | "EVERY_WEEKDAY"
-  | "ONCE_A_WEEK"
-  | "THREE_TIMES_A_WEEK"
-  | "USER_INPUT";
-
-export type MyParticipationStatusType =
-  | "NONE"
-  | "PENDING"
-  | "JOINED"
-  | "REJECTED";
+export type MyParticipationStatusType = MyParticipationStatus;
 
 export interface ChallengesDetail {
   id: number;
