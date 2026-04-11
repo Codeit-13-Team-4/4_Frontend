@@ -7,7 +7,7 @@ const badgeInfo = {
   APPROVAL: { label: "승인 후 참여 가능", icon: Lock, variant: "approve" },
 } as const;
 
-export function ChallengesBadge({ type }: { type: ParticipationType }) {
+export function ChallengesJoinTypeBadge({ type }: { type: ParticipationType }) {
   const { label, icon: Icon, variant } = badgeInfo[type];
 
   return (

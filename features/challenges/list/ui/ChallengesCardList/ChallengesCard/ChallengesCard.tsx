@@ -11,7 +11,7 @@ import {
   VERIFICATION_FREQUENCY_LABEL,
 } from "@/features/challenges/model";
 import {
-  ChallengesBadge,
+  ChallengesJoinTypeBadge,
   ChallengesStatusBadge,
 } from "@/features/challenges/ui";
 import { useToggleChallengeLike } from "@/features/challenges/detail/hooks/useToggleChallengeLike";
@@ -72,7 +72,7 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
       <header className="mb-7 flex items-center justify-between">
         <div className="flex gap-2">
           <ChallengesStatusBadge status={status} />
-          <ChallengesBadge type={participationType} />
+          <ChallengesJoinTypeBadge type={participationType} />
         </div>
         <div
           onClick={(e) => {
