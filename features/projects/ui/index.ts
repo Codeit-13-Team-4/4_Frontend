@@ -21,7 +21,6 @@ export { ProjectPositionDropdown } from "./ProjectDropdown/ProjectPositionDropdo
 export { ProjectCreatePositionDropdown } from "./ProjectDropdown/ProjectCreatePositionDropdown";
 export { CreateCancelAlertModal } from "./ProjectCreateModal/CreateCancelAlertModal";
 export { CreateAlertModal } from "./ProjectCreateModal/CreateAlertModal";
-export { ProjectCreateRangeBar } from "./ProjectCreateRangeBar/ProjectCreateRangeBar";
 export { ProjectContactLinkDropdown } from "./ProjectDropdown/ProjectContactLinkDropdown";
 export { ProjectCreateTagInput } from "./ProjectCreateTagInput/ProjectCreateTagInput";
 export { ProjectCreateForm } from "./ProjectCreateForm/ProjectCreateForm";
