@@ -6,6 +6,7 @@ const createSearchParams = (filters: VerificationsFilter) => {
   const params = new URLSearchParams({
     page: String(page ?? 1),
     limit: String(limit ?? 10),
+    status: status ?? "PENDING",
   });
 
   if (status) params.set("status", status);
