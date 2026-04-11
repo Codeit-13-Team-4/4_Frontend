@@ -21,14 +21,18 @@ export function ChallengesCreateAlertModal({
             이제 멋진 멤버들과 함께 목표를 향해 달려볼까요?
           </AlertModal.Description>
         </AlertModal.Header>
-        <AlertModal.Footer>
+        <AlertModal.Footer className="flex-col sm:flex-row">
           <AlertModal.Cancel asChild>
-            <Link href="/challenges" className="min-w-58">
+            <Link href="/challenges" className="w-full">
               <Button className="h-full w-full">계속 둘러보기</Button>
             </Link>
           </AlertModal.Cancel>
-          <AlertModal.Action className="w-full">
-            <Link href={`/challenges/${id}`}>개설한 챌린지 확인</Link>
+          <AlertModal.Action asChild>
+            <Link href={`/challenges/${id}`} className="w-full">
+              <Button variant="primary" className="h-full w-full">
+                개설한 챌린지 확인
+              </Button>
+            </Link>
           </AlertModal.Action>
         </AlertModal.Footer>
       </AlertModal.Content>
