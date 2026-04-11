@@ -3,18 +3,32 @@ import { AvatarIcon, Check, Meetballs, XIcon } from "@/shared/icons";
 import { Dropdown } from "@/shared/ui";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { VerificationCardProps } from "@/features/challengesVerifications/model";
+import { useGetVerificationsDetail } from "../../hook/useGetVerificationsDetail";
+import Image from "next/image";
+import { formatToDate } from "../../utils/formatToDate";
 
 const isHost = true;
-export default function VerifyCard() {
+export default function VerifyCard({ data }: { data: VerificationCardProps }) {
+  const { verificationId, challengeId } = data;
+
+  // console.log("🚀 ~ VerifyCard ~ challengeId:", challengeId);
+  // console.log("🚀 ~ VerifyCard ~ verificationId:", verificationId);
+
   const [isOverflow, setIsOverflow] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const descriptionRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
-  const description =
-    "여기 각 내용임 두줄넘어가면 더보기해달래요.ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ";
+  const { data: verificationData } = useGetVerificationsDetail({
+    challengeId,
+    verificationId,
+  });
+  // console.log("🚀 ~ VerifyCard ~ verificationData:", verificationData);
+
+  const { content, user, imageUrls, createdAt } = verificationData?.data ?? {};
 
   useEffect(() => {
-    const el = descriptionRef.current;
+    const el = contentRef?.current;
     if (!el) return;
 
     const observer = new ResizeObserver(() => {
@@ -58,14 +72,16 @@ export default function VerifyCard() {
   };
 
   return (
-    <div className="flex h-150 w-full flex-col gap-10 rounded-[20px] border border-gray-700 bg-gray-800 px-5 pt-10 pb-5">
+    <div className="flex max-h-150 w-full flex-col gap-10 rounded-[20px] border border-gray-700 bg-gray-800 px-5 pt-10 pb-5">
       <div className="flex items-center justify-center gap-1.5">
         <AvatarIcon className="text-gray-800" width={52} height={52} />
 
         <div className="flex w-full items-center">
           <div className="flex flex-col">
-            <span className="text-gray-400">닉네임</span>
-            <span className="text-gray-600">1분 전</span>
+            <span className="text-gray-400">{user?.nickname}</span>
+            <span className="text-gray-600">
+              {createdAt && formatToDate(createdAt)}
+            </span>
           </div>
           <div className="ml-auto flex">
             {isHost ? (
@@ -104,16 +120,27 @@ export default function VerifyCard() {
           </div>
         </div>
       </div>
-      <div className="flex-1 rounded-[40px] bg-gray-700"></div>
+      <div className="relative aspect-4/3 overflow-hidden rounded-[40px] bg-red-50">
+        {imageUrls?.length > 0 && imageUrls[0] ? (
+          <Image
+            src="https://devup-bucket.s3.ap-northeast-2.amazonaws.com/13/a4b98e21-69c4-451e-9f9b-da9b9389cfa6.jpg"
+            alt="인증이미지"
+            fill
+          />
+        ) : (
+          <div className="h-full w-full bg-gray-700" />
+        )}
+      </div>
+
       <div className="relative">
         <div
-          ref={descriptionRef}
+          ref={contentRef}
           className={`relative pr-8 leading-6 text-gray-300 ${
             !expanded ? "line-clamp-2" : ""
           }`}
           style={{ maxHeight: !expanded ? "3rem" : "none" }}
         >
-          {description}
+          {content}
         </div>
         {isOverflow && (
           <button
