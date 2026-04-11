@@ -2,10 +2,8 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import {
-  ChallengesFilterButton,
-  ChallengesFilterRadioInput,
-} from "@/features/challenges/ui";
+import { ChallengesFilterRadioInput } from "@/features/challenges/ui";
+import { ChallengesFilterButton } from "@/features/challenges/list/ui/ChallengesFilter/ChallengesFilterButton";
 import { POSITION_LABELS, STATUS_LABEL } from "@/features/projects/model";
 import {
   ProjectFilterButton,
