@@ -26,7 +26,6 @@ export const VERIFICATION_FREQUENCY_LABEL: Record<
   EVERY_WEEKDAY: "평일 매일",
   ONCE_A_WEEK: "주 1회",
   THREE_TIMES_A_WEEK: "주 3회",
-  USER_INPUT: "직접 입력",
 };
 
 export const VERIFICATION_METHOD_LABEL: Record<VerificationMethodType, string> =
