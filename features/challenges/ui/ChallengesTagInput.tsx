@@ -5,15 +5,15 @@ import { Button, Input } from "@/shared/ui";
 import { useState } from "react";
 import { toast } from "sonner";
 
-interface ChallengeCreateTagInputProps {
+interface ChallengesTagInputProps {
   value: string[];
   onChange: (tags: string[]) => void;
 }
 
-export function ChallengesCreateTagInput({
+export function ChallengesTagInput({
   value: tags,
   onChange,
-}: ChallengeCreateTagInputProps) {
+}: ChallengesTagInputProps) {
   const [input, setInput] = useState("");
 
   const handleAddTag = (tag: string) => {
