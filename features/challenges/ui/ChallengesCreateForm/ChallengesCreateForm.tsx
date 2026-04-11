@@ -1,5 +1,11 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { ChevronLeftIcon } from "@/shared/icons";
+import { formatDate } from "@/shared/utils";
 import {
   Button,
   DatePicker,
@@ -8,18 +14,18 @@ import {
   FieldGroup,
   FieldLabel,
   Input,
-  TextArea,
+  TiptapEditor,
 } from "@/shared/ui";
-import { useState } from "react";
-import { DateRange } from "react-day-picker";
-import { formatDate } from "@/shared/utils";
-import { useRouter } from "next/navigation";
+import { useUploadImage } from "@/shared/hooks/useUploadImage";
+
 import { useCreateChallenges } from "../../hooks/useCreateChallenges";
 import {
   JOIN_TYPE_OPTIONS,
-  ParticipationType,
   VERIFICATION_FREQUENCY_LABEL,
+  VERIFICATION_METHOD_OPTIONS,
   VerificationFrequencyType,
+  challengesCreateSchema,
+  ChallengesCreateFormValues,
 } from "@/features/challenges/model";
 import {
   ChallengesCreateAlertModal,
@@ -29,63 +35,34 @@ import {
   ChallengesJoinTypeRadioInput,
 } from "@/features/challenges/ui";
 import { ProjectCreateRangeBar } from "@/features/projects/ui";
-import { ChevronLeftIcon } from "@/shared/icons";
-
-type CreateFormErrors = {
-  title?: string;
-  description?: string;
-  tags?: string;
-  challengeRange?: string;
-  recruitDeadline?: string;
-  verificationFrequency?: string;
-  maxParticipants?: string;
-  joinType?: string;
-  verificationMethod?: string;
-};
-
-interface CreateFormState {
-  title: string;
-  description: string;
-  tags: string[];
-  challengeRange: DateRange | undefined;
-  recruitDeadline: Date | undefined;
-  verificationFrequency: VerificationFrequencyType | undefined;
-  maxParticipants: number;
-  joinType: ParticipationType | undefined;
-  verificationMethod: "IMAGE_AND_TEXT" | "TEXT" | "IMAGE";
-}
 
 export function ChallengesCreateForm() {
-  const [tagInput, setTagInput] = useState("");
   const [confirmAlertOpen, setConfirmAlertOpen] = useState(false);
   const [createAlertOpen, setCreateAlertOpen] = useState(false);
-  const [errors, setErrors] = useState<CreateFormErrors>({});
-  const [createForm, setCreateForm] = useState<CreateFormState>({
-    title: "",
-    description: "",
-    tags: [],
-    challengeRange: undefined,
-    recruitDeadline: undefined,
-    verificationFrequency: undefined,
-    maxParticipants: 0,
-    joinType: undefined,
-    verificationMethod: "TEXT",
-  });
   const [createdChallengeId, setCreatedChallengeId] = useState<
     number | undefined
   >(undefined);
 
-  const updateForm = <K extends keyof CreateFormState>(
-    key: K,
-    value: CreateFormState[K],
-  ) => {
-    setCreateForm((prev) => ({ ...prev, [key]: value }));
-  };
-
   const router = useRouter();
+  const { mutateAsync: uploadImage } = useUploadImage();
   const { mutate, isPending } = useCreateChallenges((data) => {
     setCreatedChallengeId(data.id);
     setCreateAlertOpen(true);
+  });
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<ChallengesCreateFormValues>({
+    resolver: zodResolver(challengesCreateSchema),
+    defaultValues: {
+      title: "",
+      content: "",
+      tags: [],
+      maxParticipants: 0,
+    },
   });
 
   const handleBack = () => {
@@ -96,50 +73,19 @@ export function ChallengesCreateForm() {
     }
   };
 
-  const handleSubmit = () => {
-    const newErrors: typeof errors = {};
-
-    if (!createForm.title.trim()) {
-      newErrors.title = "챌린지 제목을 입력해주세요.";
-    }
-    if (!createForm.description.trim()) {
-      newErrors.description = "챌린지 소개글을 입력해주세요.";
-    }
-
-    if (!createForm.recruitDeadline) {
-      newErrors.recruitDeadline = "모집 마감일을 설정해주세요.";
-    }
-    if (!createForm.challengeRange?.from || !createForm.challengeRange?.to) {
-      newErrors.challengeRange = "챌린지 진행 기간을 설정해주세요.";
-    }
-    if (!createForm.verificationFrequency) {
-      newErrors.verificationFrequency = "인증 빈도를 선택해주세요.";
-    }
-    if (createForm.maxParticipants === 0) {
-      newErrors.maxParticipants = "최대 참여 인원을 설정해주세요.";
-    }
-    if (!createForm.joinType) {
-      newErrors.joinType = "참여 방식을 선택해주세요.";
-    }
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      const data = {
-        title: createForm.title,
-        description: createForm.description,
-        tags: createForm.tags,
-        startDate: formatDate(createForm.challengeRange!.from!) as string,
-        endDate: formatDate(createForm.challengeRange!.to!) as string,
-        recruitDeadline: formatDate(createForm.recruitDeadline!) as string,
-        verificationFrequency: createForm.verificationFrequency!,
-        maxParticipants: createForm.maxParticipants,
-        joinType: createForm.joinType!,
-        verificationMethod: "TEXT" as const,
-      };
-
-      mutate(data);
-    }
+  const onSubmit = (values: ChallengesCreateFormValues) => {
+    mutate({
+      title: values.title,
+      description: values.content,
+      tags: values.tags,
+      startDate: formatDate(values.challengeStart) as string,
+      endDate: formatDate(values.challengeEnd) as string,
+      recruitDeadline: formatDate(values.recruitDeadline) as string,
+      verificationFrequency: values.verificationFrequency,
+      maxParticipants: values.maxParticipants,
+      joinType: values.joinType,
+      verificationMethod: values.verificationMethod,
+    });
   };
 
   return (
@@ -148,164 +94,241 @@ export function ChallengesCreateForm() {
         <ChevronLeftIcon width={16} height={16} className="text-gray-200" />
       </button>
 
-      <section>
-        <h2 className="mt-10 mb-5 text-[20px] text-gray-50">기본정보</h2>
-        <FieldGroup className="flex flex-col gap-7 rounded-[40px] bg-gray-800 px-10 py-5">
-          <Field>
-            <FieldLabel required>챌린지명</FieldLabel>
-            <Input
-              placeholder="챌린지 모임명을 입력해주세요."
-              value={createForm.title}
-              onChange={(e) => updateForm("title", e.target.value)}
-            />
-            {errors.title && <FieldError>{errors.title}</FieldError>}
-          </Field>
-
-          <Field>
-            <FieldLabel required>소개</FieldLabel>
-            <TextArea
-              maxLength={200}
-              value={createForm.description}
-              placeholder="어떤 챌린지인지 간단하게 입력해주세요."
-              onChange={(e) => updateForm("description", e.target.value)}
-              wrapperClassName="w-full bg-gray-800 border border-gray-700"
-            />
-            {errors.description && (
-              <FieldError>{errors.description}</FieldError>
-            )}
-          </Field>
-
-          <Field>
-            <FieldLabel>키워드 입력</FieldLabel>
-            <ChallengesCreateTagInput
-              input={tagInput}
-              setInput={setTagInput}
-              tags={createForm.tags}
-              setTags={(tags) => updateForm("tags", tags)}
-            />
-            {errors.tags && <FieldError>{errors.tags}</FieldError>}
-          </Field>
-        </FieldGroup>
-      </section>
-
-      <section>
-        <h2 className="mt-10 mb-5 text-[20px] text-gray-50">운영일정</h2>
-        <FieldGroup className="flex flex-col gap-7 rounded-[40px] bg-gray-800 px-10 py-5">
-          <Field>
-            <FieldLabel required>모집 마감일</FieldLabel>
-            <DatePicker
-              mode="single"
-              value={createForm.recruitDeadline}
-              onChange={(date) => updateForm("recruitDeadline", date)}
-            />
-            {errors.recruitDeadline && (
-              <FieldError>{errors.recruitDeadline}</FieldError>
-            )}
-          </Field>
-
-          <Field>
-            <FieldLabel required>챌린지 기간</FieldLabel>
-            <DatePicker
-              mode="range"
-              value={createForm.challengeRange}
-              onChange={(range) => updateForm("challengeRange", range)}
-              showLabel={false}
-            />
-            {errors.challengeRange && (
-              <FieldError>{errors.challengeRange}</FieldError>
-            )}
-          </Field>
-
-          <Field>
-            <FieldLabel required className="mb-1">
-              인증빈도
-            </FieldLabel>
-            <ul className="flex flex-wrap gap-2">
-              {Object.entries(VERIFICATION_FREQUENCY_LABEL)
-                .slice(0, -1)
-                .map(([value, label]) => (
-                  <ChallengesFilterRadioInput
-                    key={value}
-                    name="verificationFrequency"
-                    item={{ value, label }}
-                    selectedValue={createForm.verificationFrequency}
-                    onChange={(e) =>
-                      updateForm(
-                        "verificationFrequency",
-                        e.target.value as VerificationFrequencyType,
-                      )
-                    }
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <section>
+          <h2 className="mt-10 mb-5 text-[20px] text-gray-50">모집 정보</h2>
+          <FieldGroup className="flex flex-col gap-7 rounded-[40px] bg-gray-800 px-10 py-5">
+            <Field>
+              <FieldLabel required>모집 마감일</FieldLabel>
+              <Controller
+                name="recruitDeadline"
+                control={control}
+                render={({ field }) => (
+                  <DatePicker
+                    mode="single"
+                    value={field.value}
+                    onChange={field.onChange}
                   />
-                ))}
-            </ul>
-            {errors.verificationFrequency && (
-              <FieldError>{errors.verificationFrequency}</FieldError>
-            )}
-          </Field>
-        </FieldGroup>
-      </section>
+                )}
+              />
+              {errors.recruitDeadline && (
+                <FieldError>{errors.recruitDeadline.message}</FieldError>
+              )}
+            </Field>
 
-      <section>
-        <h2 className="mt-10 mb-5 text-[20px] text-gray-50">
-          모집 및 참여 조건
-        </h2>
-        <FieldGroup className="flex flex-col gap-7 rounded-[40px] bg-gray-800 px-10 py-5">
-          <Field>
-            <FieldLabel required>모집 정원</FieldLabel>
+            <Field>
+              <FieldLabel required>진행 기간</FieldLabel>
+              <Controller
+                name="challengeStart"
+                control={control}
+                render={({ field: startField }) => (
+                  <Controller
+                    name="challengeEnd"
+                    control={control}
+                    render={({ field: endField }) => (
+                      <DatePicker
+                        mode="range"
+                        value={
+                          startField.value || endField.value
+                            ? { from: startField.value, to: endField.value }
+                            : undefined
+                        }
+                        onChange={(range) => {
+                          startField.onChange(range?.from);
+                          endField.onChange(range?.to);
+                        }}
+                        showLabel={false}
+                      />
+                    )}
+                  />
+                )}
+              />
+              {(errors.challengeStart || errors.challengeEnd) && (
+                <FieldError>
+                  {errors.challengeStart?.message ??
+                    errors.challengeEnd?.message}
+                </FieldError>
+              )}
+            </Field>
 
-            <ProjectCreateRangeBar
-              count={createForm.maxParticipants}
-              setCount={(count) => updateForm("maxParticipants", count)}
-            />
-            {errors.maxParticipants && (
-              <FieldError>{errors.maxParticipants}</FieldError>
-            )}
-          </Field>
+            <Field>
+              <FieldLabel required className="mb-1">
+                인증 빈도
+              </FieldLabel>
+              <Controller
+                name="verificationFrequency"
+                control={control}
+                render={({ field }) => (
+                  <ul className="flex flex-wrap gap-2">
+                    {Object.entries(VERIFICATION_FREQUENCY_LABEL).map(
+                      ([value, label]) => (
+                        <ChallengesFilterRadioInput
+                          key={value}
+                          name="verificationFrequency"
+                          item={{ value, label }}
+                          selectedValue={field.value}
+                          onChange={(e) =>
+                            field.onChange(
+                              e.target.value as VerificationFrequencyType,
+                            )
+                          }
+                        />
+                      ),
+                    )}
+                  </ul>
+                )}
+              />
+              {errors.verificationFrequency && (
+                <FieldError>{errors.verificationFrequency.message}</FieldError>
+              )}
+            </Field>
 
-          <Field>
-            <FieldLabel required>모집 방식</FieldLabel>
-            <ul className="flex flex-wrap gap-2">
-              {JOIN_TYPE_OPTIONS.map((item) => (
-                <ChallengesJoinTypeRadioInput
-                  key={item.value}
-                  {...item}
-                  selectedValue={createForm.joinType}
-                  onChange={(value) =>
-                    updateForm("joinType", value as ParticipationType)
-                  }
-                />
-              ))}
-            </ul>
+            <Field>
+              <FieldLabel required className="mb-1">
+                인증 방식
+              </FieldLabel>
+              <Controller
+                name="verificationMethod"
+                control={control}
+                render={({ field }) => (
+                  <ul className="flex flex-wrap gap-2">
+                    {VERIFICATION_METHOD_OPTIONS.map(({ value, label }) => (
+                      <ChallengesFilterRadioInput
+                        key={value}
+                        name="verificationMethod"
+                        item={{ value, label }}
+                        selectedValue={field.value}
+                        onChange={(e) => field.onChange(e.target.value)}
+                      />
+                    ))}
+                  </ul>
+                )}
+              />
+              {errors.verificationMethod && (
+                <FieldError>{errors.verificationMethod.message}</FieldError>
+              )}
+            </Field>
+          </FieldGroup>
+        </section>
 
-            {errors.joinType && <FieldError>{errors.joinType}</FieldError>}
-          </Field>
-        </FieldGroup>
-      </section>
+        <section>
+          <h2 className="mt-10 mb-5 text-[20px] text-gray-50">참여 조건</h2>
+          <FieldGroup className="flex flex-col gap-7 rounded-[40px] bg-gray-800 px-10 py-5">
+            <Field>
+              <FieldLabel required>모집 정원</FieldLabel>
+              <Controller
+                name="maxParticipants"
+                control={control}
+                render={({ field }) => (
+                  <ProjectCreateRangeBar
+                    count={field.value}
+                    setCount={field.onChange}
+                  />
+                )}
+              />
+              {errors.maxParticipants && (
+                <FieldError>{errors.maxParticipants.message}</FieldError>
+              )}
+            </Field>
 
-      <div className="my-12 flex justify-end gap-4">
-        <Button
-          size="lg"
-          className="w-50"
-          onClick={() => setConfirmAlertOpen(true)}
-        >
-          취소
-        </Button>
-        <Button
-          size="lg"
-          variant="primary"
-          className="w-50"
-          onClick={handleSubmit}
-          disabled={isPending}
-        >
-          개설하기
-        </Button>
-      </div>
+            <Field>
+              <FieldLabel required>모집 방식</FieldLabel>
+              <Controller
+                name="joinType"
+                control={control}
+                render={({ field }) => (
+                  <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2">
+                    {JOIN_TYPE_OPTIONS.map((item) => (
+                      <ChallengesJoinTypeRadioInput
+                        key={item.value}
+                        {...item}
+                        selectedValue={field.value}
+                        onChange={field.onChange}
+                      />
+                    ))}
+                  </ul>
+                )}
+              />
+              {errors.joinType && (
+                <FieldError>{errors.joinType.message}</FieldError>
+              )}
+            </Field>
+          </FieldGroup>
+        </section>
+
+        <section>
+          <h2 className="mt-10 mb-5 text-[20px] text-gray-50">챌린지 소개</h2>
+          <FieldGroup className="flex flex-col gap-7 rounded-[40px] bg-gray-800 px-10 py-5">
+            <Field>
+              <FieldLabel required>제목</FieldLabel>
+              <Input
+                placeholder="챌린지 모임명을 입력해주세요."
+                {...register("title")}
+              />
+              {errors.title && <FieldError>{errors.title.message}</FieldError>}
+            </Field>
+
+            <Field>
+              <FieldLabel required>소개</FieldLabel>
+              <Controller
+                name="content"
+                control={control}
+                render={({ field }) => (
+                  <TiptapEditor
+                    value={field.value}
+                    onChange={field.onChange}
+                    onImageUpload={uploadImage}
+                    className="min-h-150 bg-transparent"
+                  />
+                )}
+              />
+              {errors.content && (
+                <FieldError>{errors.content.message}</FieldError>
+              )}
+            </Field>
+
+            <Field>
+              <FieldLabel required>키워드 입력</FieldLabel>
+              <Controller
+                name="tags"
+                control={control}
+                render={({ field }) => (
+                  <ChallengesCreateTagInput
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
+              />
+              {errors.tags && <FieldError>{errors.tags.message}</FieldError>}
+            </Field>
+          </FieldGroup>
+        </section>
+
+        <div className="my-12 flex justify-end gap-4">
+          <Button
+            size="lg"
+            className="w-50"
+            type="button"
+            onClick={() => setConfirmAlertOpen(true)}
+          >
+            취소
+          </Button>
+          <Button
+            size="lg"
+            variant="primary"
+            className="w-50"
+            type="submit"
+            disabled={isPending}
+          >
+            개설하기
+          </Button>
+        </div>
+      </form>
 
       <ChallengesCreateCancelAlertModal
         open={confirmAlertOpen}
         onOpenChange={setConfirmAlertOpen}
       />
-
       <ChallengesCreateAlertModal
         open={createAlertOpen}
         onOpenChange={setCreateAlertOpen}

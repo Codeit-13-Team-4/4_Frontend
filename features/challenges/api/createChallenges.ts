@@ -11,7 +11,7 @@ interface CreateChallengesBody {
   verificationFrequency: VerificationFrequencyType;
   maxParticipants: number;
   joinType: ParticipationType;
-  verificationMethod: "IMAGE_AND_TEXT" | "TEXT" | "IMAGE"; // 지워야 할 것 같음
+  verificationMethod: "IMAGE_AND_TEXT" | "TEXT" | "IMAGE";
 }
 
 export async function createChallengesProject(body: CreateChallengesBody) {

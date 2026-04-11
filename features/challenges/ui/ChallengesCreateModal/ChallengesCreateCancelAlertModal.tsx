@@ -16,19 +16,20 @@ export function ChallengesCreateCancelAlertModal({
           </AlertModal.Description>
         </AlertModal.Header>
 
-        <AlertModal.Footer>
+        <AlertModal.Footer className="flex-col sm:flex-row">
           <AlertModal.Cancel asChild>
-            <Link href="/challenges" className="min-w-58">
-              <Button className="h-full w-full">나가기</Button>
+            <Link href="/challenges" className="w-full">
+              <Button className="w-full">나가기</Button>
             </Link>
           </AlertModal.Cancel>
-          <AlertModal.Action
-            onClick={() => {
-              onOpenChange(false);
-            }}
-            className="w-full"
-          >
-            이어서 작성하기
+          <AlertModal.Action asChild>
+            <Button
+              variant="primary"
+              onClick={() => onOpenChange(false)}
+              className="w-full"
+            >
+              이어서 작성하기
+            </Button>
           </AlertModal.Action>
         </AlertModal.Footer>
       </AlertModal.Content>
