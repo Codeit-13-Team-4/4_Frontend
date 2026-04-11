@@ -2,34 +2,38 @@
 
 import { XIcon } from "@/shared/icons";
 import { Button, Input } from "@/shared/ui";
-import React from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
-interface ProjectCreateTagInputProps {
-  input: string;
-  setInput: React.Dispatch<React.SetStateAction<string>>;
-  tags: string[];
-  setTags: (tags: string[]) => void;
+interface ChallengeCreateTagInputProps {
+  value: string[];
+  onChange: (tags: string[]) => void;
 }
 
 export function ChallengesCreateTagInput({
-  input,
-  setInput,
-  tags,
-  setTags,
-}: ProjectCreateTagInputProps) {
-  const handleAddTag = (value: string) => {
-    if (!value.trim()) {
+  value: tags,
+  onChange,
+}: ChallengeCreateTagInputProps) {
+  const [input, setInput] = useState("");
+
+  const handleAddTag = (tag: string) => {
+    if (!tag.trim()) {
       return toast.error("키워드를 입력해주세요.");
     }
-    if (!tags.includes(value)) {
-      setTags([...tags, value]);
+    if (tag.length > 6) {
+      return toast.error("태그는 6글자 이하로 입력해주세요.");
+    }
+    if (tags.length >= 3) {
+      return toast.error("태그는 최대 3개까지 입력할 수 있습니다.");
+    }
+    if (!tags.includes(tag)) {
+      onChange([...tags, tag]);
     }
     setInput("");
   };
 
   const handleTagDelete = (key: string) => {
-    setTags(tags.filter((item) => item !== key));
+    onChange(tags.filter((item) => item !== key));
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
