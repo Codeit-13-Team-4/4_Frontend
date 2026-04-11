@@ -1,5 +1,5 @@
 import type { ChallengeCardProps } from "@/features/challenges/model";
-import type { ChallengesDetail } from "@/features/challengesDetail/types/challengesDetail";
+import type { ChallengesDetail } from "@/features/challenges/detail/model/challengesDetail";
 import { ApiError } from "@/shared/lib/errors/ApiError";
 import { fetchWithAuthRetry } from "@/shared/lib/server/auth";
 import { LIKED_BACKEND_PER_PAGE } from "./liked.constants";
