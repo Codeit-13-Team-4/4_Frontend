@@ -2,6 +2,7 @@
 import { AvatarIcon, Check, Meetballs, XIcon } from "@/shared/icons";
 import { Dropdown } from "@/shared/ui";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 const isHost = true;
 export default function VerifyCard() {
@@ -28,10 +29,32 @@ export default function VerifyCard() {
 
   const handleApprove = () => {
     console.log("승인");
+
+    toast.success("인증이 승인되었습니다", {
+      action: (
+        <button
+          className="ml-auto cursor-pointer text-gray-400"
+          onClick={() => console.log("Action!")}
+        >
+          실행 취소
+        </button>
+      ),
+    });
   };
 
   const handleReject = () => {
     console.log("거절");
+
+    toast.error("인증이 거절되었습니다", {
+      action: (
+        <button
+          className="ml-auto cursor-pointer text-gray-400"
+          onClick={() => console.log("Action!")}
+        >
+          실행 취소
+        </button>
+      ),
+    });
   };
 
   return (
