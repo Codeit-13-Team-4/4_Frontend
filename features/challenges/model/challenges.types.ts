@@ -11,8 +11,7 @@ export type VerificationFrequencyType =
   | "ONCE_A_DAY"
   | "EVERY_WEEKDAY"
   | "ONCE_A_WEEK"
-  | "THREE_TIMES_A_WEEK"
-  | "USER_INPUT";
+  | "THREE_TIMES_A_WEEK";
 
 export type MyParticipationStatus = "NONE" | "PENDING" | "JOINED" | "REJECTED";
 
