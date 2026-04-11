@@ -11,7 +11,7 @@ import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
-  ChallengesBadge,
+  ChallengesJoinTypeBadge,
   ChallengesStatusBadge,
 } from "@/features/challenges/ui";
 
@@ -52,7 +52,7 @@ export default function ChallengeDetailHeader({
       <div className="flex flex-col-reverse items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-2">
           <ChallengesStatusBadge status={challenge.status} />
-          <ChallengesBadge type={challenge.joinType} />
+          <ChallengesJoinTypeBadge type={challenge.joinType} />
         </div>
         <LikeButton
           className="ml-auto"
