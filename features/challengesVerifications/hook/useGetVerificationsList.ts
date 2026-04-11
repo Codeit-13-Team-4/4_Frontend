@@ -24,10 +24,15 @@ export const useGetVerificationsList = (
       });
     },
     initialPageParam: 1,
-    getNextPageParam: (lastPage) => {
-      const { page, hasNext } = lastPage.pagination;
 
-      return hasNext ? page + 1 : undefined;
+    getNextPageParam: (lastPage) => {
+      const page = lastPage?.pagination?.page;
+      const hasNext = lastPage?.pagination?.hasNext;
+
+      if (hasNext && page !== undefined) {
+        return page + 1;
+      }
+      return undefined;
     },
     throwOnError: true,
   });

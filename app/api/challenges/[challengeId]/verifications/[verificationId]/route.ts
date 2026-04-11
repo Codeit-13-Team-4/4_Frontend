@@ -38,3 +38,22 @@ export async function PATCH(
     );
   }
 }
+
+export async function GET(
+  _request: NextRequest,
+  { params }: { params: { challengeId: string; verificationId: string } },
+) {
+  try {
+    const { challengeId, verificationId } = await params;
+    const data = await fetchWithAuthRetry(
+      `${BASE_URL}/challenges/${challengeId}/verifications/${verificationId}`,
+    );
+
+    return NextResponse.json(data, { status: 200 });
+  } catch {
+    return NextResponse.json(
+      { message: "서버 오류가 발생했습니다." },
+      { status: 500 },
+    );
+  }
+}
