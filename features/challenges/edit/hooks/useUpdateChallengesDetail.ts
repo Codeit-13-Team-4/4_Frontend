@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   updateChallengesDetail,
   type UpdateChallengesDetailParams,
-} from "@/features/challenges/detail/api/updateChallengesDetail";
+} from "@/features/challenges/edit/api/updateChallengesDetail";
 import { challengeKeys } from "@/features/challenges/model/challenges.queryKey";
 
 type UpdateVariables = Omit<UpdateChallengesDetailParams, "challengeId">;
