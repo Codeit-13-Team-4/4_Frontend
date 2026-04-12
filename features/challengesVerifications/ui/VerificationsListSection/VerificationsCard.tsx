@@ -7,13 +7,11 @@ import { VerificationCardProps } from "@/features/challengesVerifications/model"
 import { useGetVerificationsDetail } from "../../hook/useGetVerificationsDetail";
 import Image from "next/image";
 import { formatToDate } from "../../utils/formatToDate";
+import { useUpdateVerificationStatus } from "../../hook/useUpdateVerificationsStatus";
 
 const isHost = true;
 export default function VerifyCard({ data }: { data: VerificationCardProps }) {
   const { verificationId, challengeId } = data;
-
-  // console.log("🚀 ~ VerifyCard ~ challengeId:", challengeId);
-  // console.log("🚀 ~ VerifyCard ~ verificationId:", verificationId);
 
   const [isOverflow, setIsOverflow] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -23,7 +21,10 @@ export default function VerifyCard({ data }: { data: VerificationCardProps }) {
     challengeId,
     verificationId,
   });
-  // console.log("🚀 ~ VerifyCard ~ verificationData:", verificationData);
+  const { mutate: updateStatus, isPending } = useUpdateVerificationStatus(
+    challengeId,
+    verificationId,
+  );
 
   const { content, user, imageUrls, createdAt } = verificationData?.data ?? {};
 
@@ -42,18 +43,23 @@ export default function VerifyCard({ data }: { data: VerificationCardProps }) {
   }, []);
 
   const handleApprove = () => {
-    console.log("승인");
-
-    toast.success("인증이 승인되었습니다", {
-      action: (
-        <button
-          className="ml-auto cursor-pointer text-gray-400"
-          onClick={() => console.log("Action!")}
-        >
-          실행 취소
-        </button>
-      ),
-    });
+    updateStatus(
+      { status: "APPROVED" },
+      {
+        onSuccess: () => {
+          toast.success("인증이 승인되었습니다", {
+            action: (
+              <button
+                className="ml-auto cursor-pointer text-gray-400"
+                onClick={() => console.log("실행 취소")}
+              >
+                실행 취소
+              </button>
+            ),
+          });
+        },
+      },
+    );
   };
 
   const handleReject = () => {

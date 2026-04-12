@@ -1,8 +1,5 @@
 import { fetchClient } from "@/shared/lib/client/fetchClient";
-
-export type UpdateVerificationStatusRequest =
-  | { status: "APPROVED" }
-  | { status: "REJECTED"; message: string };
+import { UpdateVerificationStatusRequest } from "@/features/challengesVerifications/model";
 
 export async function updateVerificationStatus(
   challengeId: number,

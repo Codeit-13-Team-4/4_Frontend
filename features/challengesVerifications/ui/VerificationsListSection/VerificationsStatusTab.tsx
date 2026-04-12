@@ -11,11 +11,11 @@ const VERIFICATIONS_TAB_ITEMS: {
     label: "인증전",
   },
   {
-    value: "REJECTED",
+    value: "APPROVED",
     label: "인증완료",
   },
   {
-    value: "COMPLETED",
+    value: "REJECTED",
     label: "거절",
   },
 ];
