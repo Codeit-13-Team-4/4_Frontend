@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+
 import { Controller, useForm } from "react-hook-form";
 import { ChevronLeftIcon } from "@/shared/icons";
 import { formatDate } from "@/shared/utils";
@@ -29,22 +30,36 @@ import {
   ChallengesCreateFormValues,
 } from "@/features/challenges/create/model/challenges.schema";
 import { ChallengesCreateAlertModal } from "@/features/challenges/create/ui/ChallengesCreateModal/ChallengesCreateAlertModal";
-import { ChallengesCreateCancelAlertModal } from "@/features/challenges/create/ui/ChallengesCreateModal/ChallengesCreateCancelAlertModal";
 import {
   ChallengesTagInput,
   ChallengesFilterRadioInput,
   ChallengesJoinTypeRadioInput,
 } from "@/features/challenges/ui";
 import { RangeBar } from "@/shared/ui";
+import { useOpenAlertModal } from "@/shared/store/AlertModal";
 
-export function ChallengesCreateForm() {
-  const [confirmAlertOpen, setConfirmAlertOpen] = useState(false);
+interface ChallengesFormProps {
+  defaultValues?: Partial<ChallengesCreateFormValues>;
+  onSubmit?: (values: ChallengesCreateFormValues) => void;
+  submitLabel?: string;
+  isPendingExternal?: boolean;
+  cancelHref?: string;
+}
+
+export function ChallengesForm({
+  defaultValues,
+  onSubmit: onSubmitProp,
+  submitLabel,
+  isPendingExternal,
+  cancelHref,
+}: ChallengesFormProps = {}) {
   const [createAlertOpen, setCreateAlertOpen] = useState(false);
   const [createdChallengeId, setCreatedChallengeId] = useState<
     number | undefined
   >(undefined);
 
   const router = useRouter();
+  const openAlertModal = useOpenAlertModal();
   const { mutateAsync: uploadImage } = useUploadImage();
   const { mutate, isPending } = useCreateChallenges((data) => {
     setCreatedChallengeId(data.id);
@@ -63,18 +78,25 @@ export function ChallengesCreateForm() {
       content: "",
       tags: [],
       maxParticipants: 0,
+      ...defaultValues,
     },
   });
 
-  const handleBack = () => {
-    if (window.history.length > 1) {
-      router.back();
-    } else {
-      router.push("/");
-    }
+  const handleCancelClick = () => {
+    openAlertModal({
+      title: "작성을 중단하시겠어요?",
+      description: "지금 나가면 작성 중인 내용이 저장되지 않고 사라져요.",
+      negative: { text: "나가기" },
+      positive: { text: "이어서 작성하기" },
+      onNegative: () => router.replace(cancelHref ?? "/challenges"),
+    });
   };
 
   const onSubmit = (values: ChallengesCreateFormValues) => {
+    if (onSubmitProp) {
+      onSubmitProp(values);
+      return;
+    }
     mutate({
       title: values.title,
       description: values.content,
@@ -91,7 +113,7 @@ export function ChallengesCreateForm() {
 
   return (
     <div className="pt-12 text-gray-400">
-      <button onClick={handleBack} className="cursor-pointer">
+      <button onClick={handleCancelClick} className="cursor-pointer">
         <ChevronLeftIcon width={16} height={16} className="text-gray-200" />
       </button>
 
@@ -312,7 +334,7 @@ export function ChallengesCreateForm() {
             size="lg"
             className="w-50"
             type="button"
-            onClick={() => setConfirmAlertOpen(true)}
+            onClick={handleCancelClick}
           >
             취소
           </Button>
@@ -321,17 +343,13 @@ export function ChallengesCreateForm() {
             variant="primary"
             className="w-50"
             type="submit"
-            disabled={isPending}
+            disabled={isPending || isPendingExternal}
           >
-            개설하기
+            {submitLabel ?? "개설하기"}
           </Button>
         </div>
       </form>
 
-      <ChallengesCreateCancelAlertModal
-        open={confirmAlertOpen}
-        onOpenChange={setConfirmAlertOpen}
-      />
       <ChallengesCreateAlertModal
         open={createAlertOpen}
         onOpenChange={setCreateAlertOpen}
