@@ -38,7 +38,7 @@ export interface ChallengesDetail {
   isLiked: boolean;
   myParticipationStatus: MyParticipationStatusType;
   isJoinable: boolean;
-  host: Pick<User, "id" | "nickname">;
+  host: Pick<User, "id" | "nickname" | "profileImageUrl">;
   createdAt: string;
   updatedAt: string;
 }
