@@ -35,7 +35,7 @@ import {
   ChallengesFilterRadioInput,
   ChallengesJoinTypeRadioInput,
 } from "@/features/challenges/ui";
-import { ProjectCreateRangeBar } from "@/features/projects/ui";
+import { RangeBar } from "@/shared/ui";
 
 export function ChallengesCreateForm() {
   const [confirmAlertOpen, setConfirmAlertOpen] = useState(false);
@@ -221,9 +221,11 @@ export function ChallengesCreateForm() {
                 name="maxParticipants"
                 control={control}
                 render={({ field }) => (
-                  <ProjectCreateRangeBar
-                    count={field.value}
-                    setCount={field.onChange}
+                  <RangeBar
+                    min={0}
+                    max={30}
+                    value={field.value}
+                    onChange={field.onChange}
                   />
                 )}
               />
