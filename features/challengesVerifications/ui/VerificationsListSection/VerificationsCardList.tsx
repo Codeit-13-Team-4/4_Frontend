@@ -5,7 +5,7 @@ import { VerificationsSkeletonCard } from "./VerificationsSkeletonCard";
 import { useGetVerificationsList } from "../../hook/useGetVerificationsList";
 import { VerificationsTabType } from "./VerificationsListSection";
 import { useParams } from "next/navigation";
-import { useGetVerificationsDetail } from "../../hook/useGetVerificationsDetail";
+
 export function VerificationsCardList({
   status,
 }: {
@@ -23,16 +23,6 @@ export function VerificationsCardList({
   const verificationsData =
     data?.pages.flatMap((page) => page.data ?? []) ?? [];
 
-  if (isLoading) {
-    return (
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {Array.from({ length: 6 }).map((_, index) => (
-          <VerificationsSkeletonCard key={index} />
-        ))}
-      </div>
-    );
-  }
-
   if (verificationsData.length === 0)
     return (
       <div className="mt-21 flex flex-col items-center justify-center gap-6 text-gray-400">
@@ -45,6 +35,16 @@ export function VerificationsCardList({
         아직 팀원들의 인증 내역이 없어요.
       </div>
     );
+
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <VerificationsSkeletonCard key={index} />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">

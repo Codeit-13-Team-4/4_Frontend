@@ -1,10 +1,9 @@
 "use client";
 import { useState } from "react";
-import VerificationsCard from "./VerificationsCard";
 import { VerificationsStatusTab } from "./VerificationsStatusTab";
 import { VerificationsCardList } from "./VerificationsCardList";
 
-export type VerificationsTabType = "PENDING" | "REJECTED" | "COMPLETED";
+export type VerificationsTabType = "PENDING" | "APPROVED" | "REJECTED";
 
 const isHost = true;
 export function VerificationsListSection() {
@@ -21,8 +20,6 @@ export function VerificationsListSection() {
       )}
 
       <VerificationsCardList status={status} />
-      {/* <VerificationsCard />
-        <VerificationsCard /> */}
     </div>
   );
 }

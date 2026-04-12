@@ -1,3 +1,4 @@
+import { getChallengesDetailServer } from "@/features/challenges/detail/api/getChallengesDetail.server";
 import { VerificationsListSection } from "@/features/challengesVerifications/ui/VerificationsListSection/VerificationsListSection";
 import { VerificationsMemberSection } from "@/features/challengesVerifications/ui/VerificationsMemberSection/VerificationsMemberSection";
 import { ChevronLeftIcon } from "@/shared/icons";
@@ -10,17 +11,17 @@ export default async function VerificationsPage({
 }) {
   const { challengeId } = await params;
 
+  const data = await getChallengesDetailServer(Number(challengeId));
+
   return (
     <div>
       <header className="flex items-center gap-3 pb-10">
         <Link href={`/challenges/${challengeId}`}>
           <ChevronLeftIcon width={20} height={20} className="text-gray-200" />
         </Link>
-        <h2 className="text-[30px] font-semibold text-gray-50">
-          챌린지의 제목
-        </h2>
+        <h2 className="text-[30px] font-semibold text-gray-50">{data.title}</h2>
       </header>
-      <VerificationsMemberSection />
+      <VerificationsMemberSection data={data} />
       <VerificationsListSection />
     </div>
   );

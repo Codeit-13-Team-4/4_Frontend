@@ -12,10 +12,11 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { verificationsSchema } from "../../model/verifications.schema";
-import { error } from "console";
+import { useUploadImage } from "@/shared/hooks/useUploadImage";
+import { useCreateVerifications } from "../../hook/useCreateVerifications";
 
 type FormValues = {
   content: string;
@@ -26,28 +27,31 @@ type VerificationsModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  challengeId: number;
 };
 
 export function VerificationsModal({
   setIsOpen,
+  challengeId,
   ...props
 }: VerificationsModalProps) {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(verificationsSchema),
   });
 
+  const { mutateAsync } = useUploadImage();
+  const { mutate } = useCreateVerifications(challengeId);
   const [preview, setPreview] = useState<string | null>(null);
 
   const openAlertModal = useOpenAlertModal();
   const router = useRouter();
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -57,30 +61,46 @@ export function VerificationsModal({
     });
   };
 
-  const onSubmit = (data: FormValues) => {
-    console.log("data", data);
-    setIsOpen(false);
-    openAlertModal({
-      title: "챌린지 인증 글이 등록되었습니다! 🎉",
-      description: "호스트가 확인하는 대로 알림을 드릴게요.",
-      showCompleteAnimation: true,
-      positive: {
-        text: "마이 페이지",
-        button: { type: "default", variant: "primary" },
+  const onSubmit = async (data: FormValues) => {
+    const file = data.imageUrls?.[0];
+    if (!file) return;
+    const imageUrl = await mutateAsync(file);
+
+    mutate(
+      {
+        content: data.content,
+        imageUrls: [imageUrl],
       },
-      negative: { text: "확인" },
-      onPositive: () => router.push("/mypage"),
-    });
+      {
+        onSuccess: () => {
+          setIsOpen(false);
 
-    console.log("인증 하기 모달 제출 버튼");
-    return;
+          openAlertModal({
+            title: "챌린지 인증 글이 등록되었습니다! 🎉",
+            description: "호스트가 확인하는 대로 알림을 드릴게요.",
+            showCompleteAnimation: true,
+            positive: {
+              text: "마이 페이지",
+              button: { type: "default", variant: "primary" },
+            },
+            negative: { text: "확인" },
+            onPositive: () => router.push("/mypage"),
+          });
+
+          reset();
+          setPreview(null);
+        },
+
+        onError: () => {
+          setIsOpen(false);
+          reset();
+          setPreview(null);
+        },
+      },
+    );
   };
 
-  const onError = () => {
-    console.log("validation errors:", errors);
-  };
   const handleCancelClick = () => {
-    console.log("인증 하기 모달 취소 버튼");
     reset();
     setPreview(null);
     setIsOpen(false);
@@ -99,7 +119,7 @@ export function VerificationsModal({
     <Modal {...props}>
       <Modal.Overlay />
       <Modal.Content className="z-50 gap-12 p-10">
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Modal.Header className="mb-12 flex-row items-center justify-between">
             <Modal.Title>인증하기</Modal.Title>
             <Modal.CloseIcon />
