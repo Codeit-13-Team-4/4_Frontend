@@ -2,23 +2,28 @@ import { AlertModal, Button } from "@/shared/ui";
 import Link from "next/link";
 import { ChallengesAlertModalProps } from "@/features/challenges/model";
 
+interface ChallengesCreateCancelAlertModalProps extends ChallengesAlertModalProps {
+  description?: string;
+  cancelHref?: string;
+}
+
 export function ChallengesCreateCancelAlertModal({
   open,
   onOpenChange,
-}: ChallengesAlertModalProps) {
+  description = "지금 나가면 작성 중인 내용이 저장되지 않고 사라져요.",
+  cancelHref = "/challenges",
+}: ChallengesCreateCancelAlertModalProps) {
   return (
     <AlertModal open={open} onOpenChange={onOpenChange}>
       <AlertModal.Content>
         <AlertModal.Header>
           <AlertModal.Title>작성을 중단하시겠어요?</AlertModal.Title>
-          <AlertModal.Description>
-            지금 나가면 작성 중인 신청 사유가 저장되지 않고 사라져요.
-          </AlertModal.Description>
+          <AlertModal.Description>{description}</AlertModal.Description>
         </AlertModal.Header>
 
         <AlertModal.Footer className="flex-col sm:flex-row">
           <AlertModal.Cancel asChild>
-            <Link href="/challenges" className="w-full">
+            <Link href={cancelHref} className="w-full">
               <Button className="w-full">나가기</Button>
             </Link>
           </AlertModal.Cancel>
