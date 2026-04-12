@@ -41,7 +41,9 @@ export async function PATCH(
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { challengeId: string; verificationId: string } },
+  {
+    params,
+  }: { params: Promise<{ challengeId: string; verificationId: string }> },
 ) {
   try {
     const { challengeId, verificationId } = await params;
