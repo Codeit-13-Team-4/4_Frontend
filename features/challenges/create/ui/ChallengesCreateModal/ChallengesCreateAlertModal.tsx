@@ -1,5 +1,8 @@
-import { AlertModal, Button } from "@/shared/ui";
+"use client";
+
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { AlertModal, Button } from "@/shared/ui";
 import { CompleteAnimation } from "@/shared/ui/CompleteAnimation/CompleteAnimation";
 import { ChallengesAlertModalProps } from "@/features/challenges/model";
 
@@ -8,6 +11,8 @@ export function ChallengesCreateAlertModal({
   onOpenChange,
   id,
 }: ChallengesAlertModalProps) {
+  const router = useRouter();
+
   return (
     <AlertModal open={open} onOpenChange={onOpenChange}>
       <AlertModal.Content>
@@ -28,11 +33,13 @@ export function ChallengesCreateAlertModal({
             </Link>
           </AlertModal.Cancel>
           <AlertModal.Action asChild>
-            <Link href={`/challenges/${id}`} className="w-full">
-              <Button variant="primary" className="h-full w-full">
-                개설한 챌린지 확인
-              </Button>
-            </Link>
+            <Button
+              variant="primary"
+              className="h-full w-full"
+              onClick={() => router.replace(`/challenges/${id}`)}
+            >
+              개설한 챌린지 확인
+            </Button>
           </AlertModal.Action>
         </AlertModal.Footer>
       </AlertModal.Content>
