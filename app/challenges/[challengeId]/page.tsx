@@ -1,5 +1,6 @@
-import ChallengeDetailCard from "@/widgets/challengesDetail/ui/ChallengeDetailCard";
-import CommentSection from "@/widgets/challengesDetail/ui/CommentSection";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { prefetchChallengesDetail } from "@/features/challenges/detail/hooks/prefetchChallengesDetail";
+import ChallengeDetail from "@/widgets/challengesDetail/ui/ChallengeDetail";
 
 export default async function ChallengesPage({
   params,
@@ -9,10 +10,11 @@ export default async function ChallengesPage({
   const { challengeId } = await params;
   const id = Number(challengeId);
 
+  const queryClient = await prefetchChallengesDetail(id);
+
   return (
-    <>
-      <ChallengeDetailCard challengeId={id} />
-      <CommentSection challengeId={id} />
-    </>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ChallengeDetail challengeId={id} />
+    </HydrationBoundary>
   );
 }

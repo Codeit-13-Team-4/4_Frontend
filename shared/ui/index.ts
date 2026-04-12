@@ -39,3 +39,4 @@ export { LikeButton } from "./LikeButton/LikeButton";
 export { Toaster } from "./Sonner/Sonner";
 export { TiptapEditor } from "./TiptapEditor/TiptapEditor";
 export { TiptapViewer } from "./TiptapEditor/TiptapViewer";
+export { RangeBar } from "./RangeBar/RangeBar";

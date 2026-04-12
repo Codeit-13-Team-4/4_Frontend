@@ -7,6 +7,11 @@ export interface GetChallengesResDtoHost {
 
 export type ChallengesFilterOptions = { value: string; label: string };
 export type ParticipationType = "INSTANT" | "APPROVAL";
+export type ChallengesStatusType =
+  | "RECRUITING"
+  | "RECRUITMENT_CLOSED"
+  | "IN_PROGRESS"
+  | "COMPLETED";
 export type VerificationFrequencyType =
   | "ONCE_A_DAY"
   | "EVERY_WEEKDAY"
@@ -19,7 +24,7 @@ export interface ChallengeCardProps {
   id: number;
   title: string;
   host: GetChallengesResDtoHost;
-  status: "RECRUITING" | "RECRUITMENT_CLOSED" | "IN_PROGRESS" | "COMPLETED";
+  status: ChallengesStatusType;
   participationType: ParticipationType;
   tags: string[];
   verificationFrequency: VerificationFrequencyType;

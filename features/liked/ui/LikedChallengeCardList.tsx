@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
 import { ApiError } from "@/shared/lib/errors/ApiError";
-import { ChallengesCardSkeleton } from "@/features/challenges/ui/ChallengesCardList/ChallengesCard/ChallengesCardSkeleton";
+import { ChallengesCardSkeleton } from "@/features/challenges/list/ui/ChallengesCardList/ChallengesCard/ChallengesCardSkeleton";
 import { useGetLikedChallengeList } from "../hooks/useGetLikedChallengeList";
 import type { LikedChallengeFilter } from "../model";
 import { LikedChallengeCard } from "./LikedChallengeCard";

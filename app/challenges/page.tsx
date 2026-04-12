@@ -1,12 +1,10 @@
-import { prefetchChallengesList } from "@/features/challenges/api/prefetchChallengesList";
+import { prefetchChallengesList } from "@/features/challenges/list/api/prefetchChallengesList";
 import { ParticipationType } from "@/features/challenges/model";
-import {
-  ChallengesCardList,
-  ChallengesCreateButton,
-  ChallengesFilter,
-  ChallengesSearchInput,
-  ChallengesSortDropdown,
-} from "@/features/challenges/ui";
+import { ChallengesCardList } from "@/features/challenges/list/ui/ChallengesCardList/ChallengesCardList";
+import { ChallengesCreateButton } from "@/features/challenges/list/ui/ChallengesCreateButton/ChallengesCreateButton";
+import { ChallengesFilter } from "@/features/challenges/list/ui/ChallengesFilter/ChallengesFilter";
+import { ChallengesSearchInput } from "@/features/challenges/list/ui/ChallengesSearchInput/ChallengesSearchInput";
+import { ChallengesSortDropdown } from "@/features/challenges/list/ui/ChallengesDropdown/ChallengesSortDropdown";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 export default async function ChallengesPage({

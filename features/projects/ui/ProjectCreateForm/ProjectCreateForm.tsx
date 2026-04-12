@@ -12,7 +12,6 @@ import {
   CreateCancelAlertModal,
   ProjectContactLinkDropdown,
   ProjectCreatePositionDropdown,
-  ProjectCreateRangeBar,
   ProjectCreateTagInput,
   ProjectFilterRadioInput,
 } from "@/features/projects/ui";
@@ -24,6 +23,7 @@ import {
   FieldGroup,
   FieldLabel,
   Input,
+  RangeBar,
   TextArea,
 } from "@/shared/ui";
 import { useState } from "react";
@@ -292,9 +292,11 @@ export function ProjectCreateForm() {
         <FieldGroup className="rounded-[40px] bg-gray-800 px-10 py-5">
           <Field>
             <FieldLabel required>모집 정원</FieldLabel>
-            <ProjectCreateRangeBar
-              count={createForm.maxMembers}
-              setCount={(count) => updateForm("maxMembers", count)}
+            <RangeBar
+              min={0}
+              max={30}
+              value={createForm.maxMembers}
+              onChange={(value) => updateForm("maxMembers", value)}
             />
             {errors.maxMembers && <FieldError>{errors.maxMembers}</FieldError>}
           </Field>

@@ -3,18 +3,20 @@
 import { useRouter } from "next/navigation";
 import {
   ChallengeCardProps,
-  CHALLENGES_STATUS,
   VERIFICATION_FREQUENCY_LABEL,
 } from "@/features/challenges/model";
 import { challengeKeys } from "@/features/challenges/model/challenges.queryKey";
-import { ChallengesBadge } from "@/features/challenges/ui";
-import type { ChallengesDetail } from "@/features/challengesDetail/types/challengesDetail";
+import {
+  ChallengesJoinTypeBadge,
+  ChallengesStatusBadge,
+} from "@/features/challenges/ui";
+import type { ChallengesDetail } from "@/features/challenges/detail/model/challengesDetail";
 import { useLikeLoginGuard } from "@/features/liked/hooks/useLikeLoginGuard";
 import { useOptimisticLikedToggle } from "@/features/liked/hooks/useOptimisticLikedToggle";
-import { toggleChallengeLike } from "@/features/challengesDetail/api/toggleChallengeLike";
+import { toggleChallengeLike } from "@/features/challenges/detail/api/toggleChallengeLike";
 import { likedChallengeKeys } from "@/features/liked/model";
 import { CommentIcon, Eyeopen } from "@/shared/icons";
-import { DeadlineBadge, LikeButton, Progress, StatusBadge } from "@/shared/ui";
+import { DeadlineBadge, LikeButton, Progress } from "@/shared/ui";
 
 export function LikedChallengeCard({ data }: { data: ChallengeCardProps }) {
   const {
@@ -55,11 +57,6 @@ export function LikedChallengeCard({ data }: { data: ChallengeCardProps }) {
     router.push(`/challenges/${id}`);
   };
 
-  const badgeStatus =
-    CHALLENGES_STATUS[status].value === "recruiting"
-      ? "recruiting"
-      : "recruitment_closed";
-
   return (
     <article
       onClick={handleCardClick}
@@ -67,8 +64,8 @@ export function LikedChallengeCard({ data }: { data: ChallengeCardProps }) {
     >
       <header className="mb-7 flex items-center justify-between">
         <div className="flex gap-2">
-          <StatusBadge status={badgeStatus} />
-          <ChallengesBadge type={participationType} />
+          <ChallengesStatusBadge status={status} />
+          <ChallengesJoinTypeBadge type={participationType} />
         </div>
         <div
           onClick={(event) => {
