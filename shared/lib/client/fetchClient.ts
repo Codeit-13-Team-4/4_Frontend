@@ -1,5 +1,5 @@
 import { ApiError } from "@/shared/lib/errors/ApiError";
-import { getErrorMessage } from "../errors/errorMessage";
+import { getErrorMessage } from "@/shared/lib/errors/errorMessage";
 
 export async function fetchClient(
   input: RequestInfo,

@@ -50,11 +50,12 @@ export default function ChallengeDetailHeader({
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-2">
             <Avatar className="h-6 w-6 md:h-11 md:w-11">
+              <AvatarImage
+                src={challenge.host.profileImageUrl ?? ""}
+                alt="주최자 프로필"
+              />
+
               <AvatarFallback>
-                <AvatarImage
-                  src={challenge.host.profileImageUrl ?? ""}
-                  alt="주최자 프로필"
-                />
                 <AvatarIcon className="h-full w-full text-gray-800" />
               </AvatarFallback>
             </Avatar>
