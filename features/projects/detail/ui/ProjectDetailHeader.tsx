@@ -2,21 +2,19 @@
 
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage, Separator } from "@/shared/ui";
-import {
-  ChallengesJoinTypeBadge,
-  ChallengesStatusBadge,
-} from "@/features/challenges/ui";
-import type { ChallengesDetail } from "@/features/challenges/detail/model/challengesDetail";
+import { StatusBadge, DeadlineBadge } from "@/shared/ui";
+import { ProjectBadge } from "@/features/projects/ui";
+import type { ProjectDetail } from "@/features/projects/model";
 import { ArrowLeft, AvatarIcon, CommentIcon, Eyeopen } from "@/shared/icons";
 import { formatDate } from "@/shared/utils";
 
-interface ChallengeDetailHeaderProps {
-  challenge: ChallengesDetail;
+interface ProjectDetailHeaderProps {
+  project: ProjectDetail;
 }
 
-export default function ChallengeDetailHeader({
-  challenge,
-}: ChallengeDetailHeaderProps) {
+export default function ProjectDetailHeader({
+  project,
+}: ProjectDetailHeaderProps) {
   const router = useRouter();
 
   return (
@@ -29,38 +27,30 @@ export default function ChallengeDetailHeader({
         <ArrowLeft className="h-6 w-6 md:h-8 md:w-8" />
       </button>
 
-      <div className="flex gap-2">
-        <ChallengesStatusBadge status={challenge.status} />
-        <ChallengesJoinTypeBadge type={challenge.joinType} />
+      <div className="flex flex-wrap items-center gap-2">
+        <StatusBadge status={project.status} />
+        <ProjectBadge type={project.projectType} />
+        <DeadlineBadge endDate={project.recruitEndDate} />
       </div>
 
       <h1 className="flex text-xl font-medium md:text-3xl md:font-semibold">
-        {challenge.title}
+        {project.title}
       </h1>
 
-      {challenge.tags.length > 0 && (
-        <ul className="mb-10 flex flex-wrap gap-3 text-sm text-gray-400 md:mb-15">
-          {challenge.tags.map((tag) => (
-            <li key={tag}>#{tag}</li>
-          ))}
-        </ul>
-      )}
-
-      <div className="flex flex-col justify-between gap-3 md:flex-row">
+      <div className="mt-10 flex flex-col justify-between gap-3 md:mt-15 md:flex-row">
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-2">
             <Avatar className="h-6 w-6 md:h-11 md:w-11">
               <AvatarImage
-                src={challenge.host.profileImageUrl ?? ""}
-                alt="주최자 프로필"
+                src={project.host.profileImageUrl ?? ""}
+                alt="작성자 프로필"
               />
-
               <AvatarFallback>
                 <AvatarIcon className="h-full w-full text-gray-800" />
               </AvatarFallback>
             </Avatar>
             <span className="text-sm font-medium md:text-base">
-              {challenge.host.nickname}
+              {project.host.nickname}
             </span>
           </div>
 
@@ -70,19 +60,19 @@ export default function ChallengeDetailHeader({
           />
 
           <span className="text-xs font-medium text-gray-400 md:text-sm md:font-normal">
-            {formatDate(new Date(challenge.createdAt))}
+            {formatDate(new Date(project.recruitEndDate))}
           </span>
         </div>
 
         <div className="flex items-center gap-3 text-xs font-medium text-gray-400 md:gap-6 md:text-sm">
           <div className="flex items-center gap-1">
             <Eyeopen className="h-4 w-4 md:h-6 md:w-6" />
-            <span>{challenge.viewCount}</span>
+            <span>{project.viewCount}</span>
           </div>
 
-          <div className="flex items-center gap-1 text-xs font-medium md:text-sm">
+          <div className="flex items-center gap-1">
             <CommentIcon className="h-4 w-4 md:h-6 md:w-6" />
-            <span>{challenge.commentCount}</span>
+            <span>{project.commentCount}</span>
           </div>
         </div>
       </div>
