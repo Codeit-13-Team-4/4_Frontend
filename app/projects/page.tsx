@@ -1,4 +1,4 @@
-import { prefetchProjectList } from "@/features/projects/api/prefetchProjectList";
+import { prefetchProjectList } from "@/features/projects/list/api/prefetchProjectList";
 import {
   ProjectCardList,
   ProjectCreateButton,

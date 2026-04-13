@@ -1,5 +1,5 @@
 import { PositionType } from "@/features/projects/model";
-import { POSITION_LABELS } from "@/features/projectsDetail/model/projects.constants";
+import { POSITION_LABELS } from "@/features/projects/model";
 
 export function PositionBadgeList({
   positions,
