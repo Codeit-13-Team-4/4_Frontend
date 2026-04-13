@@ -22,7 +22,7 @@ export default async function VerificationsPage({
         <h2 className="text-[30px] font-semibold text-gray-50">{data.title}</h2>
       </header>
       <VerificationsMemberSection data={data} />
-      <VerificationsListSection />
+      <VerificationsListSection isHost={data.isHost} />
     </div>
   );
 }

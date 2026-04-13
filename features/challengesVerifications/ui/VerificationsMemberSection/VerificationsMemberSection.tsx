@@ -24,6 +24,7 @@ export function VerificationsMemberSection({
   } = data;
 
   const { data: memberData } = useGetVerificationsMember(challengeId);
+
   const { data: memberPermissions } =
     useGetVerificationsMemberPermissions(challengeId);
 
@@ -38,6 +39,7 @@ export function VerificationsMemberSection({
               width={120}
               height={120}
               className="rounded-full"
+              priority
             />
           ) : (
             <AvatarIcon width={120} height={120} className="text-gray-800" />
@@ -60,7 +62,7 @@ export function VerificationsMemberSection({
 
         <Button
           variant="primary"
-          disabled={!memberPermissions?.canCreate}
+          // disabled={!memberPermissions?.canCreate}
           className="mt-auto w-full"
           onClick={() => setIsOpen(true)}
         >
@@ -84,7 +86,13 @@ export function VerificationsMemberSection({
         </div>
         <div className="custom-scrollbar flex max-h-70 flex-col gap-4 overflow-y-scroll pr-4">
           {memberData?.data?.map((member) => {
-            return <MemberProgressBar data={member} key={member.id} />;
+            return (
+              <MemberProgressBar
+                data={member}
+                key={member.id}
+                verificationStatus={memberPermissions?.myVerificationStatus}
+              />
+            );
           })}
         </div>
       </div>

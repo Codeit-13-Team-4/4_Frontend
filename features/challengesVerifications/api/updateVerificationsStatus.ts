@@ -7,7 +7,7 @@ export async function updateVerificationStatus(
   payload: UpdateVerificationStatusRequest,
 ) {
   const response = await fetchClient(
-    `/api/challenges/${challengeId}/verifications/${verificationId}`,
+    `/api/challenges/${challengeId}/verifications/${verificationId}/status`,
     {
       method: "PATCH",
       headers: {
