@@ -5,7 +5,7 @@ import { ProjectCard } from "./ProjectCard/ProjectCard";
 import { ProjectCardSkeleton } from "./ProjectCard/ProjectCardSkeleton";
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
-import { useGetProjectList } from "../../hooks/useGetProjectList";
+import { useGetProjectList } from "@/features/projects/list/hooks/useGetProjectList";
 
 export function ProjectCardList({ filters }: { filters?: ProjectFilter }) {
   const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =

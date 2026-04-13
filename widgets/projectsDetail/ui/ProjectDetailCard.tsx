@@ -5,8 +5,8 @@ import {
   ProjectDetailLeftPanel,
   ProjectDetailRightPanel,
   ProjectDetailFooter,
-} from "@/features/projectsDetail/ui/ProjectDetailCard";
-import { useProjectsDetail } from "@/features/projectsDetail/hooks/useProjectsDetail";
+} from "@/features/projects/detail/ui/ProjectDetailCard";
+import { useProjectsDetail } from "@/features/projects/detail/hooks/useProjectsDetail";
 import ProjectDetailCardSkeleton from "@/widgets/projectsDetail/ui/ProjectDetailCardSkeleton";
 import BackButton from "@/widgets/projectsDetail/ui/BackButton";
 import DeleteProjectButton from "@/widgets/projectsDetail/ui/DeleteProjectButton";

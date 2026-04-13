@@ -7,9 +7,9 @@ import {
   likedProjectKeys,
   type LikedProjectCardData,
 } from "@/features/liked/model";
-import { toggleProjectLike } from "@/features/projectsDetail/api/toggleProjectLike";
+import { toggleProjectLike } from "@/features/projects/api/toggleProjectLike";
 import { projectKeys } from "@/features/projects/model/projects.queryKey";
-import type { ProjectDetail } from "@/features/projectsDetail/types/projectsDetail";
+import type { ProjectDetail } from "@/features/projects/model";
 import {
   PositionBadgeList,
   ProjectBadge,

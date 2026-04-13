@@ -30,7 +30,7 @@ import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { formatDate } from "@/shared/utils";
 import { useRouter } from "next/navigation";
-import { useCreateProject } from "../../hooks/useCreateProject";
+import { useCreateProject } from "@/features/projects/create/hooks/useCreateProject";
 import { ChevronLeftIcon, XIcon } from "@/shared/icons";
 
 type CreateFormErrors = {
