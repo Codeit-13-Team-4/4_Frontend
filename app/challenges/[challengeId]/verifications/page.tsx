@@ -1,6 +1,6 @@
 import { getChallengesDetailServer } from "@/features/challenges/detail/api/getChallengesDetail.server";
-import { VerificationsListSection } from "@/features/challengesVerifications/ui/VerificationsListSection/VerificationsListSection";
-import { VerificationsMemberSection } from "@/features/challengesVerifications/ui/VerificationsMemberSection/VerificationsMemberSection";
+import { VerificationsListSection } from "@/features/challenges/verifications/ui/VerificationsListSection/VerificationsListSection";
+import { VerificationsMemberSection } from "@/features/challenges/verifications/ui/VerificationsMemberSection/VerificationsMemberSection";
 import { ChevronLeftIcon } from "@/shared/icons";
 import Link from "next/link";
 

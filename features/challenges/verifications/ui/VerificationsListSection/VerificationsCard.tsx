@@ -3,7 +3,7 @@ import { AvatarIcon, Check, Meetballs, XIcon } from "@/shared/icons";
 import { Dropdown } from "@/shared/ui";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import { VerificationCardProps } from "@/features/challengesVerifications/model";
+import { VerificationCardProps } from "@/features/challenges/verifications/model";
 import { useGetVerificationsDetail } from "../../hook/useGetVerificationsDetail";
 import Image from "next/image";
 import { formatToDate } from "../../utils/formatToDate";
