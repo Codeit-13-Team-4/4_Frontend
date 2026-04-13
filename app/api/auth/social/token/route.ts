@@ -23,7 +23,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           message: data.message || "토큰 발급 중 에러가 발생했습니다.",
-          code: data.code || null,
         },
         { status: response.status },
       );

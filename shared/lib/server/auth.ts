@@ -1,10 +1,9 @@
 import { cookies } from "next/headers";
 import { ApiError } from "@/shared/lib/errors/ApiError";
 import { getErrorMessage } from "@/shared/lib/errors/errorMessage";
+import { getAuthCookieOptions } from "@/shared/lib/server/authCookie";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const ACCESS_TOKEN_MAX_AGE = 60 * 15;
-const REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 7;
 
 interface RefreshTokenResponse {
   accessToken: string;
@@ -44,20 +43,12 @@ async function refreshAccessToken(): Promise<RefreshAccessTokenResult> {
   }
 
   cookieStore.set("accessToken", data.accessToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    maxAge: ACCESS_TOKEN_MAX_AGE,
+    ...getAuthCookieOptions(data.accessToken),
   });
 
   if (data.refreshToken) {
     cookieStore.set("refreshToken", data.refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: REFRESH_TOKEN_MAX_AGE,
+      ...getAuthCookieOptions(data.refreshToken),
     });
   }
 
@@ -112,15 +103,11 @@ export async function fetchWithAuthRetry<T>(
   }
 
   const data = (await response.json().catch(() => null)) as
-    | (T & { message?: string; code?: string | null })
+    | (T & { message?: string })
     | null;
 
   if (!response.ok) {
-    throw new ApiError(
-      response.status,
-      getErrorMessage(response.status, data?.message),
-      data?.code ?? null,
-    );
+    throw new ApiError(response.status, getErrorMessage(response.status, data?.message));
   }
 
   return data as T;

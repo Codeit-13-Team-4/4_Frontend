@@ -20,7 +20,12 @@ export async function POST() {
           ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
         },
       });
-    } catch {}
+    } catch {
+      return NextResponse.json(
+        { message: "백엔드 로그아웃에 실패했습니다." },
+        { status: 500 },
+      );
+    }
   }
 
   const response = NextResponse.json({ message: "로그아웃 되었습니다." });
