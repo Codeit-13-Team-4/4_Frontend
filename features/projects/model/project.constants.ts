@@ -59,7 +59,7 @@ export const PROJECT_TYPE_LABEL = {
 export const SORT_LABEL = {
   createdAt_DESC: "최신순",
   viewCount_DESC: "조회수 순",
-  recruitEndDate_DESC: "마감 임박순",
+  recruitEndDate_ASC: "마감 임박순",
   createdAt_ASC: "오래된 순",
 };
 
