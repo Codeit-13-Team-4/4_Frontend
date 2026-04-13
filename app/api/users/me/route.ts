@@ -11,7 +11,7 @@ export async function GET() {
   } catch (error) {
     if (error instanceof ApiError) {
       return NextResponse.json(
-        { message: error.message },
+        { message: error.message, code: error.code },
         { status: error.status },
       );
     }
@@ -36,7 +36,7 @@ export async function PATCH(request: NextRequest) {
   } catch (error) {
     if (error instanceof ApiError) {
       return NextResponse.json(
-        { message: error.message },
+        { message: error.message, code: error.code },
         { status: error.status },
       );
     }

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getSignupErrorDetails } from "@/features/auth/signup/lib/signupError";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -14,18 +15,24 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({
         type: body.type,
         token: body.token,
+        email: body.email,
         nickname: body.nickname,
+        position: body.jobLabel,
       }),
       cache: "no-store",
     });
 
-    const data = await response.json();
+    const data = await response.json().catch(() => null);
 
     if (!response.ok) {
+      const errorDetails = getSignupErrorDetails(data?.message, data?.code, {
+        fallbackMessage: "회원가입에 실패했습니다.",
+      });
+
       return NextResponse.json(
         {
-          message: data.message || "회원가입에 실패했습니다.",
-          code: data.code || null,
+          message: errorDetails.message,
+          code: errorDetails.code,
         },
         { status: response.status },
       );
