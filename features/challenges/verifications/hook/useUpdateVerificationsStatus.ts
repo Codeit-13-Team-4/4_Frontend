@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   UpdateVerificationStatusRequest,
   verificationsKeys,
-} from "@/features/challengesVerifications/model";
+} from "@/features/challenges/verifications/model";
 import { updateVerificationStatus } from "../api/updateVerificationsStatus";
 
 export function useUpdateVerificationStatus(

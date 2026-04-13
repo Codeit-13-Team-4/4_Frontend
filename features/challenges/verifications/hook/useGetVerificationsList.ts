@@ -1,5 +1,3 @@
-"use client";
-
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { verificationsKeys } from "../model/verifications.queryKey";
 import { VerificationsFilter } from "../model/verifications.type";
