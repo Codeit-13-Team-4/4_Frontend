@@ -23,12 +23,18 @@ export function CreateAlertModal({
         </AlertModal.Header>
         <AlertModal.Footer>
           <AlertModal.Cancel asChild>
-            <Link href="/projects" className="min-w-58">
-              <Button className="h-full w-full">계속 둘러보기</Button>
-            </Link>
+            <Button className="h-full w-full" asChild>
+              <Link href="/projects" className="min-w-58" replace>
+                계속 둘러보기
+              </Link>
+            </Button>
           </AlertModal.Cancel>
-          <AlertModal.Action className="w-full">
-            <Link href={`/projects/${id}`}>개설한 프로젝트 확인</Link>
+          <AlertModal.Action asChild className="w-full">
+            <Button variant="primary" className="h-full w-full" asChild>
+              <Link href={`/projects/${id}`} replace>
+                개설한 프로젝트 확인
+              </Link>
+            </Button>
           </AlertModal.Action>
         </AlertModal.Footer>
       </AlertModal.Content>
