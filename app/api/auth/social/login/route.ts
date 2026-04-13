@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getAuthCookieOptions } from "@/shared/lib/server/authCookie";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const SOCIAL_LOGIN_PATH = "/auth/social";
@@ -51,7 +52,6 @@ export async function POST(request: NextRequest) {
             (typeof data?.message === "string" && data.message) ||
             raw ||
             "로그인에 실패했습니다.",
-          code: data?.code ?? null,
         },
         { status: response.status },
       );
@@ -83,18 +83,12 @@ export async function POST(request: NextRequest) {
     );
 
     responseToClient.cookies.set("accessToken", accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
+      ...getAuthCookieOptions(accessToken),
     });
 
     if (refreshToken) {
       responseToClient.cookies.set("refreshToken", refreshToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        path: "/",
+        ...getAuthCookieOptions(refreshToken),
       });
     }
 

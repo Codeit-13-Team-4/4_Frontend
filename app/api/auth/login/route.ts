@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getAuthCookieOptions } from "@/shared/lib/server/authCookie";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const ACCESS_TOKEN_MAX_AGE = 60 * 15;
-const REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 7;
 
 export async function POST(request: NextRequest) {
   try {
@@ -26,7 +25,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           message: data.message || "로그인에 실패했습니다.",
-          code: data.code || null,
         },
         { status: response.status },
       );
@@ -43,19 +41,11 @@ export async function POST(request: NextRequest) {
     );
 
     responseToClient.cookies.set("accessToken", accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: ACCESS_TOKEN_MAX_AGE,
+      ...getAuthCookieOptions(accessToken),
     });
 
     responseToClient.cookies.set("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: REFRESH_TOKEN_MAX_AGE,
+      ...getAuthCookieOptions(refreshToken),
     });
 
     return responseToClient;
