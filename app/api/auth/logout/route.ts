@@ -10,24 +10,17 @@ export async function POST() {
   const refreshToken = cookieStore.get("refreshToken")?.value;
 
   if (refreshToken) {
-    const logoutUrl = new URL(`${BASE_URL}/auth/logout`);
-    logoutUrl.searchParams.set("refreshToken", refreshToken);
+    try {
+      const logoutUrl = new URL(`${BASE_URL}/auth/logout`);
+      logoutUrl.searchParams.set("refreshToken", refreshToken);
 
-    const backendResponse = await fetch(logoutUrl.toString(), {
-      method: "DELETE",
-      headers: {
-        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-      },
-    });
-
-    if (!backendResponse.ok && backendResponse.status !== 204) {
-      const text = await backendResponse.text();
-
-      return NextResponse.json(
-        { message: text || "백엔드 로그아웃에 실패했습니다." },
-        { status: backendResponse.status },
-      );
-    }
+      await fetch(logoutUrl.toString(), {
+        method: "DELETE",
+        headers: {
+          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+        },
+      });
+    } catch {}
   }
 
   const response = NextResponse.json({ message: "로그아웃 되었습니다." });

@@ -112,13 +112,14 @@ export async function fetchWithAuthRetry<T>(
   }
 
   const data = (await response.json().catch(() => null)) as
-    | (T & { message?: string })
+    | (T & { message?: string; code?: string | null })
     | null;
 
   if (!response.ok) {
     throw new ApiError(
       response.status,
       getErrorMessage(response.status, data?.message),
+      data?.code ?? null,
     );
   }
 
