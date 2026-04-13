@@ -1,8 +1,7 @@
 import { getMeServer } from "@/features/auth/api/getMeServer";
 import { getSafeRedirectPath } from "@/features/auth/lib/authRedirect";
-import SignupForm from "@/features/auth/ui/SignupForm";
-import SocialSignupForm from "@/features/auth/ui/SocialSignupForm";
 import { type SocialType } from "@/features/auth/api/socialLogin";
+import SignupForm from "@/features/auth/signup/ui/SignupForm";
 import { redirect } from "next/navigation";
 
 interface SignupPageProps {
@@ -35,14 +34,10 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
   const isSocialSignup =
     !!token && !!email && !!type && isValidSocialType(type);
 
+  const socialSignup = isSocialSignup ? { token, type, email } : undefined;
   return (
     <div className="flex min-h-screen items-center justify-center">
-      {isSocialSignup ? (
-        <SocialSignupForm token={token} type={type} email={email} />
-      ) : (
-        // 쿼리파라미터가 있으면 여길로 렌더링 -> 소셜 회원가입용 폼
-        <SignupForm /> //없으면 여기로 랜더링 -> 일반 회원가입 폼
-      )}
+      <SignupForm socialSignup={socialSignup} />
     </div>
   );
 }
