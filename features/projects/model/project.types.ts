@@ -71,6 +71,7 @@ export type ProjectFilter = {
   sort?: string;
   start?: number;
   perPage?: number;
+  order?: string;
 };
 
 export type ProjectSortType = keyof typeof SORT_LABEL;
