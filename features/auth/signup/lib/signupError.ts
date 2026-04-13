@@ -1,15 +1,8 @@
-import { ApiError } from "@/shared/lib/errors/ApiError";
-
 interface SignupErrorDetailsOptions {
   fallbackMessage: string;
 }
 
-interface SignupErrorDetails {
-  code: string | null;
-  message: string;
-}
-
-const SIGNUP_ERROR_MESSAGE_BY_CODE: Record<string, string> = {
+const SIGNUP_ERROR_MESSAGE_BY_IDENTIFIER: Record<string, string> = {
   social_account_exists:
     "해당 이메일은 다른 소셜 계정으로 가입되어 있습니다. 해당 소셜 계정으로 로그인해주세요.",
   social_email_exists:
@@ -18,61 +11,88 @@ const SIGNUP_ERROR_MESSAGE_BY_CODE: Record<string, string> = {
   duplicate_email: "이미 가입된 이메일입니다. 기존 계정으로 로그인해주세요.",
 };
 
-function normalizeErrorCode(
-  rawCode?: string | null,
-  rawMessage?: string | null,
-) {
-  const trimmedCode = rawCode?.trim();
+const SOCIAL_PROVIDER_LABEL_BY_TYPE: Record<string, string> = {
+  kakao: "카카오",
+  google: "구글",
+  github: "깃허브",
+};
 
-  if (trimmedCode) {
-    return trimmedCode;
-  }
-
+function parseSignupError(rawMessage?: string | null) {
   const trimmedMessage = rawMessage?.trim();
 
-  if (trimmedMessage && /^[a-z0-9_]+$/.test(trimmedMessage)) {
-    return trimmedMessage;
+  if (!trimmedMessage) {
+    return null;
+  }
+
+  const [identifierPart, ...detailParts] = trimmedMessage
+    .split(",")
+    .map((part) => part.trim())
+    .filter(Boolean);
+
+  if (!identifierPart || !/^[a-z0-9_]+$/.test(identifierPart)) {
+    return null;
+  }
+
+  const details = detailParts.reduce<Record<string, string>>((acc, part) => {
+    const [key, ...valueParts] = part.split("=");
+    const value = valueParts.join("=").trim();
+
+    if (!key || !value) {
+      return acc;
+    }
+
+    acc[key.trim()] = value;
+    return acc;
+  }, {});
+
+  return {
+    identifier: identifierPart,
+    details,
+  };
+}
+
+function getSocialAccountExistsMessage(type?: string) {
+  const providerLabel = type ? SOCIAL_PROVIDER_LABEL_BY_TYPE[type] : null;
+
+  if (providerLabel) {
+    return `이미 ${providerLabel} 계정으로 가입된 이메일입니다. ${providerLabel} 로그인으로 이용해주세요.`;
+  }
+
+  return "이미 다른 소셜 계정으로 가입된 이메일입니다. 해당 소셜 로그인으로 이용해주세요.";
+}
+
+export function getDuplicateEmailErrorMessage(error: unknown) {
+  if (error instanceof Error && "status" in error && error.status === 404) {
+    return "이미 가입된 이메일입니다. 기존 계정으로 로그인해주세요.";
   }
 
   return null;
 }
 
-export function getDuplicateEmailErrorMessage(error: unknown) {
-  if (error instanceof ApiError && error.code) {
-    if (error.code in SIGNUP_ERROR_MESSAGE_BY_CODE) {
-      return error.message || SIGNUP_ERROR_MESSAGE_BY_CODE[error.code];
-    }
+export function getSignupErrorMessage(
+  status: number,
+  rawMessage: string | null | undefined,
+  options: SignupErrorDetailsOptions,
+) {
+  if (status === 404) {
+    return "이미 가입된 이메일입니다. 기존 계정으로 로그인해주세요.";
   }
 
-  if (!(error instanceof Error)) return null;
+  const parsedError = parseSignupError(rawMessage);
+  const identifier = parsedError?.identifier;
 
-  const message = error.message.trim();
-  if (!message) return null;
+  if (identifier && SIGNUP_ERROR_MESSAGE_BY_IDENTIFIER[identifier]) {
+    return SIGNUP_ERROR_MESSAGE_BY_IDENTIFIER[identifier];
+  }
 
-  return message.includes("이미 가입된 이메일") ? message : null;
-}
-
-export function getSignupErrorDetails(
-  rawMessage: string | null | undefined,
-  rawCode: string | null | undefined,
-  options: SignupErrorDetailsOptions,
-): SignupErrorDetails {
-  const code = normalizeErrorCode(rawCode, rawMessage);
-
-  if (code && SIGNUP_ERROR_MESSAGE_BY_CODE[code]) {
-    return {
-      code,
-      message: SIGNUP_ERROR_MESSAGE_BY_CODE[code],
-    };
+  if (identifier === "already_account_exists") {
+    return getSocialAccountExistsMessage(parsedError?.details.type);
   }
 
   const message = rawMessage?.trim();
 
   if (!message) {
-    return {
-      code,
-      message: options.fallbackMessage,
-    };
+    return options.fallbackMessage;
   }
 
   const loweredMessage = message.toLowerCase();
@@ -81,26 +101,8 @@ export function getSignupErrorDetails(
     loweredMessage.includes("position should not be null") ||
     loweredMessage.includes("position must be one of")
   ) {
-    return {
-      code,
-      message: "포지션을 선택해주세요.",
-    };
+    return "포지션을 선택해주세요.";
   }
 
-  if (
-    loweredMessage.includes("email") &&
-    (loweredMessage.includes("exists") ||
-      loweredMessage.includes("already") ||
-      loweredMessage.includes("duplicate"))
-  ) {
-    return {
-      code: code ?? "email_exists",
-      message: "이미 가입된 이메일입니다. 기존 계정으로 로그인해주세요.",
-    };
-  }
-
-  return {
-    code,
-    message,
-  };
+  return message;
 }

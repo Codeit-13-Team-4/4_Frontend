@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSignupErrorDetails } from "@/features/auth/signup/lib/signupError";
+import { getSignupErrorMessage } from "@/features/auth/signup/lib/signupError";
+import { getAuthCookieOptions } from "@/shared/lib/server/authCookie";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const ACCESS_TOKEN_MAX_AGE = 60 * 15;
-const REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 7;
 
 export async function POST(request: NextRequest) {
   try {
@@ -26,17 +25,11 @@ export async function POST(request: NextRequest) {
     const data = await response.json().catch(() => null);
 
     if (!response.ok) {
-      const errorDetails = getSignupErrorDetails(data?.message, data?.code, {
+      const message = getSignupErrorMessage(response.status, data?.message, {
         fallbackMessage: "회원가입에 실패했습니다.",
       });
 
-      return NextResponse.json(
-        {
-          message: errorDetails.message,
-          code: errorDetails.code,
-        },
-        { status: response.status },
-      );
+      return NextResponse.json({ message }, { status: response.status });
     }
 
     const responseToClient = NextResponse.json(
@@ -59,21 +52,13 @@ export async function POST(request: NextRequest) {
 
     if (accessToken) {
       responseToClient.cookies.set("accessToken", accessToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        path: "/",
-        maxAge: ACCESS_TOKEN_MAX_AGE,
+        ...getAuthCookieOptions(accessToken),
       });
     }
 
     if (refreshToken) {
       responseToClient.cookies.set("refreshToken", refreshToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        path: "/",
-        maxAge: REFRESH_TOKEN_MAX_AGE,
+        ...getAuthCookieOptions(refreshToken),
       });
     }
 
