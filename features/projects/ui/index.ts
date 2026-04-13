@@ -6,3 +6,4 @@ export { TechStackList } from "./TechStackList";
 export { ProjectContactLinkDropdown } from "./ProjectContactLinkDropdown";
 export { ProjectCreatePositionDropdown } from "./ProjectCreatePositionDropdown";
 export { ProjectCreateTagInput } from "./ProjectCreateTagInput";
+export { ProjectForm } from "./ProjectForm";
