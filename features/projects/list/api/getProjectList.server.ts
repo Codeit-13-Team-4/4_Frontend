@@ -28,6 +28,9 @@ const createSearchParams = (filters: ProjectFilter) => {
     params.set("status", status);
   }
   if (sort) {
+    if (sort === "recruitEndDate") {
+      params.set("status", "recruiting");
+    }
     params.set("sort", sort);
   }
 
