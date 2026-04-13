@@ -275,6 +275,19 @@ body {
   color: var(--foreground);
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: #f8fafc;
+  caret-color: #f8fafc;
+  -webkit-box-shadow: 0 0 0 1000px #243043 inset;
+  box-shadow: 0 0 0 1000px #243043 inset;
+  transition: background-color 9999s ease-out 0s;
+}
+
 @utility scrollbar-hide {
   &::-webkit-scrollbar {
     display: none;
