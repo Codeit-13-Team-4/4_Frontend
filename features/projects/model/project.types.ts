@@ -9,7 +9,6 @@ import {
 export type ProjectFilterOptions = { value: string; label: string };
 
 export type TechStackType = keyof typeof TECH_STACK;
-
 export type PositionType = keyof typeof POSITION_LABELS;
 export type ContactMethod = keyof typeof CONTACT_METHOD;
 export type ContactMethodType = ContactMethod;
@@ -31,14 +30,28 @@ export type ProjectStatusType = ProjectStatus;
 
 export type ApplicationStatusType = "pending" | "approved" | "rejected";
 
+export type RejectionType =
+  | "position_limit"
+  | "condition_not_met"
+  | "internal_standard"
+  | "custom";
+
+export interface ApplicationType {
+  id: number;
+  status: ApplicationStatusType;
+  rejectionType: RejectionType;
+  rejectionText: string;
+}
+
 export interface ProjectHost {
   id: number;
   nickname: string;
-  jobLabel?: PositionType[];
-  profileImageUrl?: string;
-  skills?: TechStackType[];
+  jobLabel: PositionType[];
+  profileImageUrl: string;
+  skills: TechStackType[];
 }
 
+// 프로젝트 리스트
 export interface ProjectCardProps {
   id: number;
   title: string;
@@ -57,10 +70,12 @@ export interface ProjectCardProps {
   viewCount: number;
   commentCount: number;
   liked: boolean;
-  host: ProjectHost;
   hasApplication: boolean;
+  applicationStatus: ApplicationStatusType | null;
+  application: ApplicationType | null;
   isHost: boolean;
-  applicationStatus: ApplicationStatusType;
+  isMember: boolean;
+  host: ProjectHost;
 }
 
 export type ProjectFilter = {
@@ -87,7 +102,7 @@ export interface ProjectsResponse {
   total: number;
 }
 
-// Detail types (previously in projectsDetail/types/)
+// 프로젝트 상세
 export interface ProjectDetail {
   id: number;
   title: string;
@@ -106,10 +121,12 @@ export interface ProjectDetail {
   viewCount: number;
   commentCount: number;
   liked: boolean;
-  host: Pick<
-    User,
-    "id" | "nickname" | "jobLabel" | "profileImageUrl" | "skills"
-  >;
+  hasApplication: boolean;
+  applicationStatus: ApplicationStatusType | null;
+  application: ApplicationType | null;
+  isMember: boolean;
+  isHost: boolean;
+  host: ProjectHost;
 }
 
 export interface ProjectsDetailResponse {
@@ -117,15 +134,18 @@ export interface ProjectsDetailResponse {
   total: number;
 }
 
+// 댓글
+type CommentUserType = Pick<
+  User,
+  "id" | "nickname" | "jobLabel" | "profileImageUrl" | "skills"
+>;
+
 export interface Comment {
   id: number;
   userId: number;
   content: string;
   createdAt: string;
-  user: Pick<
-    User,
-    "id" | "nickname" | "jobLabel" | "profileImageUrl" | "skills"
-  >;
+  user: CommentUserType;
 }
 
 export interface CommentsResponse {

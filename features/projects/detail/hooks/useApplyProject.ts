@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { applicationsProject } from "../api/applicationsProject";
+import { projectKeys } from "@/features/projects/model";
 
-export function useApplyProject() {
+export function useApplyProject(projectId: number) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -14,7 +15,10 @@ export function useApplyProject() {
       },
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["projectList"] });
+      queryClient.invalidateQueries({
+        queryKey: projectKeys.detail(projectId),
+      });
+      queryClient.invalidateQueries({ queryKey: projectKeys.lists() });
     },
   });
 }
