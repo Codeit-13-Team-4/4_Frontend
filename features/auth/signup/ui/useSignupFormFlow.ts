@@ -64,15 +64,26 @@ export function useSignupFormFlow({ socialSignup }: UseSignupFormFlowOptions) {
     router.replace(buildLoginPath(redirectPath));
   }, [redirectPath, router]);
 
+  const scrollToPageTop = () => {
+    if (typeof window === "undefined") return;
+    if (typeof window.scrollTo !== "function") return;
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   const moveStep = (step: SignupStep) => {
     setCurrentStep(step);
     setIsComplete(false);
     setSubmitError(null);
+    scrollToPageTop();
   };
 
   const openComplete = () => {
     setIsComplete(true);
     setSubmitError(null);
+    scrollToPageTop();
   };
 
   const getNormalizedValues = () => {

@@ -126,7 +126,6 @@ function SocialSignupSummary({
     </div>
   );
 }
-
 function NicknameField({
   hasError,
   hasValue,
@@ -301,14 +300,15 @@ export default function SignupStep2({
       <AccountStepHeader />
 
       <div
-        className={`mx-auto w-full max-w-[560px]${
-          isSocialSignup ? "flex flex-col gap-6" : ""
-        }`}
+        className={
+          isSocialSignup
+            ? "mx-auto flex w-full max-w-[560px] flex-col gap-6"
+            : "mx-auto w-full max-w-[560px]"
+        }
       >
         {isSocialSignup && socialSignup ? (
           <SocialSignupSummary socialSignup={socialSignup} />
         ) : null}
-
         <FieldGroup className="gap-1">
           <NicknameField
             hasError={!!errors.nickname}

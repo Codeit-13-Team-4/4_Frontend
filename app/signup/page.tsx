@@ -36,7 +36,7 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
 
   const socialSignup = isSocialSignup ? { token, type, email } : undefined;
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex min-h-[calc(100vh-5.5rem)] items-start justify-center py-6 md:py-10">
       <SignupForm socialSignup={socialSignup} />
     </div>
   );

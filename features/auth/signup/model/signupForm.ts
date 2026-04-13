@@ -30,7 +30,7 @@ export interface SignupFormValues {
 
 export function getInitialNickname(name?: string) {
   const trimmedName = name?.trim();
-  return trimmedName ? trimmedName.slice(0, 10) : getRandomName();
+  return trimmedName || getRandomName();
 }
 
 export function getSignupDefaultValues({
