@@ -8,23 +8,40 @@ import { useGetVerificationsDetail } from "../../hook/useGetVerificationsDetail"
 import Image from "next/image";
 import { formatToDate } from "../../utils/formatToDate";
 import { useUpdateVerificationStatus } from "../../hook/useUpdateVerificationsStatus";
+import { VerificationsRejectModal } from "../VerificationsModal/VerificationsRejectModal";
+import { useDeleteVerifications } from "../../hook/useDeleteVerifications";
+import { VerificationsEditModal } from "../VerificationsModal/VerificationsEditModal";
 
-const isHost = true;
-export default function VerifyCard({ data }: { data: VerificationCardProps }) {
+export default function VerifyCard({
+  data,
+  isHost,
+}: {
+  data: VerificationCardProps;
+  isHost: boolean;
+}) {
   const { verificationId, challengeId } = data;
 
   const [isOverflow, setIsOverflow] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
+  const [rejectModalIsOpen, setRejectModalIsOpen] = useState(false);
+  const [rejectReason, setRejectReason] = useState("");
+  const [editModalIsOpen, setEditModalIsOpen] = useState(false);
 
   const { data: verificationData } = useGetVerificationsDetail({
     challengeId,
     verificationId,
   });
+
   const { mutate: updateStatus, isPending } = useUpdateVerificationStatus(
     challengeId,
     verificationId,
   );
+
+  const { mutate: deleteVerification } = useDeleteVerifications({
+    challengeId,
+    verificationId,
+  });
 
   const { content, user, imageUrls, createdAt } = verificationData?.data ?? {};
 
@@ -47,34 +64,21 @@ export default function VerifyCard({ data }: { data: VerificationCardProps }) {
       { status: "APPROVED" },
       {
         onSuccess: () => {
-          toast.success("인증이 승인되었습니다", {
-            action: (
-              <button
-                className="ml-auto cursor-pointer text-gray-400"
-                onClick={() => console.log("실행 취소")}
-              >
-                실행 취소
-              </button>
-            ),
-          });
+          toast.success("인증이 승인되었습니다", {});
         },
       },
     );
   };
 
   const handleReject = () => {
-    console.log("거절");
-
-    toast.error("인증이 거절되었습니다", {
-      action: (
-        <button
-          className="ml-auto cursor-pointer text-gray-400"
-          onClick={() => console.log("Action!")}
-        >
-          실행 취소
-        </button>
-      ),
-    });
+    updateStatus(
+      { status: "REJECTED", message: rejectReason },
+      {
+        onSuccess: () => {
+          toast.error("인증이 거절되었습니다.", {});
+        },
+      },
+    );
   };
 
   return (
@@ -95,7 +99,10 @@ export default function VerifyCard({ data }: { data: VerificationCardProps }) {
                 <button onClick={handleApprove} className="cursor-pointer">
                   <Check className="text-mint-500" width={24} height={24} />
                 </button>
-                <button onClick={handleReject} className="cursor-pointer">
+                <button
+                  onClick={() => setRejectModalIsOpen(true)}
+                  className="cursor-pointer"
+                >
                   <XIcon className="text-error" width={18} height={18} />
                 </button>
               </div>
@@ -114,10 +121,16 @@ export default function VerifyCard({ data }: { data: VerificationCardProps }) {
                   align="end"
                   className="min-w-24 border-gray-700 bg-gray-800 text-sm text-gray-200"
                 >
-                  <Dropdown.Item className="px-3 py-2 hover:bg-gray-900">
+                  <Dropdown.Item
+                    className="px-3 py-2 hover:bg-gray-900"
+                    onClick={() => setEditModalIsOpen(true)}
+                  >
                     수정
                   </Dropdown.Item>
-                  <Dropdown.Item className="px-3 py-2 text-red-400 hover:bg-gray-900">
+                  <Dropdown.Item
+                    className="px-3 py-2 text-red-400 hover:bg-gray-900"
+                    onClick={() => deleteVerification()}
+                  >
                     삭제
                   </Dropdown.Item>
                 </Dropdown.Content>
@@ -157,6 +170,21 @@ export default function VerifyCard({ data }: { data: VerificationCardProps }) {
           </button>
         )}
       </div>
+      <VerificationsRejectModal
+        setIsOpen={setRejectModalIsOpen}
+        isOpen={rejectModalIsOpen}
+        setRejectReason={setRejectReason}
+        onSubmit={handleReject}
+      />
+      <VerificationsEditModal
+        key={verificationId}
+        open={editModalIsOpen}
+        setIsOpen={setEditModalIsOpen}
+        onOpenChange={() => setEditModalIsOpen(false)}
+        challengeId={challengeId}
+        verificationId={verificationId}
+        data={verificationData?.data}
+      />
     </div>
   );
 }

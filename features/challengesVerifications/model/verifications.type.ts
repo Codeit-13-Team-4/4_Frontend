@@ -12,7 +12,7 @@ export type VerificationListUserData = {
   nickname: string;
   profileImageUrl: string;
 };
-export type VerificationStatus = "PENDING" | "APPROVED" | "REJECTED";
+export type VerificationStatus = "BEFORE" | "PENDING" | "APPROVED" | "REJECTED";
 
 export type VerificationCardProps = {
   challengeId: number;

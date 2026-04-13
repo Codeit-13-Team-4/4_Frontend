@@ -1,9 +1,22 @@
-import { AvatarIcon } from "@/shared/icons";
+import { AvatarIcon, Check, XIcon } from "@/shared/icons";
 import { Progress } from "@/shared/ui";
-import { VerificationMember } from "../../model";
+import { VerificationMember, VerificationStatus } from "../../model";
 
-export function MemberProgressBar({ data }: { data: VerificationMember }) {
+export function MemberProgressBar({
+  data,
+  verificationStatus,
+}: {
+  data: VerificationMember;
+  verificationStatus: VerificationStatus;
+}) {
   const { user } = data;
+  const verificationLabel = {
+    BEFORE: "인증 전",
+    APPROVED: <Check className="text-mint-500" width={20} height={20} />,
+    PENDING: "대기중",
+    REJECTED: <XIcon className="text-error" width={14} height={14} />,
+  };
+
   // 수정: 현재 멤버 목록 데이터에 진행도가없음
   return (
     <div className="flex w-full items-center">
@@ -19,7 +32,9 @@ export function MemberProgressBar({ data }: { data: VerificationMember }) {
           <span className="text-mint-500">30</span>%
         </span>
       </div>
-      <span className="text-nowrap">인증 전</span>
+      <span className="text-nowrap">
+        {verificationLabel[verificationStatus]}
+      </span>
     </div>
   );
 }

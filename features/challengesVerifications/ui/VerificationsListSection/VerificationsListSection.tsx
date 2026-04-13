@@ -5,8 +5,7 @@ import { VerificationsCardList } from "./VerificationsCardList";
 
 export type VerificationsTabType = "PENDING" | "APPROVED" | "REJECTED";
 
-const isHost = true;
-export function VerificationsListSection() {
+export function VerificationsListSection({ isHost }: { isHost: boolean }) {
   const [status, setStatus] = useState<VerificationsTabType>("PENDING");
 
   return (
@@ -19,7 +18,7 @@ export function VerificationsListSection() {
         <VerificationsStatusTab status={status} onStatusChange={setStatus} />
       )}
 
-      <VerificationsCardList status={status} />
+      <VerificationsCardList status={status} isHost={isHost} />
     </div>
   );
 }
