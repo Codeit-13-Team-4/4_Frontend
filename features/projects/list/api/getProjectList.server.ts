@@ -4,8 +4,16 @@ import { ProjectFilter } from "@/features/projects/model";
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const createSearchParams = (filters: ProjectFilter) => {
-  const { keyword, status, projectType, positions, sort, start, perPage } =
-    filters;
+  const {
+    keyword,
+    status,
+    projectType,
+    positions,
+    sort,
+    start,
+    perPage,
+    order,
+  } = filters;
   const params = new URLSearchParams({
     start: String(start ?? 0),
     perPage: String(perPage ?? 10),
@@ -19,11 +27,12 @@ const createSearchParams = (filters: ProjectFilter) => {
   if (status) {
     params.set("status", status);
   }
-  if (sort && sort !== "createdAt") {
-    if (sort === "recruitEndDate") {
-      params.set("order", "ASC");
-    }
+  if (sort) {
     params.set("sort", sort);
+  }
+
+  if (order) {
+    params.set("order", order);
   }
 
   projectType?.forEach((type) => params.append("projectType", type));
