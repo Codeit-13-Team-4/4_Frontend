@@ -5,11 +5,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ChallengesFilterRadioInput } from "@/features/challenges/ui";
 import { ChallengesFilterButton } from "@/features/challenges/list/ui/ChallengesFilter/ChallengesFilterButton";
 import { POSITION_LABELS, STATUS_LABEL } from "@/features/projects/model";
-import {
-  ProjectFilterButton,
-  ProjectFilterRadioInput,
-  ProjectFilterCheckBoxInput,
-} from "@/features/projects/ui";
+import { ProjectFilterButton } from "@/features/projects/list/ui/ProjectFilter/ProjectFilterButton";
+import { ProjectFilterRadioInput } from "@/features/projects/list/ui/ProjectFilter/ProjectFilterRadioInput";
+import { ProjectFilterCheckBoxInput } from "@/features/projects/list/ui/ProjectFilter/ProjectFilterCheckBoxInput";
 import { Button, Modal } from "@/shared/ui";
 
 const FILTER_STATUS_LABEL: Record<string, string> = {
