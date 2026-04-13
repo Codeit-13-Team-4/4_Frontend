@@ -1,4 +1,4 @@
-import { TechBadge } from "@/features/projects/ui";
+import { TechBadge } from "@/features/projects/ui/TechBadge";
 import { TechStackType } from "@/features/projects/model";
 
 export function TechStackList({ techs }: { techs: TechStackType[] }) {

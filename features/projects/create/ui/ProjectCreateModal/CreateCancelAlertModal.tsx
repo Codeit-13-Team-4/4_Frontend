@@ -18,7 +18,7 @@ export function CreateCancelAlertModal({
 
         <AlertModal.Footer>
           <AlertModal.Cancel asChild>
-            <Link href="/projects" className="min-w-58">
+            <Link href="/projects" className="min-w-58" replace>
               <Button className="h-full w-full">나가기</Button>
             </Link>
           </AlertModal.Cancel>
