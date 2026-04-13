@@ -48,16 +48,16 @@ export function SecondSection() {
 
             <div className="absolute top-[50%] right-[10%] md:right-0 lg:top-[-15%] lg:right-[-10%]">
               <div className="relative">
-                <div className="animate-float-right border-mint-500/50 flex h-20 w-20 items-center justify-center rounded-full border bg-white/10 text-4xl backdrop-blur-md [animation-delay:1s] md:h-25 md:w-25">
+                <div className="animate-float-right border-mint-500/50 flex h-20 w-20 items-center justify-center rounded-full border bg-white/10 text-4xl backdrop-blur-md [animation-delay:1s] md:h-20 md:w-20">
                   👍
                 </div>
               </div>
             </div>
 
-            <div className="border-mint-500/30 animate-float text-md absolute top-0 right-0 rounded-full border bg-gray-700/70 px-5 py-2 text-gray-200 md:text-lg lg:top-[20%] lg:right-[-12%]">
+            <div className="border-mint-500/30 animate-float text-md absolute top-0 right-0 rounded-full border bg-gray-700/70 px-3 py-2 text-gray-200 md:px-5 md:text-lg lg:top-[20%] lg:right-[-12%]">
               같이 으쌰으쌰할 수 있어서 너무 좋아요~
             </div>
-            <div className="border-mint-500/30 animate-float text-md absolute bottom-[50%] left-0 rounded-full border bg-gray-700/70 px-5 py-2 text-gray-200 [animation-delay:0.5s] md:text-lg lg:left-[-15%]">
+            <div className="border-mint-500/30 animate-float text-md absolute bottom-[50%] left-0 rounded-full border bg-gray-700/70 px-3 py-2 text-gray-200 [animation-delay:0.5s] md:px-5 md:text-lg lg:left-[-15%]">
               오늘 하루도 알차게 보내셨네요 멋져요!
             </div>
           </div>

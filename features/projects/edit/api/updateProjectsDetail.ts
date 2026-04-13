@@ -1,0 +1,33 @@
+import { fetchClient } from "@/shared/lib/client/fetchClient";
+import type {
+  ProjectType,
+  TechStackType,
+  PositionType,
+  ContactMethodType,
+} from "@/features/projects/model";
+
+export interface UpdateProjectDetailParams {
+  projectId: number;
+  title?: string;
+  description?: string;
+  projectType?: ProjectType;
+  techStacks?: TechStackType[];
+  positions?: PositionType[];
+  maxMembers?: number;
+  recruitEndDate?: string;
+  projectStartDate?: string;
+  projectEndDate?: string;
+  contactMethod?: ContactMethodType;
+  contactLink?: string;
+}
+
+export async function updateProjectsDetail({
+  projectId,
+  ...body
+}: UpdateProjectDetailParams): Promise<void> {
+  await fetchClient(`/api/projects/${projectId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}

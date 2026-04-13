@@ -123,9 +123,12 @@ export function FourthSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="overflow-hidden bg-gray-900 px-20">
+    <section
+      ref={sectionRef}
+      className="overflow-hidden bg-gray-900 px-10 md:px-20"
+    >
       <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[minmax(280px,420px)_1fr] lg:gap-16">
-        <div className="flex flex-col gap-7 text-center">
+        <div className="flex flex-col gap-7 text-center md:text-left">
           <p className="text-mint-500 text-lg font-semibold">
             {"// COMMUNITY"}
           </p>
