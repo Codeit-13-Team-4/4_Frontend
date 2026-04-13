@@ -1,6 +1,7 @@
 "use client";
+
 import { useState } from "react";
-import { POSITION_LABELS, PositionType } from "../../model";
+import { POSITION_LABELS, PositionType } from "@/features/projects/model";
 import { Dropdown } from "@/shared/ui";
 import { ChevronDownIcon, ChevronUpIcon } from "@/shared/icons";
 
