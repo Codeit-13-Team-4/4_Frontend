@@ -24,6 +24,7 @@ export default async function ProjectPage({
         ? [params.positions]
         : params.positions,
     sort: typeof params.sort === "string" ? params.sort : undefined,
+    order: typeof params.order === "string" ? params.order : undefined,
   };
 
   const queryClient = await prefetchProjectList(filters);
