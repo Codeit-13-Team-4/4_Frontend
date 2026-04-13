@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { ChevronDownIcon } from "@/shared/icons";
 import { useRouter } from "next/navigation";
 import { Modal } from "@/shared/ui/Modal/Modal";
 import { Button, TextArea } from "@/shared/ui";
 import { POSITION_LABELS, PositionType } from "@/features/projects/model";
-import { applicationsProject } from "@/features/projects/detail/api/applicationsProject";
-import { toast } from "@/shared/utils";
+import { useApplyProject } from "@/features/projects/detail/hooks/useApplyProject";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
 
 const POSITION_ENTRIES = Object.entries(POSITION_LABELS) as [
@@ -27,6 +27,7 @@ export function ApplyModal({ open, onOpenChange, projectId }: ApplyModalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const openAlertModal = useOpenAlertModal();
+  const { mutate: applyProject } = useApplyProject(Number(projectId));
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -47,34 +48,30 @@ export function ApplyModal({ open, onOpenChange, projectId }: ApplyModalProps) {
     onOpenChange(false);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!projectId || !position) return;
 
-    try {
-      await applicationsProject({ projectId, position, motivation: message });
-      setPosition(null);
-      setMessage("");
-      onOpenChange(false);
-      openAlertModal({
-        title: "프로젝트 참여 신청을 완료했어요",
-        description: "주최자가 승인하면 알림으로 알려드릴게요.",
-        showCompleteAnimation: true,
-        positive: {
-          text: "지원 내역 확인",
-          button: { type: "default", variant: "primary" },
+    applyProject(
+      { projectId, position, motivation: message },
+      {
+        onSuccess: () => {
+          setPosition(null);
+          setMessage("");
+          onOpenChange(false);
+          openAlertModal({
+            title: "프로젝트 참여 신청을 완료했어요",
+            description: "주최자가 승인하면 알림으로 알려드릴게요.",
+            showCompleteAnimation: true,
+            positive: {
+              text: "지원 내역 확인",
+              button: { type: "default", variant: "primary" },
+            },
+            negative: { text: "계속 둘러보기" },
+            onPositive: () => router.push("/mypage"),
+          });
         },
-        negative: { text: "계속 둘러보기" },
-        onPositive: () => router.push("/mypage"),
-      });
-    } catch (error) {
-      onOpenChange(false);
-      setPosition(null);
-      setMessage("");
-      const err = error as { status?: number; message?: string };
-      if (err.status === 409) {
-        toast(err.message!, { variant: "error" });
-      }
-    }
+      },
+    );
   };
 
   return (
@@ -103,23 +100,14 @@ export function ApplyModal({ open, onOpenChange, projectId }: ApplyModalProps) {
               >
                 {position ? POSITION_LABELS[position] : "희망 포지션"}
               </span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
+              <ChevronDownIcon
                 width="16"
                 height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
                 className="text-gray-400 transition-transform duration-200"
                 style={{
                   transform: dropdownOpen ? "rotate(180deg)" : "rotate(0deg)",
                 }}
-              >
-                <path d="m6 9 6 6 6-6" />
-              </svg>
+              />
             </button>
 
             {dropdownOpen && (
