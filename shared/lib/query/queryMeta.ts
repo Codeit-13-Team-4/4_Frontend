@@ -4,6 +4,7 @@ declare module "@tanstack/react-query" {
   interface Register {
     mutationMeta: {
       successMessage?: string;
+      errorMessage?: Partial<Record<number, string>>;
     };
   }
 }

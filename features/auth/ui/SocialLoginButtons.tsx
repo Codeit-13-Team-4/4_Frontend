@@ -27,37 +27,51 @@ export default function SocialLoginButtons() {
     <div className="flex flex-col gap-3">
       <div className="flex w-full items-center gap-3 sm:gap-4">
         <div className="h-px min-w-0 flex-1 bg-slate-300" />
-        <span className="shrink-0 text-sm text-slate-500">
+        <span className="shrink-0 text-[15px] text-slate-500">
           SNS 계정으로 로그인
         </span>
         <div className="h-px min-w-0 flex-1 bg-slate-300" />
       </div>
-      <button
-        type="button"
-        onClick={() => handleSocialLogin("google")}
-        className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white text-black"
-      >
-        <Google width={20} height={20} />
-        <span>구글로 시작하기</span>
-      </button>
+      <div className="flex justify-center gap-7 md:flex-col md:gap-3">
+        <button
+          type="button"
+          onClick={() => handleSocialLogin("google")}
+          className="flex h-12 w-12 items-center justify-center gap-2 rounded-full bg-white text-black md:w-full md:rounded-xl"
+        >
+          <Google
+            width={20}
+            height={20}
+            className="h-full w-full p-2 md:h-auto md:w-auto md:p-0"
+          />
+          <span className="hidden md:flex">구글로 시작하기</span>
+        </button>
 
-      <button
-        type="button"
-        onClick={() => handleSocialLogin("kakao")}
-        className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-yellow-300 text-black"
-      >
-        <Kakao width={20} height={20} />
-        <span>카카오로 시작하기</span>
-      </button>
+        <button
+          type="button"
+          onClick={() => handleSocialLogin("kakao")}
+          className="flex h-12 w-12 items-center justify-center gap-2 rounded-full bg-yellow-300 text-black md:w-full md:rounded-xl"
+        >
+          <Kakao
+            width={20}
+            height={20}
+            className="h-full w-full p-2 md:h-auto md:w-auto md:p-0"
+          />
+          <span className="hidden md:flex">카카오로 시작하기</span>
+        </button>
 
-      <button
-        type="button"
-        onClick={() => handleSocialLogin("github")}
-        className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white text-slate-800"
-      >
-        <Github width={20} height={20} />
-        <span>GitHub로 시작하기</span>
-      </button>
+        <button
+          type="button"
+          onClick={() => handleSocialLogin("github")}
+          className="flex h-12 w-12 items-center justify-center gap-2 rounded-full bg-white text-slate-800 md:w-full md:rounded-xl"
+        >
+          <Github
+            width={20}
+            height={20}
+            className="h-full w-full p-2 md:h-auto md:w-auto md:p-0"
+          />
+          <span className="hidden md:flex">GitHub로 시작하기</span>
+        </button>
+      </div>
     </div>
   );
 }
