@@ -10,6 +10,12 @@ export function useToggleProjectLike(projectId: number) {
   return useMutation({
     mutationFn: (currentLiked: boolean) =>
       toggleProjectLike(projectId, currentLiked),
+    meta: {
+      errorMessage: {
+        404: "존재하지 않는 프로젝트입니다.",
+        409: "이미 처리된 요청입니다.",
+      },
+    },
     onMutate: async (currentLiked) => {
       await queryClient.cancelQueries({ queryKey });
 
