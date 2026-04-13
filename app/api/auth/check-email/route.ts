@@ -1,4 +1,4 @@
-import { getSignupErrorDetails } from "@/features/auth/signup/lib/signupError";
+import { getSignupErrorMessage } from "@/features/auth/signup/lib/signupError";
 import { ApiError } from "@/shared/lib/errors/ApiError";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -26,17 +26,11 @@ export async function GET(request: NextRequest) {
     const data = await response.json().catch(() => null);
 
     if (!response.ok) {
-      const errorDetails = getSignupErrorDetails(data?.message, data?.code, {
+      const message = getSignupErrorMessage(response.status, data?.message, {
         fallbackMessage: "이메일 중복 확인에 실패했습니다.",
       });
 
-      return NextResponse.json(
-        {
-          message: errorDetails.message,
-          code: errorDetails.code,
-        },
-        { status: response.status },
-      );
+      return NextResponse.json({ message }, { status: response.status });
     }
 
     return NextResponse.json(
@@ -48,10 +42,7 @@ export async function GET(request: NextRequest) {
     );
   } catch (error) {
     if (error instanceof ApiError) {
-      return NextResponse.json(
-        { message: error.message, code: error.code },
-        { status: error.status },
-      );
+      return NextResponse.json({ message: error.message }, { status: error.status });
     }
     return NextResponse.json(
       {

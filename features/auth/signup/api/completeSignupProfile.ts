@@ -11,17 +11,8 @@ interface CompleteSignupProfileRequest {
   externalLink: string;
 }
 
-const RETRYABLE_PROFILE_SAVE_STATUSES = new Set([401, 404]);
-const MAX_PROFILE_SAVE_ATTEMPTS = 5;
 const PROFILE_SAVE_FAILED_MESSAGE =
   "추가 정보를 저장하지 못했어요. 잠시 후 다시 시도해주세요.";
-
-function delay(ms: number) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
-
 function resolveProfileLinks(externalLink: string) {
   const trimmedLink = externalLink.trim();
 
@@ -78,36 +69,23 @@ export async function completeSignupProfile(
     ...links,
   });
 
-  for (let attempt = 0; attempt < MAX_PROFILE_SAVE_ATTEMPTS; attempt += 1) {
-    try {
-      await fetchClient("/api/users/me", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: requestBody,
-      });
-      return;
-    } catch (error) {
-      const isRetryable =
-        error instanceof ApiError &&
-        RETRYABLE_PROFILE_SAVE_STATUSES.has(error.status) &&
-        attempt < MAX_PROFILE_SAVE_ATTEMPTS - 1;
-
-      if (isRetryable) {
-        await delay(500 * (attempt + 1));
-        continue;
+  try {
+    await fetchClient("/api/users/me", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: requestBody,
+    });
+  } catch (error) {
+    if (error instanceof ApiError) {
+      if (error.status === 404) {
+        throw new Error(
+          "회원 정보를 준비하는 중이에요. 잠시 후 다시 시도해주세요.",
+        );
       }
 
-      if (error instanceof ApiError) {
-        if (error.code === "not_found_user_info") {
-          throw new Error(
-            "회원 정보를 준비하는 중이에요. 잠시 후 다시 시도해주세요.",
-          );
-        }
-
-        throw new Error(error.message || PROFILE_SAVE_FAILED_MESSAGE);
-      }
-
-      throw new Error(PROFILE_SAVE_FAILED_MESSAGE);
+      throw new Error(error.message || PROFILE_SAVE_FAILED_MESSAGE);
     }
+
+    throw new Error(PROFILE_SAVE_FAILED_MESSAGE);
   }
 }
