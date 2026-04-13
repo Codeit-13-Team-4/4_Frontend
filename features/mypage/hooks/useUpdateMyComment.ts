@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateProjectsDetailComment } from "@/features/projectsDetail/api/updateProjectsDetailComment";
+import { updateProjectsDetailComment } from "@/features/projects/detail/api/updateProjectsDetailComment";
 import { updateChallengesDetailComment } from "@/features/challenges/detail/api/updateChallengesDetailComment";
 import { mypageKeys } from "../model/mypage.queryKey";
 import type { MyComment } from "../model/mypage.types";

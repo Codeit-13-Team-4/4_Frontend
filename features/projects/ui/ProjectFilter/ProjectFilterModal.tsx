@@ -1,7 +1,7 @@
 "use client";
 import { Button, Modal } from "@/shared/ui";
 import { ProjectFilterRadioInput } from "./ProjectFilterRadioInput";
-import { useMultiSelect } from "../../hooks/useMultiSelect";
+import { useMultiSelect } from "@/features/projects/list/hooks/useMultiSelect";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ProjectFilterCheckBoxInput } from "./ProjectFilterCheckBoxInput";

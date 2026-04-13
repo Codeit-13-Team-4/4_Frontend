@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toggleProjectLike } from "@/features/projectsDetail/api/toggleProjectLike";
+import { toggleProjectLike } from "@/features/projects/api/toggleProjectLike";
 import { mypageKeys } from "../model/mypage.queryKey";
 import type { MyProjectsResponse } from "../model/mypage.types";
 

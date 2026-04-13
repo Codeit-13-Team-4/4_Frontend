@@ -7,7 +7,6 @@ export { PositionBadge } from "./PositionBadgeList/PositionBadge";
 export { PositionBadgeList } from "./PositionBadgeList/PositionBadgeList";
 export { ProjectBadge } from "./ProjectBadge/ProjectBadge";
 export { ProjectCard } from "./ProjectCardList/ProjectCard/ProjectCard";
-export { ProjectApplyModal } from "./ProjectCardList/ProjectCard/ProjectApplyModal";
 export { ProjectCardSkeleton } from "./ProjectCardList/ProjectCard/ProjectCardSkeleton";
 export { ProjectCreateButton } from "./ProjectCreateButton/ProjectCreateButton";
 export { ProjectSortDropdown } from "./ProjectDropdown/ProjectSortDropdown";
