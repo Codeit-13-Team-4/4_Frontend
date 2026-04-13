@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useDeleteProjectsDetail } from "@/features/projectsDetail/hooks/useDeleteProjectsDetail";
+import { useDeleteProjectsDetail } from "@/features/projects/detail/hooks/useDeleteProjectsDetail";
 import { useOpenAlertModal } from "@/shared/store/AlertModal";
 import { Button } from "@/shared/ui";
 import { Trash } from "@/shared/icons";
