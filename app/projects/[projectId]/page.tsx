@@ -1,5 +1,6 @@
-import ProjectDetailCard from "@/widgets/projectsDetail/ui/ProjectDetailCard";
-import CommentSection from "@/widgets/projectsDetail/ui/CommentSection";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { prefetchProjectsDetail } from "@/features/projects/detail/hooks/prefetchProjectsDetail";
+import ProjectDetail from "@/widgets/projectsDetail/ui/ProjectDetail";
 
 export default async function ProjectsDetailPage({
   params,
@@ -9,10 +10,11 @@ export default async function ProjectsDetailPage({
   const { projectId } = await params;
   const id = Number(projectId);
 
+  const queryClient = await prefetchProjectsDetail(id);
+
   return (
-    <>
-      <ProjectDetailCard projectId={id} />
-      <CommentSection projectId={id} />
-    </>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ProjectDetail projectId={id} />
+    </HydrationBoundary>
   );
 }
