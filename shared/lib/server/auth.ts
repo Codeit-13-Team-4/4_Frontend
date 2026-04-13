@@ -107,7 +107,10 @@ export async function fetchWithAuthRetry<T>(
     | null;
 
   if (!response.ok) {
-    throw new ApiError(response.status, getErrorMessage(response.status, data?.message));
+    throw new ApiError(
+      response.status,
+      getErrorMessage(response.status, data?.message),
+    );
   }
 
   return data as T;
