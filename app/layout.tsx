@@ -31,12 +31,18 @@ export const metadata: Metadata = {
     url: "https://devupup.vercel.app/",
     siteName: "DevUp",
     type: "website",
+    images: [
+      {
+        url: "https://devupup.vercel.app/og-image.png",
+      },
+    ],
   },
 
   twitter: {
     card: "summary",
     title: "DevUp | 개발자를 위한 모임 플랫폼",
     description: "개발자 커뮤니티 플랫폼",
+    images: ["https://devupup.vercel.app/og-image.png"],
   },
 };
 
