@@ -5,6 +5,24 @@ import { ProjectFilter } from "@/features/projects/list/ui/ProjectFilter/Project
 import { ProjectSortDropdown } from "@/features/projects/list/ui/ProjectDropdown/ProjectSortDropdown";
 import { SearchInput } from "@/features/projects/list/ui/SearchInput/SearchInput";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "프로젝트",
+  description:
+    "혼자 하기 힘든 프로젝트, DevUp에서 팀원을 찾고 실전 경험을 쌓으세요.",
+  openGraph: {
+    title: "함께 완성하는 개발 프로젝트",
+    description:
+      "혼자 하기 힘든 프로젝트, DevUp에서 팀원을 찾고 실전 경험을 쌓으세요.",
+  },
+  twitter: {
+    card: "summary",
+    title: "함께 완성하는 개발 프로젝트",
+    description:
+      "혼자 하기 힘든 프로젝트, DevUp에서 팀원을 찾고 실전 경험을 쌓으세요.",
+  },
+};
 
 export default async function ProjectPage({
   searchParams,

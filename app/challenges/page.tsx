@@ -11,6 +11,15 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "챌린지",
   description: "성장을 위한 다양한 개발 챌린지에 참여해 보세요.",
+  openGraph: {
+    title: "함께 달려서 끝까지 완주하는 개발 챌린지",
+    description: "성장을 위한 다양한 개발 챌린지에 참여해 보세요.",
+  },
+  twitter: {
+    card: "summary",
+    title: "함께 달려서 끝까지 완주하는 개발 챌린지",
+    description: "성장을 위한 다양한 개발 챌린지에 참여해 보세요.",
+  },
 };
 
 export default async function ChallengesPage({
