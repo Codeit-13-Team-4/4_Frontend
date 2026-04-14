@@ -1,24 +1,19 @@
-function getJwtPayload(token: string) {
-  const payload = token.split(".")[1];
-
-  if (!payload) {
+function resolveCookieMaxAge(expiresIn?: number | null) {
+  if (typeof expiresIn !== "number" || !Number.isFinite(expiresIn)) {
     return null;
   }
 
-  try {
-    return JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as {
-      exp?: number;
-    };
-  } catch {
+  const normalizedMaxAge = Math.floor(expiresIn);
+
+  if (normalizedMaxAge <= 0) {
     return null;
   }
+
+  return normalizedMaxAge;
 }
 
-export function getAuthCookieOptions(token: string) {
-  const payload = getJwtPayload(token);
-  const now = Math.floor(Date.now() / 1000);
-  const maxAge =
-    typeof payload?.exp === "number" ? Math.max(payload.exp - now, 0) : null;
+export function getAuthCookieOptions(expiresIn?: number | null) {
+  const maxAge = resolveCookieMaxAge(expiresIn);
 
   return {
     httpOnly: true as const,

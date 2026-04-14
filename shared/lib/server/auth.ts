@@ -2,19 +2,16 @@ import { cookies } from "next/headers";
 import { ApiError } from "@/shared/lib/errors/ApiError";
 import { getErrorMessage } from "@/shared/lib/errors/errorMessage";
 import { getAuthCookieOptions } from "@/shared/lib/server/authCookie";
-
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
 interface RefreshTokenResponse {
   accessToken: string;
   refreshToken?: string;
+  expiresIn?: number;
   message?: string;
 }
-
 type RefreshAccessTokenResult =
   | { ok: true; accessToken: string }
   | { ok: false; status: number; message: string };
-
 async function refreshAccessToken(): Promise<RefreshAccessTokenResult> {
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get("refreshToken")?.value;
@@ -43,18 +40,17 @@ async function refreshAccessToken(): Promise<RefreshAccessTokenResult> {
   }
 
   cookieStore.set("accessToken", data.accessToken, {
-    ...getAuthCookieOptions(data.accessToken),
+    ...getAuthCookieOptions(data.expiresIn),
   });
 
   if (data.refreshToken) {
     cookieStore.set("refreshToken", data.refreshToken, {
-      ...getAuthCookieOptions(data.refreshToken),
+      ...getAuthCookieOptions(),
     });
   }
 
   return { ok: true, accessToken: data.accessToken };
 }
-
 export async function fetchWithAuthRetry<T>(
   url: string,
   options?: RequestInit,
@@ -82,7 +78,6 @@ export async function fetchWithAuthRetry<T>(
     },
     cache: "no-store",
   });
-
   if (response.status === 401) {
     const refreshResult = await refreshAccessToken();
 
@@ -105,7 +100,6 @@ export async function fetchWithAuthRetry<T>(
   const data = (await response.json().catch(() => null)) as
     | (T & { message?: string })
     | null;
-
   if (!response.ok) {
     throw new ApiError(
       response.status,

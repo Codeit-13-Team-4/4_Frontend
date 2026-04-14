@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthCookieOptions } from "@/shared/lib/server/authCookie";
-
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-
     const response = await fetch(`${BASE_URL}/auth/login`, {
       method: "POST",
       headers: {
@@ -30,8 +27,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { user, accessToken, refreshToken } = data;
-
+    const { user, accessToken, refreshToken, expiresIn } = data;
     const responseToClient = NextResponse.json(
       {
         message: "로그인에 성공했습니다.",
@@ -41,11 +37,11 @@ export async function POST(request: NextRequest) {
     );
 
     responseToClient.cookies.set("accessToken", accessToken, {
-      ...getAuthCookieOptions(accessToken),
+      ...getAuthCookieOptions(expiresIn),
     });
 
     responseToClient.cookies.set("refreshToken", refreshToken, {
-      ...getAuthCookieOptions(refreshToken),
+      ...getAuthCookieOptions(),
     });
 
     return responseToClient;
