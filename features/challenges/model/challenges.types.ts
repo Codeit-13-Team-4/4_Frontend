@@ -1,3 +1,4 @@
+import { User } from "@/shared/types/user";
 import { CHALLENGES_SORT_LABEL } from "./challenges.constants";
 
 export interface GetChallengesResDtoHost {
@@ -74,4 +75,22 @@ export interface ChallengesPagination {
 export interface ChallengesResponse {
   data: ChallengeCardProps[];
   pagination: ChallengesPagination;
+}
+
+// 챌린지 멤버 목록 조회
+export interface ChallengeMemberList {
+  id: number;
+  userId: number;
+  memberType: "HOST" | "MEMBER";
+  position: string | null;
+  joinedAt: string;
+  user: Pick<
+    User,
+    "id" | "nickname" | "jobLabel" | "profileImageUrl" | "skills"
+  >;
+}
+
+export interface ChallengeMemberResponse {
+  data: ChallengeMemberList[];
+  total: number;
 }
