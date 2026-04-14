@@ -1,36 +1,42 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { prefetchChallengesDetail } from "@/features/challenges/detail/hooks/prefetchChallengesDetail";
 import ChallengeDetail from "@/widgets/challengesDetail/ui/ChallengeDetail";
+import { challengeKeys } from "@/features/challenges/model/challenges.queryKey";
 import { Metadata } from "next";
+import { cleanDescription } from "@/shared/utils";
+import { ChallengesDetail } from "@/features/challenges/detail/model/challengesDetail";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-interface Props {
+export async function generateMetadata({
+  params,
+}: {
   params: Promise<{ challengeId: string }>;
-}
-
-// 1. 메타데이터 생성 함수
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+}): Promise<Metadata> {
   const { challengeId } = await params;
+  const id = Number(challengeId);
+  const queryClient = await prefetchChallengesDetail(id);
+  const challenge = queryClient.getQueryData<ChallengesDetail>(
+    challengeKeys.detail(id),
+  );
 
-  try {
-    const response = await fetch(`${BASE_URL}/challenges/${challengeId}`);
-    const data = await response.json();
-    const challenge = data.data;
-
-    return {
-      title: challenge.title,
-      description: challenge.description.slice(0, 100),
-      openGraph: {
-        title: `${challenge.title} | DevUp`,
-        description: challenge.description.slice(0, 100),
-      },
-    };
-  } catch (error) {
-    return {
-      title: "챌린지 상세",
-    };
+  if (!challenge) {
+    return { title: "챌린지를 찾을 수 없습니다" };
   }
+
+  const description = cleanDescription(challenge.description);
+
+  return {
+    title: `${challenge.title}`,
+    description: description || undefined,
+    openGraph: {
+      title: `${challenge.title}`,
+      description: description || undefined,
+    },
+    twitter: {
+      card: "summary",
+      title: `${challenge.title}`,
+      description: description || undefined,
+    },
+  };
 }
 
 export default async function ChallengesPage({

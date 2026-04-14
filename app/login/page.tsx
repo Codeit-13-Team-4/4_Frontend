@@ -7,7 +7,6 @@ import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "로그인",
-  description: "DevUp에 로그인하여 더 많은 개발자 모임에 참여하세요.",
   robots: {
     index: false,
     follow: false,
