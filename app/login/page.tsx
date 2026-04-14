@@ -2,7 +2,17 @@ import { getMeServer } from "@/features/auth/api/getMeServer";
 import { getSafeRedirectPath } from "@/features/auth/lib/authRedirect";
 import LoginForm from "@/features/auth/ui/LoginForm";
 import LoginHero from "@/features/auth/ui/LoginHero";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "로그인",
+  description: "DevUp에 로그인하여 더 많은 개발자 모임에 참여하세요.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 interface LoginPageProps {
   searchParams: Promise<{

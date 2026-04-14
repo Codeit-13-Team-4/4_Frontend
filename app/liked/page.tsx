@@ -19,6 +19,16 @@ import {
   LikedSortDropdown,
   LikedTabs,
 } from "@/features/liked/ui";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "찜한 모임",
+  description: "내가 찜한 관심 스터디와 프로젝트 목록을 확인하세요.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 const PAGE_TITLE = "찜한 모임";
 const PAGE_DESCRIPTION = "마감되기 전에 지금 바로 참여해보세요";

@@ -4,6 +4,17 @@ import SignupForm from "@/features/auth/ui/SignupForm";
 import SocialSignupForm from "@/features/auth/ui/SocialSignupForm";
 import { type SocialType } from "@/features/auth/api/socialLogin";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "회원가입",
+  description:
+    "DevUp에 가입하고 다양한 개발자 스터디와 프로젝트에 참여해 보세요.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 interface SignupPageProps {
   searchParams: Promise<{
