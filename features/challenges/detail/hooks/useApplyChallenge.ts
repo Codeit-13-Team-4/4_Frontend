@@ -8,6 +8,12 @@ export function useApplyChallenge(challengeId: number) {
   return useMutation({
     mutationFn: ({ name, motivation }: { name: string; motivation: string }) =>
       applyChallenge({ challengeId, name, motivation }),
+    meta: {
+      errorMessage: {
+        404: "존재하지 않는 챌린지입니다.",
+        409: "이미 신청한 챌린지입니다.",
+      },
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: challengeKeys.detail(challengeId),

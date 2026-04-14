@@ -3,15 +3,16 @@ import { ApiError } from "@/shared/lib/errors/ApiError";
 import { getErrorMessage } from "@/shared/lib/errors/errorMessage";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const ACCESS_TOKEN_MAX_AGE = 60 * 15;
-const REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 7;
+
+export const ACCESS_TOKEN_MAX_AGE = 60 * 15;
+export const REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 7;
 
 interface RefreshTokenResponse {
   accessToken: string;
   refreshToken?: string;
+  expiresIn?: number;
   message?: string;
 }
-
 type RefreshAccessTokenResult =
   | { ok: true; accessToken: string }
   | { ok: false; status: number; message: string };

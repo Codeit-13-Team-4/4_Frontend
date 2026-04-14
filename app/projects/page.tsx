@@ -1,11 +1,9 @@
-import { prefetchProjectList } from "@/features/projects/api/prefetchProjectList";
-import {
-  ProjectCardList,
-  ProjectCreateButton,
-  ProjectFilter,
-  ProjectSortDropdown,
-  SearchInput,
-} from "@/features/projects/ui";
+import { prefetchProjectList } from "@/features/projects/list/api/prefetchProjectList";
+import { ProjectCardList } from "@/features/projects/list/ui/ProjectCardList/ProjectCardList";
+import { ProjectCreateButton } from "@/features/projects/list/ui/ProjectCreateButton/ProjectCreateButton";
+import { ProjectFilter } from "@/features/projects/list/ui/ProjectFilter/ProjectFilter";
+import { ProjectSortDropdown } from "@/features/projects/list/ui/ProjectDropdown/ProjectSortDropdown";
+import { SearchInput } from "@/features/projects/list/ui/SearchInput/SearchInput";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 export default async function ProjectPage({
@@ -26,6 +24,7 @@ export default async function ProjectPage({
         ? [params.positions]
         : params.positions,
     sort: typeof params.sort === "string" ? params.sort : undefined,
+    order: typeof params.order === "string" ? params.order : undefined,
   };
 
   const queryClient = await prefetchProjectList(filters);
