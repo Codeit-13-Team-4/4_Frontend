@@ -119,6 +119,8 @@ export interface ProjectDetail {
   contactLink: string;
   status: ProjectStatusType;
   viewCount: number;
+  createdAt: string;
+  updatedAt: string;
   commentCount: number;
   liked: boolean;
   hasApplication: boolean;
