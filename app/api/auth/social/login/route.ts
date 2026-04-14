@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthCookieOptions } from "@/shared/lib/server/authCookie";
-
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const SOCIAL_LOGIN_PATH = "/auth/social";
-
 function parseJsonSafely(text: string) {
   if (!text) {
     return null;
@@ -15,7 +13,6 @@ function parseJsonSafely(text: string) {
     return null;
   }
 }
-
 export async function POST(request: NextRequest) {
   try {
     if (!BASE_URL) {
@@ -28,7 +25,6 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-
     const response = await fetch(`${BASE_URL}${SOCIAL_LOGIN_PATH}`, {
       method: "POST",
       headers: {
@@ -41,7 +37,6 @@ export async function POST(request: NextRequest) {
       }),
       cache: "no-store",
     });
-    console.log(response);
     const raw = await response.text();
     const data = parseJsonSafely(raw);
 
@@ -56,11 +51,12 @@ export async function POST(request: NextRequest) {
         { status: response.status },
       );
     }
-
     const accessToken =
       typeof data?.accessToken === "string" ? data.accessToken : null;
     const refreshToken =
       typeof data?.refreshToken === "string" ? data.refreshToken : null;
+    const expiresIn =
+      typeof data?.expiresIn === "number" ? data.expiresIn : null;
     const user = data?.user;
 
     if (!accessToken) {
@@ -71,7 +67,6 @@ export async function POST(request: NextRequest) {
         { status: 502 },
       );
     }
-
     const responseToClient = NextResponse.json(
       {
         message:
@@ -83,12 +78,12 @@ export async function POST(request: NextRequest) {
     );
 
     responseToClient.cookies.set("accessToken", accessToken, {
-      ...getAuthCookieOptions(accessToken),
+      ...getAuthCookieOptions(expiresIn),
     });
 
     if (refreshToken) {
       responseToClient.cookies.set("refreshToken", refreshToken, {
-        ...getAuthCookieOptions(refreshToken),
+        ...getAuthCookieOptions(),
       });
     }
 
