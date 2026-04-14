@@ -5,7 +5,7 @@ import {
   MY_PROJECT_STATUS_FILTERS,
   MY_ROLE_TABS,
 } from "./mypage.constants";
-import { ProjectsResponse } from "@/features/projects/model";
+import { PositionType, ProjectsResponse } from "@/features/projects/model";
 
 export type MyTab = "challenges" | "projects" | "comments";
 
@@ -57,5 +57,55 @@ export interface MyComment {
 
 export interface MyCommentResponse {
   data: MyComment[];
+  total: number;
+}
+
+// 챌린지 신청 목록 조회 (호스트 전용)
+export interface ChallengeApplication {
+  id: number;
+  userId: number;
+  name: string;
+  githubUrl?: string;
+  motivation: string;
+  status: "PENDING" | "APPROVED" | "REJECTED";
+  createdAt: string;
+  user: Pick<User, "nickname" | "profileImageUrl">;
+}
+
+export interface ChallengeApplicationProps {
+  data: ChallengeApplication[];
+  total: number;
+}
+
+// 챌린지 신청 거절
+export type ReasonCategoryType =
+  | "SKILL_MISMATCH"
+  | "POSITION_FULL"
+  | "SCHEDULE_CONFLICT"
+  | "OTHER";
+
+// 프로젝트 신청 목록 조회 (호스트 전용)
+export type ApplicationRejectionType =
+  | "position_limit"
+  | "condition_not_met"
+  | "internal_standard"
+  | "custom";
+
+export type ApplicationStatusType = "pending" | "approved" | "rejected";
+
+export interface ProjectApplication {
+  id: number;
+  userId: number;
+  position: PositionType;
+  motivation: string;
+  status: ApplicationStatusType;
+  rejectionType: ApplicationRejectionType;
+  rejectionText: string;
+  createAt: string;
+  user: Pick<User, "id" | "nickname" | "profileImageUrl">;
+}
+
+export interface ProjectApplicationProps {
+  data: ProjectApplication[];
   total: number;
 }
