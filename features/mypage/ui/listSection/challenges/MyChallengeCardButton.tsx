@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { GradientButton } from "@/shared/ui";
 import {
   ChallengeCardProps,
   MyParticipationStatus,
 } from "@/features/challenges/model";
 import { useRouter } from "next/navigation";
+import ChallengeApplicationModal from "./ChallengeApplicationModal";
 
 interface MyChallengeCardButtonProps {
   id: ChallengeCardProps["id"];
@@ -23,6 +25,7 @@ export default function MyChallengeCardButton({
   isHost,
 }: MyChallengeCardButtonProps) {
   const router = useRouter();
+  const [applicationModalOpen, setApplicationModalOpen] = useState(false);
 
   // 1. 종료
   if (status === "COMPLETED" || status === "RECRUITMENT_CLOSED") {
@@ -59,16 +62,24 @@ export default function MyChallengeCardButton({
       );
     }
     return (
-      <GradientButton
-        size="sm"
-        className={btnClass}
-        onClick={(e) => {
-          e.stopPropagation();
-          router.push(`/challenges/${id}`);
-        }}
-      >
-        참여자 목록 관리
-      </GradientButton>
+      <>
+        <GradientButton
+          size="sm"
+          className={btnClass}
+          onClick={(e) => {
+            e.stopPropagation();
+            setApplicationModalOpen(true);
+          }}
+        >
+          참여자 목록 관리
+        </GradientButton>
+
+        <ChallengeApplicationModal
+          challengeId={id}
+          open={applicationModalOpen}
+          onOpenChange={setApplicationModalOpen}
+        />
+      </>
     );
   }
 
