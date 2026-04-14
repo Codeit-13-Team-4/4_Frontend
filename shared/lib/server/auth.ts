@@ -33,6 +33,10 @@ async function refreshAccessToken(): Promise<RefreshAccessTokenResult> {
   const data = (await response
     .json()
     .catch(() => null)) as RefreshTokenResponse | null;
+  const refreshTokenMaxAge =
+    typeof data?.expiresIn === "number" && Number.isFinite(data.expiresIn)
+      ? Math.floor(data.expiresIn / 1000)
+      : null;
 
   if (!response.ok || !data?.accessToken) {
     return {
@@ -48,7 +52,7 @@ async function refreshAccessToken(): Promise<RefreshAccessTokenResult> {
 
   if (data.refreshToken) {
     cookieStore.set("refreshToken", data.refreshToken, {
-      ...getAuthCookieOptions(data.expiresIn),
+      ...getAuthCookieOptions(refreshTokenMaxAge),
     });
   }
 
