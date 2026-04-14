@@ -61,8 +61,8 @@ export default function ChallengeApplicationModal({
                       <div className="flex items-center gap-3 px-4 py-3">
                         <Avatar size="sm">
                           <AvatarImage
-                            src={application.user?.profileImageUrl ?? ""}
-                            alt={application.user?.nickname ?? application.name}
+                            src={application.user.profileImageUrl ?? ""}
+                            alt={application.user.nickname}
                           />
                           <AvatarFallback delayMs={0}>
                             <AvatarIcon

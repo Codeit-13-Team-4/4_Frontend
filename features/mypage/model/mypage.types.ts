@@ -69,7 +69,7 @@ export interface ChallengeApplication {
   motivation: string;
   status: "PENDING" | "APPROVED" | "REJECTED";
   createdAt: string;
-  user?: Pick<User, "id" | "nickname" | "profileImageUrl">;
+  user: Pick<User, "nickname" | "profileImageUrl">;
 }
 
 export interface ChallengeApplicationProps {
