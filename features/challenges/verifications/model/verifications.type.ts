@@ -57,6 +57,16 @@ export type GetVerificationMembersResponse = {
   total: number;
 };
 
+export type VerificationsIdProps = {
+  challengeId: number;
+  verificationId: number;
+};
+
+export type VerificationsPayload = {
+  content: string;
+  imageUrls: string;
+};
+
 type MemberUser = {
   id: number;
   nickname: string;

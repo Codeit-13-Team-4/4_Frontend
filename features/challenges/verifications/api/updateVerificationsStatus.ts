@@ -1,9 +1,11 @@
 import { fetchClient } from "@/shared/lib/client/fetchClient";
-import { UpdateVerificationStatusRequest } from "@/features/challenges/verifications/model";
+import {
+  UpdateVerificationStatusRequest,
+  VerificationsIdProps,
+} from "@/features/challenges/verifications/model";
 
 export async function updateVerificationStatus(
-  challengeId: number,
-  verificationId: number,
+  { challengeId, verificationId }: VerificationsIdProps,
   payload: UpdateVerificationStatusRequest,
 ) {
   const response = await fetchClient(

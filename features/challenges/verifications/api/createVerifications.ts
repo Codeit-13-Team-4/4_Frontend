@@ -1,11 +1,9 @@
 import { fetchClient } from "@/shared/lib/client/fetchClient";
+import { VerificationsPayload } from "@/features/challenges/verifications/model";
 
 export async function createVerifications(
   challengeId: number,
-  payload: {
-    content: string;
-    imageUrls: string[];
-  },
+  payload: VerificationsPayload,
 ) {
   const response = await fetchClient(
     `/api/challenges/${challengeId}/verifications`,

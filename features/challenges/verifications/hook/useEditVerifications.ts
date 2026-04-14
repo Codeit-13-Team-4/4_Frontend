@@ -1,15 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { editVerification } from "../api/editVerifications";
-import { verificationsKeys } from "../model";
+import {
+  VerificationsIdProps,
+  verificationsKeys,
+  VerificationsPayload,
+} from "@/features/challenges/verifications/model";
 
-export function useEditVerifications(
-  challengeId: number,
-  verificationId: number,
-) {
+export function useEditVerifications({
+  challengeId,
+  verificationId,
+}: VerificationsIdProps) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (payload: { content: string; imageUrls: string[] }) =>
-      editVerification(challengeId, verificationId, payload),
+    mutationFn: (payload: VerificationsPayload) =>
+      editVerification({ challengeId, verificationId }, payload),
     meta: { successMessage: "인증이 수정되었습니다." },
     onSuccess: () => {
       queryClient.invalidateQueries({
