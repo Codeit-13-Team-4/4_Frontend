@@ -37,12 +37,6 @@ export async function POST(request: NextRequest) {
       typeof data.accessToken === "string" ? data.accessToken : null;
     const refreshToken =
       typeof data.refreshToken === "string" ? data.refreshToken : null;
-    const expiresIn =
-      typeof data.expiresIn === "number" ? data.expiresIn : null;
-    const refreshTokenMaxAge =
-      typeof expiresIn === "number"
-        ? Math.floor(expiresIn / 1000)
-        : REFRESH_TOKEN_MAX_AGE;
 
     if (!accessToken) {
       return NextResponse.json(
@@ -78,7 +72,7 @@ export async function POST(request: NextRequest) {
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
         path: "/",
-        maxAge: refreshTokenMaxAge,
+        maxAge: REFRESH_TOKEN_MAX_AGE,
       });
     }
 

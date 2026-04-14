@@ -35,10 +35,6 @@ async function refreshAccessToken(): Promise<RefreshAccessTokenResult> {
   const data = (await response
     .json()
     .catch(() => null)) as RefreshTokenResponse | null;
-  const refreshTokenMaxAge =
-    typeof data?.expiresIn === "number"
-      ? Math.floor(data.expiresIn / 1000)
-      : REFRESH_TOKEN_MAX_AGE;
 
   if (!response.ok || !data?.accessToken) {
     return {
@@ -62,7 +58,7 @@ async function refreshAccessToken(): Promise<RefreshAccessTokenResult> {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: refreshTokenMaxAge,
+      maxAge: REFRESH_TOKEN_MAX_AGE,
     });
   }
 
