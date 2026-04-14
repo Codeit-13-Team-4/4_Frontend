@@ -20,7 +20,7 @@ export const tiptapExtensions = [
     inline: false,
     allowBase64: true,
     HTMLAttributes: {
-      class: "max-w-full rounded-lg",
+      class: "max-w-[600px] w-full rounded-lg",
     },
   }),
 ];

@@ -34,11 +34,11 @@ export default function MyProfileSection({ userData }: { userData: User }) {
           bio={userData.bio}
         />
         <div className="flex w-full flex-col gap-1.5">
-          <Label className="text-sm font-medium text-gray-600">기술스택</Label>
+          <Label className="text-sm font-medium text-[#58677D]">기술스택</Label>
           <ProfileSkills skills={userData.skills} />
         </div>
         <div className="flex w-full flex-col gap-1.5">
-          <Label className="text-sm font-medium text-gray-600">링크</Label>
+          <Label className="text-sm font-medium text-[#58677D]">링크</Label>
           <ProfileLinks
             githubLink={userData.githubLink}
             blogLink={userData.blogLink}
@@ -46,7 +46,7 @@ export default function MyProfileSection({ userData }: { userData: User }) {
           />
         </div>
         <div className="flex w-full flex-col gap-2">
-          <Label className="text-sm font-medium text-gray-600">
+          <Label className="text-sm font-medium text-[#58677D]">
             참여한 활동
           </Label>
           <ProfileStats stats={userData.stats} />
@@ -61,7 +61,7 @@ export default function MyProfileSection({ userData }: { userData: User }) {
         <div className="flex w-32 shrink-0 flex-col items-center gap-4">
           <AVATAR userData={userData} />
           <div className="flex flex-col items-center gap-2">
-            <Label className="text-base font-medium text-gray-600">
+            <Label className="text-base font-medium text-[#58677D]">
               참여한 활동
             </Label>
             <ProfileStats stats={userData.stats} />
@@ -78,13 +78,13 @@ export default function MyProfileSection({ userData }: { userData: User }) {
             bio={userData.bio}
           />
           <div className="flex flex-col gap-1.5">
-            <Label className="text-base font-medium text-gray-600">
+            <Label className="text-base font-medium text-[#58677D]">
               기술스택
             </Label>
             <ProfileSkills skills={userData.skills} />
           </div>
           <div className="flex flex-col gap-1.5">
-            <Label className="text-base font-medium text-gray-600">링크</Label>
+            <Label className="text-base font-medium text-[#58677D]">링크</Label>
             <ProfileLinks
               githubLink={userData.githubLink}
               blogLink={userData.blogLink}

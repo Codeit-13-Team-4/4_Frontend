@@ -11,4 +11,5 @@ export const projectKeys = {
   detail: (id: number) => [...projectKeys.details(), id] as const,
 
   comments: (id: number) => [...projectKeys.detail(id), "comments"] as const,
+  members: (id: number) => [...projectKeys.detail(id), "members"] as const,
 };

@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getSignupErrorMessage } from "@/features/auth/signup/lib/signupError";
+import {
+  ACCESS_TOKEN_MAX_AGE,
+  REFRESH_TOKEN_MAX_AGE,
+} from "@/shared/lib/server/auth";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-
     const response = await fetch(`${BASE_URL}/auth/social/register`, {
       method: "POST",
       headers: {
@@ -14,23 +18,21 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({
         type: body.type,
         token: body.token,
+        email: body.email,
         nickname: body.nickname,
+        position: body.jobLabel,
       }),
       cache: "no-store",
     });
-
-    const data = await response.json();
+    const data = await response.json().catch(() => null);
 
     if (!response.ok) {
-      return NextResponse.json(
-        {
-          message: data.message || "회원가입에 실패했습니다.",
-          code: data.code || null,
-        },
-        { status: response.status },
-      );
-    }
+      const message = getSignupErrorMessage(response.status, data?.message, {
+        fallbackMessage: "회원가입에 실패했습니다.",
+      });
 
+      return NextResponse.json({ message }, { status: response.status });
+    }
     const accessToken =
       typeof data.accessToken === "string" ? data.accessToken : null;
     const refreshToken =
@@ -61,6 +63,7 @@ export async function POST(request: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
+      maxAge: ACCESS_TOKEN_MAX_AGE,
     });
 
     if (refreshToken) {
@@ -69,6 +72,7 @@ export async function POST(request: NextRequest) {
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
         path: "/",
+        maxAge: REFRESH_TOKEN_MAX_AGE,
       });
     }
 

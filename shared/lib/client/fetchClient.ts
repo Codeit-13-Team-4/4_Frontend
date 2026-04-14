@@ -1,4 +1,5 @@
 import { ApiError } from "@/shared/lib/errors/ApiError";
+import { getErrorMessage } from "@/shared/lib/errors/errorMessage";
 
 export async function fetchClient(
   input: RequestInfo,
@@ -10,7 +11,7 @@ export async function fetchClient(
     const data = await response.json().catch(() => null);
     throw new ApiError(
       response.status,
-      data?.message ?? "요청에 실패했습니다.",
+      getErrorMessage(response.status, data?.message),
     );
   }
 
