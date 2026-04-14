@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSignupErrorMessage } from "@/features/auth/signup/lib/signupError";
 import { getAuthCookieOptions } from "@/shared/lib/server/authCookie";
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -56,12 +58,12 @@ export async function POST(request: NextRequest) {
       { status: response.status },
     );
     responseToClient.cookies.set("accessToken", accessToken, {
-      ...getAuthCookieOptions(expiresIn),
+      ...getAuthCookieOptions(),
     });
 
     if (refreshToken) {
       responseToClient.cookies.set("refreshToken", refreshToken, {
-        ...getAuthCookieOptions(),
+        ...getAuthCookieOptions(expiresIn),
       });
     }
 

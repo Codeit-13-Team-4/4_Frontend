@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthCookieOptions } from "@/shared/lib/server/authCookie";
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const SOCIAL_LOGIN_PATH = "/auth/social";
+
 function parseJsonSafely(text: string) {
   if (!text) {
     return null;
@@ -13,6 +15,7 @@ function parseJsonSafely(text: string) {
     return null;
   }
 }
+
 export async function POST(request: NextRequest) {
   try {
     if (!BASE_URL) {
@@ -78,12 +81,12 @@ export async function POST(request: NextRequest) {
     );
 
     responseToClient.cookies.set("accessToken", accessToken, {
-      ...getAuthCookieOptions(expiresIn),
+      ...getAuthCookieOptions(),
     });
 
     if (refreshToken) {
       responseToClient.cookies.set("refreshToken", refreshToken, {
-        ...getAuthCookieOptions(),
+        ...getAuthCookieOptions(expiresIn),
       });
     }
 
