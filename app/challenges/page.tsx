@@ -6,6 +6,12 @@ import { ChallengesFilter } from "@/features/challenges/list/ui/ChallengesFilter
 import { ChallengesSearchInput } from "@/features/challenges/list/ui/ChallengesSearchInput/ChallengesSearchInput";
 import { ChallengesSortDropdown } from "@/features/challenges/list/ui/ChallengesDropdown/ChallengesSortDropdown";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "챌린지",
+  description: "성장을 위한 다양한 개발 챌린지에 참여해 보세요.",
+};
 
 export default async function ChallengesPage({
   searchParams,
