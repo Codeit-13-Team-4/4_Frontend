@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteVerifications } from "../api/deleteVerifications";
-import { verificationsKeys } from "../model";
+import {
+  VerificationsIdProps,
+  verificationsKeys,
+} from "@/features/challenges/verifications/model";
 
 export function useDeleteVerifications({
   challengeId,
   verificationId,
-}: {
-  challengeId: number;
-  verificationId: number;
-}) {
+}: VerificationsIdProps) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: () =>

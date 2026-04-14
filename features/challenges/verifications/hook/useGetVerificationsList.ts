@@ -1,6 +1,8 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { verificationsKeys } from "../model/verifications.queryKey";
-import { VerificationsFilter } from "../model/verifications.type";
+import {
+  verificationsKeys,
+  VerificationsFilter,
+} from "@/features/challenges/verifications/model";
 import { getVerificationsList } from "../api/getVerificationsList";
 
 const LIMIT = 10;

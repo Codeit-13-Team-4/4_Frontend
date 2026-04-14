@@ -1,16 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import { verificationsKeys } from "../model/verifications.queryKey";
 import { getVerificationsDetail } from "../api/getVerificationsDetail";
-
-interface UseGetVerificationsDetailParams {
-  challengeId: number;
-  verificationId: number;
-}
+import {
+  VerificationsIdProps,
+  verificationsKeys,
+} from "@/features/challenges/verifications/model";
 
 export function useGetVerificationsDetail({
   challengeId,
   verificationId,
-}: UseGetVerificationsDetailParams) {
+}: VerificationsIdProps) {
   return useQuery({
     queryKey: verificationsKeys.detail({
       challengeId,
