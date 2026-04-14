@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthCookieOptions } from "@/shared/lib/server/authCookie";
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+
     const response = await fetch(`${BASE_URL}/auth/login`, {
       method: "POST",
       headers: {
@@ -37,11 +40,11 @@ export async function POST(request: NextRequest) {
     );
 
     responseToClient.cookies.set("accessToken", accessToken, {
-      ...getAuthCookieOptions(expiresIn),
+      ...getAuthCookieOptions(),
     });
 
     responseToClient.cookies.set("refreshToken", refreshToken, {
-      ...getAuthCookieOptions(),
+      ...getAuthCookieOptions(expiresIn),
     });
 
     return responseToClient;

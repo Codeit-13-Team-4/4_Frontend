@@ -1,9 +1,9 @@
-function resolveCookieMaxAge(expiresIn?: number | null) {
-  if (typeof expiresIn !== "number" || !Number.isFinite(expiresIn)) {
+function resolveCookieMaxAge(expiresInMs?: number | null) {
+  if (typeof expiresInMs !== "number" || !Number.isFinite(expiresInMs)) {
     return null;
   }
 
-  const normalizedMaxAge = Math.floor(expiresIn);
+  const normalizedMaxAge = Math.floor(expiresInMs / 1000);
 
   if (normalizedMaxAge <= 0) {
     return null;
@@ -12,8 +12,8 @@ function resolveCookieMaxAge(expiresIn?: number | null) {
   return normalizedMaxAge;
 }
 
-export function getAuthCookieOptions(expiresIn?: number | null) {
-  const maxAge = resolveCookieMaxAge(expiresIn);
+export function getAuthCookieOptions(expiresInMs?: number | null) {
+  const maxAge = resolveCookieMaxAge(expiresInMs);
 
   return {
     httpOnly: true as const,

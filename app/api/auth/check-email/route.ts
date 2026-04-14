@@ -1,6 +1,8 @@
 import { getSignupErrorMessage } from "@/features/auth/signup/lib/signupError";
 import { NextRequest, NextResponse } from "next/server";
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export async function GET(request: NextRequest) {
   try {
     const email = request.nextUrl.searchParams.get("email")?.trim();
@@ -13,11 +15,13 @@ export async function GET(request: NextRequest) {
         { status: 400 },
       );
     }
+
     const params = new URLSearchParams({ email });
     const response = await fetch(`${BASE_URL}/auth/check-email?${params}`, {
       method: "GET",
       cache: "no-store",
     });
+
     const data = await response.json().catch(() => null);
 
     if (!response.ok) {
