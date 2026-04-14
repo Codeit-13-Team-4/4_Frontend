@@ -50,7 +50,7 @@ export function VerificationsEditModal({
   });
 
   const { mutateAsync } = useUploadImage();
-  const { mutate } = useEditVerifications(challengeId, verificationId);
+  const { mutate } = useEditVerifications({ challengeId, verificationId });
   const [preview, setPreview] = useState<string | null>(
     data?.imageUrls?.[0] ?? null,
   );

@@ -4,12 +4,14 @@ import { Dropdown } from "@/shared/ui";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { VerificationCardProps } from "@/features/challenges/verifications/model";
-import { useGetVerificationsDetail } from "../../hook/useGetVerificationsDetail";
+import {
+  useGetVerificationsDetail,
+  useUpdateVerificationsStatus,
+  useDeleteVerifications,
+} from "@/features/challenges/verifications/hook";
 import Image from "next/image";
 import { formatToDate } from "../../utils/formatToDate";
-import { useUpdateVerificationStatus } from "../../hook/useUpdateVerificationsStatus";
 import { VerificationsRejectModal } from "../VerificationsModal/VerificationsRejectModal";
-import { useDeleteVerifications } from "../../hook/useDeleteVerifications";
 import { VerificationsEditModal } from "../VerificationsModal/VerificationsEditModal";
 
 export default function VerifyCard({
@@ -33,10 +35,10 @@ export default function VerifyCard({
     verificationId,
   });
 
-  const { mutate: updateStatus, isPending } = useUpdateVerificationStatus(
+  const { mutate: updateStatus } = useUpdateVerificationsStatus({
     challengeId,
     verificationId,
-  );
+  });
 
   const { mutate: deleteVerification } = useDeleteVerifications({
     challengeId,
