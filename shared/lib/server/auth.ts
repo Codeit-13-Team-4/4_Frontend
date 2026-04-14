@@ -1,9 +1,11 @@
 import { cookies } from "next/headers";
 import { ApiError } from "@/shared/lib/errors/ApiError";
 import { getErrorMessage } from "@/shared/lib/errors/errorMessage";
-import { getAuthCookieOptions } from "@/shared/lib/server/authCookie";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+export const ACCESS_TOKEN_MAX_AGE = 60 * 15;
+export const REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 7;
 
 interface RefreshTokenResponse {
   accessToken: string;
@@ -34,9 +36,9 @@ async function refreshAccessToken(): Promise<RefreshAccessTokenResult> {
     .json()
     .catch(() => null)) as RefreshTokenResponse | null;
   const refreshTokenMaxAge =
-    typeof data?.expiresIn === "number" && Number.isFinite(data.expiresIn)
+    typeof data?.expiresIn === "number"
       ? Math.floor(data.expiresIn / 1000)
-      : null;
+      : REFRESH_TOKEN_MAX_AGE;
 
   if (!response.ok || !data?.accessToken) {
     return {
@@ -47,12 +49,20 @@ async function refreshAccessToken(): Promise<RefreshAccessTokenResult> {
   }
 
   cookieStore.set("accessToken", data.accessToken, {
-    ...getAuthCookieOptions(),
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: ACCESS_TOKEN_MAX_AGE,
   });
 
   if (data.refreshToken) {
     cookieStore.set("refreshToken", data.refreshToken, {
-      ...getAuthCookieOptions(refreshTokenMaxAge),
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: refreshTokenMaxAge,
     });
   }
 

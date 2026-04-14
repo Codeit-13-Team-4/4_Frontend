@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAuthCookieOptions } from "@/shared/lib/server/authCookie";
+import {
+  ACCESS_TOKEN_MAX_AGE,
+  REFRESH_TOKEN_MAX_AGE,
+} from "@/shared/lib/server/auth";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const SOCIAL_LOGIN_PATH = "/auth/social";
@@ -61,9 +64,9 @@ export async function POST(request: NextRequest) {
     const expiresIn =
       typeof data?.expiresIn === "number" ? data.expiresIn : null;
     const refreshTokenMaxAge =
-      typeof expiresIn === "number" && Number.isFinite(expiresIn)
+      typeof expiresIn === "number"
         ? Math.floor(expiresIn / 1000)
-        : null;
+        : REFRESH_TOKEN_MAX_AGE;
     const user = data?.user;
 
     if (!accessToken) {
@@ -85,12 +88,20 @@ export async function POST(request: NextRequest) {
     );
 
     responseToClient.cookies.set("accessToken", accessToken, {
-      ...getAuthCookieOptions(),
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: ACCESS_TOKEN_MAX_AGE,
     });
 
     if (refreshToken) {
       responseToClient.cookies.set("refreshToken", refreshToken, {
-        ...getAuthCookieOptions(refreshTokenMaxAge),
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+        maxAge: refreshTokenMaxAge,
       });
     }
 
