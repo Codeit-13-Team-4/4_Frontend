@@ -8,7 +8,7 @@ import {
   JOIN_BUTTON_CONFIG,
   getJoinButtonKey,
 } from "@/features/challenges/detail/model/challengeActionButton.constants";
-import { useToggleChallengeLike } from "@/features/challenges/detail/hooks/useToggleChallengeLike";
+import { useToggleChallengeLike } from "@/features/challenges/hook/useToggleChallengeLike";
 import { useApplyChallenge } from "@/features/challenges/detail/hooks/useApplyChallenge";
 import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import { useLoginGuard } from "@/shared/hooks/useLoginGuard";
