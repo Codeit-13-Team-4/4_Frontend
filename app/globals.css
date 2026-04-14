@@ -4,6 +4,12 @@
 @custom-variant data-open (&[data-state="open"]);
 @custom-variant data-closed (&[data-state="closed"]);
 
+@layer base {
+  button {
+    cursor: pointer;
+  }
+}
+
 @theme {
   --animate-toast-in: toast-in 0.3s ease-out;
 
