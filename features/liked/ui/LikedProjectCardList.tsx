@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
 import { ApiError } from "@/shared/lib/errors/ApiError";
-import { ProjectCardSkeleton } from "@/features/projects/ui";
+import { ProjectCardSkeleton } from "@/features/projects/list/ui/ProjectCardList/ProjectCard/ProjectCardSkeleton";
 import { useGetLikedProjectList } from "../hooks/useGetLikedProjectList";
 import type { LikedProjectFilter } from "../model";
 import { LikedProjectCard } from "./LikedProjectCard";

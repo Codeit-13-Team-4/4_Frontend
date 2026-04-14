@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import {
+  ACCESS_TOKEN_MAX_AGE,
+  REFRESH_TOKEN_MAX_AGE,
+} from "@/shared/lib/server/auth";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const SOCIAL_LOGIN_PATH = "/auth/social";
@@ -27,7 +31,6 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-
     const response = await fetch(`${BASE_URL}${SOCIAL_LOGIN_PATH}`, {
       method: "POST",
       headers: {
@@ -40,7 +43,6 @@ export async function POST(request: NextRequest) {
       }),
       cache: "no-store",
     });
-    console.log(response);
     const raw = await response.text();
     const data = parseJsonSafely(raw);
 
@@ -51,12 +53,10 @@ export async function POST(request: NextRequest) {
             (typeof data?.message === "string" && data.message) ||
             raw ||
             "로그인에 실패했습니다.",
-          code: data?.code ?? null,
         },
         { status: response.status },
       );
     }
-
     const accessToken =
       typeof data?.accessToken === "string" ? data.accessToken : null;
     const refreshToken =
@@ -71,7 +71,6 @@ export async function POST(request: NextRequest) {
         { status: 502 },
       );
     }
-
     const responseToClient = NextResponse.json(
       {
         message:
@@ -87,6 +86,7 @@ export async function POST(request: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
+      maxAge: ACCESS_TOKEN_MAX_AGE,
     });
 
     if (refreshToken) {
@@ -95,6 +95,7 @@ export async function POST(request: NextRequest) {
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
         path: "/",
+        maxAge: REFRESH_TOKEN_MAX_AGE,
       });
     }
 
