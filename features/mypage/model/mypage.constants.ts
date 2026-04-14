@@ -90,3 +90,43 @@ export const MY_PROJECT_STATUS_FILTERS = [
   { value: "recruiting", label: "모집중" },
   { value: "recruitment_closed", label: "모집 종료" },
 ] as const;
+
+export const CHALLENGE_REJECTION_MESSAGE = [
+  {
+    value: "SKILL_MISMATCH",
+    label:
+      "현재 모집 조건과 일부 맞지 않아 이번에는 함께하기 어려울 것 같습니다.",
+  },
+  {
+    value: "POSITION_FULL",
+    label: "제한된 인원으로 인해 모든 분을 모시기 어려운 점 양해 부탁드립니다.",
+  },
+  {
+    value: "SCHEDULE_CONFLICT",
+    label: "내부 기준에 따라 이번 모집에서는 선발되지 않으셨습니다.",
+  },
+  {
+    value: "OTHER",
+    label: "직접 입력",
+  },
+];
+
+export const PROJECT_REJECTION_MESSAGE = [
+  {
+    value: "condition_not_met",
+    label:
+      "현재 모집 조건과 일부 맞지 않아 이번에는 함께하기 어려울 것 같습니다.",
+  },
+  {
+    value: "position_limit",
+    label: "제한된 인원으로 인해 모든 분을 모시기 어려운 점 양해 부탁드립니다.",
+  },
+  {
+    value: "internal_standard",
+    label: "내부 기준에 따라 이번 모집에서는 선발되지 않으셨습니다.",
+  },
+  {
+    value: "custom",
+    label: "직접 입력",
+  },
+];

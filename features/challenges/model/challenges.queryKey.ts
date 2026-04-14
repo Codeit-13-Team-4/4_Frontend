@@ -11,4 +11,5 @@ export const challengeKeys = {
   detail: (id: number) => [...challengeKeys.details(), id] as const,
 
   comments: (id: number) => [...challengeKeys.detail(id), "comments"] as const,
+  members: (id: number) => [...challengeKeys.detail(id), "members"] as const,
 };
