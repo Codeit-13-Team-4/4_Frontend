@@ -17,4 +17,7 @@ export const mypageKeys = {
 
   challengeApplications: (challengeId: number) =>
     [...mypageKeys.all, "challengeApplications", challengeId] as const,
+
+  projectApplications: (projectId: number) =>
+    [...mypageKeys.all, "projectApplications", projectId] as const,
 };
