@@ -33,11 +33,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { user, accessToken, refreshToken, expiresIn } = data;
-    const refreshTokenMaxAge =
-      typeof expiresIn === "number"
-        ? Math.floor(expiresIn / 1000)
-        : REFRESH_TOKEN_MAX_AGE;
+    const { user, accessToken, refreshToken } = data;
     const responseToClient = NextResponse.json(
       {
         message: "로그인에 성공했습니다.",
@@ -60,7 +56,7 @@ export async function POST(request: NextRequest) {
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
         path: "/",
-        maxAge: refreshTokenMaxAge,
+        maxAge: REFRESH_TOKEN_MAX_AGE,
       });
     }
 
