@@ -6,7 +6,7 @@ import {
 } from "@/features/challenges/verifications/model";
 import { updateVerificationStatus } from "../api/updateVerificationsStatus";
 
-export function useUpdateVerificationStatus({
+export function useUpdateVerificationsStatus({
   challengeId,
   verificationId,
 }: VerificationsIdProps) {

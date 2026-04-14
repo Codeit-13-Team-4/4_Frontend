@@ -64,7 +64,7 @@ export type VerificationsIdProps = {
 
 export type VerificationsPayload = {
   content: string;
-  imageUrls: string;
+  imageUrls: string[];
 };
 
 type MemberUser = {
