@@ -1,9 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { GradientButton } from "@/shared/ui";
 import { ProjectCardProps } from "@/features/projects/model";
+import ProjectApplicationModal from "./ProjectApplicationModal";
 
 interface MyProjectCardButtonProps {
+  projectId: number;
   status: ProjectCardProps["status"];
   applicationStatus: ProjectCardProps["applicationStatus"];
   isHost: ProjectCardProps["isHost"];
@@ -12,10 +15,13 @@ interface MyProjectCardButtonProps {
 const btnClass = "w-full md:px-6 md:py-3 md:text-base md:rounded-[12px]";
 
 export default function MyProjectCardButton({
+  projectId,
   status,
   applicationStatus,
   isHost,
 }: MyProjectCardButtonProps) {
+  const [applicationModalOpen, setApplicationModalOpen] = useState(false);
+
   // 1. 모집 마감
   if (status === "recruitment_closed") {
     return (
@@ -46,9 +52,23 @@ export default function MyProjectCardButton({
   // 4. HOST → 지원자 목록 관리
   if (isHost) {
     return (
-      <GradientButton size="sm" className={btnClass}>
-        지원자 목록 관리
-      </GradientButton>
+      <>
+        <GradientButton
+          size="sm"
+          className={btnClass}
+          onClick={(e) => {
+            e.stopPropagation();
+            setApplicationModalOpen(true);
+          }}
+        >
+          지원자 목록 관리
+        </GradientButton>
+        <ProjectApplicationModal
+          projectId={projectId}
+          open={applicationModalOpen}
+          onOpenChange={setApplicationModalOpen}
+        />
+      </>
     );
   }
 
