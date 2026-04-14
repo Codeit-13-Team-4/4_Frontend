@@ -59,6 +59,11 @@ export function useToggleProjectLike(projectId: number) {
       if (context?.previous) {
         queryClient.setQueryData(queryKey, context.previous);
       }
+      if (context?.previousLists) {
+        context.previousLists.forEach(([key, data]) => {
+          queryClient.setQueryData(key, data);
+        });
+      }
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey });
