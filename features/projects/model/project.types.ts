@@ -152,3 +152,21 @@ export interface CommentsResponse {
   data: Comment[];
   total: number;
 }
+
+// 프로젝트 멤버 목록 조회
+export interface ProjectMemberList {
+  id: number;
+  userId: number;
+  memberType: "HOST" | "MEMBER";
+  position: string | null;
+  joinedAt: string;
+  user: Pick<
+    User,
+    "id" | "nickname" | "jobLabel" | "profileImageUrl" | "skills"
+  >;
+}
+
+export interface ProjectMemberResponse {
+  data: ProjectMemberList[];
+  total: number;
+}
