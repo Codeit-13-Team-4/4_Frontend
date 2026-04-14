@@ -48,6 +48,10 @@ export async function POST(request: NextRequest) {
       typeof data?.refreshToken === "string" ? data.refreshToken : null;
     const expiresIn =
       typeof data?.expiresIn === "number" ? data.expiresIn : null;
+    const refreshTokenMaxAge =
+      typeof expiresIn === "number" && Number.isFinite(expiresIn)
+        ? Math.floor(expiresIn / 1000)
+        : null;
 
     if (accessToken) {
       responseToClient.cookies.set("accessToken", accessToken, {
@@ -57,7 +61,7 @@ export async function POST(request: NextRequest) {
 
     if (refreshToken) {
       responseToClient.cookies.set("refreshToken", refreshToken, {
-        ...getAuthCookieOptions(expiresIn),
+        ...getAuthCookieOptions(refreshTokenMaxAge),
       });
     }
 

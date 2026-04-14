@@ -31,6 +31,10 @@ export async function POST(request: NextRequest) {
     }
 
     const { user, accessToken, refreshToken, expiresIn } = data;
+    const refreshTokenMaxAge =
+      typeof expiresIn === "number" && Number.isFinite(expiresIn)
+        ? Math.floor(expiresIn / 1000)
+        : null;
     const responseToClient = NextResponse.json(
       {
         message: "로그인에 성공했습니다.",
@@ -44,7 +48,7 @@ export async function POST(request: NextRequest) {
     });
 
     responseToClient.cookies.set("refreshToken", refreshToken, {
-      ...getAuthCookieOptions(expiresIn),
+      ...getAuthCookieOptions(refreshTokenMaxAge),
     });
 
     return responseToClient;
