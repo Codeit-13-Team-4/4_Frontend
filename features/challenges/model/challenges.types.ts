@@ -21,6 +21,18 @@ export type VerificationFrequencyType =
 
 export type MyParticipationStatus = "NONE" | "PENDING" | "JOINED" | "REJECTED";
 
+export interface ChallengeApplication {
+  // 내 지원 정보
+  id: number;
+  status: "PENDING" | "APPROVED" | "REJECTED";
+  reasonCategory:
+    | "SKILL_MISMATCH"
+    | "POSITION_FULL"
+    | "SCHEDULE_CONFLICT"
+    | "OTHER";
+  reasonDetail: string;
+}
+
 export interface ChallengeCardProps {
   id: number;
   title: string;
@@ -45,6 +57,7 @@ export interface ChallengeCardProps {
   isHost: boolean;
   isLiked: boolean;
   myParticipationStatus: MyParticipationStatus;
+  application: ChallengeApplication;
 }
 
 export type ChallengesSortType = keyof typeof CHALLENGES_SORT_LABEL;
