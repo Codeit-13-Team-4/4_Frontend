@@ -7,14 +7,12 @@ import MyProjectStatusBadge from "./MyProjectStatusBadge";
 import { DeadlineBadge, LikeButton } from "@/shared/ui";
 import MyProjectCardButton from "./MyProjectCardButton";
 import { useToggleMyProjectLike } from "@/features/mypage/hooks/useToggleMyProjectLike";
-import { MyRoleType } from "@/features/mypage/model/mypage.types";
 
 interface MyProjectCardProps {
   data: ProjectCardProps;
-  role: MyRoleType;
 }
 
-export default function MyProjectCard({ data, role }: MyProjectCardProps) {
+export default function MyProjectCard({ data }: MyProjectCardProps) {
   const router = useRouter();
   const { mutate: toggleLike } = useToggleMyProjectLike(data.id);
 
@@ -29,11 +27,7 @@ export default function MyProjectCard({ data, role }: MyProjectCardProps) {
     >
       {/* 상태배지, 찜하기 */}
       <header className="mb-4 flex items-center justify-between">
-        <MyProjectStatusBadge
-          role={role}
-          status={data.status}
-          applicationStatus={data.applicationStatus}
-        />
+        <MyProjectStatusBadge status={data.status} />
         <div
           className="flex items-center gap-2"
           onClick={(e) => e.stopPropagation()}
@@ -85,6 +79,7 @@ export default function MyProjectCard({ data, role }: MyProjectCardProps) {
           projectId={data.id}
           status={data.status}
           applicationStatus={data.applicationStatus}
+          application={data.application}
           isHost={data.isHost}
         />
       </footer>
