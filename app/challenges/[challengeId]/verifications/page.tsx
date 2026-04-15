@@ -17,9 +17,15 @@ export default async function VerificationsPage({
     <div>
       <header className="flex items-center gap-3 pb-10">
         <Link href={`/challenges/${challengeId}`}>
-          <ChevronLeftIcon width={20} height={20} className="text-gray-200" />
+          <ChevronLeftIcon
+            width={20}
+            height={20}
+            className="h-4 w-4 text-gray-200 md:h-5 md:w-5"
+          />
         </Link>
-        <h2 className="text-[30px] font-semibold text-gray-50">{data.title}</h2>
+        <h2 className="text-[18px] font-semibold text-gray-50 md:text-[30px]">
+          {data.title}
+        </h2>
       </header>
       <VerificationsMemberSection data={data} />
       <VerificationsListSection isHost={data.isHost} />

@@ -13,6 +13,7 @@ import { formatToDate } from "../../utils/formatToDate";
 import { VerificationsRejectModal } from "../VerificationsModal/VerificationsRejectModal";
 import { VerificationsEditModal } from "../VerificationsModal/VerificationsEditModal";
 import { VerificationsStatusDropdown } from "./VerificationsStatusDropdown";
+import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 
 export default function VerifyCard({
   data,
@@ -45,8 +46,12 @@ export default function VerifyCard({
     verificationId,
   });
 
+  const { data: me } = useUserData();
+
   const { content, user, imageUrls, createdAt, status } =
     verificationData?.data ?? {};
+
+  const isOwner = data?.user.id === me?.id;
 
   useEffect(() => {
     const el = contentRef?.current;
@@ -110,7 +115,7 @@ export default function VerifyCard({
             </span>
           </div>
           <div className="ml-auto flex">
-            {status === "PENDING" && (
+            {isOwner && status === "PENDING" && (
               <div className="flex flex-col items-end gap-2">
                 <VerificationsStatusDropdown
                   onEdit={() => setEditModalIsOpen(true)}
@@ -135,7 +140,7 @@ export default function VerifyCard({
           </div>
         </div>
       </div>
-      <div className="relative aspect-4/3 overflow-hidden rounded-[40px] bg-red-50">
+      <div className="relative aspect-square overflow-hidden rounded-[40px] bg-gray-700">
         {imageUrls?.length > 0 && imageUrls[0] ? (
           <Image
             src={imageUrls[0]}

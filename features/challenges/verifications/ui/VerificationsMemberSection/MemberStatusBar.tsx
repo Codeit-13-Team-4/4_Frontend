@@ -19,7 +19,7 @@ export function MemberStatusBar({
 
   return (
     <div className="flex w-full items-center justify-between">
-      <div className="mr-7 flex items-center gap-2">
+      <div className="mr-7 flex h-6 w-6 items-center gap-2 md:h-11 md:w-11">
         {user.profileImageUrl ? (
           <Image
             src={user.profileImageUrl}
@@ -33,10 +33,12 @@ export function MemberStatusBar({
           <AvatarIcon className="text-gray-800" width={40} height={40} />
         )}
 
-        <span className="text-nowrap">{user.nickname}</span>
+        <span className="text-[14px] text-nowrap md:text-base">
+          {user.nickname}
+        </span>
       </div>
 
-      <span className="text-nowrap">
+      <span className="text-[14px] text-nowrap md:text-base">
         {verificationLabel[verificationStatus]}
       </span>
     </div>

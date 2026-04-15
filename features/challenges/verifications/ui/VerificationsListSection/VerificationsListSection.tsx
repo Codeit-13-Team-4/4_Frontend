@@ -10,7 +10,7 @@ export function VerificationsListSection({ isHost }: { isHost: boolean }) {
 
   return (
     <div>
-      <h3 className="mt-11 mb-7 text-[24px] text-gray-50">
+      <h3 className="mt-11 mb-7 text-[20px] text-gray-50 md:text-[24px]">
         {isHost ? "멤버 활동 내역" : "실시간 인증 현황"}
       </h3>
 
