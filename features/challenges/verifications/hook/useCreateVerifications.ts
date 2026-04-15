@@ -15,6 +15,12 @@ export function useCreateVerifications(challengeId: number) {
       queryClient.invalidateQueries({
         queryKey: verificationsKeys.list({ challengeId }),
       });
+      queryClient.invalidateQueries({
+        queryKey: verificationsKeys.me({ challengeId }),
+      });
+      queryClient.invalidateQueries({
+        queryKey: verificationsKeys.memberProgressList({ challengeId }),
+      });
     },
   });
 }

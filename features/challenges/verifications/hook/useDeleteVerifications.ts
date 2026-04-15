@@ -21,6 +21,9 @@ export function useDeleteVerifications({
       queryClient.invalidateQueries({
         queryKey: verificationsKeys.list({ challengeId }),
       });
+      queryClient.invalidateQueries({
+        queryKey: verificationsKeys.me({ challengeId }),
+      });
     },
   });
 }

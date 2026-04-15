@@ -23,6 +23,9 @@ export function useUpdateVerificationsStatus({
       queryClient.invalidateQueries({
         queryKey: verificationsKeys.details(),
       });
+      queryClient.invalidateQueries({
+        queryKey: verificationsKeys.memberProgressList({ challengeId }),
+      });
     },
   });
 }
