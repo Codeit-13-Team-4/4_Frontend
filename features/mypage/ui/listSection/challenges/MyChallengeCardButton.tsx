@@ -129,7 +129,7 @@ export default function MyChallengeCardButton({
         className={btnClass}
         onClick={(e) => {
           e.stopPropagation();
-          router.push(`/challenges/${id}/verify`);
+          router.push(`/challenges/${id}/verifications`);
         }}
       >
         인증하기
