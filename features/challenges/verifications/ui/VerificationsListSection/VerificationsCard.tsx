@@ -1,6 +1,5 @@
 "use client";
-import { AvatarIcon, Check, Meetballs, XIcon } from "@/shared/icons";
-import { Dropdown } from "@/shared/ui";
+import { AvatarIcon, Check, XIcon } from "@/shared/icons";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { VerificationCardProps } from "@/features/challenges/verifications/model";
@@ -13,6 +12,7 @@ import Image from "next/image";
 import { formatToDate } from "../../utils/formatToDate";
 import { VerificationsRejectModal } from "../VerificationsModal/VerificationsRejectModal";
 import { VerificationsEditModal } from "../VerificationsModal/VerificationsEditModal";
+import { VerificationsStatusDropdown } from "./VerificationsStatusDropdown";
 
 export default function VerifyCard({
   data,
@@ -45,7 +45,8 @@ export default function VerifyCard({
     verificationId,
   });
 
-  const { content, user, imageUrls, createdAt } = verificationData?.data ?? {};
+  const { content, user, imageUrls, createdAt, status } =
+    verificationData?.data ?? {};
 
   useEffect(() => {
     const el = contentRef?.current;
@@ -85,10 +86,23 @@ export default function VerifyCard({
 
   return (
     <div className="flex max-h-150 w-full flex-col gap-10 rounded-[20px] border border-gray-700 bg-gray-800 px-5 pt-10 pb-5">
-      <div className="flex items-center justify-center gap-1.5">
-        <AvatarIcon className="text-gray-800" width={52} height={52} />
+      <div className="flex items-center gap-1.5">
+        <div className="h-13 w-13 overflow-hidden rounded-full">
+          {user?.profileImageUrl ? (
+            <Image
+              src={user.profileImageUrl}
+              alt="인증자 프로필 이미지"
+              width={52}
+              height={52}
+              className="h-full w-full object-cover"
+              priority
+            />
+          ) : (
+            <AvatarIcon className="text-gray-800" width={52} height={52} />
+          )}
+        </div>
 
-        <div className="flex w-full items-center">
+        <div className="flex flex-1">
           <div className="flex flex-col">
             <span className="text-gray-400">{user?.nickname}</span>
             <span className="text-gray-600">
@@ -96,47 +110,27 @@ export default function VerifyCard({
             </span>
           </div>
           <div className="ml-auto flex">
-            {isHost ? (
-              <div className="flex items-center gap-6">
-                <button onClick={handleApprove} className="cursor-pointer">
-                  <Check className="text-mint-500" width={24} height={24} />
-                </button>
-                <button
-                  onClick={() => setRejectModalIsOpen(true)}
-                  className="cursor-pointer"
-                >
-                  <XIcon className="text-error" width={18} height={18} />
-                </button>
+            {status === "PENDING" && (
+              <div className="flex flex-col items-end gap-2">
+                <VerificationsStatusDropdown
+                  onEdit={() => setEditModalIsOpen(true)}
+                  onDelete={deleteVerification}
+                />
+
+                {isHost && (
+                  <div className="flex items-center gap-6">
+                    <button onClick={handleApprove} aria-label="인증 승인">
+                      <Check className="text-mint-500" width={24} height={24} />
+                    </button>
+                    <button
+                      onClick={() => setRejectModalIsOpen(true)}
+                      aria-label="인증 거절"
+                    >
+                      <XIcon className="text-error" width={18} height={18} />
+                    </button>
+                  </div>
+                )}
               </div>
-            ) : (
-              <Dropdown>
-                <Dropdown.Trigger>
-                  <button type="button" aria-label="인증 메뉴">
-                    <Meetballs
-                      width={24}
-                      height={24}
-                      className="text-gray-400"
-                    />
-                  </button>
-                </Dropdown.Trigger>
-                <Dropdown.Content
-                  align="end"
-                  className="min-w-24 border-gray-700 bg-gray-800 text-sm text-gray-200"
-                >
-                  <Dropdown.Item
-                    className="px-3 py-2 hover:bg-gray-900"
-                    onClick={() => setEditModalIsOpen(true)}
-                  >
-                    수정
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    className="px-3 py-2 text-red-400 hover:bg-gray-900"
-                    onClick={() => deleteVerification()}
-                  >
-                    삭제
-                  </Dropdown.Item>
-                </Dropdown.Content>
-              </Dropdown>
             )}
           </div>
         </div>
@@ -144,9 +138,10 @@ export default function VerifyCard({
       <div className="relative aspect-4/3 overflow-hidden rounded-[40px] bg-red-50">
         {imageUrls?.length > 0 && imageUrls[0] ? (
           <Image
-            src="https://devup-bucket.s3.ap-northeast-2.amazonaws.com/13/a4b98e21-69c4-451e-9f9b-da9b9389cfa6.jpg"
+            src={imageUrls[0]}
             alt="인증이미지"
             fill
+            sizes="(max-width: 350px) 100vw, 350px"
           />
         ) : (
           <div className="h-full w-full bg-gray-700" />
@@ -177,11 +172,11 @@ export default function VerifyCard({
         isOpen={rejectModalIsOpen}
         setRejectReason={setRejectReason}
         onSubmit={handleReject}
+        rejectReason={rejectReason}
       />
       <VerificationsEditModal
         key={verificationId}
         open={editModalIsOpen}
-        setIsOpen={setEditModalIsOpen}
         onOpenChange={() => setEditModalIsOpen(false)}
         challengeId={challengeId}
         verificationId={verificationId}

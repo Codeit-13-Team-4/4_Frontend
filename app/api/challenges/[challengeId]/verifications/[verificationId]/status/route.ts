@@ -13,7 +13,7 @@ export async function PATCH(
   try {
     const { challengeId, verificationId } = await params;
     const body = await request.json();
-    await fetchWithAuthRetry(
+    const data = await fetchWithAuthRetry(
       `${BASE_URL}/challenges/${challengeId}/verifications/${verificationId}/status`,
       {
         method: "PATCH",
@@ -24,7 +24,7 @@ export async function PATCH(
       },
     );
 
-    return new NextResponse(null, { status: 200 });
+    return NextResponse.json(data, { status: 200 });
   } catch (error) {
     if (error instanceof ApiError) {
       return NextResponse.json(
@@ -32,9 +32,5 @@ export async function PATCH(
         { status: error.status },
       );
     }
-    return NextResponse.json(
-      { message: "서버 오류가 발생했습니다." },
-      { status: 500 },
-    );
   }
 }
