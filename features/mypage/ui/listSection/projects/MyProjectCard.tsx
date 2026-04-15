@@ -82,6 +82,7 @@ export default function MyProjectCard({ data, role }: MyProjectCardProps) {
       {/* 버튼 */}
       <footer className="mt-auto pt-4">
         <MyProjectCardButton
+          projectId={data.id}
           status={data.status}
           applicationStatus={data.applicationStatus}
           isHost={data.isHost}
