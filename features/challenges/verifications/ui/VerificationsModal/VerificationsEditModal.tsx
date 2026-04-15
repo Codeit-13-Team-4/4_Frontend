@@ -11,7 +11,7 @@ import {
 } from "@/shared/ui";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useUploadImage } from "@/shared/hooks/useUploadImage";
 import { useEditVerifications } from "../../hook/useEditVerifications";
@@ -44,18 +44,18 @@ export function VerificationsEditModal({
     reset,
     watch,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
-      content: data?.content,
+      content: "",
       imageUrls: undefined,
-      existingImageUrl: data?.imageUrls?.[0] ?? null,
+      existingImageUrl: null,
     },
   });
 
   const watchedImages = watch("imageUrls");
   const currentExistingUrl = watch("existingImageUrl");
-
   const { mutateAsync } = useUploadImage();
   const { mutate } = useEditVerifications({ challengeId, verificationId });
   const openAlertModal = useOpenAlertModal();
@@ -75,10 +75,12 @@ export function VerificationsEditModal({
     }
   }, [data, reset]);
 
-  const previewSrc =
-    watchedImages && watchedImages.length > 0
-      ? URL.createObjectURL(watchedImages[0])
-      : currentExistingUrl;
+  const previewSrc = useMemo(() => {
+    if (watchedImages && watchedImages.length > 0) {
+      return URL.createObjectURL(watchedImages[0]);
+    }
+    return currentExistingUrl ?? null;
+  }, [watchedImages, currentExistingUrl]);
 
   useEffect(() => {
     return () => {
@@ -96,7 +98,9 @@ export function VerificationsEditModal({
       imageUrl = await mutateAsync(file);
     }
 
-    if (!imageUrl) return;
+    if (!imageUrl) {
+      return;
+    }
 
     mutate(
       {
@@ -104,8 +108,11 @@ export function VerificationsEditModal({
         imageUrls: [imageUrl],
       },
       {
-        onSuccess: () => {
+        onSettled: () => {
           onOpenChange(false);
+          reset();
+        },
+        onSuccess: () => {
           openAlertModal({
             title: "챌린지 인증 글이 수정되었습니다! 🎉",
             description: "수정 내역을 확인해보세요.",
@@ -119,27 +126,26 @@ export function VerificationsEditModal({
           });
           reset();
         },
-        onError: () => {
-          onOpenChange(false);
-          reset();
-        },
       },
     );
   };
 
-  const resetImage = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const resetImage = () => {
     setValue("imageUrls", undefined, { shouldDirty: true });
     setValue("existingImageUrl", null, { shouldDirty: true });
   };
 
   const handleCancelClick = () => {
-    reset();
+    reset({
+      content: data.content,
+      existingImageUrl: data?.imageUrls?.[0] ?? null,
+      imageUrls: undefined,
+    });
     onOpenChange(false);
   };
 
   return (
-    <Modal {...props} onOpenChange={onOpenChange}>
+    <Modal {...props} onOpenChange={handleCancelClick}>
       <Modal.Overlay />
       <Modal.Content className="z-50 gap-12 p-10">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -170,7 +176,9 @@ export function VerificationsEditModal({
                     </span>
                   )}
                 </label>
-
+                {errors.imageUrls && (
+                  <FieldError>{errors.imageUrls.message}</FieldError>
+                )}
                 {previewSrc && (
                   <button
                     onClick={resetImage}
@@ -188,7 +196,16 @@ export function VerificationsEditModal({
                 accept="image/*"
                 className="hidden"
                 {...register("imageUrls", {
-                  required: "이미지를 등록해주세요.",
+                  validate: () => {
+                    const existingUrl = getValues("existingImageUrl");
+                    const imageUrls = getValues("imageUrls");
+                    const newFile = imageUrls && imageUrls.length > 0;
+
+                    if (!existingUrl && !newFile) {
+                      return "이미지를 등록해주세요.";
+                    }
+                    return true;
+                  },
                 })}
               />
             </Field>

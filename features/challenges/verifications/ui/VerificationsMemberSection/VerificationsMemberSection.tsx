@@ -32,8 +32,8 @@ export function VerificationsMemberSection({
     <section className="grid gap-5 md:h-90 md:grid-cols-[0.8fr_1fr]">
       <div className="flex flex-col gap-5 rounded-[20px] bg-gray-800 p-5">
         <div className="flex flex-col items-center justify-center gap-4 pt-5">
-          <div className="flex h-30 w-30 items-center justify-center overflow-hidden rounded-full bg-red-50">
-            {host.profileImageUrl ? (
+          <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-red-50 md:h-30 md:w-30">
+            {host?.profileImageUrl ? (
               <Image
                 src={host.profileImageUrl}
                 alt="호스트 프로필 이미지"
@@ -47,8 +47,11 @@ export function VerificationsMemberSection({
             )}
           </div>
 
-          <span className="flex gap-1 text-[24px] font-semibold">
-            {host.nickname} <span>{isHost ? <Crown /> : null}</span>
+          <span className="flex gap-1 text-[18px] font-semibold md:text-[24px]">
+            {host?.nickname}
+            <span>
+              {isHost ? <Crown className="h-6 w-6 md:h-8 md:w-8" /> : null}
+            </span>
           </span>
         </div>
         <div>
@@ -74,16 +77,15 @@ export function VerificationsMemberSection({
       <div className="overflow-hidden rounded-[20px] bg-gray-800 p-5">
         <div className="mb-7 flex items-center justify-between pt-2">
           <div className="flex items-center gap-2">
-            <People className="text-gray-400" width={28} height={28} />
-            <span className="text-[18px] text-gray-300">
+            <People className="h-6 w-6 text-gray-400" width={28} height={28} />
+            <span className="text-gray-300 md:text-[18px]">
               {participantCount}
             </span>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 text-[14px] md:text-[18px]">
             <span className="text-gray-200">인증 완료 멤버</span>
             <span className="text-gray-300">
               <span className="text-mint-500">5</span> / {participantCount}
-              {/* 수정필요 */}
             </span>
           </div>
         </div>
