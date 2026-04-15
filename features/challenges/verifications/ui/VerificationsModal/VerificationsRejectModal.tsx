@@ -1,10 +1,12 @@
 import { Button, Modal } from "@/shared/ui";
+import { useState } from "react";
 
 type VerificationsRejectModalProps = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setRejectReason: React.Dispatch<React.SetStateAction<string>>;
   onSubmit: () => void;
+  rejectReason: string;
 };
 
 export function VerificationsRejectModal({
@@ -12,7 +14,16 @@ export function VerificationsRejectModal({
   setIsOpen,
   setRejectReason,
   onSubmit,
+  rejectReason,
 }: VerificationsRejectModalProps) {
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const handleSubmit = () => {
+    if (!rejectReason.trim()) {
+      return setErrorMessage("거절 사유를 입력해주세요.");
+    }
+    onSubmit();
+    setIsOpen(false);
+  };
   return (
     <Modal open={isOpen} onOpenChange={setIsOpen}>
       <Modal.Content>
@@ -27,6 +38,7 @@ export function VerificationsRejectModal({
             placeholder="거절 사유를 적어주세요."
             className="min-h-36 w-full resize-none rounded-xl border border-gray-700 px-4 py-3 text-sm text-white outline-none placeholder:text-gray-500"
           />
+          {errorMessage && <span className="text-error">{errorMessage}</span>}
         </Modal.Body>
 
         <Modal.Footer>
@@ -35,14 +47,7 @@ export function VerificationsRejectModal({
               취소
             </Button>
           </Modal.Close>
-          <Button
-            className="flex-1"
-            variant="primary"
-            onClick={() => {
-              onSubmit();
-              setIsOpen(false);
-            }}
-          >
+          <Button className="flex-1" variant="primary" onClick={handleSubmit}>
             제출하기
           </Button>
         </Modal.Footer>
