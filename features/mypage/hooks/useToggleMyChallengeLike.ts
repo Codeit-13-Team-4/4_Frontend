@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toggleChallengeLike } from "@/features/challenges/detail/api/toggleChallengeLike";
+import { toggleChallengeLike } from "@/features/challenges/api/toggleChallengeLike";
 import { mypageKeys } from "../model/mypage.queryKey";
 import type { MyChallengesResponse } from "../model/mypage.types";
 

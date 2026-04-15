@@ -1,8 +1,5 @@
 "use client";
-import {
-  buildCurrentPath,
-  buildLoginPath,
-} from "@/features/auth/lib/authRedirect";
+
 import { DeadlineBadge, LikeButton, StatusBadge } from "@/shared/ui";
 import {
   PositionBadgeList,
@@ -10,11 +7,10 @@ import {
   TechStackList,
 } from "@/features/projects/ui";
 import { ProjectCardProps } from "@/features/projects/model";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useUserData } from "@/features/auth/hooks/queries/useUserData";
+import { useRouter } from "next/navigation";
 import { useToggleProjectLike } from "@/features/projects/hooks/useToggleProjectLike";
-import { useOpenAlertModal } from "@/shared/store/AlertModal";
 import { CommentIcon, Eyeopen } from "@/shared/icons";
+import { useLoginGuard } from "@/shared/hooks/useLoginGuard";
 
 export function ProjectCard({ data }: { data: ProjectCardProps }) {
   const {
@@ -31,29 +27,14 @@ export function ProjectCard({ data }: { data: ProjectCardProps }) {
   } = data;
 
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const loginPath = buildLoginPath(buildCurrentPath(pathname, searchParams));
-
-  const { data: userData } = useUserData();
+  const withLoginGuard = useLoginGuard();
   const { mutate: toggleLike } = useToggleProjectLike(id);
-  const openAlertModal = useOpenAlertModal();
 
   const handleLikeToggle = () => {
-    if (!userData) {
-      openAlertModal({
-        title: "로그인이 필요합니다",
-        description: "좋아요 기능은 로그인 후 이용할 수 있습니다.",
-        positive: {
-          text: "로그인하기",
-          button: { type: "default", variant: "primary" },
-        },
-        negative: { text: "취소" },
-        onPositive: () => router.push(loginPath),
-      });
-      return;
-    }
-    toggleLike(liked);
+    withLoginGuard(
+      () => toggleLike(liked),
+      "좋아요 기능은 로그인 후 이용할 수 있습니다.",
+    );
   };
 
   const handleCardClick = () => {

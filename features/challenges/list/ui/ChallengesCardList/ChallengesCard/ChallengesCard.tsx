@@ -1,11 +1,7 @@
 "use client";
-import {
-  buildCurrentPath,
-  buildLoginPath,
-} from "@/features/auth/lib/authRedirect";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+import { useRouter } from "next/navigation";
 import { DeadlineBadge, LikeButton, Progress } from "@/shared/ui";
-import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import {
   ChallengeCardProps,
   VERIFICATION_FREQUENCY_LABEL,
@@ -14,9 +10,9 @@ import {
   ChallengesJoinTypeBadge,
   ChallengesStatusBadge,
 } from "@/features/challenges/ui";
-import { useToggleChallengeLike } from "@/features/challenges/detail/hooks/useToggleChallengeLike";
-import { useOpenAlertModal } from "@/shared/store/AlertModal";
+import { useToggleChallengeLike } from "@/features/challenges/hook/useToggleChallengeLike";
 import { CommentIcon, Eyeopen } from "@/shared/icons";
+import { useLoginGuard } from "@/shared/hooks/useLoginGuard";
 
 export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
   const {
@@ -35,29 +31,15 @@ export function ChallengesCard({ data }: { data: ChallengeCardProps }) {
   } = data;
 
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const loginPath = buildLoginPath(buildCurrentPath(pathname, searchParams));
 
-  const openAlertModal = useOpenAlertModal();
-  const { data: userData } = useUserData();
   const { mutate: toggleLike } = useToggleChallengeLike(id);
+  const withLoginGuard = useLoginGuard();
 
   const handleLikeToggle = () => {
-    if (!userData) {
-      openAlertModal({
-        title: "로그인이 필요합니다",
-        description: "좋아요 기능은 로그인 후 이용할 수 있습니다.",
-        positive: {
-          text: "로그인하기",
-          button: { type: "default", variant: "primary" },
-        },
-        negative: { text: "취소" },
-        onPositive: () => router.push(loginPath),
-      });
-      return;
-    }
-    toggleLike(isLiked);
+    withLoginGuard(
+      () => toggleLike(isLiked),
+      "좋아요 기능은 로그인 후 이용할 수 있습니다.",
+    );
   };
 
   const handleCardClick = () => {

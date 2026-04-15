@@ -1,6 +1,13 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { toggleProjectLike } from "../api/toggleProjectLike";
-import type { ProjectDetail } from "@/features/projects/model";
+import type {
+  ProjectDetail,
+  ProjectsResponse,
+} from "@/features/projects/model";
 import { projectKeys } from "@/features/projects/model";
 
 export function useToggleProjectLike(projectId: number) {
@@ -18,18 +25,44 @@ export function useToggleProjectLike(projectId: number) {
     },
     onMutate: async (currentLiked) => {
       await queryClient.cancelQueries({ queryKey });
+      await queryClient.cancelQueries({ queryKey: projectKeys.lists() });
 
       const previous = queryClient.getQueryData<ProjectDetail>(queryKey);
+      const previousLists = queryClient.getQueriesData({
+        queryKey: projectKeys.lists(),
+      });
 
       queryClient.setQueryData<ProjectDetail>(queryKey, (old) =>
         old ? { ...old, liked: !currentLiked } : old,
       );
+      queryClient.setQueriesData<InfiniteData<ProjectsResponse>>(
+        { queryKey: projectKeys.lists() },
+        (old) => {
+          if (!old) return old;
 
-      return { previous };
+          return {
+            ...old,
+            pages: old.pages.map((page) => ({
+              ...page,
+              data: page.data.map((project) =>
+                project.id === projectId
+                  ? { ...project, liked: !project.liked }
+                  : project,
+              ),
+            })),
+          };
+        },
+      );
+      return { previous, previousLists };
     },
     onError: (_err, _vars, context) => {
       if (context?.previous) {
         queryClient.setQueryData(queryKey, context.previous);
+      }
+      if (context?.previousLists) {
+        context.previousLists.forEach(([key, data]) => {
+          queryClient.setQueryData(key, data);
+        });
       }
     },
     onSettled: () => {

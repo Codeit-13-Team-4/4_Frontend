@@ -13,7 +13,7 @@ import {
 import type { ChallengesDetail } from "@/features/challenges/detail/model/challengesDetail";
 import { useLikeLoginGuard } from "@/features/liked/hooks/useLikeLoginGuard";
 import { useOptimisticLikedToggle } from "@/features/liked/hooks/useOptimisticLikedToggle";
-import { toggleChallengeLike } from "@/features/challenges/detail/api/toggleChallengeLike";
+import { toggleChallengeLike } from "@/features/challenges/api/toggleChallengeLike";
 import { likedChallengeKeys } from "@/features/liked/model";
 import { CommentIcon, Eyeopen } from "@/shared/icons";
 import { DeadlineBadge, LikeButton, Progress } from "@/shared/ui";
