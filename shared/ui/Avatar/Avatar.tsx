@@ -26,6 +26,7 @@ function Avatar({
   VariantProps<typeof avatarVariants>) {
   return (
     <AvatarPrimitive.Root
+      role="img"
       className={cn(avatarVariants({ size }), className)}
       {...props}
     />
