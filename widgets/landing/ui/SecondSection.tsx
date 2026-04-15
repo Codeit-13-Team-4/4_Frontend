@@ -22,7 +22,7 @@ export function SecondSection() {
           </p>
         </div>
 
-        <div className="mx-auto mt-30 flex w-full justify-center px-4">
+        <div className="mx-auto mt-30 flex w-full justify-center md:px-4">
           <div className="relative w-full max-w-275 rounded-[40px] md:aspect-video md:shadow-[0_0_30px_5px_rgba(0,215,160,0.6)]">
             <Image
               src="images/section-02-pc.svg"
