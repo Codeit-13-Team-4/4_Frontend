@@ -36,14 +36,14 @@ function getInputClassName({
   readOnly?: boolean;
 }) {
   return [
-    "h-[60px] rounded-[18px] border bg-[#243043] px-5 text-base text-[#F8FAFC] placeholder:text-[#94A3B8] transition-colors",
+    "rounded-[10px] border bg-[#243043] px-3 py-2.5 text-base text-gray-50 placeholder:text-[#94A3B8] transition-colors ",
     hasTrailingIcon ? "pr-14" : "",
     readOnly ? "cursor-default" : "",
     hasError
       ? "border-error hover:border-error focus:border-error focus-visible:border-error"
       : hasValue
-        ? "border-[#00D7A0] hover:border-[#00D7A0] focus:border-[#00D7A0] focus-visible:border-[#00D7A0]"
-        : "border-[#34455E] hover:border-[#00D7A0] focus:border-[#00D7A0] focus-visible:border-[#00D7A0]",
+        ? "border-mint-500 hover:border-mint-500 focus:border-mint-500 focus-visible:border-mint-500"
+        : "border-gray-700 hover:border-mint-500 focus:border-mint-500 focus-visible:border-[#00D7A0]",
   ].join(" ");
 }
 
@@ -88,10 +88,10 @@ interface PasswordFieldProps {
 function AccountStepHeader() {
   return (
     <div className="flex flex-col gap-3 text-center">
-      <h2 className="text-[32px] leading-tight font-semibold text-gray-50 md:text-[40px]">
+      <h2 className="text-lg leading-tight font-semibold text-gray-50 md:text-2xl">
         계정 정보 입력
       </h2>
-      <p className="text-base text-gray-400 md:text-lg">
+      <p className="text-base font-medium text-gray-400 md:text-lg">
         입력하신 정보로 계정이 생성돼요
       </p>
     </div>
@@ -104,7 +104,7 @@ function SocialSignupSummary({
   socialSignup: SocialSignupContext;
 }) {
   return (
-    <div className="rounded-[24px] border border-gray-700 bg-gray-900/70 p-4">
+    <div className="rounded-3xl border border-gray-700 bg-gray-900/70 p-4">
       <div className="flex items-center gap-3">
         <div className="flex size-10 items-center justify-center rounded-2xl bg-white">
           <SocialProviderIcon type={socialSignup.type} className="size-5" />
@@ -138,7 +138,7 @@ function NicknameField({
       <FieldLabel
         htmlFor="nickname"
         required
-        className="text-base text-gray-50"
+        className="text-sm text-gray-50 md:text-base"
       >
         닉네임
       </FieldLabel>
@@ -179,7 +179,11 @@ function EmailField({
 }: SignupEmailFieldProps) {
   return (
     <Field>
-      <FieldLabel htmlFor="email" required className="text-base text-gray-50">
+      <FieldLabel
+        htmlFor="email"
+        required
+        className="text-sm text-gray-50 md:text-base"
+      >
         이메일
       </FieldLabel>
 
@@ -213,7 +217,11 @@ function PasswordField({
 }: PasswordFieldProps) {
   return (
     <Field>
-      <FieldLabel htmlFor={id} required className="text-base text-gray-50">
+      <FieldLabel
+        htmlFor={id}
+        required
+        className="text-sm text-gray-50 md:text-base"
+      >
         {label}
       </FieldLabel>
 
@@ -302,8 +310,8 @@ export default function SignupStep2({
       <div
         className={
           isSocialSignup
-            ? "mx-auto flex w-full max-w-[560px] flex-col gap-6"
-            : "mx-auto w-full max-w-[560px]"
+            ? "mx-auto flex w-full max-w-140 flex-col gap-6"
+            : "mx-auto w-full max-w-140"
         }
       >
         {isSocialSignup && socialSignup ? (

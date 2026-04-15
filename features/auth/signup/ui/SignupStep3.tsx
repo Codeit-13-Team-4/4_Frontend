@@ -2,16 +2,11 @@
 
 import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { toast } from "sonner";
+import Image from "next/image";
 import { XIcon } from "@/shared/icons";
 import { Input, Field, FieldError, FieldGroup, FieldLabel } from "@/shared/ui";
 import { TECH_STACK, type TechStackKey } from "@/shared/types/techStack";
 import type { SignupFormValues } from "../model/signupForm";
-
-const TECH_STACK_ENTRIES = Object.entries(TECH_STACK) as [
-  TechStackKey,
-  { label: string; icon: string },
-][];
 
 function getFieldBorderClassName({
   hasError,
@@ -23,8 +18,8 @@ function getFieldBorderClassName({
   useFocusWithin?: boolean;
 }) {
   const focusClassName = useFocusWithin
-    ? "hover:border-[#00D7A0] focus-within:border-[#00D7A0]"
-    : "hover:border-[#00D7A0] focus:border-[#00D7A0] focus-visible:border-[#00D7A0]";
+    ? "hover:border-mint-500 focus-within:border-mint-500"
+    : "hover:border-mint-500 focus:border-mint-500 focus-visible:border-mint-500";
 
   if (hasError) {
     return useFocusWithin
@@ -33,34 +28,8 @@ function getFieldBorderClassName({
   }
 
   return hasValue
-    ? `border-[#00D7A0] ${focusClassName}`
-    : `border-[#34455E] ${focusClassName}`;
-}
-
-function findSkillKey(query: string, selected: TechStackKey[]) {
-  const normalizedQuery = query.trim().toLowerCase();
-
-  if (!normalizedQuery) return null;
-
-  const availableEntries = TECH_STACK_ENTRIES.filter(([key]) => {
-    return !selected.includes(key);
-  });
-
-  const exactMatch = availableEntries.find(([key, { label }]) => {
-    return (
-      key.toLowerCase() === normalizedQuery ||
-      label.toLowerCase() === normalizedQuery
-    );
-  });
-
-  const partialMatch = availableEntries.find(([key, { label }]) => {
-    return (
-      key.toLowerCase().includes(normalizedQuery) ||
-      label.toLowerCase().includes(normalizedQuery)
-    );
-  });
-
-  return exactMatch?.[0] ?? partialMatch?.[0] ?? null;
+    ? `border-mint-500 ${focusClassName}`
+    : `border-gray-700 ${focusClassName}`;
 }
 
 interface SignupSkillTagInputProps {
@@ -70,22 +39,23 @@ interface SignupSkillTagInputProps {
 
 function SignupSkillTagInput({ value, onChange }: SignupSkillTagInputProps) {
   const [query, setQuery] = useState("");
-  const hasSkillValue = query.trim().length > 0 || value.length > 0;
+  const [isFocused, setIsFocused] = useState(false);
 
-  const handleAdd = () => {
-    const normalizedQuery = query.trim();
+  const recommendList = Object.keys(TECH_STACK).filter(
+    (key) =>
+      (key.includes(query.toLowerCase()) ||
+        TECH_STACK[key as TechStackKey].label
+          .toLowerCase()
+          .includes(query.toLowerCase())) &&
+      !value.includes(key as TechStackKey),
+  ) as TechStackKey[];
 
-    if (!normalizedQuery) return;
-
-    const skillKey = findSkillKey(query, value);
-
-    if (!skillKey) {
-      toast.error("등록 가능한 기술 스택을 찾을 수 없어요.");
-      return;
+  const handleAdd = (key: TechStackKey) => {
+    if (!value.includes(key)) {
+      onChange([...value, key]);
     }
-
-    onChange([...value, skillKey]);
     setQuery("");
+    setIsFocused(false);
   };
 
   const handleRemove = (target: TechStackKey) => {
@@ -94,36 +64,33 @@ function SignupSkillTagInput({ value, onChange }: SignupSkillTagInputProps) {
 
   return (
     <div className="flex flex-col gap-3">
-      <div
-        className={`flex h-[60px] items-center gap-2.5 rounded-[18px] border bg-[#243043] px-4 transition-colors ${getFieldBorderClassName(
-          {
-            hasError: false,
-            hasValue: hasSkillValue,
-            useFocusWithin: true,
-          },
-        )}`}
-      >
-        <input
-          type="text"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === "Enter") {
-              event.preventDefault();
-              handleAdd();
-            }
-          }}
+      <div className="relative">
+        <Input
           placeholder="태그 키워드 입력"
-          className="min-w-0 flex-1 bg-transparent text-base text-gray-50 outline-none placeholder:text-[#94A3B8]"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onClick={() => setIsFocused((prev) => !prev)}
+          onBlur={() => setTimeout(() => setIsFocused(false), 100)}
         />
-
-        <button
-          type="button"
-          onClick={handleAdd}
-          className="flex h-10 w-[58px] shrink-0 items-center justify-center rounded-xl bg-gray-50 text-base font-semibold text-[#64748B]"
-        >
-          추가
-        </button>
+        {isFocused && recommendList.length > 0 && (
+          <ul className="scrollbar-hide absolute top-full z-50 mt-1 max-h-40 w-full overflow-y-auto rounded-md border border-gray-700 bg-gray-800">
+            {recommendList.map((key) => (
+              <li
+                key={key}
+                className="flex cursor-pointer items-center gap-2 px-3 py-1 hover:bg-gray-700"
+                onClick={() => handleAdd(key)}
+              >
+                <Image
+                  src={TECH_STACK[key].icon}
+                  alt={TECH_STACK[key].label}
+                  width={16}
+                  height={16}
+                />
+                <span>{TECH_STACK[key].label}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       {value.length > 0 ? (
@@ -131,7 +98,7 @@ function SignupSkillTagInput({ value, onChange }: SignupSkillTagInputProps) {
           {value.map((item) => (
             <span
               key={item}
-              className="flex h-8 min-w-[82px] items-center justify-center gap-2 rounded-[4px] bg-[#3A4962] px-2.5 text-base text-gray-100"
+              className="flex h-8 min-w-20.5 items-center justify-center gap-2 rounded-sm bg-[#3A4962] px-2.5 text-base text-gray-100"
             >
               {TECH_STACK[item].label}
               <button
@@ -140,7 +107,7 @@ function SignupSkillTagInput({ value, onChange }: SignupSkillTagInputProps) {
                 className="text-[#A5B3C7] hover:text-[#F8FAFC]"
                 aria-label={`${TECH_STACK[item].label} 삭제`}
               >
-                <XIcon width={16} height={16} />
+                <XIcon width={14} height={14} />
               </button>
             </span>
           ))}
@@ -186,17 +153,20 @@ export default function SignupStep3({
   return (
     <div className="flex w-full flex-1 flex-col gap-10 md:gap-12">
       <div className="flex flex-col gap-3 text-center">
-        <h2 className="text-[32px] leading-tight font-semibold text-gray-50 md:text-[40px]">
+        <h2 className="text-lg leading-tight font-semibold text-gray-50 md:text-2xl">
           추가 정보 입력
         </h2>
-        <p className="text-base text-gray-400 md:text-lg">
+        <p className="text-sm text-gray-400 md:text-lg">
           나중에 마이페이지에서 언제든 수정할 수 있어요
         </p>
       </div>
 
-      <FieldGroup className="mx-auto w-full max-w-[560px] gap-6">
+      <FieldGroup className="mx-auto w-full max-w-140 gap-6">
         <Field>
-          <FieldLabel htmlFor="bio" className="text-base text-gray-50">
+          <FieldLabel
+            htmlFor="bio"
+            className="text-sm text-gray-50 md:text-base"
+          >
             소개
           </FieldLabel>
           <div
@@ -215,7 +185,9 @@ export default function SignupStep3({
         </Field>
 
         <Field>
-          <FieldLabel className="text-base text-gray-50">기술 스택</FieldLabel>
+          <FieldLabel className="text-sm text-gray-50 md:text-base">
+            기술 스택
+          </FieldLabel>
           <Controller
             name="skills"
             control={control}
@@ -229,14 +201,17 @@ export default function SignupStep3({
         </Field>
 
         <Field>
-          <FieldLabel htmlFor="externalLink" className="text-base text-gray-50">
+          <FieldLabel
+            htmlFor="externalLink"
+            className="text-sm text-gray-50 md:text-base"
+          >
             외부 링크
           </FieldLabel>
           <Input
             id="externalLink"
             {...register("externalLink")}
             placeholder="Github, Notion, Behance 등"
-            className={`h-[60px] rounded-[18px] border bg-[#243043] px-5 text-base text-gray-50 transition-colors placeholder:text-[#94A3B8] ${externalLinkFieldClassName}`}
+            className={`rounded-[18px] border bg-[#243043] px-3 py-3 text-base text-gray-50 transition-colors placeholder:text-[#94A3B8] ${externalLinkFieldClassName}`}
           />
           <FieldError className="min-h-5">
             {errors.externalLink?.message ?? ""}
@@ -250,7 +225,7 @@ export default function SignupStep3({
         <div className="flex w-full gap-3">
           <button
             type="button"
-            className="flex h-[60px] w-full items-center justify-center rounded-[18px] border border-[#E2E8F0] bg-[#F8FAFC] px-[30px] py-4 text-lg font-semibold text-[#58677D] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-15 w-full items-center justify-center rounded-[18px] border border-[#E2E8F0] bg-[#F8FAFC] px-7.5 py-4 text-lg font-semibold text-[#58677D] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
             onClick={onPrevious}
             disabled={isSubmitting}
           >
@@ -259,7 +234,7 @@ export default function SignupStep3({
 
           <button
             type="button"
-            className="flex h-[60px] w-full items-center justify-center rounded-[18px] bg-[#00D7A0] px-[30px] py-4 text-lg font-semibold text-[#F8FAFC] transition-colors hover:bg-[#00c391] disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-15 w-full items-center justify-center rounded-[18px] bg-[#00D7A0] px-7.5 py-4 text-lg font-semibold text-[#F8FAFC] transition-colors hover:bg-[#00c391] disabled:cursor-not-allowed disabled:opacity-50"
             disabled={isSubmitting}
             onClick={onSubmit}
           >
