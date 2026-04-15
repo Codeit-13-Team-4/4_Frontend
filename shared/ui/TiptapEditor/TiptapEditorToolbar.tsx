@@ -252,7 +252,7 @@ function TiptapEditorToolbar({
     if (!file || !onImageUpload) return;
 
     const url = await onImageUpload(file);
-    editor.chain().focus().setImage({ src: url }).run();
+    editor.chain().focus().setImage({ src: url, alt: file.name }).run();
 
     e.target.value = "";
   };
