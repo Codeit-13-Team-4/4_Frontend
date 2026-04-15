@@ -1,8 +1,8 @@
 import { AvatarIcon, Check, XIcon } from "@/shared/icons";
-import { Progress } from "@/shared/ui";
 import { VerificationMember, VerificationStatus } from "../../model";
+import Image from "next/image";
 
-export function MemberProgressBar({
+export function MemberStatusBar({
   data,
   verificationStatus,
 }: {
@@ -17,21 +17,25 @@ export function MemberProgressBar({
     REJECTED: <XIcon className="text-error" width={14} height={14} />,
   };
 
-  // 수정: 현재 멤버 목록 데이터에 진행도가없음
   return (
-    <div className="flex w-full items-center">
+    <div className="flex w-full items-center justify-between">
       <div className="mr-7 flex items-center gap-2">
-        <AvatarIcon className="text-gray-800" width={40} height={40} />
+        {user.profileImageUrl ? (
+          <Image
+            src={user.profileImageUrl}
+            alt="멤버 프로필 이미지"
+            width={40}
+            height={40}
+            className="h-full w-full rounded-full"
+            priority
+          />
+        ) : (
+          <AvatarIcon className="text-gray-800" width={40} height={40} />
+        )}
+
         <span className="text-nowrap">{user.nickname}</span>
       </div>
 
-      <div className="mr-5 flex w-full items-center gap-3">
-        <Progress value={10} max={30} />
-
-        <span className="text-nowrap text-gray-600">
-          <span className="text-mint-500">30</span>%
-        </span>
-      </div>
       <span className="text-nowrap">
         {verificationLabel[verificationStatus]}
       </span>

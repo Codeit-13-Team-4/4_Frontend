@@ -1,7 +1,7 @@
 "use client";
 import { AvatarIcon, Crown, People } from "@/shared/icons";
 import { Button, Progress } from "@/shared/ui";
-import { MemberProgressBar } from "./MemberProgressBar";
+import { MemberStatusBar } from "./MemberStatusBar";
 import { useState } from "react";
 import { VerificationsModal } from "../VerificationsModal/VerificationsModal";
 import Image from "next/image";
@@ -32,18 +32,20 @@ export function VerificationsMemberSection({
     <section className="grid gap-5 md:h-90 md:grid-cols-[0.8fr_1fr]">
       <div className="flex flex-col gap-5 rounded-[20px] bg-gray-800 p-5">
         <div className="flex flex-col items-center justify-center gap-4 pt-5">
-          {host.profileImageUrl ? (
-            <Image
-              src={host.profileImageUrl}
-              alt="호스트 프로필 이미지"
-              width={120}
-              height={120}
-              className="rounded-full"
-              priority
-            />
-          ) : (
-            <AvatarIcon width={120} height={120} className="text-gray-800" />
-          )}
+          <div className="flex h-30 w-30 items-center justify-center overflow-hidden rounded-full bg-red-50">
+            {host.profileImageUrl ? (
+              <Image
+                src={host.profileImageUrl}
+                alt="호스트 프로필 이미지"
+                width={120}
+                height={120}
+                className="h-full w-full"
+                priority
+              />
+            ) : (
+              <AvatarIcon width={120} height={120} className="text-gray-800" />
+            )}
+          </div>
 
           <span className="flex gap-1 text-[24px] font-semibold">
             {host.nickname} <span>{isHost ? <Crown /> : null}</span>
@@ -62,7 +64,7 @@ export function VerificationsMemberSection({
 
         <Button
           variant="primary"
-          // disabled={!memberPermissions?.canCreate}
+          disabled={!memberPermissions?.canCreate}
           className="mt-auto w-full"
           onClick={() => setIsOpen(true)}
         >
@@ -81,13 +83,14 @@ export function VerificationsMemberSection({
             <span className="text-gray-200">인증 완료 멤버</span>
             <span className="text-gray-300">
               <span className="text-mint-500">5</span> / {participantCount}
+              {/* 수정필요 */}
             </span>
           </div>
         </div>
         <div className="custom-scrollbar flex max-h-70 flex-col gap-4 overflow-y-scroll pr-4">
           {memberData?.data?.map((member) => {
             return (
-              <MemberProgressBar
+              <MemberStatusBar
                 data={member}
                 key={member.id}
                 verificationStatus={memberPermissions?.myVerificationStatus}

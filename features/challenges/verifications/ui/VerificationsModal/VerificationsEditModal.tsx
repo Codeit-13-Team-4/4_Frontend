@@ -11,7 +11,7 @@ import {
 } from "@/shared/ui";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useUploadImage } from "@/shared/hooks/useUploadImage";
 import { useEditVerifications } from "../../hook/useEditVerifications";
@@ -20,65 +20,78 @@ import { VerificationDetailData } from "../../model";
 type FormValues = {
   content: string;
   imageUrls?: FileList;
+  existingImageUrl?: string | null;
 };
 
 type VerificationsEditModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
   challengeId: number;
   verificationId: number;
   data: VerificationDetailData;
 };
 
 export function VerificationsEditModal({
-  setIsOpen,
   challengeId,
   verificationId,
   data,
+  onOpenChange,
   ...props
 }: VerificationsEditModalProps) {
   const {
     register,
     handleSubmit,
     reset,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
       content: data?.content,
+      imageUrls: undefined,
+      existingImageUrl: data?.imageUrls?.[0] ?? null,
     },
   });
 
+  const watchedImages = watch("imageUrls");
+  const currentExistingUrl = watch("existingImageUrl");
+
   const { mutateAsync } = useUploadImage();
   const { mutate } = useEditVerifications({ challengeId, verificationId });
-  const [preview, setPreview] = useState<string | null>(
-    data?.imageUrls?.[0] ?? null,
-  );
   const openAlertModal = useOpenAlertModal();
   const router = useRouter();
+
+  const isChanged =
+    watch("content") !== data?.content ||
+    (watch("imageUrls") && watch("imageUrls")!.length > 0) ||
+    watch("existingImageUrl") !== (data?.imageUrls?.[0] ?? null);
 
   useEffect(() => {
     if (data) {
       reset({
         content: data.content,
+        existingImageUrl: data?.imageUrls?.[0] ?? null,
       });
     }
   }, [data, reset]);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const previewSrc =
+    watchedImages && watchedImages.length > 0
+      ? URL.createObjectURL(watchedImages[0])
+      : currentExistingUrl;
 
-    setPreview((prev) => {
-      if (prev) URL.revokeObjectURL(prev);
-      return URL.createObjectURL(file);
-    });
-  };
+  useEffect(() => {
+    return () => {
+      if (previewSrc && previewSrc.startsWith("blob:")) {
+        URL.revokeObjectURL(previewSrc);
+      }
+    };
+  }, [previewSrc]);
 
   const onSubmit = async (formData: FormValues) => {
-    let imageUrl = data.imageUrls?.[0];
-
+    let imageUrl = formData.existingImageUrl;
     const file = formData.imageUrls?.[0];
+
     if (file) {
       imageUrl = await mutateAsync(file);
     }
@@ -92,8 +105,7 @@ export function VerificationsEditModal({
       },
       {
         onSuccess: () => {
-          setIsOpen(false);
-
+          onOpenChange(false);
           openAlertModal({
             title: "챌린지 인증 글이 수정되었습니다! 🎉",
             description: "수정 내역을 확인해보세요.",
@@ -105,34 +117,29 @@ export function VerificationsEditModal({
             negative: { text: "확인" },
             onPositive: () => router.push("/mypage"),
           });
-
-          reset({ content: "" });
-          setPreview(null);
+          reset();
         },
         onError: () => {
-          setIsOpen(false);
+          onOpenChange(false);
+          reset();
         },
       },
     );
   };
 
-  const handleCancelClick = () => {
-    reset();
-    setPreview(null);
-    setIsOpen(false);
-  };
-
   const resetImage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    e.stopPropagation();
-    setPreview((prev) => {
-      if (prev) URL.revokeObjectURL(prev);
-      return null;
-    });
+    setValue("imageUrls", undefined, { shouldDirty: true });
+    setValue("existingImageUrl", null, { shouldDirty: true });
+  };
+
+  const handleCancelClick = () => {
+    reset();
+    onOpenChange(false);
   };
 
   return (
-    <Modal {...props}>
+    <Modal {...props} onOpenChange={onOpenChange}>
       <Modal.Overlay />
       <Modal.Content className="z-50 gap-12 p-10">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -144,37 +151,36 @@ export function VerificationsEditModal({
             <Field>
               <FieldLabel required>이미지</FieldLabel>
 
-              <label
-                htmlFor="verifications_image"
-                className="relative flex h-36 w-36 cursor-pointer items-center justify-center overflow-hidden rounded-xl border border-gray-700"
-              >
-                {preview ? (
-                  <div className="relative h-full w-full">
+              <div className="relative h-36 w-36">
+                <label
+                  htmlFor="verifications_image"
+                  className="flex h-full w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl border border-gray-700"
+                >
+                  {previewSrc ? (
                     <Image
-                      src={preview}
-                      alt="인증수정 미리보기"
+                      src={previewSrc}
+                      alt="미리보기"
                       fill
-                      priority
-                      className="object-cover"
+                      className="rounded-xl object-cover"
                     />
-                    <button onClick={resetImage} type="button">
-                      <XIcon
-                        className="absolute top-2 right-1 cursor-pointer rounded-full bg-gray-800 p-1 text-gray-300"
-                        width={20}
-                        height={20}
-                      />
-                    </button>
-                  </div>
-                ) : (
-                  <span className="flex flex-col items-center justify-center gap-2 text-gray-200">
-                    <ImageIcon />
-                    <span>파일 첨부</span>
-                  </span>
+                  ) : (
+                    <span className="flex flex-col items-center justify-center gap-2 text-gray-200">
+                      <ImageIcon />
+                      <span>파일 첨부</span>
+                    </span>
+                  )}
+                </label>
+
+                {previewSrc && (
+                  <button
+                    onClick={resetImage}
+                    type="button"
+                    className="absolute top-2 right-2 z-10"
+                  >
+                    <XIcon className="cursor-pointer rounded-full bg-gray-800 p-1 text-gray-300" />
+                  </button>
                 )}
-              </label>
-              {errors.imageUrls && (
-                <FieldError>{errors.imageUrls.message}</FieldError>
-              )}
+              </div>
 
               <input
                 type="file"
@@ -182,12 +188,12 @@ export function VerificationsEditModal({
                 accept="image/*"
                 className="hidden"
                 {...register("imageUrls", {
-                  onChange: handleFileChange,
+                  required: "이미지를 등록해주세요.",
                 })}
               />
             </Field>
 
-            <Field className="mb-14">
+            <Field>
               <FieldLabel required>설명</FieldLabel>
               <TextArea
                 wrapperClassName="w-full bg-gray-800 border border-gray-700"
@@ -201,7 +207,7 @@ export function VerificationsEditModal({
               )}
             </Field>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className="mt-14">
             <Button
               variant="default"
               className="flex-1 text-[20px]"
@@ -210,12 +216,12 @@ export function VerificationsEditModal({
             >
               취소
             </Button>
-
             <Button
               variant="primary"
               className="flex-1 text-[20px]"
               size="lg"
               type="submit"
+              disabled={!isChanged}
             >
               수정하기
             </Button>
