@@ -5,7 +5,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: Promise<{ challengeId: number }> },
+  { params }: { params: Promise<{ challengeId: string }> },
 ) {
   try {
     const { challengeId } = await params;
