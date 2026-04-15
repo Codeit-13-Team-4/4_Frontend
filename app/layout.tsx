@@ -6,6 +6,7 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient } from "./providers/getQueryClient";
 import { QueryProvider } from "./providers/QueryProvider";
 import { getMeServer } from "@/features/auth/api/getMeServer";
+import { authKeys } from "@/features/auth/model/auth.queryKey";
 import Header from "@/widgets/layout/Header/ui/Header";
 import { Metadata } from "next";
 
@@ -58,7 +59,7 @@ export default async function RootLayout({
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["auth", "me"],
+    queryKey: authKeys.me(),
     queryFn: getMeServer,
   });
 
