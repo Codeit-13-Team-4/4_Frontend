@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import Image from "next/image";
 import { cn } from "@/shared/utils";
 import { ScrollArea, SidebarOverlay } from "@/shared/ui";
 import { useInView } from "react-intersection-observer";
 import { useNotifications } from "@/features/notification/hooks/useNotifications";
 import { useReadAllNotification } from "@/features/notification/hooks/useReadAllNotification";
+import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import { Bell, XIcon } from "@/shared/icons";
 
 interface NotificationSidebarProps {
@@ -18,8 +18,9 @@ export default function NotificationSidebar({
   isOpen,
   onClose,
 }: NotificationSidebarProps) {
+  const { data: userData } = useUserData();
   const { data, refetch, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useNotifications();
+    useNotifications(undefined, !!userData);
 
   const { mutate: readAll } = useReadAllNotification();
 

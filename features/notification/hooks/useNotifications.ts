@@ -7,6 +7,7 @@ const PER_PAGE = 10;
 
 export function useNotifications(
   params?: Omit<NotificationsParamsType, "start" | "perPage">,
+  enabled = true,
 ) {
   return useInfiniteQuery({
     queryKey: notificationKeys.list(params),
@@ -17,5 +18,6 @@ export function useNotifications(
       const nextStart = lastPageParam + PER_PAGE;
       return nextStart < lastPage.total ? nextStart : undefined;
     },
+    enabled,
   });
 }

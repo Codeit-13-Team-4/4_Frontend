@@ -5,11 +5,13 @@ import { cn } from "@/shared/utils";
 import { useInView } from "react-intersection-observer";
 import { useNotifications } from "@/features/notification/hooks/useNotifications";
 import { useReadAllNotification } from "@/features/notification/hooks/useReadAllNotification";
+import { useUserData } from "@/features/auth/hooks/queries/useUserData";
 import { Bell, BellActive } from "@/shared/icons";
 
 export default function NotificationDropdown() {
+  const { data: userData } = useUserData();
   const { data, refetch, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useNotifications();
+    useNotifications(undefined, !!userData);
 
   const { mutate: readAll } = useReadAllNotification();
 
