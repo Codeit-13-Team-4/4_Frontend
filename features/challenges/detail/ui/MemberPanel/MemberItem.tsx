@@ -28,7 +28,11 @@ export default function MemberItem({
             alt={member.user.nickname}
           />
           <AvatarFallback delayMs={0}>
-            <AvatarIcon width={20} height={20} className="text-gray-600" />
+            <AvatarIcon
+              width={20}
+              height={20}
+              className="h-full w-full text-gray-800"
+            />
           </AvatarFallback>
         </Avatar>
       </div>
