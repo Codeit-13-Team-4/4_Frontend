@@ -114,27 +114,24 @@ export default function VerifyCard({
               {createdAt && formatToDate(createdAt)}
             </span>
           </div>
-          <div className="ml-auto flex">
-            {isOwner && status === "PENDING" && (
-              <div className="flex flex-col items-end gap-2">
-                <VerificationsStatusDropdown
-                  onEdit={() => setEditModalIsOpen(true)}
-                  onDelete={deleteVerification}
-                />
-
-                {isHost && (
-                  <div className="flex items-center gap-6">
-                    <button onClick={handleApprove} aria-label="인증 승인">
-                      <Check className="text-mint-500" width={24} height={24} />
-                    </button>
-                    <button
-                      onClick={() => setRejectModalIsOpen(true)}
-                      aria-label="인증 거절"
-                    >
-                      <XIcon className="text-error" width={18} height={18} />
-                    </button>
-                  </div>
-                )}
+          <div className="ml-auto flex flex-col items-end">
+            {isOwner && (
+              <VerificationsStatusDropdown
+                onEdit={() => setEditModalIsOpen(true)}
+                onDelete={deleteVerification}
+              />
+            )}
+            {isHost && status === "PENDING" && (
+              <div className="flex items-center gap-6">
+                <button onClick={handleApprove} aria-label="인증 승인">
+                  <Check className="text-mint-500" width={24} height={24} />
+                </button>
+                <button
+                  onClick={() => setRejectModalIsOpen(true)}
+                  aria-label="인증 거절"
+                >
+                  <XIcon className="text-error" width={18} height={18} />
+                </button>
               </div>
             )}
           </div>

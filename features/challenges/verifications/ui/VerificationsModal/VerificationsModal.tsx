@@ -106,17 +106,13 @@ export function VerificationsModal({
     setIsOpen(false);
   };
 
-  const resetImage = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setPreview((prev) => {
-      if (prev) URL.revokeObjectURL(prev);
-      return null;
-    });
+  const resetImage = () => {
+    reset();
+    setPreview(null);
   };
 
   return (
-    <Modal {...props}>
+    <Modal {...props} onOpenChange={handleCancelClick}>
       <Modal.Overlay />
       <Modal.Content className="z-50 gap-12 p-10">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -201,7 +197,7 @@ export function VerificationsModal({
               size="lg"
               type="submit"
             >
-              지원하기
+              제출하기
             </Button>
           </Modal.Footer>
         </form>

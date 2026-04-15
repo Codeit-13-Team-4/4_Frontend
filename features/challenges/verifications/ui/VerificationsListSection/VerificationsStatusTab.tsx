@@ -23,9 +23,11 @@ const VERIFICATIONS_TAB_ITEMS: {
 export function VerificationsStatusTab({
   status,
   onStatusChange,
+  count,
 }: {
   status: VerificationsTabType;
   onStatusChange: Dispatch<SetStateAction<VerificationsTabType>>;
+  count: number;
 }) {
   return (
     <div className="mb-7 flex justify-center gap-1 rounded-full bg-gray-800 px-2.5 py-2 sm:w-fit sm:justify-start">
@@ -43,7 +45,7 @@ export function VerificationsStatusTab({
           {tab.label}
           {tab.value === "PENDING" && (
             <span className="text-mint-500 ml-1 rounded-[8.5px] bg-gray-50 px-1.5 text-[12px]">
-              {tab.value === "PENDING" && 3}
+              {tab.value === "PENDING" && count}
             </span>
           )}
         </button>
