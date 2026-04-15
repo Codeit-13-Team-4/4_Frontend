@@ -5,9 +5,10 @@ import { MemberStatusBar } from "./MemberStatusBar";
 import { useState } from "react";
 import { VerificationsModal } from "../VerificationsModal/VerificationsModal";
 import Image from "next/image";
-import { useGetVerificationsMember } from "../../hook/useGetVerificationsMember";
 import { useGetVerificationsMemberPermissions } from "../../hook/useGetVerificationsMemberPermissions";
 import { ChallengesDetail } from "@/features/challenges/detail/model/challengesDetail";
+import { useGetVerificationsMembersProgress } from "../../hook/useGetVerificationsMembersProgress";
+import { MemberStatusBarProps } from "../../model";
 
 export function VerificationsMemberSection({
   data,
@@ -15,15 +16,18 @@ export function VerificationsMemberSection({
   data: ChallengesDetail;
 }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const {
     host,
     isHost,
     id: challengeId,
     progressRate,
     participantCount,
+    verifiedMemberCount,
   } = data;
 
-  const { data: memberData } = useGetVerificationsMember(challengeId);
+  const { data: progressData } =
+    useGetVerificationsMembersProgress(challengeId);
 
   const { data: memberPermissions } =
     useGetVerificationsMemberPermissions(challengeId);
@@ -85,19 +89,14 @@ export function VerificationsMemberSection({
           <div className="flex gap-2 text-[14px] md:text-[18px]">
             <span className="text-gray-200">인증 완료 멤버</span>
             <span className="text-gray-300">
-              <span className="text-mint-500">5</span> / {participantCount}
+              <span className="text-mint-500">{verifiedMemberCount}</span>/
+              {participantCount}
             </span>
           </div>
         </div>
         <div className="custom-scrollbar flex max-h-70 flex-col gap-4 overflow-y-scroll pr-4">
-          {memberData?.data?.map((member) => {
-            return (
-              <MemberStatusBar
-                data={member}
-                key={member.id}
-                verificationStatus={memberPermissions?.myVerificationStatus}
-              />
-            );
+          {progressData?.members?.map((member: MemberStatusBarProps) => {
+            return <MemberStatusBar data={member} key={member.userId} />;
           })}
         </div>
       </div>
