@@ -171,7 +171,7 @@ export function VerificationsModal({
               />
             </Field>
 
-            <Field className="mb-14">
+            <Field>
               <FieldLabel required>설명</FieldLabel>
               <TextArea
                 wrapperClassName="w-full bg-gray-800 border border-gray-700"
@@ -185,7 +185,7 @@ export function VerificationsModal({
               )}
             </Field>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className="mt-12">
             <Button
               variant="default"
               className="flex-1 text-[20px]"

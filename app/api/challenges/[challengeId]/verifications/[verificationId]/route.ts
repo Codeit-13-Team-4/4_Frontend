@@ -12,13 +12,15 @@ export async function PATCH(
 ) {
   try {
     const { challengeId, verificationId } = await params;
+
     const body = await request.json();
+
     const { content, imageUrls } = body;
 
     await fetchWithAuthRetry(
       `${BASE_URL}/challenges/${challengeId}/verifications/${verificationId}`,
       {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -38,10 +40,6 @@ export async function PATCH(
         { status: error.status },
       );
     }
-    return NextResponse.json(
-      { message: "서버 오류가 발생했습니다." },
-      { status: 500 },
-    );
   }
 }
 
@@ -58,11 +56,13 @@ export async function GET(
     );
 
     return NextResponse.json(data, { status: 200 });
-  } catch {
-    return NextResponse.json(
-      { message: "서버 오류가 발생했습니다." },
-      { status: 500 },
-    );
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return NextResponse.json(
+        { message: error.message },
+        { status: error.status },
+      );
+    }
   }
 }
 
@@ -74,15 +74,21 @@ export async function DELETE(
 ) {
   try {
     const { challengeId, verificationId } = await params;
+
     const data = await fetchWithAuthRetry(
       `${BASE_URL}/challenges/${challengeId}/verifications/${verificationId}`,
+      {
+        method: "DELETE",
+      },
     );
 
     return NextResponse.json(data, { status: 200 });
-  } catch {
-    return NextResponse.json(
-      { message: "서버 오류가 발생했습니다." },
-      { status: 500 },
-    );
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return NextResponse.json(
+        { message: error.message },
+        { status: error.status },
+      );
+    }
   }
 }

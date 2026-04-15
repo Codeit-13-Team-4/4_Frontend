@@ -16,10 +16,12 @@ export function useUpdateVerificationsStatus({
     mutationFn: (payload: UpdateVerificationStatusRequest) => {
       return updateVerificationStatus({ challengeId, verificationId }, payload);
     },
-    meta: { successMessage: "인증 상태가 변경되었습니다." },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: verificationsKeys.lists(),
+      });
+      queryClient.invalidateQueries({
+        queryKey: verificationsKeys.details(),
       });
     },
   });

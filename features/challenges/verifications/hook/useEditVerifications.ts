@@ -12,8 +12,9 @@ export function useEditVerifications({
 }: VerificationsIdProps) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (payload: VerificationsPayload) =>
-      editVerification({ challengeId, verificationId }, payload),
+    mutationFn: (payload: VerificationsPayload) => {
+      return editVerification({ challengeId, verificationId }, payload);
+    },
     meta: { successMessage: "인증이 수정되었습니다." },
     onSuccess: () => {
       queryClient.invalidateQueries({

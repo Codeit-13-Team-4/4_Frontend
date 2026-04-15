@@ -8,7 +8,7 @@ export async function updateVerificationStatus(
   { challengeId, verificationId }: VerificationsIdProps,
   payload: UpdateVerificationStatusRequest,
 ) {
-  const response = await fetchClient(
+  await fetchClient(
     `/api/challenges/${challengeId}/verifications/${verificationId}/status`,
     {
       method: "PATCH",
@@ -18,10 +18,4 @@ export async function updateVerificationStatus(
       body: JSON.stringify(payload),
     },
   );
-
-  if (!response.ok) {
-    throw new Error("인증 상태 변경에 실패했습니다.");
-  }
-
-  return response.json();
 }

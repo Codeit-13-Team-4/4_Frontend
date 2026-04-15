@@ -41,6 +41,11 @@ export function VerificationsStatusTab({
           )}
         >
           {tab.label}
+          {tab.value === "PENDING" && (
+            <span className="text-mint-500 ml-1 rounded-[8.5px] bg-gray-50 px-1.5 text-[12px]">
+              {tab.value === "PENDING" && 3}
+            </span>
+          )}
         </button>
       ))}
     </div>
