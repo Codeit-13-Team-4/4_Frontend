@@ -57,7 +57,7 @@ export interface ChallengeCardProps {
   isHost: boolean;
   isLiked: boolean;
   myParticipationStatus: MyParticipationStatus;
-  application: ChallengeApplication;
+  application?: ChallengeApplication;
 }
 
 export type ChallengesSortType = keyof typeof CHALLENGES_SORT_LABEL;

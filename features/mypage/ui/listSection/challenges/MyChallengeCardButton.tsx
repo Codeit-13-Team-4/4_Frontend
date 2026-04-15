@@ -16,7 +16,7 @@ interface MyChallengeCardButtonProps {
   status: ChallengeCardProps["status"];
   participationStatus: MyParticipationStatus;
   isHost: ChallengeCardProps["isHost"];
-  application: ChallengeApplication;
+  application?: ChallengeApplication;
 }
 
 const btnClass = "w-full md:px-6 md:py-3 md:text-base md:rounded-[12px]";
@@ -57,7 +57,7 @@ export default function MyChallengeCardButton({
           거절 사유 보기
         </Button>
         <ChallengeRejectionReasonModal
-          application={application}
+          application={application!}
           open={rejectionReasonModalOpen}
           onOpenChange={setRejectionReasonModalOpen}
         />
