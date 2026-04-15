@@ -1,6 +1,7 @@
 import { User } from "@/shared/types/user";
 import { ChallengesResponse } from "@/features/challenges/model/challenges.types";
 import {
+  MY_APPLICATION_STATUS_FILTERS,
   MY_CHALLENGE_STATUS_FILTERS,
   MY_PROJECT_STATUS_FILTERS,
   MY_ROLE_TABS,
@@ -14,6 +15,9 @@ export type MyRoleType = (typeof MY_ROLE_TABS)[number]["value"];
 export type MyChallengeStatusType =
   (typeof MY_CHALLENGE_STATUS_FILTERS)[number]["value"];
 
+export type MyApplicationStatusType =
+  (typeof MY_APPLICATION_STATUS_FILTERS)[number]["value"];
+
 export type MyProjectStatusType =
   (typeof MY_PROJECT_STATUS_FILTERS)[number]["value"];
 
@@ -22,6 +26,7 @@ export type MyChallengesParams = {
   isHost?: boolean;
   hasPendingApplication?: boolean;
   status?: MyChallengeStatusType;
+  applicationStatus?: MyApplicationStatusType;
   page?: number;
   limit?: number;
 };
@@ -34,6 +39,7 @@ export type MyProjectsParams = {
   isHost?: boolean;
   hasPendingApplication?: boolean;
   status?: MyProjectStatusType;
+  applicationStatus?: MyApplicationStatusType;
   start?: number;
   perPage?: number;
 };
