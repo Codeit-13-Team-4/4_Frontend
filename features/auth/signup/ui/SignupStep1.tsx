@@ -24,7 +24,7 @@ interface JobLabelSelectorProps {
 
 function JobLabelSelector({ value, onChange }: JobLabelSelectorProps) {
   return (
-    <div className="mx-auto flex w-full max-w-[560px] flex-col gap-3">
+    <div className="mx-auto flex w-full max-w-140 flex-col gap-3">
       {JOB_OPTIONS.map((option) => (
         <button
           key={option.value}
@@ -32,10 +32,10 @@ function JobLabelSelector({ value, onChange }: JobLabelSelectorProps) {
           aria-pressed={value === option.value}
           onClick={() => onChange(option.value)}
           className={cn(
-            "flex h-[60px] w-full items-center justify-center rounded-[18px] border px-4 text-lg font-semibold transition-colors",
+            "flex w-full items-center justify-center rounded-full border px-4 py-3 text-sm font-normal transition-colors md:text-base",
             value === option.value
-              ? "border-[#00D7A0] bg-[#00D7A0] text-[#F8FAFC]"
-              : "border-[#34455E] bg-[#243043] text-[#F8FAFC] hover:border-[#00D7A0]/40",
+              ? "border-mint-500 bg-mint-500 text-gray-50"
+              : "hover:border-mint-500/40 border-gray-700 bg-gray-800 text-gray-400",
           )}
         >
           {option.label}
@@ -52,17 +52,17 @@ export default function SignupStep1() {
   } = useFormContext<SignupFormValues>();
 
   return (
-    <div className="flex flex-col gap-12 md:gap-14">
+    <div className="flex flex-col gap-7 md:gap-10">
       <div className="flex flex-col gap-3 text-center">
-        <h2 className="text-[32px] leading-tight font-semibold text-gray-50 md:text-[40px]">
+        <h2 className="text-base leading-tight font-semibold text-gray-50 md:text-2xl">
           포지션 선택
         </h2>
-        <p className="text-base text-gray-400 md:text-lg">
+        <p className="text-sm font-medium text-gray-400 md:text-lg">
           활동하실 주 포지션을 선택해 주세요
         </p>
       </div>
 
-      <FieldGroup className="gap-6">
+      <FieldGroup>
         <Field>
           <Controller
             name="jobLabel"
