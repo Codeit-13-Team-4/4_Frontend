@@ -154,7 +154,7 @@ export function ProjectForm({
                 name="projectType"
                 control={control}
                 render={({ field }) => (
-                  <ul className="flex gap-2">
+                  <ul className="flex flex-wrap gap-2">
                     {Object.entries(PROJECT_TYPE_LABEL).map(
                       ([value, label]) => (
                         <ProjectFilterRadioInput
