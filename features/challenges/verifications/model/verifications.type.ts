@@ -50,6 +50,8 @@ export type VerificationMember = {
   position: string;
   joinedAt: string;
   user: MemberUser;
+  verificationCount: number;
+  isVerified: boolean;
 };
 
 export type GetVerificationMembersResponse = {
@@ -65,6 +67,17 @@ export type VerificationsIdProps = {
 export type VerificationsPayload = {
   content: string;
   imageUrls: string[];
+};
+
+export type MemberStatusBarProps = {
+  userId: number;
+  nickname: string;
+  profileImageUrl: string;
+  progressPercentage: number;
+  completedDays: number;
+  remainingDays: number;
+  status: string;
+  todayVerificationStatus: "PENDING" | "APPROVED" | "REJECTED";
 };
 
 type MemberUser = {

@@ -17,4 +17,8 @@ export const verificationsKeys = {
   members: () => [...verificationsKeys.all, "members"] as const,
   memberList: (params: { challengeId: number }) =>
     [...verificationsKeys.members(), params] as const,
+
+  membersProgress: () => [...verificationsKeys.members(), "progress"] as const,
+  memberProgressList: (params: { challengeId: number }) =>
+    [...verificationsKeys.membersProgress(), params] as const,
 };

@@ -1,8 +1,12 @@
+import { getMeServer } from "@/features/auth/api/getMeServer";
+import { buildLoginPath } from "@/features/auth/lib/authRedirect";
 import { getChallengesDetailServer } from "@/features/challenges/detail/api/getChallengesDetail.server";
 import { VerificationsListSection } from "@/features/challenges/verifications/ui/VerificationsListSection/VerificationsListSection";
 import { VerificationsMemberSection } from "@/features/challenges/verifications/ui/VerificationsMemberSection/VerificationsMemberSection";
 import { ChevronLeftIcon } from "@/shared/icons";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { VerificationsToast } from "@/features/challenges/verifications/ui/VerificationsToast";
 
 export default async function VerificationsPage({
   params,
@@ -10,8 +14,21 @@ export default async function VerificationsPage({
   params: Promise<{ challengeId: string }>;
 }) {
   const { challengeId } = await params;
-
+  const userData = await getMeServer();
   const data = await getChallengesDetailServer(Number(challengeId));
+
+  if (!userData) {
+    return redirect(buildLoginPath(`/challenges/${challengeId}/verifications`));
+  }
+
+  if (data?.isMember === false) {
+    return (
+      <VerificationsToast
+        isMember={data.isMember}
+        challengeId={Number(challengeId)}
+      />
+    );
+  }
 
   return (
     <div>
