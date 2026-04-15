@@ -5,13 +5,16 @@ import { VerificationsSkeletonCard } from "./VerificationsSkeletonCard";
 import { useGetVerificationsList } from "../../hook/useGetVerificationsList";
 import { VerificationsTabType } from "./VerificationsListSection";
 import { useParams } from "next/navigation";
+import { useEffect } from "react";
 
 export function VerificationsCardList({
   status,
   isHost,
+  setPendingCount,
 }: {
   status: VerificationsTabType;
   isHost: boolean;
+  setPendingCount: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const params = useParams();
   const challengeId = Number(params.challengeId);
@@ -24,6 +27,14 @@ export function VerificationsCardList({
 
   const verificationsData =
     data?.pages.flatMap((page) => page.data ?? []) ?? [];
+
+  const pendingCount = verificationsData.filter(
+    (item) => item.status === "PENDING",
+  ).length;
+
+  useEffect(() => {
+    setPendingCount(pendingCount);
+  }, [data]);
 
   if (verificationsData.length === 0)
     return (

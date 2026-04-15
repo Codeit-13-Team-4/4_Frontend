@@ -7,6 +7,7 @@ export type VerificationsTabType = "PENDING" | "APPROVED" | "REJECTED";
 
 export function VerificationsListSection({ isHost }: { isHost: boolean }) {
   const [status, setStatus] = useState<VerificationsTabType>("PENDING");
+  const [pendingCount, setPendingCount] = useState<number>(0);
 
   return (
     <div>
@@ -15,10 +16,18 @@ export function VerificationsListSection({ isHost }: { isHost: boolean }) {
       </h3>
 
       {isHost && (
-        <VerificationsStatusTab status={status} onStatusChange={setStatus} />
+        <VerificationsStatusTab
+          status={status}
+          onStatusChange={setStatus}
+          count={pendingCount}
+        />
       )}
 
-      <VerificationsCardList status={status} isHost={isHost} />
+      <VerificationsCardList
+        status={status}
+        isHost={isHost}
+        setPendingCount={setPendingCount}
+      />
     </div>
   );
 }
