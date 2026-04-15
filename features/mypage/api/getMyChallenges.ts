@@ -5,8 +5,15 @@ import {
 } from "../model/mypage.types";
 
 const createSearchParams = (params: MyChallengesParams) => {
-  const { isMember, isHost, hasPendingApplication, status, page, limit } =
-    params;
+  const {
+    isMember,
+    isHost,
+    hasPendingApplication,
+    status,
+    applicationStatus,
+    page,
+    limit,
+  } = params;
 
   const searchParams = new URLSearchParams({
     page: String(page ?? 1),
@@ -17,6 +24,8 @@ const createSearchParams = (params: MyChallengesParams) => {
   if (isHost) searchParams.set("isHost", "true");
   if (hasPendingApplication) searchParams.set("hasPendingApplication", "true");
   if (status) searchParams.set("status", status);
+  if (applicationStatus)
+    searchParams.set("applicationStatus", applicationStatus);
 
   return searchParams;
 };

@@ -4,19 +4,23 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import getMyProjects from "../api/getMyProjects";
 import { MyProjectsParams, MyRoleType } from "../model/mypage.types";
 import { mypageKeys } from "../model/mypage.queryKey";
+import { MyApplicationStatusType } from "../model/mypage.types";
 
 const PER_PAGE = 10;
 
-export const useGetMyProjects = (role: MyRoleType, status: string) => {
+export const useGetMyProjects = (role: MyRoleType, filterValue: string) => {
+  const applicationStatus =
+    role === "MEMBER" ? (filterValue as MyApplicationStatusType) : undefined;
+  const status = role === "HOST" ? filterValue : undefined;
+
   const params: MyProjectsParams = {
-    ...(role === "MEMBER" && { isMember: true }),
     ...(role === "HOST" && { isHost: true }),
-    ...(role === "PENDING" && { hasPendingApplication: true }),
     ...(status && { status: status as MyProjectsParams["status"] }),
+    ...(applicationStatus && { applicationStatus }),
   };
 
   return useInfiniteQuery({
-    queryKey: [...mypageKeys.projectList(role, status), params],
+    queryKey: [...mypageKeys.projectList(role, filterValue), params],
     queryFn: ({ pageParam }) => {
       return getMyProjects({
         ...params,

@@ -2,8 +2,15 @@ import { fetchClient } from "@/shared/lib/client/fetchClient";
 import { MyProjectsParams, MyProjectsResponse } from "../model/mypage.types";
 
 const createSearchParams = (params: MyProjectsParams) => {
-  const { isMember, isHost, hasPendingApplication, status, start, perPage } =
-    params;
+  const {
+    isMember,
+    isHost,
+    hasPendingApplication,
+    status,
+    applicationStatus,
+    start,
+    perPage,
+  } = params;
 
   const searchParams = new URLSearchParams({
     start: String(start ?? 0),
@@ -14,6 +21,8 @@ const createSearchParams = (params: MyProjectsParams) => {
   if (isHost) searchParams.set("isHost", "true");
   if (hasPendingApplication) searchParams.set("hasPendingApplication", "true");
   if (status) searchParams.set("status", status);
+  if (applicationStatus)
+    searchParams.set("applicationStatus", applicationStatus);
 
   return searchParams;
 };
