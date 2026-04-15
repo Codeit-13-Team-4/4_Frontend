@@ -16,7 +16,11 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "DevUp | 개발자를 위한 모임 플랫폼",
+  title: {
+    default: "DevUp | 개발자를 위한 모임 플랫폼",
+    template: "%s | DevUp",
+  },
+
   description:
     "개발자들이 스터디, 프로젝트를 통해 함께 성장하는 커뮤니티 플랫폼입니다.",
 

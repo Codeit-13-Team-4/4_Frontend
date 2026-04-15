@@ -5,6 +5,15 @@ import { buildLoginPath } from "@/features/auth/lib/authRedirect";
 import { prefetchProjectsDetail } from "@/features/projects/detail/hooks/prefetchProjectsDetail";
 import { getProjectsDetailServer } from "@/features/projects/detail/api/getProjectsDetail.server";
 import { ProjectsEditForm } from "@/features/projects/edit/ui/ProjectsEditForm";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "프로젝트 수정",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function ProjectsEditPage({
   params,

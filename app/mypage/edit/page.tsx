@@ -1,6 +1,15 @@
 import { getMeServer } from "@/features/auth/api/getMeServer";
 import ProfileEditForm from "@/features/mypage/edit/ui/ProfileEditForm";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "마이페이지 - 프로필 수정",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function ProfileEditPage() {
   const userData = await getMeServer();

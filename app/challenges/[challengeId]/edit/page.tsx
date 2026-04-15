@@ -5,6 +5,15 @@ import { buildLoginPath } from "@/features/auth/lib/authRedirect";
 import { prefetchChallengesDetail } from "@/features/challenges/detail/hooks/prefetchChallengesDetail";
 import { getChallengesDetailServer } from "@/features/challenges/detail/api/getChallengesDetail.server";
 import { ChallengesEditForm } from "@/features/challenges/edit/ui/ChallengesEditForm";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "챌린지 수정",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function ChallengesEditPage({
   params,

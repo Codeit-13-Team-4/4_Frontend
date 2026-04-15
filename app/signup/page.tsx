@@ -3,6 +3,17 @@ import { getSafeRedirectPath } from "@/features/auth/lib/authRedirect";
 import { type SocialType } from "@/features/auth/api/socialLogin";
 import SignupForm from "@/features/auth/signup/ui/SignupForm";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "회원가입",
+  description:
+    "DevUp에 가입하고 다양한 개발자 스터디와 프로젝트에 참여해 보세요.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 interface SignupPageProps {
   searchParams: Promise<{
