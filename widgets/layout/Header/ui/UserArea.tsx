@@ -16,7 +16,7 @@ export default function UserArea() {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
   const { data: userData } = useUserData();
-  const { data: notificationsData } = useNotifications();
+  const { data: notificationsData } = useNotifications(undefined, !!userData);
   const notifications =
     notificationsData?.pages.flatMap((page) => page.data) ?? [];
   const hasUnread = notifications.some((n) => !n.isRead);
