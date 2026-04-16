@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Badge } from "./Badge";
-import { Lock, Zap } from "lucide-react";
 import { StatusBadge } from "../StatusBadge/StatusBadge";
 import { DeadlineBadge } from "../DeadlineBadge/DeadlineBadge";
+import { Lightning, Lock } from "@/shared/icons";
 
 const meta = {
   title: "shared/ui/Badge",
@@ -28,11 +28,11 @@ export const AllVariants: Story = {
         <StatusBadge status="recruiting" />
         <StatusBadge status="recruitment_closed" />
         <Badge variant="auto">
-          <Lock />
+          <Lightning />
           즉시 참여 가능
         </Badge>
         <Badge variant="approve">
-          <Zap />
+          <Lock />
           승인 후 참여 가능
         </Badge>
 
