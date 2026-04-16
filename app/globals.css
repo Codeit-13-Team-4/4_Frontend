@@ -329,3 +329,20 @@ textarea:-webkit-autofill:focus {
     transform: scale(1.1);
   }
 }
+
+@utility custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #1e293b;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #334155;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+}
