@@ -69,7 +69,7 @@ export default async function RootLayout({
           <HydrationBoundary state={dehydrate(queryClient)}>
             <Header />
             {children}
-            <Toaster richColors position="bottom-center" />
+            <Toaster position="bottom-center" />
             <AlertModalGlobal />
           </HydrationBoundary>
         </QueryProvider>
