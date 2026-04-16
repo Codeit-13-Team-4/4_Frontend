@@ -18,7 +18,7 @@ import {
   Strikethrough,
   Underline,
 } from "@/shared/icons";
-import { cn } from "@/shared/utils";
+import { cn, resizeImageFile } from "@/shared/utils";
 
 interface TiptapEditorToolbarProps {
   editor: Editor | null;
@@ -251,8 +251,17 @@ function TiptapEditorToolbar({
     const file = e.target.files?.[0];
     if (!file || !onImageUpload) return;
 
-    const url = await onImageUpload(file);
-    editor.chain().focus().setImage({ src: url, alt: file.name }).run();
+    const {
+      file: resized,
+      width,
+      height,
+    } = await resizeImageFile(file, 600, 600);
+    const url = await onImageUpload(resized);
+    editor
+      .chain()
+      .focus()
+      .setImage({ src: url, alt: file.name, width, height })
+      .run();
 
     e.target.value = "";
   };
