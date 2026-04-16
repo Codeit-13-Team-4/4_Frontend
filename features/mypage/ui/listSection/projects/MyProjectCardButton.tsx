@@ -1,14 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { GradientButton } from "@/shared/ui";
-import { ProjectCardProps } from "@/features/projects/model";
+import { Button, GradientButton } from "@/shared/ui";
+import { ApplicationType, ProjectCardProps } from "@/features/projects/model";
 import ProjectApplicationModal from "./ProjectApplicationModal";
+import ProjectRejectionReasonModal from "./ProjectRejectionReasonModal";
 
 interface MyProjectCardButtonProps {
   projectId: number;
   status: ProjectCardProps["status"];
   applicationStatus: ProjectCardProps["applicationStatus"];
+  application: ProjectCardProps["application"];
   isHost: ProjectCardProps["isHost"];
 }
 
@@ -18,9 +20,12 @@ export default function MyProjectCardButton({
   projectId,
   status,
   applicationStatus,
+  application,
   isHost,
 }: MyProjectCardButtonProps) {
   const [applicationModalOpen, setApplicationModalOpen] = useState(false);
+  const [rejectionReasonModalOpen, setRejectionReasonModalOpen] =
+    useState(false);
 
   // 1. 모집 마감
   if (status === "recruitment_closed") {
@@ -34,9 +39,23 @@ export default function MyProjectCardButton({
   // 2. 거절 사유 보기
   if (applicationStatus === "rejected") {
     return (
-      <GradientButton size="sm" disabled className={btnClass}>
-        거절 사유 보기
-      </GradientButton>
+      <>
+        <Button
+          variant="default"
+          className={btnClass}
+          onClick={(e) => {
+            e.stopPropagation();
+            setRejectionReasonModalOpen(true);
+          }}
+        >
+          거절 사유 보기
+        </Button>
+        <ProjectRejectionReasonModal
+          application={application as ApplicationType}
+          open={rejectionReasonModalOpen}
+          onOpenChange={setRejectionReasonModalOpen}
+        />
+      </>
     );
   }
 
