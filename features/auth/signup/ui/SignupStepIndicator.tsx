@@ -34,7 +34,7 @@ export default function SignupStepIndicator({
             {index < SIGNUP_STEPS.length - 1 ? (
               <span
                 className={cn(
-                  "h-px w-12 shrink-0 transition-colors sm:w-[55px]",
+                  "h-px w-12 shrink-0 transition-colors sm:w-13.75",
                   currentStep > step ? "bg-[#00D7A0]" : "bg-[#334155]",
                 )}
               />

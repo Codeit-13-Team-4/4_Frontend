@@ -11,12 +11,12 @@ export default function SignupCompleteStep({
 }: SignupCompleteStepProps) {
   return (
     <AlertModal open>
-      <AlertModal.Content className="max-w-[560px] gap-14 rounded-[40px] px-10 py-12">
+      <AlertModal.Content>
         <AlertModal.Header className="gap-4">
-          <CompleteAnimation className="size-25" />
+          <CompleteAnimation className="size-10 md:size-15" />
 
           <div className="flex flex-col gap-3">
-            <AlertModal.Title className="text-[24px] leading-tight font-semibold text-[#F8FAFC]">
+            <AlertModal.Title className="text-xl leading-tight font-semibold text-[#F8FAFC] md:text-2xl">
               데브업에 가입하신걸 환영합니다🎉
             </AlertModal.Title>
             <AlertModal.Description className="text-base text-[#94A3B8] md:text-lg">
@@ -29,7 +29,7 @@ export default function SignupCompleteStep({
           <AlertModal.Action asChild onClick={onStart}>
             <button
               type="button"
-              className="flex h-[60px] w-full items-center justify-center rounded-[18px] bg-[#00D7A0] px-[30px] py-4 text-lg font-semibold text-[#F8FAFC] transition-colors hover:bg-[#00c391] sm:max-w-[480px]"
+              className="bg-mint-500 flex w-full items-center justify-center rounded-[18px] px-4 py-2.5 text-sm font-semibold text-gray-50 transition-colors hover:bg-[#00c391] sm:max-w-120 md:px-7.5 md:py-4 md:text-lg"
             >
               시작하기
             </button>

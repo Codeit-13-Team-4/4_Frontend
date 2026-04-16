@@ -33,7 +33,7 @@ export default function SignupForm({ socialSignup }: SignupFormProps) {
       <div
         className={cn(
           "m-4 flex w-full flex-col gap-8",
-          isComplete ? "max-w-[680px]" : "max-w-[600px] sm:max-w-142",
+          isComplete ? "max-w-170" : "max-w-150 sm:max-w-142",
         )}
       >
         {!isComplete ? (
@@ -44,7 +44,7 @@ export default function SignupForm({ socialSignup }: SignupFormProps) {
 
             <form
               onSubmit={handleStepSubmit}
-              className="flex min-h-[620px] flex-col gap-2 rounded-[32px] bg-[#1e293b] px-6 py-8 md:min-h-[680px] md:rounded-[40px] md:px-10 md:py-12 lg:px-14"
+              className="flex min-h-155 flex-col gap-2 rounded-4xl bg-gray-800 px-6 py-8 md:min-h-170 md:rounded-[40px] md:px-10 md:py-12 lg:px-14"
             >
               {currentStep === 1 && <SignupStep1 />}
 
@@ -80,7 +80,7 @@ export default function SignupForm({ socialSignup }: SignupFormProps) {
                         type="button"
                         onClick={handlePrevious}
                         disabled={isCheckingEmail}
-                        className="flex h-[60px] w-full items-center justify-center rounded-[18px] border border-[#E2E8F0] bg-[#F8FAFC] px-[30px] py-4 text-lg font-semibold text-[#58677D] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
+                        className="flex h-15 w-full items-center justify-center rounded-[18px] border border-[#E2E8F0] bg-[#F8FAFC] px-7.5 py-4 text-lg font-semibold text-[#58677D] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         이전
                       </button>
@@ -90,7 +90,7 @@ export default function SignupForm({ socialSignup }: SignupFormProps) {
                       type="submit"
                       disabled={isCheckingEmail || isStep1NextDisabled}
                       className={cn(
-                        "flex h-[60px] w-full items-center justify-center rounded-[18px] bg-[#00D7A0] px-[30px] py-4 text-lg font-semibold text-[#F8FAFC] transition-colors hover:bg-[#00c391] disabled:cursor-not-allowed disabled:opacity-50",
+                        "flex h-15 w-full items-center justify-center rounded-[18px] bg-[#00D7A0] px-7.5 py-4 text-lg font-semibold text-[#F8FAFC] transition-colors hover:bg-[#00c391] disabled:cursor-not-allowed disabled:opacity-50",
                         currentStep === 1 &&
                           "md:ml-auto md:w-[calc((100%-0.75rem)/2)]",
                         isStep1NextDisabled &&
