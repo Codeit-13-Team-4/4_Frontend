@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui";
 import { useUploadImage } from "@/shared/hooks/useUploadImage";
+import { resizeImageFile } from "@/shared/utils";
 import { AvatarIcon, Pencil } from "@/shared/icons";
 
 interface Props {
@@ -22,7 +23,8 @@ export default function ProfileImageEditor({ value, onChange }: Props) {
     const objectUrl = URL.createObjectURL(file);
     setPreview(objectUrl);
 
-    const path = await mutateAsync(file);
+    const { file: resized } = await resizeImageFile(file, 200, 200);
+    const path = await mutateAsync(resized);
     onChange(path);
 
     URL.revokeObjectURL(objectUrl);
