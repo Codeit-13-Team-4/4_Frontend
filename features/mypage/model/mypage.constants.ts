@@ -74,7 +74,12 @@ export const MY_TAB_ITEMS = [
 export const MY_ROLE_TABS = [
   { value: "MEMBER", label: "멤버" },
   { value: "HOST", label: "호스트" },
-  { value: "PENDING", label: "승인대기" },
+] as const;
+
+export const MY_APPLICATION_STATUS_FILTERS = [
+  { value: "approved", label: "승인됨" },
+  { value: "pending", label: "승인 대기" },
+  { value: "rejected", label: "거절됨" },
 ] as const;
 
 export const MY_CHALLENGE_STATUS_FILTERS = [

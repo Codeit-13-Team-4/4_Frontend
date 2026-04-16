@@ -49,7 +49,7 @@ export default function MyChallengeList({
     <div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {challenges.map((challenge) => (
-          <MyChallengeCard key={challenge.id} data={challenge} role={role} />
+          <MyChallengeCard key={challenge.id} data={challenge} />
         ))}
       </div>
 

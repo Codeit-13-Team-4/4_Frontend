@@ -8,14 +8,12 @@ import MyChallengeStatusBadge from "./MyChallengeStatusBadge";
 import { DeadlineBadge, LikeButton, Progress } from "@/shared/ui";
 import MyChallengeCardButton from "./MyChallengeCardButton";
 import { useToggleMyChallengeLike } from "@/features/mypage/hooks/useToggleMyChallengeLike";
-import { MyRoleType } from "@/features/mypage/model/mypage.types";
 
 interface MyChallengeCardProps {
   data: ChallengeCardProps;
-  role: MyRoleType;
 }
 
-export default function MyChallengeCard({ data, role }: MyChallengeCardProps) {
+export default function MyChallengeCard({ data }: MyChallengeCardProps) {
   const router = useRouter();
   const { mutate: toggleLike } = useToggleMyChallengeLike(data.id);
 
@@ -31,11 +29,7 @@ export default function MyChallengeCard({ data, role }: MyChallengeCardProps) {
     >
       {/* 상태배지, 찜하기 */}
       <header className="mb-4 flex items-center justify-between">
-        <MyChallengeStatusBadge
-          role={role}
-          status={data.status}
-          participationStatus={data.myParticipationStatus}
-        />
+        <MyChallengeStatusBadge status={data.status} />
         <div
           className="flex items-center gap-2"
           onClick={(e) => e.stopPropagation()}
@@ -102,6 +96,7 @@ export default function MyChallengeCard({ data, role }: MyChallengeCardProps) {
           status={data.status}
           participationStatus={data.myParticipationStatus}
           isHost={data.isHost}
+          application={data.application}
         />
       </footer>
     </article>
