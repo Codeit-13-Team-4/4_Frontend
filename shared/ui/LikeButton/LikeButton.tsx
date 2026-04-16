@@ -14,6 +14,7 @@ function LikeButton({
     <button
       type="button"
       onClick={onToggle}
+      aria-label={liked ? "좋아요 취소" : "좋아요"}
       className={cn(
         "flex items-center justify-center rounded-full transition-all duration-100 hover:cursor-pointer active:scale-90",
         className,
