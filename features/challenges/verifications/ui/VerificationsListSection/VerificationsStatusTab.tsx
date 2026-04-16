@@ -1,0 +1,55 @@
+import { cn } from "@/shared/utils";
+import { VerificationsTabType } from "./VerificationsListSection";
+import { Dispatch, SetStateAction } from "react";
+
+const VERIFICATIONS_TAB_ITEMS: {
+  value: VerificationsTabType;
+  label: string;
+}[] = [
+  {
+    value: "PENDING",
+    label: "인증전",
+  },
+  {
+    value: "APPROVED",
+    label: "인증완료",
+  },
+  {
+    value: "REJECTED",
+    label: "거절",
+  },
+];
+
+export function VerificationsStatusTab({
+  status,
+  onStatusChange,
+  count,
+}: {
+  status: VerificationsTabType;
+  onStatusChange: Dispatch<SetStateAction<VerificationsTabType>>;
+  count: number;
+}) {
+  return (
+    <div className="mb-7 flex justify-center gap-1 rounded-full bg-gray-800 px-2.5 py-2 sm:w-fit sm:justify-start">
+      {VERIFICATIONS_TAB_ITEMS.map((tab) => (
+        <button
+          key={tab.value}
+          onClick={() => onStatusChange(tab.value)}
+          className={cn(
+            "flex-1 cursor-pointer rounded-full px-3 py-2 text-sm font-medium whitespace-nowrap text-gray-50 transition-colors duration-200 sm:flex-none",
+            status === tab.value
+              ? "bg-mint-500 border-mint-500"
+              : "border-none bg-transparent",
+          )}
+        >
+          {tab.label}
+          {tab.value === "PENDING" && (
+            <span className="text-mint-500 ml-1 rounded-[8.5px] bg-gray-50 px-1.5 text-[12px]">
+              {tab.value === "PENDING" && count}
+            </span>
+          )}
+        </button>
+      ))}
+    </div>
+  );
+}
