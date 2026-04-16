@@ -1,10 +1,9 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { PencilIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui";
 import { useUploadImage } from "@/shared/hooks/useUploadImage";
-import { AvatarIcon } from "@/shared/icons";
+import { AvatarIcon, Pencil } from "@/shared/icons";
 
 interface Props {
   value: string | null;
@@ -45,7 +44,7 @@ export default function ProfileImageEditor({ value, onChange }: Props) {
         </Avatar>
 
         <div className="absolute right-0 bottom-0 flex size-6 items-center justify-center rounded-full border border-gray-600 bg-gray-700 transition-colors group-hover:bg-gray-600 group-disabled:opacity-50 md:size-8">
-          <PencilIcon className="size-3 text-gray-200 md:size-4" />
+          <Pencil className="size-4 text-gray-50 md:size-6" />
         </div>
       </button>
 
