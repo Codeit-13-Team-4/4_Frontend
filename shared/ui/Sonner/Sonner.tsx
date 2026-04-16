@@ -1,36 +1,29 @@
 "use client";
 
 import { Toaster as Sonner, type ToasterProps } from "sonner";
-import {
-  CircleCheckIcon,
-  InfoIcon,
-  TriangleAlertIcon,
-  OctagonXIcon,
-  Loader2Icon,
-} from "lucide-react";
+import { Check, XIcon } from "@/shared/icons";
+import { Spinner } from "../Spinner/Spinner";
 
 const Toaster = ({ ...props }: ToasterProps) => {
   return (
     <Sonner
       className="toaster group"
       icons={{
-        success: <CircleCheckIcon className="size-4" />,
-        info: <InfoIcon className="size-4" />,
-        warning: <TriangleAlertIcon className="size-4" />,
-        error: <OctagonXIcon className="size-4" />,
-        loading: <Loader2Icon className="size-4 animate-spin" />,
+        success: <Check className="bg-mint-500 size-4 rounded-full p-0.5" />,
+        error: <XIcon className="bg-error size-4 rounded-full p-0.5" />,
+        loading: <Spinner className="size-4 animate-spin" />,
       }}
       style={
         {
-          "--normal-bg": "var(--gray-50)",
-          "--normal-text": "var(--color-gray-900)",
-          "--normal-border": "var(--color-gray-300)",
-          "--border-radius": "0.5rem",
+          "--normal-bg": "var(--color-gray-900)",
+          "--normal-text": "var(--color-gray-50)",
+          "--normal-border": "var(--color-gray-600)",
+          "--border-radius": "12px",
         } as React.CSSProperties
       }
       toastOptions={{
         classNames: {
-          toast: "cn-toast",
+          title: "!font-semibold",
         },
       }}
       {...props}
