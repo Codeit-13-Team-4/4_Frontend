@@ -2,7 +2,7 @@ import { Skeleton } from "@/shared/ui";
 
 export function ChallengesCardSkeleton() {
   return (
-    <article className="flex h-90.5 w-104.5 flex-col rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5">
+    <article className="flex h-90.5 w-full flex-col rounded-[20px] border-2 border-gray-700 bg-gray-800 px-5 pt-8 pb-5">
       <header className="mb-7 flex items-center justify-between">
         <div className="flex gap-2">
           <Skeleton className="h-6 w-16 rounded" />

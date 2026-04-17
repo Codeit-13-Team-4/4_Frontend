@@ -4,6 +4,12 @@
 @custom-variant data-open (&[data-state="open"]);
 @custom-variant data-closed (&[data-state="closed"]);
 
+@layer base {
+  button {
+    cursor: pointer;
+  }
+}
+
 @theme {
   --animate-toast-in: toast-in 0.3s ease-out;
 
@@ -275,6 +281,19 @@ body {
   color: var(--foreground);
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: #f8fafc;
+  caret-color: #f8fafc;
+  -webkit-box-shadow: 0 0 0 1000px #243043 inset;
+  box-shadow: 0 0 0 1000px #243043 inset;
+  transition: background-color 9999s ease-out 0s;
+}
+
 @utility scrollbar-hide {
   &::-webkit-scrollbar {
     display: none;
@@ -308,5 +327,22 @@ body {
 
   &::-webkit-slider-thumb:active {
     transform: scale(1.1);
+  }
+}
+
+@utility custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #1e293b;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #334155;
+    border-radius: 10px;
+    cursor: pointer;
   }
 }

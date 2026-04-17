@@ -50,3 +50,5 @@ export { NumberedListLeft } from "./NumberedListLeft";
 export { Strikethrough } from "./Strikethrough";
 export { TablerHeading } from "./TablerHeading";
 export { Underline } from "./Underline";
+export { ImageIcon } from "./ImageIcon";
+export { Pencil } from "./Pencil";

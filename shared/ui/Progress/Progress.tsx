@@ -19,6 +19,7 @@ function Progress({
       data-slot="progress"
       value={value}
       max={max}
+      aria-label={`${value} / ${max}`}
       className={cn(
         "relative h-1.75 w-full overflow-hidden rounded-full bg-gray-900",
         className,

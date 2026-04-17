@@ -20,7 +20,7 @@ export function FirstSection() {
 
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,215,160,0.18),transparent_60%)]" />
 
-          <div className="relative z-10 mx-auto flex w-full max-w-360 flex-col items-center text-center">
+          <div className="relative mx-auto flex w-full max-w-360 flex-col items-center text-center">
             <TypingText
               text="개발 공부, 아직도 혼자해?"
               speed={100}

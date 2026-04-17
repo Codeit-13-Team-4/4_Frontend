@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { useState } from "react";
 import { Dropdown } from "@/shared/ui";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon } from "@/shared/icons";
 
 const meta = {
   title: "shared/ui/Dropdown",
@@ -32,11 +32,11 @@ export const DropdownExample: Story = {
         <Dropdown.Trigger>
           <button className="group flex items-center gap-1 text-[#94A3B8]">
             {SORT_LABEL[sort]}
-            <ChevronDown className="group-data-[state=open]:hidden" />
-            <ChevronUp className="hidden group-data-[state=open]:block" />
+            <ChevronDownIcon className="group-data-open:hidden" />
+            <ChevronUpIcon className="hidden group-data-open:block" />
           </button>
         </Dropdown.Trigger>
-        <Dropdown.Content className="border border-[#334155] bg-[#0f172a]">
+        <Dropdown.Content className="bg-900 border border-gray-700">
           <Dropdown.RadioGroup
             value={sort}
             onValueChange={(value) => setSort(value as SortType)}

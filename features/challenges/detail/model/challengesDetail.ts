@@ -41,6 +41,7 @@ export interface ChallengesDetail {
   host: Pick<User, "id" | "nickname" | "profileImageUrl">;
   createdAt: string;
   updatedAt: string;
+  verifiedMemberCount: number;
 }
 
 export interface ChallengesDetailResponse {

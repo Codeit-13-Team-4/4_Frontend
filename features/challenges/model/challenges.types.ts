@@ -1,3 +1,4 @@
+import { User } from "@/shared/types/user";
 import { CHALLENGES_SORT_LABEL } from "./challenges.constants";
 
 export interface GetChallengesResDtoHost {
@@ -19,6 +20,18 @@ export type VerificationFrequencyType =
   | "THREE_TIMES_A_WEEK";
 
 export type MyParticipationStatus = "NONE" | "PENDING" | "JOINED" | "REJECTED";
+
+export interface ChallengeApplication {
+  // 내 지원 정보
+  id: number;
+  status: "PENDING" | "APPROVED" | "REJECTED";
+  reasonCategory:
+    | "SKILL_MISMATCH"
+    | "POSITION_FULL"
+    | "SCHEDULE_CONFLICT"
+    | "OTHER";
+  reasonDetail: string;
+}
 
 export interface ChallengeCardProps {
   id: number;
@@ -44,6 +57,7 @@ export interface ChallengeCardProps {
   isHost: boolean;
   isLiked: boolean;
   myParticipationStatus: MyParticipationStatus;
+  application?: ChallengeApplication;
 }
 
 export type ChallengesSortType = keyof typeof CHALLENGES_SORT_LABEL;
@@ -74,4 +88,22 @@ export interface ChallengesPagination {
 export interface ChallengesResponse {
   data: ChallengeCardProps[];
   pagination: ChallengesPagination;
+}
+
+// 챌린지 멤버 목록 조회
+export interface ChallengeMemberList {
+  id: number;
+  userId: number;
+  memberType: "HOST" | "MEMBER";
+  position: string | null;
+  joinedAt: string;
+  user: Pick<
+    User,
+    "id" | "nickname" | "jobLabel" | "profileImageUrl" | "skills"
+  >;
+}
+
+export interface ChallengeMemberResponse {
+  data: ChallengeMemberList[];
+  total: number;
 }

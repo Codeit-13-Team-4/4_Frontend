@@ -6,6 +6,7 @@ import type { MyTab, MyRoleType } from "@/features/mypage/model/mypage.types";
 import MyRoleFilter from "@/features/mypage/ui/listSection/MyRoleFilter";
 import MyStatusFilter from "@/features/mypage/ui/listSection/MyStatusFilter";
 import {
+  MY_APPLICATION_STATUS_FILTERS,
   MY_CHALLENGE_STATUS_FILTERS,
   MY_PROJECT_STATUS_FILTERS,
 } from "@/features/mypage/model/mypage.constants";
@@ -17,17 +18,17 @@ import MyCommentList from "@/features/mypage/ui/listSection/comments/MyCommentLi
 export default function MyListSection() {
   const [tab, setTab] = useState<MyTab>("challenges");
   const [role, setRole] = useState<MyRoleType>("MEMBER");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("approved");
 
   const handleTabChange = (newTab: MyTab) => {
     setTab(newTab);
     setRole("MEMBER");
-    setStatus("");
+    setStatus("approved");
   };
 
   const handleRoleChange = (newRole: MyRoleType) => {
     setRole(newRole);
-    setStatus("");
+    setStatus(newRole === "MEMBER" ? "approved" : "");
   };
 
   return (
@@ -39,21 +40,23 @@ export default function MyListSection() {
           <MyRoleFilter role={role} onRoleChange={handleRoleChange} />
         )}
 
-        {tab !== "comments" && role !== "PENDING" && (
+        {tab !== "comments" && (
           <Separator
             orientation="vertical"
             className="hidden h-12 bg-gray-700 sm:block"
           />
         )}
 
-        {tab !== "comments" && role !== "PENDING" && (
+        {tab !== "comments" && (
           <MyStatusFilter
             status={status}
             onStatusChange={setStatus}
             filters={
-              tab === "challenges"
-                ? MY_CHALLENGE_STATUS_FILTERS
-                : MY_PROJECT_STATUS_FILTERS
+              role === "MEMBER"
+                ? MY_APPLICATION_STATUS_FILTERS
+                : tab === "challenges"
+                  ? MY_CHALLENGE_STATUS_FILTERS
+                  : MY_PROJECT_STATUS_FILTERS
             }
           />
         )}

@@ -60,7 +60,7 @@ export default function ProjectDetailHeader({
           />
 
           <span className="text-xs font-medium text-gray-400 md:text-sm md:font-normal">
-            {formatDate(new Date(project.recruitEndDate))}
+            {formatDate(new Date(project.createdAt))}
           </span>
         </div>
 

@@ -46,7 +46,7 @@ export default function MyProjectList({ role, status }: MyProjectListProps) {
     <div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {projects.map((project) => (
-          <MyProjectCard key={project.id} data={project} role={role} />
+          <MyProjectCard key={project.id} data={project} />
         ))}
       </div>
 

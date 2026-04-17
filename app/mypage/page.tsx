@@ -3,6 +3,15 @@ import { buildLoginPath } from "@/features/auth/lib/authRedirect";
 import { redirect } from "next/navigation";
 import MyListSection from "@/widgets/mypage/ui/MyListSection";
 import MyProfileSection from "@/widgets/mypage/ui/MyProfileSection";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "마이페이지",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function MyPage() {
   const userData = await getMeServer();
