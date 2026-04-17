@@ -14,7 +14,7 @@
 스터디, 챌린지, 사이드 프로젝트, 공모전 등
 다양한 모임을 통해 함께 배우고 만들며 성장할 수 있도록 돕는 모임 중심 플랫폼입니다.
 
-<!-- <div align="center"><a href="public/assets/your-ppt.pdf"  target="_blank" ><b>피피티</b></a></div> -->
+<div align="center"><a href="public/readme/4팀_ppt.pdf"  target="_blank" ><b>피피티</b></a></div>
 
 ---
 
@@ -51,11 +51,10 @@
 
 ### **Editor / UX**
 
-|                                                                                                   | 사용 기술 | 역할                        |
-| :------------------------------------------------------------------------------------------------ | :-------- | :-------------------------- |
-| ![Tiptap](https://img.shields.io/badge/Tiptap-000000?style=flat&logo=prosemirror&logoColor=white) | Tiptap    | 에디터 기능 구현            |
-| ![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=flat&logo=greensock&logoColor=black)       | GSAP      | 인터랙션 및 애니메이션 구현 |
-| ![Sonner](https://img.shields.io/badge/Sonner-000000?style=flat&logo=react&logoColor=white)       | Sonner    | 토스트 알림 UI              |
+|                                                                                                   | 사용 기술 | 역할             |
+| :------------------------------------------------------------------------------------------------ | :-------- | :--------------- |
+| ![Tiptap](https://img.shields.io/badge/Tiptap-000000?style=flat&logo=prosemirror&logoColor=white) | Tiptap    | 에디터 기능 구현 |
+| ![Sonner](https://img.shields.io/badge/Sonner-000000?style=flat&logo=react&logoColor=white)       | Sonner    | 토스트 알림 UI   |
 
 ### **Development Tools**
 
@@ -66,4 +65,3 @@
 | ![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=flat&logo=eslint&logoColor=white)          | ESLint    | 코드 린팅 및 품질 관리                |
 | ![Prettier](https://img.shields.io/badge/Prettier-F7B93E?style=flat&logo=prettier&logoColor=black)    | Prettier  | 코드 포맷팅                           |
 | ![Husky](https://img.shields.io/badge/Husky-000000?style=flat&logo=git&logoColor=white)               | Husky     | Git Hook 기반 코드 검증 자동화        |
-
